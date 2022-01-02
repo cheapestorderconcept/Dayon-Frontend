@@ -1,8 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import HouseIcon from "@mui/icons-material/House";
 import SaveIcon from "@mui/icons-material/Save";
 import { makeStyles } from "@mui/styles";
 import { Typography } from "@mui/material";
+import { stores } from "../__mocks__/stores";
+import { CustomSelect } from "./basicInputs";
+import { Formik, Form } from "formik";
+
+const INIITAL_VALUE = {
+  branchName: "",
+};
 
 const useStyles = makeStyles((theme) => ({
   address_bar_wrapper: {
@@ -11,6 +18,7 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     background: "#F2DEDE",
     marginBottom: "20px",
+    padding: "10px",
   },
   left_items: {
     display: "flex",
@@ -31,6 +39,13 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const BranchIndicator = () => {
+  const [branch, setbranch] = useState("");
+
+  const handleChange = (e) => {
+    const { value } = e.target;
+    setbranch(value);
+    console.log(branch);
+  };
   const classes = useStyles();
   return (
     <div className={classes.address_bar_wrapper}>
@@ -43,6 +58,17 @@ const BranchIndicator = () => {
         </Typography>
       </div>
       <div className={classes.right_items}>
+        <Formik initialValues={{ ...INIITAL_VALUE }}>
+          <Form>
+            <CustomSelect
+              // onChange={handleChange}
+              placeholder="select branch"
+              name="branchName"
+              options={stores}
+            />
+          </Form>
+        </Formik>
+
         <span className={classes.right_items_icon}>
           <SaveIcon />
         </span>

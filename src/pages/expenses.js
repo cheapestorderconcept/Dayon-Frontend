@@ -1,18 +1,18 @@
 import Head from "next/head";
 import { Box, Container } from "@mui/material";
 import { DashboardLayout } from "../components/dashboard-layout";
-import { AddStoreOutlets } from "src/components/storeoutlets/add-store-outlets";
-import StoreOuletLists from "src/components/storeoutlets/store-lists";
 import dynamic from "next/dynamic";
+import ExpensesContainer from "src/components/expenses/expense-container";
+import ListOfExpensesCategory from "src/components/expenses/list-of-expenses-category";
 
 const DynamicComponentWithNoSSR = dynamic(() => import("src/components/navbar-branch-indicator"), {
   ssr: false,
 });
 
-const Store = () => (
+const Expenses = () => (
   <>
     <Head>
-      <title>Store | 1948 App</title>
+      <title>Expenses | 1948 App</title>
     </Head>
     <Box
       component="main"
@@ -22,15 +22,15 @@ const Store = () => (
       }}
     >
       <DynamicComponentWithNoSSR />
-      <Container maxWidth={false}>
-        <AddStoreOutlets />
+      <Container maxWidth={true}>
+        <ExpensesContainer />
         <Box sx={{ mt: 3 }}>
-          <StoreOuletLists />
+          <ListOfExpensesCategory />
         </Box>
       </Container>
     </Box>
   </>
 );
-Store.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
+Expenses.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
 
-export default Store;
+export default Expenses;

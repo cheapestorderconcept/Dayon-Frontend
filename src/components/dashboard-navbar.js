@@ -13,13 +13,10 @@ import {
   Typography,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
-import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
-import BarChartIcon from "@mui/icons-material/BarChart";
+import CloudDownloadIcon from "@mui/icons-material/CloudDownload";
 import { Bell as BellIcon } from "../icons/bell";
 import { UserCircle as UserCircleIcon } from "../icons/user-circle";
 import { Users as UsersIcon } from "../icons/users";
-import { makeStyles } from "@mui/styles";
-import NextLink from "next/link";
 import { useState } from "react";
 
 // const useStyles = makeStyles({
@@ -130,13 +127,11 @@ export const DashboardNavbar = (props) => {
             onClose={handleClose}
           >
             <MenuItem onClick={handleClose}>Profile</MenuItem>
-            <MenuItem onClick={handleClose}>My account</MenuItem>
+            <MenuItem onClick={handleClose}>Logout</MenuItem>
           </Menu>
-          <Tooltip title="Notifications">
+          <Tooltip title="Download database">
             <IconButton sx={{ ml: 1 }}>
-              <Badge badgeContent={4} color="primary" variant="dot">
-                <BellIcon fontSize="small" />
-              </Badge>
+              <CloudDownloadIcon fontSize="small" />
             </IconButton>
           </Tooltip>
           <Avatar
