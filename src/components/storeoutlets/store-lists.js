@@ -1,27 +1,27 @@
-import MaterialTable from "material-table";
+import MUIDataTable from "mui-datatables";
+import { useEffect, useState } from "react";
+
+const columns = ["STORE NAME", "CONTACT PERSON", "PHONE", "ADDRESS"];
+
+const data = [["Headquarters Parakin", "	MR. Ayo", "08023456789", "Parakin Junction, Il"]];
+
+const options = {
+  filter: true,
+  sort: true,
+};
+
 const StoreOuletLists = () => {
+  const [ready, setready] = useState(false);
+  useEffect(() => {
+    setready(true);
+  }, []);
+
   return (
-    <MaterialTable
-      columns={[
-        { title: "Adı", field: "name" },
-        { title: "Soyadı", field: "surname" },
-        { title: "Doğum Yılı", field: "birthYear", type: "numeric" },
-        {
-          title: "Doğum Yeri",
-          field: "birthCity",
-          lookup: { 34: "İstanbul", 63: "Şanlıurfa" },
-        },
-      ]}
-      data={[
-        {
-          name: "Mehmet",
-          surname: "Baran",
-          birthYear: 1987,
-          birthCity: 63,
-        },
-      ]}
-      title="Demo Title"
-    />
+    <>
+      {ready == true && (
+        <MUIDataTable title={"Lists Of Stores"} data={data} columns={columns} options={options} />
+      )}
+    </>
   );
 };
 

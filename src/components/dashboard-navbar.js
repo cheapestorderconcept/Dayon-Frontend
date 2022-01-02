@@ -13,7 +13,6 @@ import {
   Typography,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
-import SearchIcon from "@mui/icons-material/Search";
 import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
 import BarChartIcon from "@mui/icons-material/BarChart";
 import { Bell as BellIcon } from "../icons/bell";
@@ -23,19 +22,19 @@ import { makeStyles } from "@mui/styles";
 import NextLink from "next/link";
 import { useState } from "react";
 
-const useStyles = makeStyles({
-  linkContainer: {
-    display: "flex",
-  },
-  navlink: {
-    marginRight: "30px",
-    display: "flex",
-  },
-  navicon: {
-    color: "#65748B",
-    marginRight: "10px",
-  },
-});
+// const useStyles = makeStyles({
+//   linkContainer: {
+//     display: "flex",
+//   },
+//   navlink: {
+//     marginRight: "30px",
+//     display: "flex",
+//   },
+//   navicon: {
+//     color: "#65748B",
+//     marginRight: "10px",
+//   },
+// });
 
 const DashboardNavbarRoot = styled(AppBar)(({ theme }) => ({
   backgroundColor: theme.palette.background.paper,
@@ -52,24 +51,8 @@ export const DashboardNavbar = (props) => {
   const handleClose = () => {
     setAnchorEl(null);
   };
-  const RenderMenu = ({ handleClose, open, anchorEl }) => {
-    return (
-      <Menu
-        id="basic-menu"
-        anchorEl={anchorEl}
-        open={open}
-        onClose={handleClose}
-        MenuListProps={{
-          "aria-labelledby": "basic-button",
-        }}
-      >
-        <MenuItem onClick={handleClose}>Profile</MenuItem>
 
-        <MenuItem onClick={handleClose}>Logout</MenuItem>
-      </Menu>
-    );
-  };
-  const classes = useStyles();
+  // const classes = useStyles();
 
   return (
     <>
@@ -104,7 +87,7 @@ export const DashboardNavbar = (props) => {
             <MenuIcon fontSize="small" />
           </IconButton>
 
-          <div className={classes.linkContainer}>
+          {/* <div className={classes.linkContainer}>
             <div className={classes.navlink}>
               <span className={classes.navicon}>
                 <BarChartIcon color="error" />
@@ -121,15 +104,34 @@ export const DashboardNavbar = (props) => {
                 Deposit
               </Typography>
             </div>
-          </div>
+          </div> */}
 
           <Box sx={{ flexGrow: 1 }} />
           <Tooltip title="Daycon">
-            <IconButton sx={{ ml: 1 }} onClick={handleClick}>
-              <UsersIcon fontSize="small" />
-              <RenderMenu handleClose={handleClose} open={open} anchorEl={anchorEl} />
-            </IconButton>
+            <>
+              <IconButton sx={{ ml: 1 }} onClick={handleClick}>
+                <UsersIcon fontSize="small" />
+              </IconButton>
+            </>
           </Tooltip>
+          <Menu
+            id="menu-appbar"
+            anchorEl={anchorEl}
+            anchorOrigin={{
+              vertical: "top",
+              horizontal: "right",
+            }}
+            keepMounted
+            transformOrigin={{
+              vertical: "top",
+              horizontal: "right",
+            }}
+            open={Boolean(anchorEl)}
+            onClose={handleClose}
+          >
+            <MenuItem onClick={handleClose}>Profile</MenuItem>
+            <MenuItem onClick={handleClose}>My account</MenuItem>
+          </Menu>
           <Tooltip title="Notifications">
             <IconButton sx={{ ml: 1 }}>
               <Badge badgeContent={4} color="primary" variant="dot">

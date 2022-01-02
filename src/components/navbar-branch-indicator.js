@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const BranchIndicator = () => {
+const BranchIndicator = () => {
   const classes = useStyles();
   return (
     <div className={classes.address_bar_wrapper}>
@@ -50,3 +50,4 @@ export const BranchIndicator = () => {
     </div>
   );
 };
+export default BranchIndicator;

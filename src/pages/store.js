@@ -1,16 +1,18 @@
 import Head from "next/head";
 import { Box, Container } from "@mui/material";
-import { CustomerListResults } from "../components/customer/customer-list-results";
-import { CustomerListToolbar } from "../components/customer/customer-list-toolbar";
 import { DashboardLayout } from "../components/dashboard-layout";
-import { customers } from "../__mocks__/customers";
 import { AddStoreOutlets } from "src/components/storeoutlets/add-store-outlets";
 import StoreOuletLists from "src/components/storeoutlets/store-lists";
+import dynamic from "next/dynamic";
 
-const Customers = () => (
+const DynamicComponentWithNoSSR = dynamic(() => import("src/components/navbar-branch-indicator"), {
+  ssr: false,
+});
+
+const Store = () => (
   <>
     <Head>
-      <title>Customers | Material Kit</title>
+      <title>Store | 1948 App</title>
     </Head>
     <Box
       component="main"
@@ -19,17 +21,16 @@ const Customers = () => (
         py: 8,
       }}
     >
+      <DynamicComponentWithNoSSR />
       <Container maxWidth={false}>
-        {/* <CustomerListToolbar /> */}
         <AddStoreOutlets />
         <Box sx={{ mt: 3 }}>
           <StoreOuletLists />
-          {/* <CustomerListResults customers={customers} /> */}
         </Box>
       </Container>
     </Box>
   </>
 );
-Customers.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
+Store.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
 
-export default Customers;
+export default Store;

@@ -16,15 +16,55 @@ export const CustomTextField = ({ name, ...other }) => {
   return <TextField {...defaultConfiq} />;
 };
 
-export const CustomSelect = ({ name, option, ...other }) => {
+// custom select
+export const CustomSelect = ({ name, options, ...other }) => {
   const [field, meta] = useField(name);
+  const { setFieldValue } = useFormikContext();
+
+  const handleChange = (e) => {
+    const { value } = e.target;
+    setFieldValue(name, value);
+  };
+
   const defaultConfiq = {
     select: true,
     variant: "outlined",
     fullWidth: true,
     ...other,
     ...field,
+    onchange: handleChange,
   };
+
+  if (meta && meta.touched && meta.error) {
+    defaultConfiq.error = true;
+    defaultConfiq.helperText = meta.error;
+  }
+  return (
+    <TextField {...defaultConfiq}>
+      {options.map((option) => {
+        return (
+          <MenuItem key={option.id} value={option.name}>
+            {option.name}
+          </MenuItem>
+        );
+      })}
+    </TextField>
+  );
+};
+
+//custom date input
+
+export const CustomDate = ({ name, ...other }) => {
+  const [field, meta] = useField(name);
+
+  const defaultConfiq = {
+    type: "date",
+    variant: "outlined",
+    ...field,
+    ...other,
+    fullWidth: true,
+  };
+
   if (meta && meta.touched && meta.error) {
     defaultConfiq.error = true;
     defaultConfiq.helperText = meta.error;
@@ -32,6 +72,9 @@ export const CustomSelect = ({ name, option, ...other }) => {
   return <TextField {...defaultConfiq} />;
 };
 
+//Custom
+
+// Custom button
 export const CustomButton = ({ children, ...other }) => {
   const { submitForm } = useFormikContext();
   const handleSubmit = () => {

@@ -17,29 +17,49 @@ import ListIcon from "@mui/icons-material/List";
 import * as yup from "yup";
 import { Formik, Form } from "formik";
 import { CustomSelect, CustomButton } from "../basicInputs";
-import { brand } from "../../__mocks__/brand";
+import { stores } from "../../__mocks__/stores";
 import { suppliers } from "src/__mocks__/supplier";
+import { products } from "src/__mocks__/products";
+import { CustomDate } from "../basicInputs";
 
 const INITIAL_FORM_VALUES = {
-  productName: "",
-  size: "",
-  brand: "",
-  costPrice: "",
+  date: "",
+  invoiceNum: "",
+  store: "",
   supplier: "",
+  product: "",
+  quantity: "",
+  discount: "",
+  totalPurchaseValue: "",
 };
 
 const FORM_VALIDATIONS = yup.object().shape({
-  productName: yup.string().required("Please provide product name"),
-  size: yup.string().required("Please product size"),
-  brand: yup.string().required("Please provide product brand"),
-  costPrice: yup
+  store: yup.string().required("Please choose a store"),
+  date: yup.date().required("Please enter date"),
+  invoiceNum: yup
     .number()
     .integer()
-    .typeError("Price must be a number")
-    .required("Please provide product price"),
-  supplier: yup.string().required("Please provide product supplier"),
+    .typeError("Invoice number must be a number")
+    .required("Please enter Invoice Number"),
+  supplier: yup.string().required("Please choose a supplier"),
+  product: yup.string().required("Please select a product"),
+  quantity: yup
+    .number()
+    .integer()
+    .typeError("Invoice number must be a number")
+    .required("Please enter Invoice Number"),
+  discount: yup
+    .number()
+    .integer()
+    .typeError("Discount must be a number")
+    .required("Please enter Discount"),
+  totalPurchaseValue: yup
+    .number()
+    .integer()
+    .typeError("Purchase Value must be a number")
+    .required("Please enter Purchase Value"),
 });
-export const ProductListToolbar = (props) => (
+export const AddPurchase = (props) => (
   <Box {...props}>
     <Box
       sx={{
@@ -51,7 +71,7 @@ export const ProductListToolbar = (props) => (
       }}
     >
       <Typography sx={{ m: 1 }} variant="h4">
-        Products
+        Add Purchase
       </Typography>
       <Box sx={{ m: 1 }}>
         <Button startIcon={<UploadIcon fontSize="small" />} sx={{ mr: 1 }}>
@@ -60,17 +80,17 @@ export const ProductListToolbar = (props) => (
         <Button startIcon={<DownloadIcon fontSize="small" />} sx={{ mr: 1 }}>
           Export
         </Button>
-        {/* <Button color="primary" variant="contained">
-          Add products
-        </Button> */}
+        <Button color="primary" variant="contained">
+          Add Products
+        </Button>
       </Box>
     </Box>
     <Box sx={{ mt: 3 }}>
       <Card>
-        <CardHeader title="Add Products" />
+        <CardHeader title="Add Purchase" />
         <Divider />
         <CardContent>
-          <Box sx={{ maxWidth: 500 }}>
+          <Box sx={{ maxWidth: 800 }}>
             <Formik
               initialValues={INITIAL_FORM_VALUES}
               onSubmit={(values) => console.log(values)}
@@ -78,10 +98,9 @@ export const ProductListToolbar = (props) => (
             >
               <Form>
                 <Grid container spacing={2}>
-                  <Grid item xs={12}>
-                    <CustomTextField
-                      name="productName"
-                      label="Product Name"
+                  <Grid item xs={6}>
+                    <CustomDate
+                      name="date"
                       InputProps={{
                         endAdornment: (
                           <InputAdornment position="end">
@@ -91,10 +110,10 @@ export const ProductListToolbar = (props) => (
                       }}
                     />
                   </Grid>
-                  <Grid item xs={12}>
+                  <Grid item xs={6}>
                     <CustomTextField
-                      name="size"
-                      label="Size"
+                      name="invoiceNum"
+                      label="Invoice Number"
                       InputProps={{
                         endAdornment: (
                           <InputAdornment position="end">
@@ -104,46 +123,23 @@ export const ProductListToolbar = (props) => (
                       }}
                     />
                   </Grid>
-                  <Grid item xs={12}>
-                    <CustomTextField
-                      name="costPrice"
-                      label="Cost Price"
-                      InputProps={{
-                        endAdornment: (
-                          <InputAdornment position="end">
-                            <ListIcon />
-                          </InputAdornment>
-                        ),
-                      }}
-                    />
+                  <Grid item xs={6}>
+                    <CustomSelect name="store" label="Select Store" options={stores} />
                   </Grid>
-                  <Grid item xs={12}>
-                    <CustomSelect
-                      name="brand"
-                      options={brand}
-                      label="Brand Name"
-                      // InputProps={{
-                      //   endAdornment: (
-                      //     <InputAdornment position="end">
-                      //       <ListIcon />
-                      //     </InputAdornment>
-                      //   ),
-                      // }}
-                    />
+                  <Grid item xs={6}>
+                    <CustomSelect name="supplier" label="Supplier" options={suppliers} />
                   </Grid>
-                  <Grid item xs={12}>
-                    <CustomSelect
-                      name="supplier"
-                      options={suppliers}
-                      label="Supplier Name"
-                      // InputProps={{
-                      //   endAdornment: (
-                      //     <InputAdornment position="end">
-                      //       <ListIcon />
-                      //     </InputAdornment>
-                      //   ),
-                      // }}
-                    />
+                  <Grid item xs={6}>
+                    <CustomSelect name="product" label="Select Product" options={products} />
+                  </Grid>
+                  <Grid item xs={6}>
+                    <CustomTextField name="quantity" label="Quantity" />
+                  </Grid>
+                  <Grid item xs={6}>
+                    <CustomTextField name="discount" label="Discount" />
+                  </Grid>
+                  <Grid item xs={6}>
+                    <CustomTextField name="totalPurchaseValue" label="Total Purchase Value" />
                   </Grid>
                   <Grid item xs={12}>
                     <CustomButton>Submit</CustomButton>

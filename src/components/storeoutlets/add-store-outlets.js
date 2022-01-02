@@ -63,9 +63,6 @@ export const AddStoreOutlets = (props) => (
         <Button startIcon={<DownloadIcon fontSize="small" />} sx={{ mr: 1 }}>
           Store Outlets
         </Button>
-        <Button color="primary" variant="contained">
-          Add Customers
-        </Button>
       </Box>
     </Box>
     <Box sx={{ mt: 3 }}>

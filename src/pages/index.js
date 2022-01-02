@@ -9,7 +9,11 @@ import { TotalCustomers } from "../components/dashboard/total-customers";
 import { TotalProfit } from "../components/dashboard/total-profit";
 import { TrafficByDevice } from "../components/dashboard/traffic-by-device";
 import { DashboardLayout } from "../components/dashboard-layout";
-import { BranchIndicator } from "src/components/navbar-branch-indicator";
+import dynamic from "next/dynamic";
+
+const DynamicComponentWithNoSSR = dynamic(() => import("src/components/navbar-branch-indicator"), {
+  ssr: false,
+});
 
 const Dashboard = () => {
   return (
@@ -24,7 +28,7 @@ const Dashboard = () => {
           py: 2,
         }}
       >
-        <BranchIndicator />
+        <DynamicComponentWithNoSSR />
         <Container maxWidth={false}>
           <Grid container spacing={3}>
             <Grid item lg={3} sm={6} xl={3} xs={12}>

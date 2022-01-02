@@ -24,7 +24,7 @@ const items = [
     title: "Dashboard",
   },
   {
-    href: "/customers",
+    href: "/store",
     icon: <UsersIcon fontSize="small" />,
     title: "Store Outlets",
   },
@@ -35,65 +35,65 @@ const items = [
     title: "Products",
     hasdropdown: true,
     title2: "Product Brand",
-    href2: "#",
+    href2: "/brand",
     title3: "Manage Product Price",
     href3: "#",
   },
   {
     icon: <CogIcon fontSize="small" />,
-    href: "#",
+    href: "/paymentmethods",
     title: "Payment Type",
   },
   {
-    href: "/account",
+    href: "/addpurchase",
     icon: <UserIcon fontSize="small" />,
     title: "Add Purchases",
     hasdropdown: true,
     title2: "Manage Purchases",
-    href2: "#",
+    href2: "/purchaselists",
     title3: "Update Stock",
     href3: "#",
     title4: "Add Supplier Ledger",
-    href4: "#",
+    href4: "/addsupplierledger",
     title5: "Manage Supplier Ledger",
-    href5: "#",
+    href5: "/managesuppliers",
   },
 
-  // {
-  //   href: "/settings",
-  //   icon: <CogIcon fontSize="small" />,
-  //   title: "Sales",
-  //   hasdropdown:true,
-  //   href2:"#",
-  //   title2:"Manage Sales",
-  // },
-  // {
-  //   href: "/settings",
-  //   icon: <CogIcon fontSize="small" />,
-  //   title: "Deposit",
-  //   hasdropdown: true,
-  //   href2: "#",
-  //   title2: "Manage Deposit",
-  // },
   {
-    href: "/settings",
+    href: "/addsales",
+    icon: <CogIcon fontSize="small" />,
+    title: "Sales",
+    hasdropdown: true,
+    href2: "/managesales",
+    title2: "Manage Sales",
+  },
+  {
+    href: "/adddeposit",
+    icon: <CogIcon fontSize="small" />,
+    title: "Deposit",
+    hasdropdown: true,
+    href2: "/managedeposit",
+    title2: "Manage Deposit",
+  },
+  {
+    href: "/add-transfer-outlet",
     icon: <CogIcon fontSize="small" />,
     title: "Transfer To Outlets",
     hasdropdown: true,
-    href2: "#",
+    href2: "/manage-transfer",
     title2: "Manage Transfer Log",
   },
   {
-    href: "#",
+    href: "add-subdealer",
     icon: <CogIcon fontSize="small" />,
     title: "Subdealer",
     hasdropdown: true,
-    href2: "#",
+    href2: "/manage-subdealer",
     title2: "Manage Subdealer",
   },
 
   {
-    href: "/#",
+    href: "/suppliers",
     icon: <LockIcon fontSize="small" />,
     title: "Supplier",
   },
@@ -106,7 +106,7 @@ const items = [
     title2: "Manage Expenses",
   },
   {
-    href: "/#",
+    href: "/staff",
     icon: <LockIcon fontSize="small" />,
     title: "Staff",
   },
@@ -186,10 +186,10 @@ export const DashboardSidebar = (props) => {
             >
               <div>
                 <Typography color="inherit" variant="subtitle1">
-                  Acme Inc
+                  18A Nigeria Ltd.
                 </Typography>
                 <Typography color="neutral.400" variant="body2">
-                  Your tier : Premium
+                  Daycon Consult : Available
                 </Typography>
               </div>
               <SelectorIcon

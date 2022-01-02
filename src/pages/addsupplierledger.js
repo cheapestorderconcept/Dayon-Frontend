@@ -1,0 +1,30 @@
+import Head from "next/head";
+import { Box, Container, Grid, Pagination } from "@mui/material";
+
+import { DashboardLayout } from "../components/dashboard-layout";
+import PaymentMethodList from "src/components/paymentmethod/payment-method-list";
+import { AddPurchase } from "src/components/purchases/add-purchase";
+import { AddSupplierLedger } from "src/components/purchases/add-supplier-ledger";
+
+const AddSupplierLedgerPage = () => (
+  <>
+    <Head>
+      <title>Add Supplier Ledger| Material Kit</title>
+    </Head>
+    <Box
+      component="main"
+      sx={{
+        flexGrow: 1,
+        py: 8,
+      }}
+    >
+      <Container maxWidth={true}>
+        <AddSupplierLedger />
+      </Container>
+    </Box>
+  </>
+);
+
+AddSupplierLedgerPage.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
+
+export default AddSupplierLedgerPage;

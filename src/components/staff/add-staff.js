@@ -3,43 +3,46 @@ import {
   Button,
   Card,
   CardContent,
-  CardHeader,
-  Divider,
+  TextField,
   InputAdornment,
+  SvgIcon,
   Typography,
   Grid,
+  CardHeader,
+  Divider,
 } from "@mui/material";
-import { Download as DownloadIcon } from "../../icons/download";
 import { Search as SearchIcon } from "../../icons/search";
 import { Upload as UploadIcon } from "../../icons/upload";
-import { CustomTextField } from "../basicInputs";
-import ListIcon from "@mui/icons-material/List";
-import * as yup from "yup";
+import { Download as DownloadIcon } from "../../icons/download";
 import { Formik, Form } from "formik";
-import { CustomSelect, CustomButton } from "../basicInputs";
-import { brand } from "../../__mocks__/brand";
-import { suppliers } from "src/__mocks__/supplier";
+import * as yup from "yup";
+import ListIcon from "@mui/icons-material/List";
+import HomeIcon from "@mui/icons-material/Home";
+import AccountBoxIcon from "@mui/icons-material/AccountBox";
+import { CustomTextField } from "../basicInputs";
+import { CustomButton } from "../basicInputs";
+import { CustomSelect } from "../basicInputs";
 
-const INITIAL_FORM_VALUES = {
-  productName: "",
-  size: "",
-  brand: "",
-  costPrice: "",
-  supplier: "",
+const roles = [
+  { id: 0, name: "Super Admin" },
+  { id: 1, name: "Admin" },
+];
+
+const INITIAL_FORM_STATE = {
+  name: "",
+  username: "",
+  password: "",
+  role: "",
 };
 
 const FORM_VALIDATIONS = yup.object().shape({
-  productName: yup.string().required("Please provide product name"),
-  size: yup.string().required("Please product size"),
-  brand: yup.string().required("Please provide product brand"),
-  costPrice: yup
-    .number()
-    .integer()
-    .typeError("Price must be a number")
-    .required("Please provide product price"),
-  supplier: yup.string().required("Please provide product supplier"),
+  name: yup.string().required("Please enter Staff Name"),
+  username: yup.string().required("Please enter staff username"),
+  password: yup.string().required("Please enter supplier password"),
+  role: yup.string().required("Please enter staff role"),
 });
-export const ProductListToolbar = (props) => (
+
+export const AddStaff = (props) => (
   <Box {...props}>
     <Box
       sx={{
@@ -51,28 +54,25 @@ export const ProductListToolbar = (props) => (
       }}
     >
       <Typography sx={{ m: 1 }} variant="h4">
-        Products
+        Staff
       </Typography>
       <Box sx={{ m: 1 }}>
         <Button startIcon={<UploadIcon fontSize="small" />} sx={{ mr: 1 }}>
-          Import
+          Home
         </Button>
         <Button startIcon={<DownloadIcon fontSize="small" />} sx={{ mr: 1 }}>
-          Export
+          Staff
         </Button>
-        {/* <Button color="primary" variant="contained">
-          Add products
-        </Button> */}
       </Box>
     </Box>
     <Box sx={{ mt: 3 }}>
       <Card>
-        <CardHeader title="Add Products" />
+        <CardHeader title="Add Staff" />
         <Divider />
         <CardContent>
           <Box sx={{ maxWidth: 500 }}>
             <Formik
-              initialValues={INITIAL_FORM_VALUES}
+              initialValues={{ ...INITIAL_FORM_STATE }}
               onSubmit={(values) => console.log(values)}
               validationSchema={FORM_VALIDATIONS}
             >
@@ -80,8 +80,8 @@ export const ProductListToolbar = (props) => (
                 <Grid container spacing={2}>
                   <Grid item xs={12}>
                     <CustomTextField
-                      name="productName"
-                      label="Product Name"
+                      name="name"
+                      label="Name"
                       InputProps={{
                         endAdornment: (
                           <InputAdornment position="end">
@@ -93,12 +93,12 @@ export const ProductListToolbar = (props) => (
                   </Grid>
                   <Grid item xs={12}>
                     <CustomTextField
-                      name="size"
-                      label="Size"
+                      name="username"
+                      label="Username"
                       InputProps={{
                         endAdornment: (
                           <InputAdornment position="end">
-                            <ListIcon />
+                            <HomeIcon />
                           </InputAdornment>
                         ),
                       }}
@@ -106,45 +106,21 @@ export const ProductListToolbar = (props) => (
                   </Grid>
                   <Grid item xs={12}>
                     <CustomTextField
-                      name="costPrice"
-                      label="Cost Price"
+                      name="password"
+                      label="Password"
                       InputProps={{
                         endAdornment: (
                           <InputAdornment position="end">
-                            <ListIcon />
+                            <AccountBoxIcon />
                           </InputAdornment>
                         ),
                       }}
                     />
                   </Grid>
                   <Grid item xs={12}>
-                    <CustomSelect
-                      name="brand"
-                      options={brand}
-                      label="Brand Name"
-                      // InputProps={{
-                      //   endAdornment: (
-                      //     <InputAdornment position="end">
-                      //       <ListIcon />
-                      //     </InputAdornment>
-                      //   ),
-                      // }}
-                    />
+                    <CustomSelect name="role" label="Role" options={roles} />
                   </Grid>
-                  <Grid item xs={12}>
-                    <CustomSelect
-                      name="supplier"
-                      options={suppliers}
-                      label="Supplier Name"
-                      // InputProps={{
-                      //   endAdornment: (
-                      //     <InputAdornment position="end">
-                      //       <ListIcon />
-                      //     </InputAdornment>
-                      //   ),
-                      // }}
-                    />
-                  </Grid>
+
                   <Grid item xs={12}>
                     <CustomButton>Submit</CustomButton>
                   </Grid>

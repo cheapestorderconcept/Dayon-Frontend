@@ -3,11 +3,13 @@ import { Box, Container, Grid, Pagination } from "@mui/material";
 import { ProductListToolbar } from "../components/product/product-list-toolbar";
 import { DashboardLayout } from "../components/dashboard-layout";
 import ProductTable from "src/components/product/product-table";
+import { ProductBrand } from "src/components/productBrand/product-brand";
+import BrandTable from "src/components/productBrand/brand-list";
 
-const Products = () => (
+const Brand = () => (
   <>
     <Head>
-      <title>Products | Material Kit</title>
+      <title>Brand | Material Kit</title>
     </Head>
     <Box
       component="main"
@@ -17,25 +19,16 @@ const Products = () => (
       }}
     >
       <Container maxWidth={false}>
-        <ProductListToolbar />
+        <ProductBrand />
         <Box sx={{ pt: 3 }}>
           {/* <ProductCard product={product} /> */}
-          <ProductTable />
-        </Box>
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-            pt: 3,
-          }}
-        >
-          <Pagination color="primary" count={3} size="small" />
+          <BrandTable />
         </Box>
       </Container>
     </Box>
   </>
 );
 
-Products.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
+Brand.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
 
-export default Products;
+export default Brand;
