@@ -5,7 +5,11 @@ import { DashboardLayout } from "../components/dashboard-layout";
 import PaymentMethodList from "src/components/paymentmethod/payment-method-list";
 import { AddPurchase } from "src/components/purchases/add-purchase";
 import { AddSupplierLedger } from "src/components/purchases/add-supplier-ledger";
+import dynamic from "next/dynamic";
 
+const DynamicComponentWithNoSSR = dynamic(() => import("src/components/navbar-branch-indicator"), {
+  ssr: false,
+});
 const AddSupplierLedgerPage = () => (
   <>
     <Head>
@@ -15,9 +19,10 @@ const AddSupplierLedgerPage = () => (
       component="main"
       sx={{
         flexGrow: 1,
-        py: 8,
+        py: 2,
       }}
     >
+      <DynamicComponentWithNoSSR />
       <Container maxWidth={true}>
         <AddSupplierLedger />
       </Container>

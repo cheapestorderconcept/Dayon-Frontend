@@ -4,6 +4,7 @@ import { DashboardLayout } from "../components/dashboard-layout";
 import dynamic from "next/dynamic";
 import ExpensesContainer from "src/components/expenses/expense-container";
 import ListOfExpensesCategory from "src/components/expenses/list-of-expenses-category";
+import ManageExpenses from "src/components/expenses/manage-expenses";
 
 const DynamicComponentWithNoSSR = dynamic(() => import("src/components/navbar-branch-indicator"), {
   ssr: false,

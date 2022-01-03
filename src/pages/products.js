@@ -3,6 +3,11 @@ import { Box, Container, Grid, Pagination } from "@mui/material";
 import { ProductListToolbar } from "../components/product/product-list-toolbar";
 import { DashboardLayout } from "../components/dashboard-layout";
 import ProductTable from "src/components/product/product-table";
+import dynamic from "next/dynamic";
+
+const DynamicComponentWithNoSSR = dynamic(() => import("src/components/navbar-branch-indicator"), {
+  ssr: false,
+});
 
 const Products = () => (
   <>
@@ -13,9 +18,10 @@ const Products = () => (
       component="main"
       sx={{
         flexGrow: 1,
-        py: 8,
+        py: 2,
       }}
     >
+      <DynamicComponentWithNoSSR />
       <Container maxWidth={false}>
         <ProductListToolbar />
         <Box sx={{ pt: 3 }}>

@@ -5,7 +5,11 @@ import { DashboardLayout } from "../components/dashboard-layout";
 import ProductTable from "src/components/product/product-table";
 import { ProductBrand } from "src/components/productBrand/product-brand";
 import BrandTable from "src/components/productBrand/brand-list";
+import dynamic from "next/dynamic";
 
+const DynamicComponentWithNoSSR = dynamic(() => import("src/components/navbar-branch-indicator"), {
+  ssr: false,
+});
 const Brand = () => (
   <>
     <Head>
@@ -15,9 +19,10 @@ const Brand = () => (
       component="main"
       sx={{
         flexGrow: 1,
-        py: 8,
+        py: 2,
       }}
     >
+      <DynamicComponentWithNoSSR />
       <Container maxWidth={false}>
         <ProductBrand />
         <Box sx={{ pt: 3 }}>

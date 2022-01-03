@@ -7,6 +7,11 @@ import { Upload as UploadIcon } from "src/icons/upload";
 import PurchaseList from "src/components/purchases/purchase-lists";
 import SalesList from "src/components/sales/sales-list";
 import DepositList from "src/components/deposit/deposit-lists";
+import dynamic from "next/dynamic";
+
+const DynamicComponentWithNoSSR = dynamic(() => import("src/components/navbar-branch-indicator"), {
+  ssr: false,
+});
 
 const DepositListsPage = () => (
   <>
@@ -18,9 +23,10 @@ const DepositListsPage = () => (
       component="main"
       sx={{
         flexGrow: 1,
-        py: 8,
+        py: 2,
       }}
     >
+      <DynamicComponentWithNoSSR />
       <Container maxWidth={true}>
         <Box
           sx={{

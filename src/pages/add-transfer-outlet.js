@@ -7,7 +7,11 @@ import { AddPurchase } from "src/components/purchases/add-purchase";
 import { AddSales } from "src/components/sales/add-sales";
 import { AddDeposit } from "src/components/deposit/add-deposit";
 import { AddTransferLog } from "src/components/transferoutltes/add-transfer-log";
+import dynamic from "next/dynamic";
 
+const DynamicComponentWithNoSSR = dynamic(() => import("src/components/navbar-branch-indicator"), {
+  ssr: false,
+});
 const TransferOutlets = () => (
   <>
     <Head>
@@ -17,9 +21,10 @@ const TransferOutlets = () => (
       component="main"
       sx={{
         flexGrow: 1,
-        py: 8,
+        py: 2,
       }}
     >
+      <DynamicComponentWithNoSSR />
       <Container maxWidth={true}>
         <AddTransferLog />
       </Container>

@@ -4,18 +4,23 @@ import { useRouter } from "next/router";
 import PropTypes from "prop-types";
 import { Box, Button, Divider, Drawer, Typography, useMediaQuery } from "@mui/material";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
-import { ChartBar as ChartBarIcon } from "../icons/chart-bar";
-import { Cog as CogIcon } from "../icons/cog";
-import { Lock as LockIcon } from "../icons/lock";
 import { Selector as SelectorIcon } from "../icons/selector";
 import { ShoppingBag as ShoppingBagIcon } from "../icons/shopping-bag";
-import { User as UserIcon } from "../icons/user";
-import { UserAdd as UserAddIcon } from "../icons/user-add";
-import { Users as UsersIcon } from "../icons/users";
 import { XCircle as XCircleIcon } from "../icons/x-circle";
 import { Logo } from "./logo";
-import { NavItem, NavWithDropdown, RenderNavItemsWithDropDown } from "./nav-item";
+import { NavItem, RenderNavItemsWithDropDown } from "./nav-item";
 import { Home } from "src/icons/home";
+import ExtensionIcon from "@mui/icons-material/Extension";
+import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
+import BarChartIcon from "@mui/icons-material/BarChart";
+import TrendingDownIcon from "@mui/icons-material/TrendingDown";
+import DownloadIcon from "@mui/icons-material/Download";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import PeopleIcon from "@mui/icons-material/People";
+import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
+import PaidIcon from "@mui/icons-material/Paid";
+import AssignmentIndIcon from "@mui/icons-material/AssignmentInd";
+import PowerSettingsNewIcon from "@mui/icons-material/PowerSettingsNew";
 
 const items = [
   {
@@ -25,7 +30,7 @@ const items = [
   },
   {
     href: "/store",
-    icon: <UsersIcon fontSize="small" />,
+    icon: <ExtensionIcon fontSize="small" />,
     title: "Store Outlets",
   },
 
@@ -40,13 +45,13 @@ const items = [
     href3: "#",
   },
   {
-    icon: <CogIcon fontSize="small" />,
+    icon: <AccountBalanceWalletIcon fontSize="small" />,
     href: "/paymentmethods",
     title: "Payment Type",
   },
   {
     href: "/addpurchase",
-    icon: <UserIcon fontSize="small" />,
+    icon: <BarChartIcon fontSize="small" />,
     title: "Add Purchases",
     hasdropdown: true,
     title2: "Manage Purchases",
@@ -61,7 +66,7 @@ const items = [
 
   {
     href: "/addsales",
-    icon: <CogIcon fontSize="small" />,
+    icon: <TrendingDownIcon fontSize="small" />,
     title: "Sales",
     hasdropdown: true,
     href2: "/managesales",
@@ -69,7 +74,7 @@ const items = [
   },
   {
     href: "/adddeposit",
-    icon: <CogIcon fontSize="small" />,
+    icon: <DownloadIcon fontSize="small" />,
     title: "Deposit",
     hasdropdown: true,
     href2: "/managedeposit",
@@ -77,7 +82,7 @@ const items = [
   },
   {
     href: "/add-transfer-outlet",
-    icon: <CogIcon fontSize="small" />,
+    icon: <ShoppingCartIcon fontSize="small" />,
     title: "Transfer To Outlets",
     hasdropdown: true,
     href2: "/manage-transfer",
@@ -85,7 +90,7 @@ const items = [
   },
   {
     href: "add-subdealer",
-    icon: <CogIcon fontSize="small" />,
+    icon: <PeopleIcon fontSize="small" />,
     title: "Subdealer",
     hasdropdown: true,
     href2: "/manage-subdealer",
@@ -94,36 +99,26 @@ const items = [
 
   {
     href: "/suppliers",
-    icon: <LockIcon fontSize="small" />,
+    icon: <DirectionsCarIcon fontSize="small" />,
     title: "Supplier",
   },
   {
-    href: "#",
-    icon: <CogIcon fontSize="small" />,
+    href: "/expenses",
+    icon: <PaidIcon fontSize="small" />,
     title: "Expenses",
     hasdropdown: true,
-    href2: "#",
+    href2: "/manage-expenses",
     title2: "Manage Expenses",
   },
   {
     href: "/staff",
-    icon: <LockIcon fontSize="small" />,
+    icon: <AssignmentIndIcon fontSize="small" />,
     title: "Staff",
   },
   {
-    href: "/login",
-    icon: <LockIcon fontSize="small" />,
-    title: "Login",
-  },
-  {
-    href: "/register",
-    icon: <UserAddIcon fontSize="small" />,
-    title: "Register",
-  },
-  {
-    href: "/404",
-    icon: <XCircleIcon fontSize="small" />,
-    title: "Error",
+    href: "/auth",
+    icon: <PowerSettingsNewIcon fontSize="small" />,
+    title: "Logout",
   },
 ];
 
@@ -236,7 +231,7 @@ export const DashboardSidebar = (props) => {
           )}
         </Box>
         <Divider sx={{ borderColor: "#2D3748" }} />
-        <Box
+        {/* <Box
           sx={{
             px: 2,
             py: 3,
@@ -273,7 +268,7 @@ export const DashboardSidebar = (props) => {
               Pro Live Preview
             </Button>
           </NextLink>
-        </Box>
+        </Box> */}
       </Box>
     </>
   );

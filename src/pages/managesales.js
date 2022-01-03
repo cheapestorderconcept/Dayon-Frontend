@@ -6,6 +6,11 @@ import { Download as DownloadIcon } from "src/icons/download";
 import { Upload as UploadIcon } from "src/icons/upload";
 import PurchaseList from "src/components/purchases/purchase-lists";
 import SalesList from "src/components/sales/sales-list";
+import dynamic from "next/dynamic";
+
+const DynamicComponentWithNoSSR = dynamic(() => import("src/components/navbar-branch-indicator"), {
+  ssr: false,
+});
 
 const SalesListPage = () => (
   <>
@@ -17,9 +22,10 @@ const SalesListPage = () => (
       component="main"
       sx={{
         flexGrow: 1,
-        py: 8,
+        py: 2,
       }}
     >
+      <DynamicComponentWithNoSSR />
       <Container maxWidth={true}>
         <Box
           sx={{

@@ -5,7 +5,11 @@ import { DashboardLayout } from "../components/dashboard-layout";
 
 import { AddPaymentMethod } from "src/components/paymentmethod/add-payment-method";
 import PaymentMethodList from "src/components/paymentmethod/payment-method-list";
+import dynamic from "next/dynamic";
 
+const DynamicComponentWithNoSSR = dynamic(() => import("src/components/navbar-branch-indicator"), {
+  ssr: false,
+});
 const PaymentMethod = () => (
   <>
     <Head>
@@ -15,9 +19,10 @@ const PaymentMethod = () => (
       component="main"
       sx={{
         flexGrow: 1,
-        py: 8,
+        py: 2,
       }}
     >
+      <DynamicComponentWithNoSSR />
       <Container maxWidth={false}>
         <AddPaymentMethod />
         <Box sx={{ pt: 3 }}>

@@ -11,7 +11,7 @@ import {
 import { Upload as UploadIcon } from "../../icons/upload";
 import { Download as DownloadIcon } from "../../icons/download";
 import React from "react";
-import ExpensesCategory from "./expenses-category";
+import ExpensesCategory from "./add-expenses-category";
 import AddExpenses from "./add-expenses";
 
 const ExpensesContainer = (props) => {

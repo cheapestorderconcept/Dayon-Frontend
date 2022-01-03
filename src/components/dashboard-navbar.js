@@ -14,31 +14,25 @@ import {
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloudDownloadIcon from "@mui/icons-material/CloudDownload";
-import { Bell as BellIcon } from "../icons/bell";
+import NextLink from "next/link";
 import { UserCircle as UserCircleIcon } from "../icons/user-circle";
 import { Users as UsersIcon } from "../icons/users";
 import { useState } from "react";
-
-// const useStyles = makeStyles({
-//   linkContainer: {
-//     display: "flex",
-//   },
-//   navlink: {
-//     marginRight: "30px",
-//     display: "flex",
-//   },
-//   navicon: {
-//     color: "#65748B",
-//     marginRight: "10px",
-//   },
-// });
+import { makeStyles } from "@mui/styles";
 
 const DashboardNavbarRoot = styled(AppBar)(({ theme }) => ({
   backgroundColor: theme.palette.background.paper,
   boxShadow: theme.shadows[3],
 }));
 
+const useStyles = makeStyles((theme) => ({
+  link: {
+    textDecoration: "none",
+  },
+}));
+
 export const DashboardNavbar = (props) => {
+  const classes = useStyles();
   const { onSidebarOpen, ...other } = props;
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
@@ -48,8 +42,6 @@ export const DashboardNavbar = (props) => {
   const handleClose = () => {
     setAnchorEl(null);
   };
-
-  // const classes = useStyles();
 
   return (
     <>
@@ -126,8 +118,17 @@ export const DashboardNavbar = (props) => {
             open={Boolean(anchorEl)}
             onClose={handleClose}
           >
-            <MenuItem onClick={handleClose}>Profile</MenuItem>
-            <MenuItem onClick={handleClose}>Logout</MenuItem>
+            <MenuItem onClick={handleClose}>
+              <NextLink className={classes.link} href="/account">
+                <Box sx={{ flexGrow: 1 }}>Profile</Box>
+              </NextLink>
+            </MenuItem>
+            <MenuItem onClick={handleClose}>
+              {" "}
+              <NextLink href="/auth">
+                <Box sx={{ flexGrow: 1 }}> Logout</Box>
+              </NextLink>
+            </MenuItem>
           </Menu>
           <Tooltip title="Download database">
             <IconButton sx={{ ml: 1 }}>

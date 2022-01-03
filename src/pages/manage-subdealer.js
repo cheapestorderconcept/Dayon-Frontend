@@ -9,7 +9,11 @@ import SalesList from "src/components/sales/sales-list";
 import DepositList from "src/components/deposit/deposit-lists";
 import TransferList from "src/components/transferoutltes/transfer-lists";
 import SubdealerList from "src/components/subdealers/subdealer-list";
+import dynamic from "next/dynamic";
 
+const DynamicComponentWithNoSSR = dynamic(() => import("src/components/navbar-branch-indicator"), {
+  ssr: false,
+});
 const ManageSubdealer = () => (
   <>
     <Head>
@@ -20,9 +24,10 @@ const ManageSubdealer = () => (
       component="main"
       sx={{
         flexGrow: 1,
-        py: 8,
+        py: 2,
       }}
     >
+      <DynamicComponentWithNoSSR />
       <Container maxWidth={true}>
         <Box
           sx={{

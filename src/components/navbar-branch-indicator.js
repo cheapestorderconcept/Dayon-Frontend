@@ -60,12 +60,7 @@ const BranchIndicator = () => {
       <div className={classes.right_items}>
         <Formik initialValues={{ ...INIITAL_VALUE }}>
           <Form>
-            <CustomSelect
-              // onChange={handleChange}
-              placeholder="select branch"
-              name="branchName"
-              options={stores}
-            />
+            <CustomSelect label="Select branch" name="branchName" options={stores} />
           </Form>
         </Formik>
 

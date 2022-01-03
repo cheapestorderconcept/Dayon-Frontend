@@ -1,11 +1,15 @@
 import Head from "next/head";
 import { Box, Button, Container, Grid, Pagination, Typography } from "@mui/material";
-
 import { DashboardLayout } from "../components/dashboard-layout";
 import { Download as DownloadIcon } from "src/icons/download";
 import { Upload as UploadIcon } from "src/icons/upload";
 import PurchaseList from "src/components/purchases/purchase-lists";
 import SupplierLedgerList from "src/components/purchases/supplier-ledger-lists";
+import dynamic from "next/dynamic";
+
+const DynamicComponentWithNoSSR = dynamic(() => import("src/components/navbar-branch-indicator"), {
+  ssr: false,
+});
 
 const ManageSupplierLists = () => (
   <>
@@ -17,9 +21,10 @@ const ManageSupplierLists = () => (
       component="main"
       sx={{
         flexGrow: 1,
-        py: 8,
+        py: 2,
       }}
     >
+      <DynamicComponentWithNoSSR />
       <Container maxWidth={true}>
         <Box
           sx={{

@@ -1,8 +1,12 @@
 import Head from "next/head";
 import { Box, Container } from "@mui/material";
-
 import { DashboardLayout } from "../components/dashboard-layout";
 import { AddSales } from "src/components/sales/add-sales";
+import dynamic from "next/dynamic";
+
+const DynamicComponentWithNoSSR = dynamic(() => import("src/components/navbar-branch-indicator"), {
+  ssr: false,
+});
 
 const Sales = () => (
   <>
@@ -13,9 +17,10 @@ const Sales = () => (
       component="main"
       sx={{
         flexGrow: 1,
-        py: 8,
+        py: 2,
       }}
     >
+      <DynamicComponentWithNoSSR />
       <Container maxWidth={true}>
         <AddSales />
       </Container>
