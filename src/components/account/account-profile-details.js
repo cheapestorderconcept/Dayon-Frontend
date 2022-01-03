@@ -17,11 +17,11 @@ export const AccountProfileDetails = (props) => {
   const INITIAL_FORM_VALUES = {
     name: "Ola",
     username: "Dayon Consult",
-    password: "",
+    password: "1234",
   };
 
   return (
-    <Formik initialValues={{ ...INITIAL_FORM_VALUES }}>
+    <Formik initialValues={{ ...INITIAL_FORM_VALUES }} onSubmit={(values) => console.log(values)}>
       <Form>
         <Card>
           <CardHeader subheader="The information can be edited" title="Profile" />
