@@ -75,10 +75,10 @@ export const AddPurchase = (props) => (
       </Typography>
       <Box sx={{ m: 1 }}>
         <Button startIcon={<UploadIcon fontSize="small" />} sx={{ mr: 1 }}>
-          Import
+          Home
         </Button>
         <Button startIcon={<DownloadIcon fontSize="small" />} sx={{ mr: 1 }}>
-          Export
+          Purchase
         </Button>
         <Button color="primary" variant="contained">
           Add Products

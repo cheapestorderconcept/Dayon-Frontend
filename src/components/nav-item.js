@@ -12,10 +12,17 @@ export const RenderNavItemsWithDropDown = ({
   href3,
   href4,
   href5,
+  href6,
+  href7,
+  href8,
   title2,
   title3,
   title4,
   title5,
+  title6,
+  title7,
+  title8,
+  mainTitle,
   ...others
 }) => {
   const router = useRouter();
@@ -63,7 +70,7 @@ export const RenderNavItemsWithDropDown = ({
         }}
         onClick={handleClick}
       >
-        {title}
+        {mainTitle}
       </Button>
       <Menu
         id="basic-menu"
@@ -102,6 +109,27 @@ export const RenderNavItemsWithDropDown = ({
           <MenuItem onClick={handleClose}>
             <NextLink href={href5}>
               <Box sx={{ flexGrow: 1 }}>{title5}</Box>
+            </NextLink>
+          </MenuItem>
+        )}
+        {href6 != null && (
+          <MenuItem onClick={handleClose}>
+            <NextLink href={href6}>
+              <Box sx={{ flexGrow: 1 }}>{title6}</Box>
+            </NextLink>
+          </MenuItem>
+        )}
+        {href7 != null && (
+          <MenuItem onClick={handleClose}>
+            <NextLink href={href7}>
+              <Box sx={{ flexGrow: 1 }}>{title7}</Box>
+            </NextLink>
+          </MenuItem>
+        )}
+        {href8 != null && (
+          <MenuItem onClick={handleClose}>
+            <NextLink href={href8}>
+              <Box sx={{ flexGrow: 1 }}>{title8}</Box>
             </NextLink>
           </MenuItem>
         )}

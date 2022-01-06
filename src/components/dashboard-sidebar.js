@@ -27,17 +27,20 @@ const items = [
     href: "/",
     icon: <Home fontSize="large" />,
     title: "Dashboard",
+    mainTitle: "Dashboard",
   },
   {
     href: "/store",
     icon: <ExtensionIcon fontSize="small" />,
     title: "Store Outlets",
+    mainTitle: "Store Outlets",
   },
 
   {
     icon: <ShoppingBagIcon fontSize="small" />,
+    mainTitle: "Products",
     href: "/products",
-    title: "Products",
+    title: "Add Products",
     hasdropdown: true,
     title2: "Product Brand",
     href2: "/brand",
@@ -48,10 +51,12 @@ const items = [
     icon: <AccountBalanceWalletIcon fontSize="small" />,
     href: "/paymentmethods",
     title: "Payment Type",
+    mainTitle: "Payment Type",
   },
   {
     href: "/addpurchase",
     icon: <BarChartIcon fontSize="small" />,
+    mainTitle: "Purchases",
     title: "Add Purchases",
     hasdropdown: true,
     title2: "Manage Purchases",
@@ -67,7 +72,8 @@ const items = [
   {
     href: "/addsales",
     icon: <TrendingDownIcon fontSize="small" />,
-    title: "Sales",
+    mainTitle: "Sales",
+    title: "Add Sales",
     hasdropdown: true,
     href2: "/managesales",
     title2: "Manage Sales",
@@ -75,7 +81,8 @@ const items = [
   {
     href: "/adddeposit",
     icon: <DownloadIcon fontSize="small" />,
-    title: "Deposit",
+    mainTitle: "Deposit",
+    title: "Add Deposit",
     hasdropdown: true,
     href2: "/managedeposit",
     title2: "Manage Deposit",
@@ -83,7 +90,8 @@ const items = [
   {
     href: "/add-transfer-outlet",
     icon: <ShoppingCartIcon fontSize="small" />,
-    title: "Transfer To Outlets",
+    mainTitle: "Transfer To Outlets",
+    title: "Add Transfer To Outlets",
     hasdropdown: true,
     href2: "/manage-transfer",
     title2: "Manage Transfer Log",
@@ -91,7 +99,8 @@ const items = [
   {
     href: "add-subdealer",
     icon: <PeopleIcon fontSize="small" />,
-    title: "Subdealer",
+    mainTitle: "Subdealer",
+    title: "Add Subdealer",
     hasdropdown: true,
     href2: "/manage-subdealer",
     title2: "Manage Subdealer",
@@ -101,11 +110,13 @@ const items = [
     href: "/suppliers",
     icon: <DirectionsCarIcon fontSize="small" />,
     title: "Supplier",
+    mainTitle: "Supplier",
   },
   {
     href: "/expenses",
     icon: <PaidIcon fontSize="small" />,
-    title: "Expenses",
+    mainTitle: "Expenses",
+    title: "Add Expenses",
     hasdropdown: true,
     href2: "/manage-expenses",
     title2: "Manage Expenses",
@@ -114,11 +125,34 @@ const items = [
     href: "/staff",
     icon: <AssignmentIndIcon fontSize="small" />,
     title: "Staff",
+    mainTitle: "Staff",
+  },
+  {
+    href: "/sales-report",
+    icon: <BarChartIcon fontSize="small" />,
+    mainTitle: "Reporting",
+    title: "Sales Report",
+    hasdropdown: true,
+    title2: "Profit/Loss Report",
+    href2: "/report-profit-loss",
+    title3: "Transfer To Outlets",
+    href3: "/transfer-report",
+    title4: "Deposit Report",
+    href4: "/deposit-report",
+    title5: "Product Price List",
+    href5: "/product-price-list",
+    title6: "Stock Level Summary Balance",
+    href6: "/stock-level-balance",
+    title7: "Out Of Stock Products",
+    href7: "/report-out-of-stock",
+    title8: "Suppliers Ledger",
+    href8: "/supplier-ledger-report",
   },
   {
     href: "/auth",
     icon: <PowerSettingsNewIcon fontSize="small" />,
     title: "Logout",
+    mainTitle: "Logout",
   },
 ];
 
@@ -214,10 +248,17 @@ export const DashboardSidebar = (props) => {
                 title3={item.title3}
                 title4={item.title4}
                 title5={item.title5}
+                title6={item.title6}
+                title7={item.title7}
+                title8={item.title8}
                 href2={item.href2}
                 href3={item.href3}
                 href4={item.href4}
                 href5={item.href5}
+                href6={item.href6}
+                href7={item.href7}
+                href8={item.href8}
+                mainTitle={item.mainTitle}
               />
             ) : (
               <NavItem

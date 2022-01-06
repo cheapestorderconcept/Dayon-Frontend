@@ -6,15 +6,12 @@ import { Upload as UploadIcon } from "src/icons/upload";
 import PurchaseList from "src/components/purchases/purchase-lists";
 import SupplierLedgerList from "src/components/purchases/supplier-ledger-lists";
 import dynamic from "next/dynamic";
-
-const DynamicComponentWithNoSSR = dynamic(() => import("src/components/navbar-branch-indicator"), {
-  ssr: false,
-});
+import ProductPriceListTable from "src/components/reporting/product-price-list-report";
 
 const ManageSupplierLists = () => (
   <>
     <Head>
-      <title>Supplier Ledger Lists| Material Kit</title>
+      <title>Product Price Lists| Material Kit</title>
     </Head>
 
     <Box
@@ -24,7 +21,6 @@ const ManageSupplierLists = () => (
         py: 2,
       }}
     >
-      <DynamicComponentWithNoSSR />
       <Container maxWidth={true}>
         <Box
           sx={{
@@ -36,19 +32,19 @@ const ManageSupplierLists = () => (
           }}
         >
           <Typography sx={{ m: 1 }} variant="h4">
-            Lists Of Suppliers Ledgers
+            Product Price List
           </Typography>
           <Box sx={{ m: 1 }}>
             <Button startIcon={<UploadIcon fontSize="small" />} sx={{ mr: 1 }}>
               Home
             </Button>
             <Button startIcon={<DownloadIcon fontSize="small" />} sx={{ mr: 1 }}>
-              Manage Suppliers
+              Product Price
             </Button>
           </Box>
         </Box>
         <Box sx={{ pt: 3 }}>
-          <SupplierLedgerList />
+          <ProductPriceListTable />
         </Box>
       </Container>
     </Box>

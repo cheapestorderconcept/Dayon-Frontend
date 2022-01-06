@@ -2,8 +2,6 @@ import PropTypes from "prop-types";
 import styled from "@emotion/styled";
 import {
   AppBar,
-  Avatar,
-  Badge,
   Box,
   IconButton,
   Menu,
@@ -27,12 +25,14 @@ const DashboardNavbarRoot = styled(AppBar)(({ theme }) => ({
 const useStyles = makeStyles((theme) => ({
   link: {
     textDecoration: "none",
+    cursor: "pointer",
   },
 }));
 
 export const DashboardNavbar = (props) => {
   const classes = useStyles();
   const { onSidebarOpen, ...other } = props;
+  // profile dropdown
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -75,24 +75,11 @@ export const DashboardNavbar = (props) => {
             <MenuIcon fontSize="small" />
           </IconButton>
 
-          {/* <div className={classes.linkContainer}>
-            <div className={classes.navlink}>
-              <span className={classes.navicon}>
-                <BarChartIcon color="error" />
-              </span>
-              <Typography color="text.secondary" variant="subtitle1">
-                Sales
-              </Typography>
-            </div>
-            <div className={classes.navlink}>
-              <span className={classes.navicon}>
-                <AccountBalanceWalletIcon color="error" />
-              </span>
-              <Typography color="text.secondary" variant="subtitle1">
-                Deposit
-              </Typography>
-            </div>
-          </div> */}
+          <NextLink className={classes.link} href="/addsales">
+            <Typography sx={{ flexGrow: 1 }} variant="h6" color="black">
+              Add Sales
+            </Typography>
+          </NextLink>
 
           <Box sx={{ flexGrow: 1 }} />
           <Tooltip title="Daycon">
@@ -100,35 +87,36 @@ export const DashboardNavbar = (props) => {
               <IconButton sx={{ ml: 1 }} onClick={handleClick}>
                 <UsersIcon fontSize="small" />
               </IconButton>
+              <Menu
+                id="menu-appbar"
+                anchorEl={anchorEl}
+                anchorOrigin={{
+                  vertical: "bottom",
+                  horizontal: "right",
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
+                open={Boolean(anchorEl)}
+                onClose={handleClose}
+              >
+                <MenuItem onClick={handleClose}>
+                  <NextLink className={classes.link} href="/account">
+                    <Box sx={{ flexGrow: 1 }}>Profile</Box>
+                  </NextLink>
+                </MenuItem>
+                <MenuItem onClick={handleClose}>
+                  {" "}
+                  <NextLink href="/auth">
+                    <Box sx={{ flexGrow: 1 }}> Logout</Box>
+                  </NextLink>
+                </MenuItem>
+              </Menu>
             </>
           </Tooltip>
-          <Menu
-            id="menu-appbar"
-            anchorEl={anchorEl}
-            anchorOrigin={{
-              vertical: "top",
-              horizontal: "right",
-            }}
-            keepMounted
-            transformOrigin={{
-              vertical: "top",
-              horizontal: "right",
-            }}
-            open={Boolean(anchorEl)}
-            onClose={handleClose}
-          >
-            <MenuItem onClick={handleClose}>
-              <NextLink className={classes.link} href="/account">
-                <Box sx={{ flexGrow: 1 }}>Profile</Box>
-              </NextLink>
-            </MenuItem>
-            <MenuItem onClick={handleClose}>
-              {" "}
-              <NextLink href="/auth">
-                <Box sx={{ flexGrow: 1 }}> Logout</Box>
-              </NextLink>
-            </MenuItem>
-          </Menu>
+
           <Tooltip title="Download database">
             <IconButton sx={{ ml: 1 }}>
               <CloudDownloadIcon fontSize="small" />

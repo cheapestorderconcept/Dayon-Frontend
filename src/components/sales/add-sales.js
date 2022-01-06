@@ -22,6 +22,7 @@ import { suppliers } from "src/__mocks__/supplier";
 import { products } from "src/__mocks__/products";
 import { CustomDate } from "../basicInputs";
 import { paymentMethods } from "src/__mocks__/paymentMethods";
+import { useMemo, useRef, useState } from "react";
 
 const INITIAL_FORM_VALUES = {
   date: "",
@@ -32,10 +33,12 @@ const INITIAL_FORM_VALUES = {
   pricePerUnit: "",
   paymentType: "",
   amount: "",
+  barcodeInput: "",
 };
 
 const FORM_VALIDATIONS = yup.object().shape({
   store: yup.string().required("Please choose a store"),
+  barcodeInput: yup.string().min(12),
   date: yup.date().required("Please enter date"),
   invoiceNum: yup
     .number()
@@ -60,102 +63,137 @@ const FORM_VALIDATIONS = yup.object().shape({
     .required("Please enter Amount Value"),
   paymentType: yup.string().required("Please select payment type"),
 });
-export const AddSales = (props) => (
-  <Box {...props}>
-    <Box
-      sx={{
-        alignItems: "center",
-        display: "flex",
-        justifyContent: "space-between",
-        flexWrap: "wrap",
-        m: -1,
-      }}
-    >
-      <Typography sx={{ m: 1 }} variant="h4">
-        Add Sales
-      </Typography>
-      <Box sx={{ m: 1 }}>
-        <Button startIcon={<UploadIcon fontSize="small" />} sx={{ mr: 1 }}>
-          Import
-        </Button>
-        <Button startIcon={<DownloadIcon fontSize="small" />} sx={{ mr: 1 }}>
-          Export
-        </Button>
-        <Button color="primary" variant="contained">
+
+// console.log(barcodeInput)
+
+export const AddSales = (props) => {
+  const [barcode, setbarcode] = useState("");
+
+  const handleChange = (e) => {
+    const { value } = e.target;
+    setbarcode(value);
+    console.log(barcode);
+    barcode != "" && barcode.length == 10 && getProduct();
+  };
+  const getProduct = () => {
+    alert("done");
+    return;
+  };
+
+  // getProduct();
+  return (
+    <Box {...props}>
+      <Box
+        sx={{
+          alignItems: "center",
+          display: "flex",
+          justifyContent: "space-between",
+          flexWrap: "wrap",
+          m: -1,
+        }}
+      >
+        <Typography sx={{ m: 1 }} variant="h4">
           Add Sales
-        </Button>
+        </Typography>
+        <Box sx={{ m: 1 }}>
+          <Button startIcon={<UploadIcon fontSize="small" />} sx={{ mr: 1 }}>
+            Home
+          </Button>
+          <Button startIcon={<DownloadIcon fontSize="small" />} sx={{ mr: 1 }}>
+            Sales
+          </Button>
+          <Button color="primary" variant="contained">
+            Add Sales
+          </Button>
+        </Box>
+      </Box>
+      <Box sx={{ mt: 3 }}>
+        <Card>
+          <CardHeader title="Add Sales" />
+          <Divider />
+          <CardContent>
+            <Box sx={{ maxWidth: 800 }}>
+              <Formik
+                initialValues={INITIAL_FORM_VALUES}
+                onSubmit={(values) => console.log(values)}
+                validationSchema={FORM_VALIDATIONS}
+              >
+                <Form>
+                  <Grid container spacing={2}>
+                    <Grid item xs={6}>
+                      <CustomDate
+                        name="date"
+                        InputProps={{
+                          endAdornment: (
+                            <InputAdornment position="end">
+                              <ListIcon />
+                            </InputAdornment>
+                          ),
+                        }}
+                      />
+                    </Grid>
+                    <Grid item xs={6}>
+                      <CustomTextField
+                        name="barcodeInput"
+                        label="Scan Barcode"
+                        autoFocus={true}
+                        onChange={handleChange}
+                        value={barcode}
+                        InputProps={{
+                          endAdornment: (
+                            <InputAdornment position="end">
+                              <ListIcon />
+                            </InputAdornment>
+                          ),
+                        }}
+                      />
+                    </Grid>
+                    <Grid item xs={6}>
+                      <CustomTextField
+                        name="invoiceNum"
+                        label="Invoice Number"
+                        InputProps={{
+                          endAdornment: (
+                            <InputAdornment position="end">
+                              <ListIcon />
+                            </InputAdornment>
+                          ),
+                        }}
+                      />
+                    </Grid>
+                    <Grid item xs={6}>
+                      <CustomSelect name="store" label="Select Store" options={stores} />
+                    </Grid>
+
+                    <Grid item xs={6}>
+                      <CustomSelect name="product" label="Select Product" options={products} />
+                    </Grid>
+                    <Grid item xs={6}>
+                      <CustomTextField name="quantity" label="Quantity" />
+                    </Grid>
+                    <Grid item xs={6}>
+                      <CustomTextField name="pricePerUnit" label="Selling Price Per Unit" />
+                    </Grid>
+                    <Grid item xs={6}>
+                      <CustomSelect
+                        name="paymentType"
+                        label="Payment Type"
+                        options={paymentMethods}
+                      />
+                    </Grid>
+                    <Grid item xs={6}>
+                      <CustomTextField name="amount" label="Amount" />
+                    </Grid>
+                    <Grid item xs={6}>
+                      <CustomButton>Process Sale</CustomButton>
+                    </Grid>
+                  </Grid>
+                </Form>
+              </Formik>
+            </Box>
+          </CardContent>
+        </Card>
       </Box>
     </Box>
-    <Box sx={{ mt: 3 }}>
-      <Card>
-        <CardHeader title="Add Sales" />
-        <Divider />
-        <CardContent>
-          <Box sx={{ maxWidth: 800 }}>
-            <Formik
-              initialValues={INITIAL_FORM_VALUES}
-              onSubmit={(values) => console.log(values)}
-              validationSchema={FORM_VALIDATIONS}
-            >
-              <Form>
-                <Grid container spacing={2}>
-                  <Grid item xs={6}>
-                    <CustomDate
-                      name="date"
-                      InputProps={{
-                        endAdornment: (
-                          <InputAdornment position="end">
-                            <ListIcon />
-                          </InputAdornment>
-                        ),
-                      }}
-                    />
-                  </Grid>
-                  <Grid item xs={6}>
-                    <CustomTextField
-                      name="invoiceNum"
-                      label="Invoice Number"
-                      InputProps={{
-                        endAdornment: (
-                          <InputAdornment position="end">
-                            <ListIcon />
-                          </InputAdornment>
-                        ),
-                      }}
-                    />
-                  </Grid>
-                  <Grid item xs={6}>
-                    <CustomSelect name="store" label="Select Store" options={stores} />
-                  </Grid>
-
-                  <Grid item xs={6}>
-                    <CustomSelect name="product" label="Select Product" options={products} />
-                  </Grid>
-                  <Grid item xs={6}>
-                    <CustomTextField name="quantity" label="Quantity" />
-                  </Grid>
-                  <Grid item xs={6}>
-                    <CustomTextField name="pricePerUnit" label="Selling Price Per Unit" />
-                  </Grid>
-                  <Grid item xs={6}>
-                    <CustomSelect
-                      name="paymentType"
-                      label="Payment Type"
-                      options={paymentMethods}
-                    />
-                  </Grid>
-                  <Grid item xs={6}>
-                    <CustomTextField name="amount" label="Amount" />
-                  </Grid>
-                  <Grid item xs={6}>
-                    <CustomButton>Process Sale</CustomButton>
-                  </Grid>
-                </Grid>
-              </Form>
-            </Formik>
-          </Box>
-        </CardContent>
-      </Card>
-    </Box>
-  </Box>
-);
+  );
+};
