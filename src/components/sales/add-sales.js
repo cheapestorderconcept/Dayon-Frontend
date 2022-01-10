@@ -15,16 +15,15 @@ import { Upload as UploadIcon } from "../../icons/upload";
 import { CustomTextField } from "../basicInputs";
 import ListIcon from "@mui/icons-material/List";
 import * as yup from "yup";
-import { Formik, Form } from "formik";
+import { Formik, Form, useFormikContext } from "formik";
 import { CustomSelect, CustomButton } from "../basicInputs";
-import { stores } from "../../__mocks__/stores";
-import { suppliers } from "src/__mocks__/supplier";
-import { products } from "src/__mocks__/products";
 import { CustomDate } from "../basicInputs";
 import { paymentMethods } from "src/__mocks__/paymentMethods";
 import { useContext, useMemo, useRef, useState } from "react";
 import { getProductByBarcode } from "src/statesManagement/store/actions/product-action";
 import { Store } from "src/statesManagement/store/store";
+import { addSupplier } from "src/statesManagement/store/actions/supplier-action";
+import { addSales } from "src/statesManagement/store/actions/sales-action";
 
 const INITIAL_FORM_VALUES = {
   date: "",
@@ -51,46 +50,45 @@ const FORM_VALIDATIONS = yup.object().shape({
   quantity: yup
     .number()
     .integer()
-    .typeError("Invoice number must be a number")
-    .required("Please enter Invoice Number"),
+    .typeError("Quantity number must be a number")
+    .required("Please enter Product Number"),
   pricePerUnit: yup
     .number()
     .integer()
     .typeError("Price must be a number")
     .required("Please enter Price"),
-  amount: yup
-    .number()
-    .integer()
-    .typeError("Amount Value must be a number")
-    .required("Please enter Amount Value"),
+  amount: yup.number().integer().typeError("Amount Value must be a number"),
+
   paymentType: yup.string().required("Please select payment type"),
 });
 
 // console.log(barcodeInput)
 
 export const AddSales = (props) => {
-  const { dispatch } = useContext(Store);
+  const { dispatch, state } = useContext(Store);
+  const { products, branch } = state;
+
   const [barcode, setbarcode] = useState(null);
 
   const handleSubmit = (values) => {
     const sales = {
       created_at: values.date,
       invoice_number: values.invoiceNum,
-      supplier_phone: values.store,
+      branch: values.store,
       product_name: values.product,
-      purchased_qty: values.quantity,
-      unit_price: values.pricePerUnit,
+      purchased_qty: Number(values.quantity),
+      unit_price: parseFloat(values.pricePerUnit),
       payment_type: values.paymentType,
-      total_amount: values.amount,
-      product_barcode: values.barcodeInput,
+      total_amount: Number(values.amount),
+      product_barcode: barcode,
     };
-    addSupplier(dispatch, supplier, Router);
+    addSales({ sales: sales, dispatch: dispatch });
   };
 
   const handleChange = (e) => {
     const { value } = e.target;
     setbarcode(value);
-    barcode && getProductByBarcode(dispatch, barcode);
+    // barcode && getProductByBarcode(dispatch, barcode);
   };
 
   // getProduct();
@@ -115,9 +113,6 @@ export const AddSales = (props) => {
           <Button startIcon={<DownloadIcon fontSize="small" />} sx={{ mr: 1 }}>
             Sales
           </Button>
-          <Button color="primary" variant="contained">
-            Add Sales
-          </Button>
         </Box>
       </Box>
       <Box sx={{ mt: 3 }}>
@@ -128,80 +123,89 @@ export const AddSales = (props) => {
             <Box sx={{ maxWidth: 800 }}>
               <Formik
                 initialValues={INITIAL_FORM_VALUES}
-                onSubmit={handleSubmit}
                 validationSchema={FORM_VALIDATIONS}
+                enableReinitialize={true}
+                onSubmit={handleSubmit}
               >
-                <Form>
-                  <Grid container spacing={2}>
-                    <Grid item xs={6}>
-                      <CustomDate
-                        name="date"
-                        InputProps={{
-                          endAdornment: (
-                            <InputAdornment position="end">
-                              <ListIcon />
-                            </InputAdornment>
-                          ),
-                        }}
-                      />
-                    </Grid>
-                    <Grid item xs={6}>
-                      <CustomTextField
-                        name="barcodeInput"
-                        label="Scan Barcode"
-                        autoFocus={true}
-                        onChange={handleChange}
-                        value={barcode}
-                        InputProps={{
-                          endAdornment: (
-                            <InputAdornment position="end">
-                              <ListIcon />
-                            </InputAdornment>
-                          ),
-                        }}
-                      />
-                    </Grid>
-                    <Grid item xs={6}>
-                      <CustomTextField
-                        name="invoiceNum"
-                        label="Invoice Number"
-                        InputProps={{
-                          endAdornment: (
-                            <InputAdornment position="end">
-                              <ListIcon />
-                            </InputAdornment>
-                          ),
-                        }}
-                      />
-                    </Grid>
-                    <Grid item xs={6}>
-                      <CustomSelect name="store" label="Select Store" options={stores} />
-                    </Grid>
+                {({ values, setFieldValue }) => (
+                  <Form>
+                    <Grid container spacing={2}>
+                      <Grid item xs={6}>
+                        <CustomDate
+                          name="date"
+                          InputProps={{
+                            endAdornment: (
+                              <InputAdornment position="end">
+                                <ListIcon />
+                              </InputAdornment>
+                            ),
+                          }}
+                        />
+                      </Grid>
+                      <Grid item xs={6}>
+                        <CustomTextField
+                          name="barcodeInput"
+                          label="Scan Barcode"
+                          autoFocus={true}
+                          onChange={handleChange}
+                          value={barcode}
+                          InputProps={{
+                            endAdornment: (
+                              <InputAdornment position="end">
+                                <ListIcon />
+                              </InputAdornment>
+                            ),
+                          }}
+                        />
+                      </Grid>
+                      <Grid item xs={6}>
+                        <CustomTextField
+                          name="invoiceNum"
+                          label="Invoice Number"
+                          InputProps={{
+                            endAdornment: (
+                              <InputAdornment position="end">
+                                <ListIcon />
+                              </InputAdornment>
+                            ),
+                          }}
+                        />
+                      </Grid>
+                      <Grid item xs={6}>
+                        <CustomSelect name="store" label="Select Store" options={branch} />
+                      </Grid>
 
-                    <Grid item xs={6}>
-                      <CustomSelect name="product" label="Select Product" options={products} />
+                      <Grid item xs={6}>
+                        <CustomSelect name="product" label="Select Product" options={products} />
+                      </Grid>
+                      <Grid item xs={6}>
+                        <CustomTextField name="quantity" label="Quantity" />
+                      </Grid>
+                      <Grid item xs={6}>
+                        <CustomTextField name="pricePerUnit" label="Selling Price Per Unit" />
+                      </Grid>
+                      <Grid item xs={6}>
+                        <CustomSelect
+                          name="paymentType"
+                          label="Payment Type"
+                          options={paymentMethods}
+                        />
+                      </Grid>
+                      <Grid item xs={6}>
+                        <CustomTextField
+                          disabled
+                          value={(values.amount = values.pricePerUnit * values.quantity)}
+                          name="amount"
+                          label="Amount"
+                        />
+                      </Grid>
+
+                      <Grid item xs={6}>
+                        <CustomButton>Add Sales</CustomButton>
+                      </Grid>
                     </Grid>
-                    <Grid item xs={6}>
-                      <CustomTextField name="quantity" label="Quantity" />
-                    </Grid>
-                    <Grid item xs={6}>
-                      <CustomTextField name="pricePerUnit" label="Selling Price Per Unit" />
-                    </Grid>
-                    <Grid item xs={6}>
-                      <CustomSelect
-                        name="paymentType"
-                        label="Payment Type"
-                        options={paymentMethods}
-                      />
-                    </Grid>
-                    <Grid item xs={6}>
-                      <CustomTextField name="amount" label="Amount" />
-                    </Grid>
-                    <Grid item xs={6}>
-                      <CustomButton>Process Sale</CustomButton>
-                    </Grid>
-                  </Grid>
-                </Form>
+                  </Form>
+                )}
               </Formik>
             </Box>
           </CardContent>

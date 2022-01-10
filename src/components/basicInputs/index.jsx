@@ -79,11 +79,12 @@ export const CustomDate = ({ name, ...other }) => {
 //Custom
 
 // Custom button
-export const CustomButton = ({ children, ...other }) => {
+export const CustomButton = ({ children, ...others }) => {
   const { submitForm } = useFormikContext();
   const handleSubmit = () => {
     submitForm();
   };
+
   const defaultConfiq = {
     onClick: handleSubmit,
     variant: "contained",

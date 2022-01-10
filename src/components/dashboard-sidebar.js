@@ -75,7 +75,7 @@ const items = [
     mainTitle: "Sales",
     title: "Add Sales",
     hasdropdown: true,
-    href2: "/sales/managesales",
+    href2: "/sales/manage-sales",
     title2: "Manage Sales",
   },
   {

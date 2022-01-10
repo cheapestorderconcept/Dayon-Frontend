@@ -1,6 +1,7 @@
 // const { combineReducers } = require("redux");
 // import loginReducer from "./login-reducers";
 // import supplierReducer from "./suppliers-reducers";
+import Cookies from "js-cookie";
 import {
   LOGIN_FAIL,
   LOGIN_REQUEST,
@@ -63,6 +64,9 @@ import {
   ADD_SALES_FAIL,
   ADD_SALES_REQUEST,
   ADD_SALES_SUCCESS,
+  ADD_SALES_DATA_REQUEST,
+  ADD_SALES_DATASUCCESS,
+  ADD_SALES_DATA_FAIL,
 } from "../constants";
 
 // const rootReducers = combineReducers({
@@ -209,10 +213,33 @@ const rootReducers = (state, action) => {
 
     // Get Sales Reducer
 
-    case ADD_SALES_REQUEST:
-      return { ...state, loading: true };
-    case ADD_SALES_SUCCESS:
-      return { ...state, loading: false };
+    case ADD_SALES_DATA_REQUEST:
+      return { ...state, loading: true, notification: false };
+    case ADD_SALES_DATASUCCESS:
+      return { ...state, loading: false, notification: true, success: action.payload };
+    case ADD_SALES_DATA_FAIL:
+      return { ...state, loading: false, notification: true, success: null, error: action.payload };
+
+    case ADD_SALES_SUCCESS: {
+      const newSales = action.payload;
+      const existingProduct = state.cart.cartItems.find(
+        (sale) => sale.product_barcode === newSales.product_barcode
+      );
+      const cartItems = existingProduct
+        ? state.cart.cartItems.map((sale) =>
+            sale.product_barcode === existingProduct.product_barcode
+              ? {
+                  ...newSales,
+                  purchased_qty: Number(sale.purchased_qty) + Number(newSales.purchased_qty),
+                  total_amount: Number(sale.unit_price) * Number(newSales.purchased_qty),
+                }
+              : sale
+          )
+        : [...state.cart.cartItems, newSales];
+      Cookies.set("cartItems", JSON.stringify(cartItems));
+      return { ...state, cart: { ...state.cart, cartItems } };
+    }
+
     case ADD_SALES_FAIL:
       return { ...state, loading: false, error: action.payload };
 

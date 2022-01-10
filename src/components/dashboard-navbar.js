@@ -10,6 +10,7 @@ import {
   Tooltip,
   Typography,
   Button,
+  Badge,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloudDownloadIcon from "@mui/icons-material/CloudDownload";
@@ -34,7 +35,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export const DashboardNavbar = (props) => {
-  const { dispatch } = useContext(Store);
+  const { dispatch, state } = useContext(Store);
+  const { cart } = state;
+
   const classes = useStyles();
   const { onSidebarOpen, ...other } = props;
   // profile dropdown
@@ -90,6 +93,11 @@ export const DashboardNavbar = (props) => {
           </NextLink>
 
           <Box sx={{ flexGrow: 1 }} />
+          <Badge badgeContent={cart.cartItems.length} color="success" sx={{ mr: 2 }}>
+            <Typography color={"black"} variant="h6">
+              Sales
+            </Typography>
+          </Badge>
           <Tooltip title="Daycon">
             <>
               <IconButton sx={{ ml: 1 }} onClick={handleClick}>

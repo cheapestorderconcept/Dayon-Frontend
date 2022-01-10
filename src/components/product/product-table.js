@@ -7,10 +7,6 @@ import { Store } from "src/statesManagement/store/store";
 import NextLink from "next/link";
 
 const ProductTable = ({ products }) => {
-  const { dispatch } = useContext(Store);
-
-  const Router = useRouter();
-
   const [ready, setready] = useState(false);
 
   useEffect(() => {

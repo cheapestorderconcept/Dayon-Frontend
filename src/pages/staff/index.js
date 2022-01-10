@@ -19,6 +19,7 @@ const Staff = () => {
   const router = useRouter();
 
   const { userInfo, staff, branch } = state;
+  console.log(branch);
 
   console.log(staff);
 

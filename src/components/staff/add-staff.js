@@ -101,7 +101,7 @@ export const AddStaff = (props) => {
           <Divider />
           {notification && (
             <AlertBox
-              message={error ? error : success.response_message}
+              message={error ? error : success?.response_message}
               severity={error ? "error" : "success"}
               open={openAlert}
               setopen={setopenAlert}

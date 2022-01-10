@@ -29,7 +29,9 @@ const initialState = {
   staff: [],
   purchase: [],
   branch: [],
-  sales: [],
+  cart: {
+    cartItems: Cookies.get("cartItems") ? JSON.parse(Cookies.get("cartItems")) : [],
+  },
 };
 
 export const StoreProvider = (props) => {

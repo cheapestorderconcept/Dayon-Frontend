@@ -60,7 +60,7 @@ export const getProductByBarcode = async (dispatch, barcode) => {
     dispatch({
       type: GET_PRODUCT_BY_BARCODE_REQUEST,
     });
-    alert("here");
+
     const { data } = await makeNetworkCall({ method: "GET", path: `/view-product/${barcode}` });
     console.log(data.data);
     dispatch({
@@ -84,7 +84,7 @@ export const addProduct = async (dispatch, product, Router) => {
 
     const { data } = await makeNetworkCall({
       method: "POST",
-      path: "/add-products",
+      path: "/add-product",
       requestBody: product,
     });
     dispatch({

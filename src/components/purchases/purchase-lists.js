@@ -40,7 +40,13 @@ const PurchaseList = ({ purchase }) => {
   ];
 
   const myPurchase = purchase.map((purch) => Object.values(purch));
+  // let newPurch;
+  // const myData = myPurchase.map((purch) => {
+  //   newPurch = purch.filter((indpurch) => typeof indpurch === "object");
+  // });
+
   const data = [...myPurchase];
+  // console.log(myPurchase);
 
   const options = {
     filter: true,
