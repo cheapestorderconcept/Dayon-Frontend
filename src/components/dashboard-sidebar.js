@@ -30,7 +30,7 @@ const items = [
     mainTitle: "Dashboard",
   },
   {
-    href: "/store",
+    href: "/storeoutlet",
     icon: <ExtensionIcon fontSize="small" />,
     title: "Store Outlets",
     mainTitle: "Store Outlets",
@@ -43,7 +43,7 @@ const items = [
     title: "Add Products",
     hasdropdown: true,
     title2: "Product Brand",
-    href2: "/brand",
+    href2: "products/brand",
     title3: "Manage Product Price",
     href3: "#",
   },
@@ -54,13 +54,13 @@ const items = [
     mainTitle: "Payment Type",
   },
   {
-    href: "/addpurchase",
+    href: "/purchase",
     icon: <BarChartIcon fontSize="small" />,
     mainTitle: "Purchases",
     title: "Add Purchases",
     hasdropdown: true,
     title2: "Manage Purchases",
-    href2: "/purchaselists",
+    href2: "purchase/purchaselists",
     title3: "Update Stock",
     href3: "#",
     title4: "Add Supplier Ledger",
@@ -70,12 +70,12 @@ const items = [
   },
 
   {
-    href: "/addsales",
+    href: "/sales",
     icon: <TrendingDownIcon fontSize="small" />,
     mainTitle: "Sales",
     title: "Add Sales",
     hasdropdown: true,
-    href2: "/managesales",
+    href2: "/sales/managesales",
     title2: "Manage Sales",
   },
   {

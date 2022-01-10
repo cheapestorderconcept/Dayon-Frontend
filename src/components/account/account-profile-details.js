@@ -14,10 +14,14 @@ import { CustomButton } from "../basicInputs";
 import { Form, Formik } from "formik";
 
 export const AccountProfileDetails = (props) => {
+  const { profile } = props;
+  console.log(profile.last_name);
   const INITIAL_FORM_VALUES = {
-    name: "Ola",
-    username: "Dayon Consult",
-    password: "1234",
+    firstName: profile.first_name,
+    lastName: profile.last_name,
+    email: profile.email,
+    username: profile.username,
+    password: "",
   };
 
   return (
@@ -29,13 +33,19 @@ export const AccountProfileDetails = (props) => {
           <CardContent>
             <Grid container spacing={3}>
               <Grid item md={6} xs={12}>
-                <CustomTextField name="name" label="Name" />
+                <CustomTextField name="firstName" label="First Name" />
+              </Grid>
+              <Grid item md={6} xs={12}>
+                <CustomTextField name="lastName" label="Last Name" />
+              </Grid>
+              <Grid item md={6} xs={12}>
+                <CustomTextField name="email" label="Email" />
               </Grid>
               <Grid item md={6} xs={12}>
                 <CustomTextField name="username" label="Username" />
               </Grid>
               <Grid item md={6} xs={12}>
-                <CustomTextField name="password" label="Password" type="password" />
+                <CustomTextField name="password" label="Password" />
               </Grid>
             </Grid>
           </CardContent>

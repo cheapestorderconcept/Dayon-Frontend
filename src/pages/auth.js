@@ -6,6 +6,8 @@ const DynamicComponentWithNoSSR = dynamic(() => import("src/components/auth/Logi
 });
 
 const Auth = () => {
+  // const [stores, setstores] = useState([]);
+
   return (
     <>
       <DynamicComponentWithNoSSR />

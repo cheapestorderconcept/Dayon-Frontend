@@ -1,31 +1,52 @@
 import MUIDataTable from "mui-datatables";
 import { useEffect, useState } from "react";
 
-const columns = [
-  "DATE",
-  "INVOICE #",
-  "STORE",
-  "SUPPLIER",
-  "VAT",
-  "DISCOUNT",
-  "	PURCHASE VALUE",
-  "ITEMS",
-];
+// const columns = [
+//   "DATE",
+//   "INVOICE #",
+//   "STORE",
+//   "SUPPLIER",
+//   "VAT",
+//   "DISCOUNT",
+//   "	PURCHASE VALUE",
+//   "ITEMS",
+// ];
 
-const data = [
-  ["2021-12-28", "	000001", "	Headquarters Parakin", "Amodu Olaoye", "---", "20%", "N500", "3"],
-];
+// const data = [
+//   ["2021-12-28", "	000001", "	Headquarters Parakin", "Amodu Olaoye", "---", "20%", "N500", "3"],
+// ];
 
-const options = {
-  filter: true,
-  sort: true,
-};
+// const options = {
+//   filter: true,
+//   sort: true,
+// };
 
-const PurchaseList = () => {
+const PurchaseList = ({ purchase }) => {
   const [ready, setready] = useState(false);
   useEffect(() => {
     setready(true);
   }, []);
+
+  const columns = [
+    {
+      name: "ID",
+    },
+    {
+      name: "DATE",
+    },
+    // {
+    //   name: "DATE",
+    // },
+  ];
+
+  const myPurchase = purchase.map((purch) => Object.values(purch));
+  const data = [...myPurchase];
+
+  const options = {
+    filter: true,
+    sort: true,
+    selectableRowsHeader: false,
+  };
 
   return (
     <>

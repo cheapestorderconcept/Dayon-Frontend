@@ -10,12 +10,23 @@ import { TotalProfit } from "../components/dashboard/total-profit";
 import { TrafficByDevice } from "../components/dashboard/traffic-by-device";
 import { DashboardLayout } from "../components/dashboard-layout";
 import dynamic from "next/dynamic";
+import { useRouter } from "next/router";
+import { useContext, useEffect } from "react";
+import { Store } from "src/statesManagement/store/store";
 
 const DynamicComponentWithNoSSR = dynamic(() => import("src/components/navbar-branch-indicator"), {
   ssr: false,
 });
 
 const Dashboard = () => {
+  const router = useRouter();
+  const { state } = useContext(Store);
+  const { userInfo } = state;
+  useEffect(() => {
+    !userInfo && router.push("/auth");
+  }, []);
+
+  // !userInfo && router.push("/auth");
   return (
     <>
       <Head>

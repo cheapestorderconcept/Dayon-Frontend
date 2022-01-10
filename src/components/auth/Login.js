@@ -1,4 +1,4 @@
-import { React } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -22,7 +22,13 @@ import { CustomSelect } from "../basicInputs";
 import { Form, Formik } from "formik";
 import { CustomButton } from "../basicInputs";
 import * as yup from "yup";
-import { stores } from "src/__mocks__/stores";
+import { makeNetworkCall } from "src/network";
+import AlertBox from "../alert";
+import { useRouter } from "next/router";
+import Loading from "../loading/Loading";
+import { Store } from "src/statesManagement/store/store";
+import { loginAction } from "../../statesManagement/store/actions/login-action";
+import { getStores } from "src/statesManagement/store/actions/store-outlet-action";
 
 // copyright
 function Copyright(props) {
@@ -72,21 +78,43 @@ const useStyles = makeStyles((theme) => ({
 
 // main render funtion
 export default function Login() {
+  const [openAlert, setopenAlert] = useState(true);
+  const router = useRouter();
+  const { dispatch, state } = useContext(Store);
+  const { userInfo, loading, error, branch } = state;
+
+  if (userInfo) {
+    router.push("/");
+  }
+
+  useEffect(async () => {
+    getStores({ dispatch: dispatch });
+  }, []);
+
   const classes = useStyles();
 
   //   formik initial values
   const INITIAL_FORM_vALUES = {
-    username: "",
+    staff_username: "",
     password: "",
-    branch: "",
+    branch_id: "",
   };
 
   // yup validations
   const VALIDATIONS = yup.object().shape({
-    username: yup.string().required("please enter your username"),
+    staff_username: yup.string().required("please enter your username"),
     password: yup.string().required("Please provide password"),
-    branch: yup.string().required("Please provide password"),
+    branch_id: yup.string().required("Please provide a branch"),
   });
+
+  const handleSubmit = (values) => {
+    const loginDetails = {
+      staff_username: values.staff_username,
+      password: values.password,
+      branch_id: values.branch_id,
+    };
+    loginAction(loginDetails, dispatch);
+  };
   return (
     <Grid container component="main" sx={{ height: "100vh" }}>
       <Grid
@@ -140,6 +168,9 @@ export default function Login() {
             alignItems: "center",
           }}
         >
+          {error && (
+            <AlertBox severity="error" message={error} open={openAlert} setopen={setopenAlert} />
+          )}
           <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
             <PersonIcon />
           </Avatar>
@@ -148,11 +179,11 @@ export default function Login() {
           </Typography>
           <Formik
             initialValues={{ ...INITIAL_FORM_vALUES }}
-            onSubmit={(values) => console.log(values)}
+            onSubmit={handleSubmit}
             validationSchema={VALIDATIONS}
           >
             <Form>
-              <CustomTextField className={classes.form} name="username" label="Username" />
+              <CustomTextField className={classes.form} name="staff_username" label="Username" />
 
               <CustomTextField
                 className={classes.form}
@@ -163,8 +194,8 @@ export default function Login() {
 
               <CustomSelect
                 className={classes.form}
-                name="branch"
-                options={stores}
+                name="branch_id"
+                options={branch}
                 label="Select Branch"
               />
 
@@ -173,7 +204,7 @@ export default function Login() {
                 label="Remember me"
               />
               <CustomButton type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
-                Sign In
+                {loading ? <Loading /> : "Submit"}
               </CustomButton>
               <Grid container>
                 <Grid item xs>

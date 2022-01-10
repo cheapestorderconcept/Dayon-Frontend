@@ -1,6 +1,6 @@
 export const products = [
-  { id: 0, name: "book" },
-  { id: 1, name: "bag" },
-  { id: 2, name: "shoes" },
-  { id: 3, name: "laptop" },
+  { _id: 0, name: "book" },
+  { _id: 1, name: "bag" },
+  { _id: 2, name: "shoes" },
+  { _id: 3, name: "laptop" },
 ];

@@ -22,7 +22,9 @@ import { suppliers } from "src/__mocks__/supplier";
 import { products } from "src/__mocks__/products";
 import { CustomDate } from "../basicInputs";
 import { paymentMethods } from "src/__mocks__/paymentMethods";
-import { useMemo, useRef, useState } from "react";
+import { useContext, useMemo, useRef, useState } from "react";
+import { getProductByBarcode } from "src/statesManagement/store/actions/product-action";
+import { Store } from "src/statesManagement/store/store";
 
 const INITIAL_FORM_VALUES = {
   date: "",
@@ -67,17 +69,28 @@ const FORM_VALIDATIONS = yup.object().shape({
 // console.log(barcodeInput)
 
 export const AddSales = (props) => {
-  const [barcode, setbarcode] = useState("");
+  const { dispatch } = useContext(Store);
+  const [barcode, setbarcode] = useState(null);
+
+  const handleSubmit = (values) => {
+    const sales = {
+      created_at: values.date,
+      invoice_number: values.invoiceNum,
+      supplier_phone: values.store,
+      product_name: values.product,
+      purchased_qty: values.quantity,
+      unit_price: values.pricePerUnit,
+      payment_type: values.paymentType,
+      total_amount: values.amount,
+      product_barcode: values.barcodeInput,
+    };
+    addSupplier(dispatch, supplier, Router);
+  };
 
   const handleChange = (e) => {
     const { value } = e.target;
     setbarcode(value);
-    console.log(barcode);
-    barcode != "" && barcode.length == 10 && getProduct();
-  };
-  const getProduct = () => {
-    alert("done");
-    return;
+    barcode && getProductByBarcode(dispatch, barcode);
   };
 
   // getProduct();
@@ -115,7 +128,7 @@ export const AddSales = (props) => {
             <Box sx={{ maxWidth: 800 }}>
               <Formik
                 initialValues={INITIAL_FORM_VALUES}
-                onSubmit={(values) => console.log(values)}
+                onSubmit={handleSubmit}
                 validationSchema={FORM_VALIDATIONS}
               >
                 <Form>

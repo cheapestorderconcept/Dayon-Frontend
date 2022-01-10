@@ -9,13 +9,17 @@ import {
   Toolbar,
   Tooltip,
   Typography,
+  Button,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloudDownloadIcon from "@mui/icons-material/CloudDownload";
 import NextLink from "next/link";
 import { Users as UsersIcon } from "../icons/users";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { makeStyles } from "@mui/styles";
+import { useRouter } from "next/router";
+import { logoutAction } from "src/statesManagement/store/actions/logout-action";
+import { Store } from "src/statesManagement/store/store";
 
 const DashboardNavbarRoot = styled(AppBar)(({ theme }) => ({
   backgroundColor: theme.palette.background.paper,
@@ -30,6 +34,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export const DashboardNavbar = (props) => {
+  const { dispatch } = useContext(Store);
   const classes = useStyles();
   const { onSidebarOpen, ...other } = props;
   // profile dropdown
@@ -41,7 +46,10 @@ export const DashboardNavbar = (props) => {
   const handleClose = () => {
     setAnchorEl(null);
   };
-
+  const router = useRouter();
+  const Logout = () => {
+    logoutAction(dispatch, router);
+  };
   return (
     <>
       <DashboardNavbarRoot
@@ -109,9 +117,9 @@ export const DashboardNavbar = (props) => {
                 </MenuItem>
                 <MenuItem onClick={handleClose}>
                   {" "}
-                  <NextLink href="/auth">
+                  <Button onClick={Logout}>
                     <Box sx={{ flexGrow: 1 }}> Logout</Box>
-                  </NextLink>
+                  </Button>
                 </MenuItem>
               </Menu>
             </>
