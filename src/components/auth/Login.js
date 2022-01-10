@@ -87,7 +87,7 @@ export default function Login() {
     router.push("/");
   }
 
-  useEffect(async () => {
+  useEffect(() => {
     getStores({ dispatch: dispatch });
   }, []);
 

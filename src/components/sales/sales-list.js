@@ -17,6 +17,7 @@ const SalesList = ({ cart }) => {
         total_amount: data.total_amount,
         payment_type: data.payment_type,
         created_at: data.created_at,
+        branch: data.branch,
       };
       console.log(salesData);
       addSalesData(dispatch, salesData);
