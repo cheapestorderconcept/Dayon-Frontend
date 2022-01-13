@@ -7,11 +7,16 @@ import dynamic from "next/dynamic";
 import { useContext } from "react";
 import { Store } from "src/statesManagement/store/store";
 import { useRouter } from "next/router";
-import { getProduct } from "src/statesManagement/store/actions/product-action";
+import {
+  getOutOfStock,
+  getProduct,
+  getProductPrice,
+} from "src/statesManagement/store/actions/product-action";
 import { useEffect } from "react";
 import { getSuppliers } from "src/statesManagement/store/actions/supplier-action";
 import { getBrands } from "src/statesManagement/store/actions/brand-action";
 import Loading from "src/components/loading/Loading";
+import { getStores } from "src/statesManagement/store/actions/store-outlet-action";
 
 const DynamicComponentWithNoSSR = dynamic(() => import("src/components/navbar-branch-indicator"), {
   ssr: false,
@@ -22,13 +27,12 @@ const Products = () => {
   const router = useRouter();
 
   const { userInfo, products, suppliers, brands, loading } = state;
-  console.log(products);
 
   useEffect(() => {
     !userInfo && router.push("/auth");
     getProduct(dispatch);
-    getSuppliers(dispatch);
-    getBrands(dispatch);
+    // getProductPrice(dispatch);
+    // getOutOfStock(dispatch);
   }, []);
   return (
     <>

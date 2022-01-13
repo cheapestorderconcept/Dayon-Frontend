@@ -30,7 +30,7 @@ const Dashboard = () => {
   return (
     <>
       <Head>
-        <title>Dashboard | Material Kit</title>
+        <title>Dashboard | 18A Nigeria Limited</title>
       </Head>
       <Box
         component="main"

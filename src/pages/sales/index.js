@@ -7,16 +7,20 @@ import { useContext, useEffect } from "react";
 import { Store } from "src/statesManagement/store/store";
 import { getProduct } from "src/statesManagement/store/actions/product-action";
 import { getStores } from "src/statesManagement/store/actions/store-outlet-action";
+import { useRouter } from "next/router";
+import { getTotalSales } from "src/statesManagement/store/actions/sales-action";
 
 const DynamicComponentWithNoSSR = dynamic(() => import("src/components/navbar-branch-indicator"), {
   ssr: false,
 });
 
 const Sales = () => {
-  const { dispatch } = useContext(Store);
+  const { dispatch, state } = useContext(Store);
+  const router = useRouter();
+  const { userInfo } = state;
   useEffect(() => {
-    getProduct(dispatch);
-    getStores({ dispatch: dispatch });
+    !userInfo && router.push("/auth");
+    getTotalSales(dispatch);
   }, []);
   return (
     <>

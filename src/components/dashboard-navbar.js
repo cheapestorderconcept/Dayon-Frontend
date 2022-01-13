@@ -93,11 +93,13 @@ export const DashboardNavbar = (props) => {
           </NextLink>
 
           <Box sx={{ flexGrow: 1 }} />
-          <Badge badgeContent={cart.cartItems.length} color="success" sx={{ mr: 2 }}>
-            <Typography color={"black"} variant="h6">
-              Sales
-            </Typography>
-          </Badge>
+          <NextLink href="/sales/process-sales">
+            <Badge badgeContent={cart.cartItems.length} color="success" sx={{ mr: 2 }}>
+              <Typography color={"black"} variant="h6">
+                Sales
+              </Typography>
+            </Badge>
+          </NextLink>
           <Tooltip title="Daycon">
             <>
               <IconButton sx={{ ml: 1 }} onClick={handleClick}>

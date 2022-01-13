@@ -67,7 +67,6 @@ const FORM_VALIDATIONS = yup.object().shape({
 export const AddSales = (props) => {
   const { dispatch, state } = useContext(Store);
   const { products, branch } = state;
-
   const [barcode, setbarcode] = useState(null);
 
   const handleSubmit = (values) => {

@@ -23,7 +23,7 @@ export const getSuppliers = async (dispatch) => {
     console.log(data.data);
     dispatch({
       type: GET_SUPPLIERS_SUCCESS,
-      payload: data.data,
+      payload: data.data.supplier,
     });
   } catch (error) {
     dispatch({

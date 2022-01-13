@@ -24,6 +24,7 @@ const Supplier = () => {
     getSuppliers(dispatch);
   }, []);
 
+  console.log(suppliers);
   return (
     <>
       <Head>

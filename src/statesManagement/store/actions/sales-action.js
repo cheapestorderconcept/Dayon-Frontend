@@ -5,6 +5,9 @@ import {
   ADD_SALES_DATA_REQUEST,
   ADD_SALES_FAIL,
   ADD_SALES_SUCCESS,
+  GET_TOTAL_SALES_FAIL,
+  GET_TOTAL_SALES_REQUEST,
+  GET_TOTAL_SALES_SUCCESS,
 } from "../constants";
 
 export const addSales = async ({ dispatch, sales }) => {
@@ -21,20 +24,20 @@ export const addSales = async ({ dispatch, sales }) => {
   }
 };
 
-export const getPurchase = async (dispatch) => {
+export const getTotalSales = async (dispatch) => {
   try {
     dispatch({
-      type: GET_PURCHASE_REQUEST,
+      type: GET_TOTAL_SALES_REQUEST,
     });
-    const { data } = await makeNetworkCall({ method: "GET", path: "/view-purchase" });
+    const { data } = await makeNetworkCall({ method: "GET", path: "/view-sales" });
     console.log(data.data);
     dispatch({
-      type: GET_PURCHASE_SUCCESS,
+      type: GET_TOTAL_SALES_SUCCESS,
       payload: data.data,
     });
   } catch (error) {
     dispatch({
-      type: GET_PURCHASE_FAIL,
+      type: GET_TOTAL_SALES_FAIL,
       payload: error?.response?.data?.response_message,
     });
   }

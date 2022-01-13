@@ -47,12 +47,6 @@ export const ProductListToolbar = (props) => {
   const { dispatch, state } = useContext(Store);
   const { loading, error } = state;
 
-  // let myProduct = {};
-  // if (id != null) {
-  //   const product = products.filter((pro) => pro._id == id);
-  //   myProduct = { ...product[0] };
-  // }
-
   const [openAlert, setopenAlert] = useState(true);
   error && console.log(error);
   const Router = useRouter();

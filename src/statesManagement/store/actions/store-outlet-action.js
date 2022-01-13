@@ -1,3 +1,4 @@
+import Cookies from "js-cookie";
 import { makeNetworkCall } from "src/network";
 import {
   ADD_STORE_FAIL,
@@ -14,11 +15,12 @@ export const getStores = async ({ dispatch }) => {
       type: GET_STORE_REQUEST,
     });
     const { data } = await makeNetworkCall({ method: "GET", path: "/view-branch" });
-    console.log(data.data);
+
     dispatch({
       type: GET_STORE_SUCCESS,
       payload: data.data,
     });
+    // localStorage.setItem("branch", JSON.stringify(data.data));
   } catch (error) {
     dispatch({
       type: GET_STORE_FAIL,

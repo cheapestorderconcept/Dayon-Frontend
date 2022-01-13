@@ -49,3 +49,27 @@ export const getStaff = async (dispatch) => {
     });
   }
 };
+
+export const deleteStaff = async (dispatch, staffId, Router) => {
+  try {
+    dispatch({
+      type: DELETE_PRODUCT_REQUEST,
+    });
+    const { data } = await makeNetworkCall({
+      method: "DELETE",
+      path: `/delete-staff/${staffId}`,
+    });
+    dispatch({
+      type: DELETE_PRODUCT_SUCCESS,
+      payload: data.data._id,
+    });
+    console.log(data.data);
+    Router.reload(window.location.pathname);
+  } catch (error) {
+    console.log(error);
+    dispatch({
+      type: DELETE_PRODUCT_FAIL,
+      payload: error?.response?.data?.response_message,
+    });
+  }
+};

@@ -15,6 +15,12 @@ import {
   GET_PRODUCT_BY_BARCODE_REQUEST,
   GET_PRODUCT_BY_BARCODE_SUCCESS,
   GET_PRODUCT_BY_BARCODE_FAIL,
+  GET_PRODUCT_PRICE_REQUEST,
+  GET_PRODUCT_PRICE_SUCCESS,
+  GET_PRODUCT_PRICE_FAIL,
+  GET_OUT_OF_STOCK_REQUEST,
+  GET_OUT_OF_STOCK_SUCCESS,
+  GET_OUT_OF_STOCK_FAIL,
 } from "../constants/index";
 
 export const getProductWithBarcode = async (dispatch) => {
@@ -67,7 +73,6 @@ export const getProductByBarcode = async (dispatch, barcode) => {
       type: GET_PRODUCT_BY_BARCODE_SUCCESS,
       payload: data.data,
     });
-    console.log(data);
   } catch (error) {
     dispatch({
       type: GET_PRODUCT_BY_BARCODE_FAIL,
@@ -95,6 +100,44 @@ export const addProduct = async (dispatch, product, Router) => {
   } catch (error) {
     dispatch({
       type: ADD_PRODUCT_FAIL,
+      payload: error?.response?.data?.response_message || error.message,
+    });
+  }
+};
+
+export const getProductPrice = async (dispatch) => {
+  try {
+    dispatch({
+      type: GET_PRODUCT_PRICE_REQUEST,
+    });
+    const { data } = await makeNetworkCall({ method: "GET", path: "/view-product-price" });
+    console.log(data.data);
+    dispatch({
+      type: GET_PRODUCT_PRICE_SUCCESS,
+      payload: data.data,
+    });
+  } catch (error) {
+    dispatch({
+      type: GET_PRODUCT_PRICE_FAIL,
+      payload: error?.response?.data?.response_message || error.message,
+    });
+  }
+};
+
+export const getOutOfStock = async (dispatch) => {
+  try {
+    dispatch({
+      type: GET_OUT_OF_STOCK_REQUEST,
+    });
+    const { data } = await makeNetworkCall({ method: "GET", path: "/view-out-of-stock" });
+    console.log(data.data);
+    dispatch({
+      type: GET_OUT_OF_STOCK_SUCCESS,
+      payload: data.data,
+    });
+  } catch (error) {
+    dispatch({
+      type: GET_OUT_OF_STOCK_FAIL,
       payload: error?.response?.data?.response_message || error.message,
     });
   }

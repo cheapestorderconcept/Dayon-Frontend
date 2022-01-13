@@ -7,16 +7,22 @@ import { Upload as UploadIcon } from "src/icons/upload";
 import PurchaseList from "src/components/purchases/purchase-lists";
 import SalesList from "src/components/sales/sales-list";
 import dynamic from "next/dynamic";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { Store } from "src/statesManagement/store/store";
+import { getTotalSales } from "src/statesManagement/store/actions/sales-action";
 
 const DynamicComponentWithNoSSR = dynamic(() => import("src/components/navbar-branch-indicator"), {
   ssr: false,
 });
 
 const SalesListPage = () => {
-  const { state } = useContext(Store);
-  const { cart } = state;
+  const { dispatch, state } = useContext(Store);
+  const { totalSales, cart } = state;
+  console.log(totalSales);
+  useEffect(() => {
+    getTotalSales(dispatch);
+  }, []);
+
   return (
     <>
       <Head>

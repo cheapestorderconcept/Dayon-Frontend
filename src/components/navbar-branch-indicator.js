@@ -1,11 +1,13 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect } from "react";
 import HouseIcon from "@mui/icons-material/House";
 import SaveIcon from "@mui/icons-material/Save";
 import { makeStyles } from "@mui/styles";
 import { Typography } from "@mui/material";
-import { stores } from "../__mocks__/stores";
 import { CustomSelect } from "./basicInputs";
 import { Formik, Form } from "formik";
+import { Store } from "src/statesManagement/store/store";
+import { getStores } from "src/statesManagement/store/actions/store-outlet-action";
+import { stores } from "src/__mocks__/stores";
 
 const INIITAL_VALUE = {
   branchName: "",
@@ -39,28 +41,21 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const BranchIndicator = () => {
-  const [branch, setbranch] = useState("");
-
-  const handleChange = (e) => {
-    const { value } = e.target;
-    setbranch(value);
-    console.log(branch);
-  };
   const classes = useStyles();
+  const { state } = useContext(Store);
+  const { branch } = state;
   return (
     <div className={classes.address_bar_wrapper}>
       <div className={classes.left_items}>
         <span className={classes.left_items_icon}>
           <HouseIcon />
         </span>
-        <Typography>
-          You are currently logged into: Headquarters Parakin: Parakin Junction, Ile-Ife
-        </Typography>
+        <Typography>You are currently logged into: {branch[0].branch_name || ""}</Typography>
       </div>
       <div className={classes.right_items}>
         <Formik initialValues={{ ...INIITAL_VALUE }}>
           <Form>
-            <CustomSelect label="Select branch" name="branchName" options={stores} />
+            <CustomSelect label="Select branch" name="branchName" options={branch} />
           </Form>
         </Formik>
 

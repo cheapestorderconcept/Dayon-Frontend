@@ -22,9 +22,6 @@ const AddPurchasePage = () => {
   console.log(purchase);
   useEffect(() => {
     !userInfo && router.push("/auth");
-    getSuppliers(dispatch);
-    getStores({ dispatch: dispatch });
-    getProduct(dispatch);
   }, []);
   return (
     <>

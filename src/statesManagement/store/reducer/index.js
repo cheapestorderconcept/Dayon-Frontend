@@ -67,6 +67,9 @@ import {
   ADD_SALES_DATA_REQUEST,
   ADD_SALES_DATASUCCESS,
   ADD_SALES_DATA_FAIL,
+  GET_TOTAL_SALES_REQUEST,
+  GET_TOTAL_SALES_SUCCESS,
+  GET_TOTAL_SALES_FAIL,
 } from "../constants";
 
 // const rootReducers = combineReducers({
@@ -90,8 +93,15 @@ const rootReducers = (state, action) => {
 
     case GET_SUPPLIERS_REQUEST:
       return { ...state, loading: true };
-    case GET_SUPPLIERS_SUCCESS:
-      return { ...state, loading: false, suppliers: action?.payload?.supplier };
+    case GET_SUPPLIERS_SUCCESS: {
+      if (Cookies.get("suppliers")) {
+        Cookies.remove("suppliers");
+        Cookies.set("suppliers", JSON.stringify(action.payload));
+      } else {
+        Cookies.set("suppliers", JSON.stringify(action.payload));
+      }
+      return { ...state, loading: false, suppliers: action?.payload };
+    }
     case GET_SUPPLIERS_FAIL:
       return { ...state, loading: false, error: action.payload };
     case ADD_SUPPLIERS_REQUEST:
@@ -116,8 +126,15 @@ const rootReducers = (state, action) => {
     // Brand Reducers
     case GET_BRANDS_REQUEST:
       return { ...state, loading: true };
-    case GET_BRAND_SUCCESS:
+    case GET_BRAND_SUCCESS: {
+      if (Cookies.get("brands")) {
+        Cookies.remove("brands");
+        Cookies.set("brands", JSON.stringify(action.payload));
+      } else {
+        Cookies.set("brands", JSON.stringify(action.payload));
+      }
       return { ...state, loading: false, brands: action?.payload };
+    }
     case GET_BRAND_FAIL:
       return { ...state, loading: false, error: action.payload };
 
@@ -142,8 +159,16 @@ const rootReducers = (state, action) => {
     // Prodducts Reducers
     case GET_PRODUCT_REQUEST:
       return { ...state, loading: true };
-    case GET_PRODUCT_SUCCESS:
+    case GET_PRODUCT_SUCCESS: {
+      if (Cookies.get("products")) {
+        Cookies.remove("products");
+        Cookies.set("products", JSON.stringify(action.payload));
+      } else {
+        Cookies.set("products", JSON.stringify(action.payload));
+      }
+
       return { ...state, loading: false, products: action.payload };
+    }
     case GET_PRODUCT_FAIL:
       return { ...state, loading: false, error: action.payload };
     case ADD_PRODUCT_REQUEST:
@@ -182,8 +207,15 @@ const rootReducers = (state, action) => {
 
     case GET_STAFF_REQUEST:
       return { ...state, loading: true };
-    case GET_STAFF_SUCCESS:
+    case GET_STAFF_SUCCESS: {
+      if (Cookies.get("staff")) {
+        Cookies.remove("staff");
+        Cookies.set("staff", JSON.stringify(action.payload));
+      } else {
+        Cookies.set("staff", JSON.stringify(action.payload));
+      }
       return { ...state, loading: false, staff: action?.payload };
+    }
     case GET_STAFF_FAIL:
       return { ...state, loading: false, error: action.payload };
 
@@ -191,8 +223,15 @@ const rootReducers = (state, action) => {
 
     case GET_PURCHASE_REQUEST:
       return { ...state, loading: true };
-    case GET_PURCHASE_SUCCESS:
+    case GET_PURCHASE_SUCCESS: {
+      if (Cookies.get("purchases")) {
+        Cookies.remove("purchases");
+        Cookies.set("purchases", JSON.stringify(action.payload));
+      } else {
+        Cookies.set("suppliers", JSON.stringify(action.payload));
+      }
       return { ...state, loading: false, purchase: action.payload };
+    }
     case GET_PURCHASE_FAIL:
       return { ...state, loading: false, error: action.payload };
 
@@ -206,8 +245,15 @@ const rootReducers = (state, action) => {
     // Store/Branch Reducer
     case GET_STORE_REQUEST:
       return { ...state, loading: true };
-    case GET_STORE_SUCCESS:
+    case GET_STORE_SUCCESS: {
+      if (Cookies.get("branch")) {
+        Cookies.remove("branch");
+        Cookies.set("branch", JSON.stringify(action.payload));
+      } else {
+        Cookies.set("branch", JSON.stringify(action.payload));
+      }
       return { ...state, loading: false, branch: action?.payload };
+    }
     case GET_STORE_FAIL:
       return { ...state, loading: false, error: action.payload };
 
@@ -215,8 +261,11 @@ const rootReducers = (state, action) => {
 
     case ADD_SALES_DATA_REQUEST:
       return { ...state, loading: true, notification: false };
-    case ADD_SALES_DATASUCCESS:
+    case ADD_SALES_DATASUCCESS: {
+      Cookies.remove("cartItems");
+
       return { ...state, loading: false, notification: true, success: action.payload };
+    }
     case ADD_SALES_DATA_FAIL:
       return { ...state, loading: false, notification: true, success: null, error: action.payload };
 
@@ -241,6 +290,13 @@ const rootReducers = (state, action) => {
     }
 
     case ADD_SALES_FAIL:
+      return { ...state, loading: false, error: action.payload };
+
+    case GET_TOTAL_SALES_REQUEST:
+      return { ...state, loading: true };
+    case GET_TOTAL_SALES_SUCCESS:
+      return { ...state, loading: false, totalSales: action?.payload };
+    case GET_TOTAL_SALES_FAIL:
       return { ...state, loading: false, error: action.payload };
 
     default:
