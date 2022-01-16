@@ -284,11 +284,9 @@ export const AddSales = (props) => {
                       </Grid>
                       <FieldArray name="items">
                         {() =>
-                          values.items.map((item, i) => {
-                            return (
-                              <RenderForm key={i} items={item} i={i} handleChange={handleChange} />
-                            );
-                          })
+                          values.items.map((item, i) => (
+                            <RenderForm key={i} items={item} i={i} handleChange={handleChange} />
+                          ))
                         }
                       </FieldArray>
                       <Grid item xs={6}>
