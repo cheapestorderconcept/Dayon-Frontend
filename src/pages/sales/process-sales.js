@@ -20,7 +20,7 @@ const SalesListPage = () => {
   const { totalSales, cart } = state;
   console.log(totalSales);
   useEffect(() => {
-    getTotalSales(dispatch);
+    // getTotalSales(dispatch);
   }, []);
 
   return (
