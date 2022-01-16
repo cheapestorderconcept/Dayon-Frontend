@@ -10,6 +10,7 @@ import {
   Grid,
   TextField,
   MenuItem,
+  Container,
 } from "@mui/material";
 import { Download as DownloadIcon } from "../../icons/download";
 import { Search as SearchIcon } from "../../icons/search";
@@ -21,7 +22,7 @@ import { Formik, Form, Field, FieldArray, ErrorMessage, useFormikContext } from 
 import { CustomSelect, CustomButton } from "../basicInputs";
 import { CustomDate } from "../basicInputs";
 import { paymentMethods } from "src/__mocks__/paymentMethods";
-import { useContext, useEffect, useMemo, useRef, useState } from "react";
+import React, { useContext, useEffect, useMemo, useRef, useState } from "react";
 import { getProductByBarcode } from "src/statesManagement/store/actions/product-action";
 import { Store } from "src/statesManagement/store/store";
 import { addSupplier } from "src/statesManagement/store/actions/supplier-action";
@@ -109,7 +110,7 @@ export const AddSales = (props) => {
     setbarcode(items.barcode);
 
     return (
-      <>
+      <React.Fragment key={i}>
         <Grid
           sx={{
             mb: 2,
@@ -216,7 +217,7 @@ export const AddSales = (props) => {
             }
           />
         </Grid>
-      </>
+      </React.Fragment>
     );
   };
 
@@ -284,8 +285,13 @@ export const AddSales = (props) => {
                       </Grid>
                       <FieldArray name="items">
                         {() =>
-                          values.items.map((item, i) => (
-                            <RenderForm key={i} items={item} i={i} handleChange={handleChange} />
+                          values.items.map((item, index) => (
+                            <RenderForm
+                              key={index}
+                              items={item}
+                              i={index}
+                              handleChange={handleChange}
+                            />
                           ))
                         }
                       </FieldArray>
