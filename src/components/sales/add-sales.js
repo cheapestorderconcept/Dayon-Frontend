@@ -25,41 +25,34 @@ import { useContext, useEffect, useMemo, useRef, useState } from "react";
 import { getProductByBarcode } from "src/statesManagement/store/actions/product-action";
 import { Store } from "src/statesManagement/store/store";
 import { addSupplier } from "src/statesManagement/store/actions/supplier-action";
-import { addSales } from "src/statesManagement/store/actions/sales-action";
+import { addSales, addSalesData } from "src/statesManagement/store/actions/sales-action";
+import AlertBox from "../../components/alert";
 
 // console.log(barcodeInput)
 
 export const AddSales = (props) => {
   const { dispatch, state } = useContext(Store);
-  const { products, branch, productByBarcode } = state;
+  const { branch, productByBarcode } = state;
 
   const [barcode, setbarcode] = useState("");
 
   const INITIAL_FORM_VALUES = {
-    date: "",
+    created_at: "",
     branch: "",
-    invoiceNum: "",
+    invoice_number: "",
     total_amount: 0,
+    payment_type: "",
     items: [
       { barcode: "", product: "", product_id: "", selling_price: "", amount: "", quantity: "" },
     ],
-    // date: "",
-    // invoiceNum: "",
-    // store: "",
-    // product: "",
-    // quantity: "",
-    // pricePerUnit: "",
-    // paymentType: "",
-    // amount: "",
-    // barcodeInput: "",
   };
 
   const FORM_VALIDATIONS = yup.object().shape({
     numOfItems: yup.string().required("Please enter number of items"),
-    date: yup.date().required("please select date"),
-    invoiceNum: yup.string().required("please provide invoice number"),
+    created_at: yup.date().required("please select date"),
+    invoice_number: yup.string().required("please provide invoice number"),
     store: yup.string().required("please select store"),
-    paymentType: yup.string().required("please choose a payment method"),
+    payment_type: yup.string().required("please choose a payment method"),
     items: yup.array().of(
       yup.object().shape({
         barcode: yup.string(),
@@ -98,64 +91,23 @@ export const AddSales = (props) => {
     setValues({ ...values, items });
   };
 
-  const Submit = (fields) => {
-    console.log(JSON.stringify(fields));
+  const Submit = (values) => {
+    addSalesData({ dispatch: dispatch, sales: values });
+    console.log(values);
   };
 
-  // const handleSubmit = (values) => {
-  //   console.log(values);
-  // };
-  let eee;
-  const getCode = [];
-  getCode.push(eee);
-
   const formRef = useRef(null);
+
+  const [open, setopen] = useState(true);
 
   useEffect(() => {
     const timeOutId = setTimeout(() => getProductByBarcode(dispatch, barcode), 500);
     return () => clearTimeout(timeOutId);
   }, [barcode]);
 
-  // const fetchData = (e) => {
-  //   e.preventDefault();
-  //   console.log(barcode);
-  // };
-  //   <Grid item xs={6}>
-  //   <CustomDate
-  //     name="date"
-  //     InputProps={{
-  //       endAdornment: (
-  //         <InputAdornment position="end">
-  //           <ListIcon />
-  //         </InputAdornment>
-  //       ),
-  //     }}
-  //   />
-  // </Grid>
-
-  // <Grid item xs={6}>
-  // <CustomSelect name="store" label="Select Store" options={branch} />
-  // </Grid>
-
-  // <Grid item xs={6}>
-  // <CustomSelect name="paymentType" label="Payment Type" options={paymentMethods} />
-  // </Grid>
-  //   <Grid item xs={6}>
-  //   <CustomTextField
-  //     name={`items.${i}.invoiceNum`}
-  //     label="Invoice Number"
-  //     InputProps={{
-  //       endAdornment: (
-  //         <InputAdornment position="end">
-  //           <ListIcon />
-  //         </InputAdornment>
-  //       ),
-  //     }}
-  //   />
-  // </Grid>
-  const RenderForm = ({ items, i, handleChange }) => {
+  const RenderForm = ({ items, i }) => {
     setbarcode(items.barcode);
-    const subAmount = items.quantity * items.selling_price;
+
     return (
       <>
         <Grid
@@ -191,6 +143,9 @@ export const AddSales = (props) => {
           <CustomTextField
             name={`items.${i}.barcode`}
             label="Barcode"
+            onKeyPress={(e) => {
+              e.key === "Enter" && e.preventDefault();
+            }}
             // value={barcode}
             // onChange={(e) => {
             //   setbarcode(e.currentTarget.value);
@@ -235,6 +190,11 @@ export const AddSales = (props) => {
         </Grid>
         <Grid item xs={6}>
           <CustomTextField name={`items.${i}.quantity`} label="Quantity" />
+          {productByBarcode.length > 0 && typeof productByBarcode[i] != "undefined"
+            ? Number(items.quantity) > productByBarcode[i].current_product_quantity && (
+                <AlertBox open={open} severity="error" setopen={setopen} message="out of stock" />
+              )
+            : null}
         </Grid>
 
         <Grid item xs={6}>
@@ -260,14 +220,6 @@ export const AddSales = (props) => {
     );
   };
 
-  const eachPrice = [];
-  const sumTotal = () => {
-    const reducer = (prevValues, curValues) => Number(prevValues) + Number(curValues);
-    const a = eachPrice.reduce(reducer);
-    return a;
-  };
-  // sumTotal();
-  // getProduct();
   return (
     <Box {...props}>
       <Box
@@ -308,10 +260,10 @@ export const AddSales = (props) => {
                   <Form>
                     <Grid container spacing={2}>
                       <Grid item xs={4}>
-                        <CustomDate name="date" />
+                        <CustomDate name="created_at" />
                       </Grid>
                       <Grid item xs={4}>
-                        <CustomTextField name="invoiceNum" label="Invoice Number" />
+                        <CustomTextField name="invoice_number" label="Invoice Number" />
                       </Grid>
                       <Grid item xs={4}>
                         <CustomSelect name="branch" label="Branch" options={branch} />
@@ -352,9 +304,19 @@ export const AddSales = (props) => {
                           }
                         />
                       </Grid>
+                      <Grid item xs={6}>
+                        <CustomSelect
+                          name="payment_type"
+                          label="Payment Type"
+                          options={paymentMethods}
+                        />
+                      </Grid>
 
                       <Grid item xs={12}>
-                        <button type="submit"> Process Sales</button>
+                        <Button variant="contained" type="submit" onClick={() => Submit(values)}>
+                          {" "}
+                          Process Sales
+                        </Button>
                       </Grid>
                     </Grid>
                   </Form>

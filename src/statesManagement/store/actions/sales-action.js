@@ -43,7 +43,7 @@ export const getTotalSales = async (dispatch) => {
   }
 };
 
-export const addSalesData = async (dispatch, sales, Router) => {
+export const addSalesData = async ({ dispatch, sales, Router }) => {
   try {
     dispatch({
       type: ADD_SALES_DATA_REQUEST,
