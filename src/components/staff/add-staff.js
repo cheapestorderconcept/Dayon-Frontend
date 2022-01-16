@@ -55,8 +55,6 @@ export const AddStaff = (props) => {
 
   const roles = [{ name: "Super Admin" }, { name: "Admin" }];
 
-  const [openAlert, setopenAlert] = useState(true);
-  error && console.log(error);
   const Router = useRouter();
 
   const handleSubmit = (values) => {
@@ -99,14 +97,7 @@ export const AddStaff = (props) => {
         <Card>
           <CardHeader title="Add Staff" />
           <Divider />
-          {notification && (
-            <AlertBox
-              message={error ? error : success?.response_message}
-              severity={error ? "error" : "success"}
-              open={openAlert}
-              setopen={setopenAlert}
-            />
-          )}
+
           <CardContent>
             <Box sx={{ maxWidth: 500 }}>
               <Formik

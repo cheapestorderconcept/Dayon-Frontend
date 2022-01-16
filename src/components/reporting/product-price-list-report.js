@@ -19,12 +19,7 @@ const ProductPriceListTable = () => {
   return (
     <>
       {ready == true && (
-        <MUIDataTable
-          title={"Product Price List"}
-          data={data}
-          columns={columns}
-          options={options}
-        />
+        <MUIDataTable title={"Product  List"} data={data} columns={columns} options={options} />
       )}
     </>
   );

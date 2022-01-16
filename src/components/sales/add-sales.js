@@ -269,20 +269,7 @@ export const AddSales = (props) => {
                       <Grid item xs={4}>
                         <CustomSelect name="branch" label="Branch" options={branch} />
                       </Grid>
-                      <Grid item xs={4}>
-                        <Field name="number of items">
-                          {({ field }) => (
-                            <Button
-                              variant="contained"
-                              color="primary"
-                              onClick={() => addMoreItems(values, setValues)}
-                              startIcon={<DownloadIcon fontSize="small" />}
-                            >
-                              Add More Products
-                            </Button>
-                          )}
-                        </Field>
-                      </Grid>
+
                       <FieldArray name="items">
                         {() =>
                           values.items.map((item, index) => (
@@ -311,6 +298,20 @@ export const AddSales = (props) => {
                         />
                       </Grid>
                       <Grid item xs={6}>
+                        <Field name="number of items">
+                          {({ field }) => (
+                            <Button
+                              variant="contained"
+                              color="primary"
+                              onClick={() => addMoreItems(values, setValues)}
+                              startIcon={<DownloadIcon fontSize="small" />}
+                            >
+                              Add More Products
+                            </Button>
+                          )}
+                        </Field>
+                      </Grid>
+                      <Grid item xs={12}>
                         <CustomSelect
                           name="payment_type"
                           label="Payment Type"
@@ -319,7 +320,12 @@ export const AddSales = (props) => {
                       </Grid>
 
                       <Grid item xs={12}>
-                        <Button variant="contained" type="submit" onClick={() => Submit(values)}>
+                        <Button
+                          fullWidth={true}
+                          variant="contained"
+                          type="submit"
+                          onClick={() => Submit(values)}
+                        >
                           {" "}
                           Process Sales
                         </Button>

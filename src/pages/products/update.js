@@ -11,6 +11,7 @@ import { getProduct } from "src/statesManagement/store/actions/product-action";
 import { useEffect } from "react";
 import { getSuppliers } from "src/statesManagement/store/actions/supplier-action";
 import { getBrands } from "src/statesManagement/store/actions/brand-action";
+import { useSnackbar } from "notistack";
 
 const DynamicComponentWithNoSSR = dynamic(() => import("src/components/navbar-branch-indicator"), {
   ssr: false,
@@ -20,7 +21,9 @@ const Editproduct = () => {
   const { state, dispatch } = useContext(Store);
   const { query } = useRouter();
   const router = useRouter();
-  const { userInfo, products, suppliers, brands } = state;
+  const { userInfo, products, suppliers, brands, error } = state;
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+  error && enqueueSnackbar(error, { variant: "error" });
   const [id, setid] = useState(null);
 
   useEffect(() => {

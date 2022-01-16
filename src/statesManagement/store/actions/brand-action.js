@@ -28,7 +28,7 @@ export const getBrands = async (dispatch) => {
   } catch (error) {
     dispatch({
       type: GET_BRAND_FAIL,
-      payload: error?.response?.data?.response_message,
+      payload: error?.response?.data?.response_message || error.message,
     });
   }
 };
@@ -54,7 +54,7 @@ export const addBrand = async (dispatch, brand, Router) => {
   } catch (error) {
     dispatch({
       type: ADD_BRAND_FAIL,
-      payload: error?.response?.data?.response_message,
+      payload: error?.response?.data?.response_message || error.message,
     });
   }
 };
@@ -78,7 +78,7 @@ export const deleteBrand = async (dispatch, brandId, Router) => {
     console.log(error);
     dispatch({
       type: DELETE_BRAND_FAIL,
-      payload: error?.response?.data?.response_message,
+      payload: error?.response?.data?.response_message || error.message,
     });
   }
 };
@@ -103,7 +103,7 @@ export const updateBrand = async ({ dispatch, brand, brandId, Router }) => {
   } catch (error) {
     dispatch({
       type: UPDATE_BRAND_FAIL,
-      payload: error?.response?.data?.response_message,
+      payload: error?.response?.data?.response_message || error.message,
     });
   }
 };

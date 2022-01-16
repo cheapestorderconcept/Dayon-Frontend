@@ -7,6 +7,7 @@ import { ThemeProvider } from "@mui/material/styles/";
 import { createEmotionCache } from "../utils/create-emotion-cache";
 import { theme } from "../theme";
 import { StoreProvider } from "src/statesManagement/store/store";
+import { SnackbarProvider } from "notistack";
 
 const clientSideEmotionCache = createEmotionCache();
 
@@ -16,20 +17,22 @@ const App = (props) => {
   const getLayout = Component.getLayout ?? ((page) => page);
 
   return (
-    <StoreProvider>
-      <CacheProvider value={emotionCache}>
-        <Head>
-          <title>18A Nigeria Limited</title>
-          <meta name="viewport" content="initial-scale=1, width=device-width" />
-        </Head>
-        <LocalizationProvider dateAdapter={AdapterDateFns}>
-          <ThemeProvider theme={theme}>
-            <CssBaseline />
-            {getLayout(<Component {...pageProps} />)}
-          </ThemeProvider>
-        </LocalizationProvider>
-      </CacheProvider>
-    </StoreProvider>
+    <SnackbarProvider anchorOrigin={{ vertical: "top", horizontal: "right" }}>
+      <StoreProvider>
+        <CacheProvider value={emotionCache}>
+          <Head>
+            <title>18A Nigeria Limited</title>
+            <meta name="viewport" content="initial-scale=1, width=device-width" />
+          </Head>
+          <LocalizationProvider dateAdapter={AdapterDateFns}>
+            <ThemeProvider theme={theme}>
+              <CssBaseline />
+              {getLayout(<Component {...pageProps} />)}
+            </ThemeProvider>
+          </LocalizationProvider>
+        </CacheProvider>
+      </StoreProvider>
+    </SnackbarProvider>
   );
 };
 

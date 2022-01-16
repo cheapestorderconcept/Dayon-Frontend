@@ -60,9 +60,6 @@ export const AddPurchase = (props) => {
   const { dispatch, state } = useContext(Store);
   const { loading, error, success, notification } = state;
 
-  const [openAlert, setopenAlert] = useState(false);
-
-  error && console.log(error);
   const Router = useRouter();
 
   const handleSubmit = (values) => {
@@ -109,14 +106,6 @@ export const AddPurchase = (props) => {
         <Card>
           <CardHeader title="Add Purchase" />
           <Divider />
-          {notification && (
-            <AlertBox
-              message={error ? error : success?.response_message}
-              severity={error ? "error" : "success"}
-              open={openAlert}
-              setopen={setopenAlert}
-            />
-          )}
 
           <CardContent>
             <Box sx={{ maxWidth: 800 }}>

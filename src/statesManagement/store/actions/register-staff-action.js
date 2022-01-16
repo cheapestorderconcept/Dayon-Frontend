@@ -26,7 +26,7 @@ export const registerStaff = async ({ dispatch, staff, Router }) => {
   } catch (error) {
     dispatch({
       type: ADD_STAFF_FAIL,
-      payload: error?.response?.data?.response_message,
+      payload: error?.response?.data?.response_message || error.message,
     });
   }
 };
@@ -69,7 +69,7 @@ export const deleteStaff = async (dispatch, staffId, Router) => {
     console.log(error);
     dispatch({
       type: DELETE_PRODUCT_FAIL,
-      payload: error?.response?.data?.response_message,
+      payload: error?.response?.data?.response_message || error.message,
     });
   }
 };

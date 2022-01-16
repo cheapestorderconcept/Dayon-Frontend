@@ -62,7 +62,7 @@ const items = [
     title2: "Manage Purchases",
     href2: "purchase/purchaselists",
     title3: "Update Stock",
-    href3: "#",
+    href3: "/purchase/stock",
     title4: "Add Supplier Ledger",
     href4: "/addsupplierledger",
     title5: "Manage Supplier Ledger",

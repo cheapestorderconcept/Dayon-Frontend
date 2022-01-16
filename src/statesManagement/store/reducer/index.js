@@ -73,6 +73,9 @@ import {
   GET_PRODUCT_BY_BARCODE_REQUEST,
   GET_PRODUCT_BY_BARCODE_SUCCESS,
   GET_PRODUCT_BY_BARCODE_FAIL,
+  ADD_STORE_REQUEST,
+  ADD_STORE_FAIL,
+  ADD_STORE_SUCCESS,
 } from "../constants";
 
 // const rootReducers = combineReducers({
@@ -270,6 +273,13 @@ const rootReducers = (state, action) => {
     }
     case GET_STORE_FAIL:
       return { ...state, loading: false, error: action.payload };
+
+    case ADD_STORE_REQUEST:
+      return { ...state, loading: true, notification: false };
+    case ADD_STORE_SUCCESS:
+      return { ...state, loading: false, notification: true, success: action.payload };
+    case ADD_STORE_FAIL:
+      return { ...state, loading: false, notification: true, success: null, error: action.payload };
 
     // Get Sales Reducer
 

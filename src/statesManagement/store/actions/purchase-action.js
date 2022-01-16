@@ -22,7 +22,7 @@ export const getPurchase = async (dispatch) => {
   } catch (error) {
     dispatch({
       type: GET_PURCHASE_FAIL,
-      payload: error?.response?.data?.response_message,
+      payload: error?.response?.data?.response_message || error.message,
     });
   }
 };

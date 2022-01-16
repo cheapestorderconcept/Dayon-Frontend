@@ -19,7 +19,7 @@ export const addSales = async ({ dispatch, sales }) => {
   } catch (error) {
     dispatch({
       type: ADD_SALES_FAIL,
-      payload: error?.message,
+      payload: error?.response?.data?.response_message || error.message,
     });
   }
 };
@@ -38,7 +38,7 @@ export const getTotalSales = async (dispatch) => {
   } catch (error) {
     dispatch({
       type: GET_TOTAL_SALES_FAIL,
-      payload: error?.response?.data?.response_message,
+      payload: error?.response?.data?.response_message || error.message,
     });
   }
 };
@@ -61,10 +61,9 @@ export const addSalesData = async ({ dispatch, sales, Router }) => {
 
     // Router.reload(window.location.pathname);
   } catch (error) {
-    console.log(error?.response?.data?.response_message);
-    // dispatch({
-    //   type: ADD_SALES_DATA_FAIL,
-    //   payload: error?.response?.data?.response_message || error.message,
-    // });
+    dispatch({
+      type: ADD_SALES_DATA_FAIL,
+      payload: error?.response?.data?.response_message || error.message,
+    });
   }
 };

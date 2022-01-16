@@ -24,7 +24,7 @@ export const getStores = async ({ dispatch }) => {
   } catch (error) {
     dispatch({
       type: GET_STORE_FAIL,
-      payload: error?.response?.data?.response_message,
+      payload: error?.response?.data?.response_message || error.message,
     });
   }
 };
@@ -43,11 +43,11 @@ export const addStore = async ({ dispatch, store, Router }) => {
       type: ADD_STORE_SUCCESS,
       payload: data.data,
     });
-    router.reload(window.location.pathname);
+    Router.reload(window.location.pathname);
   } catch (error) {
     dispatch({
       type: ADD_STORE_FAIL,
-      payload: error?.response?.data?.response_message,
+      payload: error?.response?.data?.response_message || error.message,
     });
   }
 };

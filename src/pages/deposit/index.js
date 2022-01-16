@@ -20,7 +20,6 @@ const Deposit = () => {
   const { userInfo } = state;
   useEffect(() => {
     !userInfo && router.push("/auth");
-    // getTotalSales(dispatch);
   }, []);
   return (
     <>

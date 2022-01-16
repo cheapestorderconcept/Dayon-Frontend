@@ -1,24 +1,26 @@
 import Head from "next/head";
-import { Box, Card, CardContent, CardHeader, Container, Divider, Typography } from "@mui/material";
-import { DashboardLayout } from "../../components/dashboard-layout";
+import { Box, Container } from "@mui/material";
 import dynamic from "next/dynamic";
-import { AddSuppliers } from "src/components/suppliers/add-suppliers";
-import SuppliersList from "src/components/suppliers/supplier-lists";
+
 import { useContext, useEffect, useState } from "react";
 import { Store } from "src/statesManagement/store/store";
 import { useRouter } from "next/router";
-import { getSuppliers } from "src/statesManagement/store/actions/supplier-action";
+
+import { getProduct } from "src/statesManagement/store/actions/product-action";
+import { DashboardLayout } from "src/components/dashboard-layout";
+import { EditProductForm } from "src/components/product/EditProductForm";
+import ProductTable from "src/components/product/product-table";
 import { useSnackbar } from "notistack";
 
 const DynamicComponentWithNoSSR = dynamic(() => import("src/components/navbar-branch-indicator"), {
   ssr: false,
 });
 
-const EditSupplier = () => {
+const EditProduct = () => {
   const { state, dispatch } = useContext(Store);
   const { query } = useRouter();
   const router = useRouter();
-  const { userInfo, suppliers, error } = state;
+  const { userInfo, products, brands, suppliers, error } = state;
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   error && enqueueSnackbar(error, { variant: "error" });
   const [id, setid] = useState(null);
@@ -26,13 +28,13 @@ const EditSupplier = () => {
   useEffect(() => {
     !userInfo && router.push("/auth");
     setid(query.id);
-    getSuppliers(dispatch);
+    getProduct(dispatch);
   }, [query.id]);
 
   return (
     <>
       <Head>
-        <title>Supplier | 1948 App</title>
+        <title>Update Price | Adeshex Nigeria Limited</title>
       </Head>
       <Box
         component="main"
@@ -43,15 +45,20 @@ const EditSupplier = () => {
       >
         <DynamicComponentWithNoSSR />
         <Container maxWidth={false}>
-          <AddSuppliers id={id} title="Edit Supplier" />
+          <EditProductForm id={id} title="Edit Product" products={products} />
           <Box sx={{ mt: 3 }}>
-            <SuppliersList suppliers={suppliers} />
+            <ProductTable
+              editable={true}
+              products={products}
+              suppliers={suppliers}
+              brands={brands}
+            />
           </Box>
         </Container>
       </Box>
     </>
   );
 };
-EditSupplier.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
+EditProduct.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
 
-export default EditSupplier;
+export default EditProduct;

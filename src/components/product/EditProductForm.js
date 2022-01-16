@@ -16,51 +16,42 @@ import ListIcon from "@mui/icons-material/List";
 import * as yup from "yup";
 import { Formik, Form } from "formik";
 import { CustomButton } from "../basicInputs";
-import { addBrand, updateBrand } from "src/statesManagement/store/actions/brand-action";
 import { useContext, useState } from "react";
-
-import AlertBox from "../alert";
-import { useRouter } from "next/router";
 import { Store } from "src/statesManagement/store/store";
+import { useRouter } from "next/router";
 import NextLink from "next/link";
+import { updateProduct } from "src/statesManagement/store/actions/product-action";
 
 const INITIAL_FORM_VALUES = {
-  name: "",
+  // name: "",
+  product_price: "",
+  current_product_quantity: "",
 };
 
 const FORM_VALIDATIONS = yup.object().shape({
-  name: yup.string().required("Please provide brand name"),
+  // name: yup.string(),
+  product_price: yup.number().integer().typeError("Price must be a number"),
+  current_product_quantity: yup.number().integer().typeError("Quantity must be a number"),
 });
-export const ProductBrand = (props) => {
+export const EditProductForm = (props) => {
   const { title, id } = props;
-  const { state, dispatch } = useContext(Store);
 
-  const { loading, error, brands } = state;
+  const { dispatch, state } = useContext(Store);
+  const { loading, error } = state;
 
-  // console.log(id);
-  let myBrand = {};
-  if (id != null) {
-    const brand = brands.filter((brand) => brand._id == id);
-    myBrand = { ...brand[0] };
-  }
+  error && enqueueSnackbar(error, { variant: "error" });
 
-  const [openAlert, setopenAlert] = useState(true);
-  error && console.log(error);
   const Router = useRouter();
 
-  const handleUpdate = (values) => {
-    const brand = {
-      brand_name: values.name,
-    };
-    updateBrand({ dispatch: dispatch, brand: brand, brandId: id, Router: Router });
-  };
   const handleSubmit = (values) => {
-    const brand = {
-      brand_name: values.name,
+    const product = {
+      // product_name: values.name,
+      price: Number(values.price),
+      quantity: Number(values.current_product_quantity),
     };
-    addBrand(dispatch, brand, Router);
+    updateProduct({ dispatch: dispatch, product: product, productId: id, Router: Router });
+    console.log(product);
   };
-
   return (
     <Box {...props}>
       <Box
@@ -73,17 +64,20 @@ export const ProductBrand = (props) => {
         }}
       >
         <Typography sx={{ m: 1 }} variant="h4">
-          Brand
+          Products
         </Typography>
         <Box sx={{ m: 1 }}>
           <Button startIcon={<UploadIcon fontSize="small" />} sx={{ mr: 1 }}>
             Home
           </Button>
           <Button startIcon={<DownloadIcon fontSize="small" />} sx={{ mr: 1 }}>
-            <NextLink href="/products/brand" replace>
-              <Typography>Brand</Typography>
+            <NextLink href="/products">
+              <Typography>Add Product</Typography>
             </NextLink>
           </Button>
+          {/* <Button color="primary" variant="contained">
+            Add products
+          </Button> */}
         </Box>
       </Box>
       <Box sx={{ mt: 3 }}>
@@ -94,16 +88,43 @@ export const ProductBrand = (props) => {
           <CardContent>
             <Box sx={{ maxWidth: 500 }}>
               <Formik
-                initialValues={INITIAL_FORM_VALUES}
-                onSubmit={id != null ? handleUpdate : handleSubmit}
+                initialValues={{ ...INITIAL_FORM_VALUES }}
+                onSubmit={handleSubmit}
                 validationSchema={FORM_VALIDATIONS}
               >
                 <Form>
                   <Grid container spacing={2}>
-                    <Grid item xs={12}>
+                    {/* <Grid item xs={12}>
                       <CustomTextField
                         name="name"
-                        label="Brand Name"
+                        label="Product Name"
+                        InputProps={{
+                          endAdornment: (
+                            <InputAdornment position="end">
+                              <ListIcon />
+                            </InputAdornment>
+                          ),
+                        }}
+                      />
+                    </Grid> */}
+
+                    <Grid item xs={12}>
+                      <CustomTextField
+                        name="price"
+                        label="Cost Price"
+                        InputProps={{
+                          endAdornment: (
+                            <InputAdornment position="end">
+                              <ListIcon />
+                            </InputAdornment>
+                          ),
+                        }}
+                      />
+                    </Grid>
+                    <Grid item xs={12}>
+                      <CustomTextField
+                        name="current_product_quantity"
+                        label="Quantity"
                         InputProps={{
                           endAdornment: (
                             <InputAdornment position="end">
@@ -115,7 +136,7 @@ export const ProductBrand = (props) => {
                     </Grid>
 
                     <Grid item xs={12}>
-                      <CustomButton>{id != null ? "Update" : "Submit"}</CustomButton>
+                      <CustomButton> Update Product</CustomButton>
                     </Grid>
                   </Grid>
                 </Form>

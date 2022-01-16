@@ -9,6 +9,7 @@ import { Store } from "src/statesManagement/store/store";
 import { useRouter } from "next/router";
 import { getStaff } from "src/statesManagement/store/actions/register-staff-action";
 import { getStores } from "src/statesManagement/store/actions/store-outlet-action";
+import { useSnackbar } from "notistack";
 
 const DynamicComponentWithNoSSR = dynamic(() => import("src/components/navbar-branch-indicator"), {
   ssr: false,
@@ -18,10 +19,9 @@ const Staff = () => {
   const { state, dispatch } = useContext(Store);
   const router = useRouter();
 
-  const { userInfo, staff, branch } = state;
-  console.log(branch);
-
-  console.log(staff);
+  const { userInfo, staff, branch, error } = state;
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+  error && enqueueSnackbar(error, { variant: "error" });
 
   useEffect(() => {
     !userInfo && router.push("/auth");

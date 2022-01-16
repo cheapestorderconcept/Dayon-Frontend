@@ -51,7 +51,7 @@ export const addSupplier = async (dispatch, supplier, Router) => {
   } catch (error) {
     dispatch({
       type: ADD_SUPPLIERS_FAIL,
-      payload: error?.response?.data?.response_message,
+      payload: error?.response?.data?.response_message || error.message,
     });
   }
 };
@@ -75,7 +75,7 @@ export const deleteSupplier = async (dispatch, supId, Router) => {
     console.log(error);
     dispatch({
       type: DELETE_SUPPLIERS_FAIL,
-      payload: error?.response?.data?.response_message,
+      payload: error?.response?.data?.response_message || error.message,
     });
   }
 };
@@ -100,7 +100,7 @@ export const updateSupplier = async ({ dispatch, supplier, supId, Router }) => {
   } catch (error) {
     dispatch({
       type: UPDATE_SUPPLIERS_FAIL,
-      payload: error?.response?.data?.response_message,
+      payload: error?.response?.data?.response_message || error.message,
     });
   }
 };

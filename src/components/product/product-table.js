@@ -1,17 +1,83 @@
 import { Button, Typography } from "@mui/material";
 import MUIDataTable from "mui-datatables";
-import { useRouter } from "next/router";
-import { useContext, useEffect, useState } from "react";
-import { deleteProduct } from "src/statesManagement/store/actions/product-action";
-import { Store } from "src/statesManagement/store/store";
-import NextLink from "next/link";
 
-const ProductTable = ({ products }) => {
+import NextLink from "next/link";
+import { useEffect, useState } from "react";
+
+const ProductTable = ({ products, editable }) => {
   const [ready, setready] = useState(false);
 
   useEffect(() => {
     setready(true);
   }, []);
+
+  const columnsEditable = [
+    {
+      name: "Update Price",
+      options: {
+        filter: true,
+        sort: false,
+        empty: true,
+        customBodyRender: (value, tableMeta, updateValue) => {
+          return (
+            <Button variant="contained">
+              <NextLink
+                href={`/purchase/stock/${tableMeta.rowData[2]}`}
+                style={{ textDecoration: "none", color: "white" }}
+              >
+                <Typography variant="body1" color="inherit">
+                  Update Price
+                </Typography>
+              </NextLink>
+            </Button>
+          );
+        },
+      },
+    },
+    {
+      name: "Update Quantity",
+      options: {
+        filter: true,
+        sort: false,
+        empty: true,
+        customBodyRender: (value, tableMeta, updateValue) => {
+          return (
+            <Button variant="contained">
+              <NextLink
+                href={`/purchase/stock/${tableMeta.rowData[2]}`}
+                style={{ textDecoration: "none", color: "white" }}
+              >
+                <Typography variant="body1" color="inherit">
+                  Update Quantity
+                </Typography>
+              </NextLink>
+            </Button>
+          );
+        },
+      },
+    },
+    {
+      name: "ID",
+    },
+    {
+      name: "NAME",
+    },
+    {
+      name: "COST PRICE",
+    },
+    {
+      name: "BARCODE",
+    },
+    {
+      name: "CURRENT QUANTITY",
+    },
+    {
+      name: "PREVIOUS QUANTITY",
+    },
+    {
+      name: "BRAND NAME",
+    },
+  ];
 
   const columns = [
     {
@@ -50,7 +116,12 @@ const ProductTable = ({ products }) => {
   return (
     <>
       {ready == true && (
-        <MUIDataTable title={"Lists Of Products"} data={data} columns={columns} options={options} />
+        <MUIDataTable
+          title={"Lists Of Products"}
+          data={data}
+          columns={editable ? columnsEditable : columns}
+          options={options}
+        />
       )}
     </>
   );

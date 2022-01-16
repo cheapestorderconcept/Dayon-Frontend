@@ -1,31 +1,27 @@
 import Head from "next/head";
 import { Box, Container, Card, CardHeader, Divider, Typography, CardContent } from "@mui/material";
-import { ProductListToolbar } from "../../components/product/product-list-toolbar";
-import { DashboardLayout } from "../../components/dashboard-layout";
+
 import ProductTable from "src/components/product/product-table";
 import dynamic from "next/dynamic";
 import { useContext } from "react";
 import { Store } from "src/statesManagement/store/store";
 import { useRouter } from "next/router";
-import {
-  getOutOfStock,
-  getProduct,
-  getProductPrice,
-} from "src/statesManagement/store/actions/product-action";
+import { getProduct } from "src/statesManagement/store/actions/product-action";
 import { useEffect } from "react";
 
 import Loading from "src/components/loading/Loading";
+import { DashboardLayout } from "src/components/dashboard-layout";
 import { useSnackbar } from "notistack";
 
 const DynamicComponentWithNoSSR = dynamic(() => import("src/components/navbar-branch-indicator"), {
   ssr: false,
 });
 
-const Products = () => {
+const Stock = () => {
   const { state, dispatch } = useContext(Store);
   const router = useRouter();
 
-  const { userInfo, products, suppliers, brands, loading, error } = state;
+  const { userInfo, products, error, loading } = state;
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   error && enqueueSnackbar(error, { variant: "error" });
 
@@ -38,7 +34,7 @@ const Products = () => {
   return (
     <>
       <Head>
-        <title>Products | Material Kit</title>
+        <title>Stocks | Adeshex Nigeria Limited</title>
       </Head>
       <Box
         component="main"
@@ -49,7 +45,6 @@ const Products = () => {
       >
         <DynamicComponentWithNoSSR />
         <Container maxWidth={false}>
-          <ProductListToolbar products={products} suppliers={suppliers} brands={brands} />
           <Box sx={{ pt: 3 }}>
             {!products ? (
               <Card>
@@ -67,7 +62,7 @@ const Products = () => {
                 <CardContent></CardContent>
               </Card>
             ) : (
-              <ProductTable products={products} />
+              <ProductTable editable={true} products={products} />
             )}
           </Box>
           <Box
@@ -83,6 +78,6 @@ const Products = () => {
   );
 };
 
-Products.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
+Stock.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
 
-export default Products;
+export default Stock;

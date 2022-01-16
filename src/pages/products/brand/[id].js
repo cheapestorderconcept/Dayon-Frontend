@@ -9,6 +9,7 @@ import { useContext, useEffect, useState } from "react";
 
 import { useRouter } from "next/router";
 import { Store } from "src/statesManagement/store/store";
+import { useSnackbar } from "notistack";
 
 const DynamicComponentWithNoSSR = dynamic(() => import("src/components/navbar-branch-indicator"), {
   ssr: false,
@@ -17,7 +18,9 @@ const EditBrand = () => {
   const { state, dispatch } = useContext(Store);
   const { query } = useRouter();
   const router = useRouter();
-  const { userInfo, brands } = state;
+  const { userInfo, brands, error } = state;
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+  error && enqueueSnackbar(error, { variant: "error" });
   const [id, setid] = useState(null);
 
   useEffect(() => {

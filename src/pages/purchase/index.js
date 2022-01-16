@@ -10,6 +10,7 @@ import { useRouter } from "next/router";
 import { getStores } from "src/statesManagement/store/actions/store-outlet-action";
 import { getProduct } from "src/statesManagement/store/actions/product-action";
 import { getSuppliers } from "src/statesManagement/store/actions/supplier-action";
+import { useSnackbar } from "notistack";
 
 const DynamicComponentWithNoSSR = dynamic(() => import("src/components/navbar-branch-indicator"), {
   ssr: false,
@@ -18,10 +19,13 @@ const AddPurchasePage = () => {
   const { state, dispatch } = useContext(Store);
   const router = useRouter();
 
-  const { userInfo, branch, suppliers, products, purchase } = state;
+  const { userInfo, branch, suppliers, products, purchase, error } = state;
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+  error && enqueueSnackbar(error, { variant: "error" });
   console.log(purchase);
   useEffect(() => {
     !userInfo && router.push("/auth");
+    getProduct(dispatch);
   }, []);
   return (
     <>

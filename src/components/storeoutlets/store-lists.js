@@ -1,21 +1,36 @@
 import MUIDataTable from "mui-datatables";
 import { useEffect, useState } from "react";
 
-const columns = ["STORE NAME", "CONTACT PERSON", "PHONE", "ADDRESS"];
-
-const data = [["Headquarters Parakin", "	MR. Ayo", "08023456789", "Parakin Junction, Il"]];
-
-const options = {
-  filter: true,
-  sort: true,
-};
-
-const StoreOuletLists = () => {
+const StoreOuletLists = ({ branch }) => {
   const [ready, setready] = useState(false);
   useEffect(() => {
     setready(true);
   }, []);
+  const columns = [
+    {
+      name: "ID",
+    },
+    {
+      name: "STORE NAME",
+    },
+    {
+      name: "ADDRESS",
+    },
+    {
+      name: "MANAGER/CONTACT PERSON",
+    },
+    {
+      name: "PHONE",
+    },
+  ];
 
+  const myBranch = branch.map((brch) => Object.values(brch));
+  const data = [...myBranch];
+
+  const options = {
+    filter: true,
+    sort: true,
+  };
   return (
     <>
       {ready == true && (

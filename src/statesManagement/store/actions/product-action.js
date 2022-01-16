@@ -37,7 +37,7 @@ export const getProductWithBarcode = async (dispatch) => {
   } catch (error) {
     dispatch({
       type: GET_PRODUCT_FAIL,
-      payload: error?.response?.data?.response_message,
+      payload: error?.response?.data?.response_message || error.message,
     });
   }
 };
@@ -56,7 +56,7 @@ export const getProduct = async (dispatch) => {
   } catch (error) {
     dispatch({
       type: GET_PRODUCT_FAIL,
-      payload: error?.response?.data?.response_message,
+      payload: error?.response?.data?.response_message || error.message,
     });
   }
 };
@@ -146,6 +146,30 @@ export const getOutOfStock = async (dispatch) => {
   }
 };
 
+export const updateProduct = async ({ dispatch, product, productId, Router }) => {
+  try {
+    dispatch({
+      type: UPDATE_PRODUCT_REQUEST,
+    });
+
+    const { data } = await makeNetworkCall({
+      method: "PUT",
+      path: `/update-product/${productId}`,
+      requestBody: product,
+    });
+    console.log(data);
+    dispatch({
+      type: UPDATE_PRODUCT_SUCCESS,
+      payload: data.data,
+    });
+    Router.reload(window.location.pathname);
+  } catch (error) {
+    dispatch({
+      type: UPDATE_PRODUCT_FAIL,
+      payload: error?.response?.data?.response_message || error.message,
+    });
+  }
+};
 // export const deleteProduct = async (dispatch, productId, Router) => {
 //   try {
 //     dispatch({

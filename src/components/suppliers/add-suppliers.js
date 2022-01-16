@@ -44,7 +44,7 @@ const FORM_VALIDATIONS = yup.object().shape({
 export const AddSuppliers = (props) => {
   const { title, id } = props;
   const { dispatch, state } = useContext(Store);
-  const { loading, error, suppliers } = state;
+  const { loading, suppliers } = state;
 
   console.log(id);
   let mySupplier = {};
@@ -53,8 +53,6 @@ export const AddSuppliers = (props) => {
     mySupplier = { ...supplier[0] };
   }
 
-  const [openAlert, setopenAlert] = useState(true);
-  error && console.log(error);
   const Router = useRouter();
 
   const handleUpdate = (values) => {
@@ -117,9 +115,7 @@ export const AddSuppliers = (props) => {
         <Card>
           <CardHeader title={title} />
           <Divider />
-          {error && (
-            <AlertBox message={error} severity="error" open={openAlert} setopen={setopenAlert} />
-          )}
+
           <CardContent>
             <Box sx={{ maxWidth: 500 }}>
               <Formik

@@ -22,6 +22,7 @@ import { useRouter } from "next/router";
 import { addProduct, updateProduct } from "src/statesManagement/store/actions/product-action";
 import AlertBox from "../alert";
 import NextLink from "next/link";
+import { useSnackbar } from "notistack";
 
 const INITIAL_FORM_VALUES = {
   name: "",
@@ -47,7 +48,8 @@ export const ProductListToolbar = (props) => {
   const { dispatch, state } = useContext(Store);
   const { loading, error } = state;
 
-  const [openAlert, setopenAlert] = useState(true);
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+  error && enqueueSnackbar(error, { variant: "error" });
 
   const Router = useRouter();
 
@@ -104,9 +106,7 @@ export const ProductListToolbar = (props) => {
         <Card>
           <CardHeader title={title} />
           <Divider />
-          {error && (
-            <AlertBox message={error} severity="error" open={openAlert} setopen={setopenAlert} />
-          )}
+
           <CardContent>
             <Box sx={{ maxWidth: 500 }}>
               <Formik

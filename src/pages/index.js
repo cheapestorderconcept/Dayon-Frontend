@@ -1,10 +1,7 @@
 import Head from "next/head";
 import { Typography, Box, Container, Grid } from "@mui/material";
 import { Budget } from "../components/dashboard/budget";
-import { LatestOrders } from "../components/dashboard/latest-orders";
-import { LatestProducts } from "../components/dashboard/latest-products";
-import { Sales } from "../components/dashboard/sales";
-import { TasksProgress } from "../components/dashboard/tasks-progress";
+import { ProductProgress } from "../components/dashboard/Product";
 import { TotalCustomers } from "../components/dashboard/total-customers";
 import { TotalProfit } from "../components/dashboard/total-profit";
 import { TrafficByDevice } from "../components/dashboard/traffic-by-device";
@@ -13,6 +10,7 @@ import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 import { useContext, useEffect } from "react";
 import { Store } from "src/statesManagement/store/store";
+import { useSnackbar } from "notistack";
 
 const DynamicComponentWithNoSSR = dynamic(() => import("src/components/navbar-branch-indicator"), {
   ssr: false,
@@ -21,7 +19,9 @@ const DynamicComponentWithNoSSR = dynamic(() => import("src/components/navbar-br
 const Dashboard = () => {
   const router = useRouter();
   const { state } = useContext(Store);
-  const { userInfo } = state;
+  const { userInfo, products, error } = state;
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+  error && enqueueSnackbar(error, { variant: "error" });
   useEffect(() => {
     !userInfo && router.push("/auth");
   }, []);
@@ -30,7 +30,7 @@ const Dashboard = () => {
   return (
     <>
       <Head>
-        <title>Dashboard | 18A Nigeria Limited</title>
+        <title>Dashboard | Adeshex Global </title>
       </Head>
       <Box
         component="main"
@@ -49,7 +49,7 @@ const Dashboard = () => {
               <TotalCustomers />
             </Grid>
             <Grid item xl={3} lg={3} sm={6} xs={12}>
-              <TasksProgress />
+              <ProductProgress products={products} />
             </Grid>
             <Grid item xl={3} lg={3} sm={6} xs={12}>
               <TotalProfit sx={{ height: "100%" }} />

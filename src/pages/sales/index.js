@@ -5,10 +5,9 @@ import { AddSales } from "src/components/sales/add-sales";
 import dynamic from "next/dynamic";
 import { useContext, useEffect } from "react";
 import { Store } from "src/statesManagement/store/store";
-import { getProduct } from "src/statesManagement/store/actions/product-action";
-import { getStores } from "src/statesManagement/store/actions/store-outlet-action";
+
 import { useRouter } from "next/router";
-import { getTotalSales } from "src/statesManagement/store/actions/sales-action";
+import { useSnackbar } from "notistack";
 
 const DynamicComponentWithNoSSR = dynamic(() => import("src/components/navbar-branch-indicator"), {
   ssr: false,
@@ -17,7 +16,9 @@ const DynamicComponentWithNoSSR = dynamic(() => import("src/components/navbar-br
 const Sales = () => {
   const { dispatch, state } = useContext(Store);
   const router = useRouter();
-  const { userInfo } = state;
+  const { userInfo, error } = state;
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+  error && enqueueSnackbar(error, { variant: "error" });
   useEffect(() => {
     !userInfo && router.push("/auth");
     // getTotalSales(dispatch);
