@@ -285,7 +285,9 @@ export const AddSales = (props) => {
                       <FieldArray name="items">
                         {() =>
                           values.items.map((item, i) => {
-                            return <RenderForm items={item} i={i} handleChange={handleChange} />;
+                            return (
+                              <RenderForm key={i} items={item} i={i} handleChange={handleChange} />
+                            );
                           })
                         }
                       </FieldArray>

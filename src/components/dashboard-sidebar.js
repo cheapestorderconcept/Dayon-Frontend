@@ -238,9 +238,10 @@ export const DashboardSidebar = (props) => {
           }}
         />
         <Box sx={{ flexGrow: 1 }}>
-          {items.map((item) =>
+          {items.map((item, i) =>
             item.hasdropdown ? (
               <RenderNavItemsWithDropDown
+                key={i}
                 title={item.title}
                 href={item.href}
                 icon={item.icon}

@@ -32,7 +32,7 @@ export const CustomSelect = ({ name, options, i, ...other }) => {
     fullWidth: true,
     ...other,
     ...field,
-    onchange: handleChange,
+    onChange: handleChange,
   };
 
   if (meta && meta.touched && meta.error) {
