@@ -24,6 +24,7 @@ const initialState = {
   suppliers: Cookies.get("suppliers") ? JSON.parse(Cookies.get("suppliers")) : [],
   brands: Cookies.get("brands") ? JSON.parse(Cookies.get("brands")) : [],
   products: Cookies.get("products") ? JSON.parse(Cookies.get("products")) : [],
+  productByBarcode: [],
   profile: {},
   staff: Cookies.get("staff") ? JSON.parse(Cookies.get("staff")) : [],
   purchase: Cookies.get("purchases") ? JSON.parse(Cookies.get("purchases")) : [],

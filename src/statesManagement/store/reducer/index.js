@@ -70,6 +70,9 @@ import {
   GET_TOTAL_SALES_REQUEST,
   GET_TOTAL_SALES_SUCCESS,
   GET_TOTAL_SALES_FAIL,
+  GET_PRODUCT_BY_BARCODE_REQUEST,
+  GET_PRODUCT_BY_BARCODE_SUCCESS,
+  GET_PRODUCT_BY_BARCODE_FAIL,
 } from "../constants";
 
 // const rootReducers = combineReducers({
@@ -157,6 +160,17 @@ const rootReducers = (state, action) => {
     case UPDATE_BRAND_FAIL:
       return { ...state, loading: false, error: action.payload };
     // Prodducts Reducers
+    case GET_PRODUCT_BY_BARCODE_REQUEST:
+      return { ...state, loading: true };
+    case GET_PRODUCT_BY_BARCODE_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        productByBarcode: [...state.productByBarcode, action.payload],
+      };
+    case GET_PRODUCT_BY_BARCODE_FAIL:
+      return { ...state, loading: false, error: action.payload };
+
     case GET_PRODUCT_REQUEST:
       return { ...state, loading: true };
     case GET_PRODUCT_SUCCESS: {

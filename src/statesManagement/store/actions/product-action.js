@@ -48,7 +48,7 @@ export const getProduct = async (dispatch) => {
       type: GET_PRODUCT_REQUEST,
     });
     const { data } = await makeNetworkCall({ method: "GET", path: "/view-product" });
-    console.log(data.data);
+
     dispatch({
       type: GET_PRODUCT_SUCCESS,
       payload: data.data,
@@ -67,7 +67,10 @@ export const getProductByBarcode = async (dispatch, barcode) => {
       type: GET_PRODUCT_BY_BARCODE_REQUEST,
     });
 
-    const { data } = await makeNetworkCall({ method: "GET", path: `/view-product/${barcode}` });
+    const { data } = await makeNetworkCall({
+      method: "GET",
+      path: `/view-product-by-barcode/${barcode}`,
+    });
     console.log(data.data);
     dispatch({
       type: GET_PRODUCT_BY_BARCODE_SUCCESS,
@@ -76,7 +79,7 @@ export const getProductByBarcode = async (dispatch, barcode) => {
   } catch (error) {
     dispatch({
       type: GET_PRODUCT_BY_BARCODE_FAIL,
-      payload: error?.response?.data?.response_message,
+      payload: error?.response?.data?.response_message || error.message,
     });
   }
 };

@@ -20,7 +20,7 @@ const Sales = () => {
   const { userInfo } = state;
   useEffect(() => {
     !userInfo && router.push("/auth");
-    getTotalSales(dispatch);
+    // getTotalSales(dispatch);
   }, []);
   return (
     <>

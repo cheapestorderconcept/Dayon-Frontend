@@ -48,7 +48,7 @@ export const ProductListToolbar = (props) => {
   const { loading, error } = state;
 
   const [openAlert, setopenAlert] = useState(true);
-  error && console.log(error);
+
   const Router = useRouter();
 
   // const handleUpdate = (values) => {
@@ -110,7 +110,7 @@ export const ProductListToolbar = (props) => {
           <CardContent>
             <Box sx={{ maxWidth: 500 }}>
               <Formik
-                initialValues={INITIAL_FORM_VALUES}
+                initialValues={{ ...INITIAL_FORM_VALUES }}
                 onSubmit={handleSubmit}
                 validationSchema={FORM_VALIDATIONS}
               >

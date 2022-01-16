@@ -17,7 +17,7 @@ export const CustomTextField = ({ name, ...other }) => {
 };
 
 // custom select
-export const CustomSelect = ({ name, options, ...other }) => {
+export const CustomSelect = ({ name, options, i, ...other }) => {
   const [field, meta] = useField(name);
   const { setFieldValue } = useFormikContext();
 
@@ -41,7 +41,7 @@ export const CustomSelect = ({ name, options, ...other }) => {
   }
   return (
     <TextField {...defaultConfiq}>
-      {options.map((option) => {
+      {options.map((option, index) => {
         return (
           <MenuItem key={option._id} value={option._id || option.name}>
             {option.branch_name ||
