@@ -31,27 +31,30 @@ import { Store } from "src/statesManagement/store/store";
 
 export const AddStoreOutlets = (props) => {
   const { dispatch, state } = useContext(Store);
-  const { error } = state;
-  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
-  error && enqueueSnackbar(error, { variant: "error" });
+  const { enqueueSnackbar } = useSnackbar();
 
   const Router = useRouter();
   const handleSubmit = (values) => {
-    addStore({ dispatch: dispatch, store: values, Router: Router });
+    addStore({
+      dispatch: dispatch,
+      store: values,
+      Router: Router,
+      enqueueSnackbar: enqueueSnackbar,
+    });
     console.log(values);
   };
   const INITIAL_FORM_STATE = {
-    storeName: "",
+    branch_name: "",
     address: "",
-    manager: "",
-    phone: "",
+    manager_name: "",
+    manager_phone: "",
   };
 
   const FORM_VALIDATIONS = yup.object().shape({
-    storeName: yup.string().required("Please input Store Name"),
+    branch_name: yup.string().required("Please input Store Name"),
     address: yup.string().required("Please input Store Address"),
-    manager: yup.string().required("Please inpu name of manager"),
-    phone: yup
+    manager_name: yup.string().required("Please inpu name of manager"),
+    manager_phone: yup
       .number()
       .integer()
       .typeError("Please enter a valid phone number")
@@ -95,7 +98,7 @@ export const AddStoreOutlets = (props) => {
                   <Grid container spacing={2}>
                     <Grid item xs={12}>
                       <CustomTextField
-                        name="storeName"
+                        name="branch_name"
                         label="Store Name"
                         InputProps={{
                           endAdornment: (
@@ -121,7 +124,7 @@ export const AddStoreOutlets = (props) => {
                     </Grid>
                     <Grid item xs={12}>
                       <CustomTextField
-                        name="manager"
+                        name="manager_name"
                         label="Manager/Contact Person"
                         InputProps={{
                           endAdornment: (
@@ -134,7 +137,7 @@ export const AddStoreOutlets = (props) => {
                     </Grid>
                     <Grid item xs={12}>
                       <CustomTextField
-                        name="phone"
+                        name="manager_phone"
                         label="Phone"
                         InputProps={{
                           endAdornment: (

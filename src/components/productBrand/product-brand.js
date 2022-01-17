@@ -23,6 +23,7 @@ import AlertBox from "../alert";
 import { useRouter } from "next/router";
 import { Store } from "src/statesManagement/store/store";
 import NextLink from "next/link";
+import { useSnackbar } from "notistack";
 
 const INITIAL_FORM_VALUES = {
   name: "",
@@ -47,18 +48,29 @@ export const ProductBrand = (props) => {
   const [openAlert, setopenAlert] = useState(true);
   error && console.log(error);
   const Router = useRouter();
-
+  const { enqueueSnackbar } = useSnackbar();
   const handleUpdate = (values) => {
     const brand = {
       brand_name: values.name,
     };
-    updateBrand({ dispatch: dispatch, brand: brand, brandId: id, Router: Router });
+    updateBrand({
+      dispatch: dispatch,
+      brand: brand,
+      brandId: id,
+      Router: Router,
+      enqueueSnackbar: enqueueSnackbar,
+    });
   };
   const handleSubmit = (values) => {
     const brand = {
       brand_name: values.name,
     };
-    addBrand(dispatch, brand, Router);
+    addBrand({
+      dispatch: dispatch,
+      brand: brand,
+      Router: Router,
+      enqueueSnackbar: enqueueSnackbar,
+    });
   };
 
   return (

@@ -1,11 +1,13 @@
 import { Button, Typography } from "@mui/material";
 import MUIDataTable from "mui-datatables";
+import { useSnackbar } from "notistack";
 import { useContext, useEffect, useState } from "react";
 import { addSalesData } from "src/statesManagement/store/actions/sales-action";
 import { Store } from "src/statesManagement/store/store";
 
 const SalesList = ({ cart }) => {
   const { dispatch, state } = useContext(Store);
+  const { enqueueSnackbar } = useSnackbar();
   const handleSubmitSalesData = () => {
     cart.cartItems.map((data) => {
       const salesData = {
@@ -19,8 +21,8 @@ const SalesList = ({ cart }) => {
         created_at: data.created_at,
         branch: data.branch,
       };
-      console.log(salesData);
-      addSalesData(dispatch, salesData);
+
+      addSalesData({ dispatch: dispatch, salesData: salesData, enqueueSnackbar: enqueueSnackbar });
     });
   };
   const columns = [

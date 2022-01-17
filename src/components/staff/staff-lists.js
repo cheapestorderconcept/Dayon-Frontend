@@ -1,7 +1,9 @@
 import { Button, Typography } from "@mui/material";
 import MUIDataTable from "mui-datatables";
 import { useRouter } from "next/router";
+import { useSnackbar } from "notistack";
 import { useContext, useEffect, useState } from "react";
+import { deleteStaff } from "src/statesManagement/store/actions/register-staff-action";
 import { Store } from "src/statesManagement/store/store";
 
 const ListOfStaff = ({ staff }) => {
@@ -13,10 +15,17 @@ const ListOfStaff = ({ staff }) => {
     setready(true);
   }, []);
 
+  const { enqueueSnackbar } = useSnackbar();
+
   const handleDelete = (tableMeta) => (e) => {
     confirm("Are you sure you want to delete Staff");
     const staffId = tableMeta.rowData[2];
-    deleteStaff(dispatch, staffId, Router);
+    deleteStaff({
+      dispatch: dispatch,
+      staffId: staffId,
+      Router: Router,
+      enqueueSnackbar: enqueueSnackbar,
+    });
   };
 
   const columns = [

@@ -21,6 +21,7 @@ import { Store } from "src/statesManagement/store/store";
 import { useRouter } from "next/router";
 import NextLink from "next/link";
 import { updateProduct } from "src/statesManagement/store/actions/product-action";
+import { useSnackbar } from "notistack";
 
 const INITIAL_FORM_VALUES = {
   // name: "",
@@ -37,19 +38,23 @@ export const EditProductForm = (props) => {
   const { title, id } = props;
 
   const { dispatch, state } = useContext(Store);
-  const { loading, error } = state;
-
-  error && enqueueSnackbar(error, { variant: "error" });
+  const { loading } = state;
 
   const Router = useRouter();
-
+  const { enqueueSnackbar } = useSnackbar();
   const handleSubmit = (values) => {
     const product = {
       // product_name: values.name,
       price: Number(values.price),
       quantity: Number(values.current_product_quantity),
     };
-    updateProduct({ dispatch: dispatch, product: product, productId: id, Router: Router });
+    updateProduct({
+      dispatch: dispatch,
+      product: product,
+      productId: id,
+      Router: Router,
+      enqueueSnackbar: enqueueSnackbar,
+    });
     console.log(product);
   };
   return (

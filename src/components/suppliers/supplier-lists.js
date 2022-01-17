@@ -5,6 +5,7 @@ import { Store } from "src/statesManagement/store/store";
 import { Button, Typography } from "@mui/material";
 import NextLink from "next/link";
 import { useRouter } from "next/router";
+import { useSnackbar } from "notistack";
 const SuppliersList = () => {
   const { dispatch, state } = useContext(Store);
   const { suppliers } = state;
@@ -17,10 +18,17 @@ const SuppliersList = () => {
     // getSuppliers(dispatch);
   }, []);
 
+  const { enqueueSnackbar } = useSnackbar();
+
   const handleDelete = (tableMeta) => (e) => {
     confirm("Are you sure you want to delete");
     const supId = tableMeta.rowData[2];
-    deleteSupplier(dispatch, supId, Router);
+    deleteSupplier({
+      dispatch: dispatch,
+      supId: supId,
+      enqueueSnackbar: enqueueSnackbar,
+      Router: Router,
+    });
   };
 
   const columns = [

@@ -23,6 +23,7 @@ import { addProduct, updateProduct } from "src/statesManagement/store/actions/pr
 import AlertBox from "../alert";
 import NextLink from "next/link";
 import { useSnackbar } from "notistack";
+import Loading from "../loading/Loading";
 
 const INITIAL_FORM_VALUES = {
   name: "",
@@ -46,11 +47,8 @@ const FORM_VALIDATIONS = yup.object().shape({
 export const ProductListToolbar = (props) => {
   const { title, suppliers, brands } = props;
   const { dispatch, state } = useContext(Store);
-  const { loading, error } = state;
-
-  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
-  error && enqueueSnackbar(error, { variant: "error" });
-
+  const { loading } = state;
+  const { enqueueSnackbar } = useSnackbar();
   const Router = useRouter();
 
   // const handleUpdate = (values) => {
@@ -72,7 +70,12 @@ export const ProductListToolbar = (props) => {
       product_barcode: values.barcode,
       supplier: values.supplier,
     };
-    addProduct(dispatch, product, Router);
+    addProduct({
+      dispatch: dispatch,
+      product: product,
+      Router: Router,
+      enqueueSnackbar: enqueueSnackbar,
+    });
   };
   return (
     <Box {...props}>

@@ -5,6 +5,7 @@ import { useContext, useEffect, useState } from "react";
 import NextLink from "next/link";
 import { Store } from "src/statesManagement/store/store";
 import { deleteBrand } from "src/statesManagement/store/actions/brand-action";
+import { useSnackbar } from "notistack";
 
 const BrandTable = ({ brands }) => {
   const { dispatch } = useContext(Store);
@@ -18,10 +19,17 @@ const BrandTable = ({ brands }) => {
     setready(true);
   }, []);
 
+  const { enqueueSnackbar } = useSnackbar();
+
   const handleDelete = (tableMeta) => (e) => {
     confirm("Are you sure you want to delete");
     const brandId = tableMeta.rowData[2];
-    deleteBrand(dispatch, brandId, Router);
+    deleteBrand({
+      dispatch: dispatch,
+      brandId: brandId,
+      Router: Router,
+      enqueueSnackbar: enqueueSnackbar,
+    });
   };
 
   const columns = [

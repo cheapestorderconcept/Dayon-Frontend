@@ -22,12 +22,12 @@ const Stock = () => {
   const router = useRouter();
 
   const { userInfo, products, error, loading } = state;
-  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
-  error && enqueueSnackbar(error, { variant: "error" });
+
+  const { enqueueSnackbar } = useSnackbar();
 
   useEffect(() => {
     !userInfo && router.push("/auth");
-    getProduct(dispatch);
+    getProduct({ dispatch, enqueueSnackbar: enqueueSnackbar });
     // getProductPrice(dispatch);
     // getOutOfStock(dispatch);
   }, []);

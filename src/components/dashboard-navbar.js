@@ -51,7 +51,7 @@ export const DashboardNavbar = (props) => {
   };
   const router = useRouter();
   const Logout = () => {
-    logoutAction(dispatch, router);
+    logoutAction({ dispatch: dispatch, router: router });
   };
   return (
     <>

@@ -20,8 +20,7 @@ const Dashboard = () => {
   const router = useRouter();
   const { state } = useContext(Store);
   const { userInfo, products, error } = state;
-  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
-  error && enqueueSnackbar(error, { variant: "error" });
+
   useEffect(() => {
     !userInfo && router.push("/auth");
   }, []);

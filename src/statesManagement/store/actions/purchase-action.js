@@ -8,26 +8,26 @@ import {
   GET_PURCHASE_SUCCESS,
 } from "../constants";
 
-export const getPurchase = async (dispatch) => {
+export const getPurchase = async ({ dispatch, enqueueSnackbar }) => {
   try {
     dispatch({
       type: GET_PURCHASE_REQUEST,
     });
     const { data } = await makeNetworkCall({ method: "GET", path: "/view-purchase" });
-    console.log(data.data);
+
     dispatch({
       type: GET_PURCHASE_SUCCESS,
       payload: data.data,
     });
   } catch (error) {
-    dispatch({
-      type: GET_PURCHASE_FAIL,
-      payload: error?.response?.data?.response_message || error.message,
-    });
+    error &&
+      enqueueSnackbar(error?.response?.data?.response_message || error.message, {
+        variant: "error",
+      });
   }
 };
 
-export const addPurchase = async (dispatch, purchase, Router) => {
+export const addPurchase = async ({ dispatch, purchase, Router, enqueueSnackbar }) => {
   try {
     dispatch({
       type: ADD_PURCHASE_REQUEST,
@@ -42,12 +42,16 @@ export const addPurchase = async (dispatch, purchase, Router) => {
       type: ADD_PURCHASE_SUCCESS,
       payload: data,
     });
+    data &&
+      enqueueSnackbar(data?.response_message, {
+        variant: "success",
+      });
 
     // Router.reload(window.location.pathname);
   } catch (error) {
-    dispatch({
-      type: ADD_PURCHASE_FAIL,
-      payload: error?.response?.data?.response_message || error.message,
-    });
+    error &&
+      enqueueSnackbar(error?.response?.data?.response_message || error.message, {
+        variant: "error",
+      });
   }
 };

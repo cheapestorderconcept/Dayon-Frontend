@@ -1,20 +1,91 @@
 import MUIDataTable from "mui-datatables";
 import { useEffect, useState } from "react";
 
-const ListOfExpensesCategory = () => {
+const ListOfExpensesCategory = ({ expensesCategories }) => {
   const [ready, setready] = useState(false);
   useEffect(() => {
     setready(true);
   }, []);
-
-  const columns = ["S/N", "NAME"];
-
-  const data = [["1", "Furniture"]];
+  const editColums = [
+    // {
+    //   name: "Delete",
+    //   options: {
+    //     filter: true,
+    //     sort: false,
+    //     empty: true,
+    //     customBodyRender: (value, tableMeta, updateValue) => {
+    //       return (
+    //         <Button onClick={handleDelete(tableMeta)} variant="contained" color="error">
+    //           <NextLink
+    //             href={`/expenses/${tableMeta.rowData[2]}`}
+    //             style={{ textDecoration: "none", color: "white" }}
+    //           >
+    //             <Typography variant="body1" color="inherit">
+    //               Delete
+    //             </Typography>
+    //           </NextLink>
+    //         </Button>
+    //       );
+    //     },
+    //   },
+    // },
+    // {
+    //   name: "Edit",
+    //   options: {
+    //     filter: true,
+    //     sort: false,
+    //     empty: true,
+    //     customBodyRender: (value, tableMeta, updateValue) => {
+    //       return (
+    //         <Button variant="contained">
+    //           <NextLink
+    //             href={`/expenses/${tableMeta.rowData[2]}`}
+    //             style={{ textDecoration: "none", color: "white" }}
+    //           >
+    //             <Typography variant="body1" color="inherit">
+    //               Edit
+    //             </Typography>
+    //           </NextLink>
+    //         </Button>
+    //       );
+    //     },
+    //   },
+    // },
+    {
+      name: "ID",
+    },
+    {
+      name: "NAME",
+    },
+    {
+      name: "ADDRESS",
+    },
+    {
+      name: "PHONE",
+    },
+    {
+      name: "EMAIL",
+    },
+    {
+      name: "CONTACT PERSON",
+    },
+  ];
+  const colums = [
+    {
+      name: "ID",
+    },
+    {
+      name: "CATEGORY NAME",
+    },
+  ];
 
   const options = {
     filter: true,
     sort: true,
   };
+
+  const exp = expensesCategories.map((exp) => Object.values(exp));
+  const data = [...exp];
 
   return (
     <>
@@ -22,7 +93,7 @@ const ListOfExpensesCategory = () => {
         <MUIDataTable
           title={"List Of Expenses Category"}
           data={data}
-          columns={columns}
+          columns={colums}
           options={options}
         />
       )}

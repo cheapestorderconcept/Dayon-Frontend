@@ -87,24 +87,24 @@ const items = [
     href2: "/deposit/managedeposit",
     title2: "Manage Deposit",
   },
-  {
-    href: "/transfer",
-    icon: <ShoppingCartIcon fontSize="small" />,
-    mainTitle: "Transfer To Outlets",
-    title: "Add Transfer To Outlets",
-    hasdropdown: true,
-    href2: "/transfer/manage-transfer",
-    title2: "Manage Transfer Log",
-  },
-  {
-    href: "/subdealer",
-    icon: <PeopleIcon fontSize="small" />,
-    mainTitle: "Subdealer",
-    title: "Add Subdealer",
-    hasdropdown: true,
-    href2: "/subdealer/manage-subdealer",
-    title2: "Manage Subdealer",
-  },
+  // {
+  //   href: "/transfer",
+  //   icon: <ShoppingCartIcon fontSize="small" />,
+  //   mainTitle: "Transfer To Outlets",
+  //   title: "Add Transfer To Outlets",
+  //   hasdropdown: true,
+  //   href2: "/transfer/manage-transfer",
+  //   title2: "Manage Transfer Log",
+  // },
+  // {
+  //   href: "/subdealer",
+  //   icon: <PeopleIcon fontSize="small" />,
+  //   mainTitle: "Subdealer",
+  //   title: "Add Subdealer",
+  //   hasdropdown: true,
+  //   href2: "/subdealer/manage-subdealer",
+  //   title2: "Manage Subdealer",
+  // },
 
   {
     href: "/suppliers",
@@ -118,7 +118,7 @@ const items = [
     mainTitle: "Expenses",
     title: "Add Expenses",
     hasdropdown: true,
-    href2: "/manage-expenses",
+    href2: "/expenses/manage-expenses",
     title2: "Manage Expenses",
   },
   {
@@ -128,25 +128,25 @@ const items = [
     mainTitle: "Staff",
   },
   {
-    href: "/sales-report",
+    href: "/reporting",
     icon: <BarChartIcon fontSize="small" />,
     mainTitle: "Reporting",
     title: "Sales Report",
     hasdropdown: true,
     title2: "Profit/Loss Report",
-    href2: "/report-profit-loss",
+    href2: "/reporting/report-profit-loss",
     title3: "Transfer To Outlets",
-    href3: "/transfer-report",
+    href3: "/reporting/transfer-report",
     title4: "Deposit Report",
-    href4: "/deposit-report",
+    href4: "/reporting/deposit-report",
     title5: "Product Price List",
-    href5: "/product-price-list",
+    href5: "/reporting/product-price-list",
     title6: "Stock Level Summary Balance",
-    href6: "/stock-level-balance",
+    href6: "/reporting/stock-level-balance",
     title7: "Out Of Stock Products",
-    href7: "/report-out-of-stock",
+    href7: "/reporting/report-out-of-stock",
     title8: "Suppliers Ledger",
-    href8: "/supplier-ledger-report",
+    href8: "/reporting/supplier-ledger-report",
   },
   {
     href: "/auth",
@@ -214,8 +214,8 @@ export const DashboardSidebar = (props) => {
               }}
             >
               <div>
-                <Typography color="inherit" variant="subtitle1">
-                  18A Nigeria Ltd.
+                <Typography color="inherit" variant="h6">
+                  Dayon Techonology.
                 </Typography>
                 <Typography color="neutral.400" variant="body2">
                   Daycon Consult : Available

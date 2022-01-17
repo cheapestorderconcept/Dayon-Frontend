@@ -20,13 +20,11 @@ const Staff = () => {
   const router = useRouter();
 
   const { userInfo, staff, branch, error } = state;
-  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
-  error && enqueueSnackbar(error, { variant: "error" });
-
+  const { enqueueSnackbar } = useSnackbar();
   useEffect(() => {
     !userInfo && router.push("/auth");
-    getStaff(dispatch);
-    getStores({ dispatch: dispatch });
+    getStaff({ dispatch: dispatch, enqueueSnackbar: enqueueSnackbar });
+    getStores({ dispatch: dispatch, enqueueSnackbar: enqueueSnackbar });
   }, []);
   return (
     <>

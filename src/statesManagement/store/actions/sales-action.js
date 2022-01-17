@@ -10,21 +10,21 @@ import {
   GET_TOTAL_SALES_SUCCESS,
 } from "../constants";
 
-export const addSales = async ({ dispatch, sales }) => {
+export const addSales = async ({ dispatch, sales, enqueueSnackbar }) => {
   try {
     dispatch({
       type: ADD_SALES_SUCCESS,
       payload: { ...sales },
     });
   } catch (error) {
-    dispatch({
-      type: ADD_SALES_FAIL,
-      payload: error?.response?.data?.response_message || error.message,
-    });
+    error &&
+      enqueueSnackbar(error?.response?.data?.response_message || error.message, {
+        variant: "error",
+      });
   }
 };
 
-export const getTotalSales = async (dispatch) => {
+export const getTotalSales = async ({ dispatch, enqueueSnackbar }) => {
   try {
     dispatch({
       type: GET_TOTAL_SALES_REQUEST,
@@ -36,14 +36,14 @@ export const getTotalSales = async (dispatch) => {
       payload: data.data,
     });
   } catch (error) {
-    dispatch({
-      type: GET_TOTAL_SALES_FAIL,
-      payload: error?.response?.data?.response_message || error.message,
-    });
+    error &&
+      enqueueSnackbar(error?.response?.data?.response_message || error.message, {
+        variant: "error",
+      });
   }
 };
 
-export const addSalesData = async ({ dispatch, sales, Router }) => {
+export const addSalesData = async ({ dispatch, sales, Router, enqueueSnackbar }) => {
   try {
     dispatch({
       type: ADD_SALES_DATA_REQUEST,
@@ -58,12 +58,16 @@ export const addSalesData = async ({ dispatch, sales, Router }) => {
       type: ADD_SALES_DATASUCCESS,
       payload: data,
     });
+    data &&
+      enqueueSnackbar(data?.response_message, {
+        variant: "success",
+      });
 
     // Router.reload(window.location.pathname);
   } catch (error) {
-    dispatch({
-      type: ADD_SALES_DATA_FAIL,
-      payload: error?.response?.data?.response_message || error.message,
-    });
+    error &&
+      enqueueSnackbar(error?.response?.data?.response_message || error.message, {
+        variant: "error",
+      });
   }
 };

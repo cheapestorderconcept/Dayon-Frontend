@@ -9,6 +9,7 @@ import dynamic from "next/dynamic";
 import { useContext, useEffect } from "react";
 import { getPurchase } from "src/statesManagement/store/actions/purchase-action";
 import { Store } from "src/statesManagement/store/store";
+import { useSnackbar } from "notistack";
 
 const DynamicComponentWithNoSSR = dynamic(() => import("src/components/navbar-branch-indicator"), {
   ssr: false,
@@ -17,10 +18,10 @@ const DynamicComponentWithNoSSR = dynamic(() => import("src/components/navbar-br
 const PurcahseListsPage = () => {
   const { dispatch, state } = useContext(Store);
   const { purchase, userInfo } = state;
-  console.log(purchase);
+  const { enqueueSnackbar } = useSnackbar();
   useEffect(() => {
     !userInfo && router.push("/auth");
-    getPurchase(dispatch);
+    getPurchase({ dispatch: dispatch, enqueueSnackbar: enqueueSnackbar });
   }, []);
 
   return (

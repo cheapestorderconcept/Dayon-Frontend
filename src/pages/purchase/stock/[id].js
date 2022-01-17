@@ -21,14 +21,14 @@ const EditProduct = () => {
   const { query } = useRouter();
   const router = useRouter();
   const { userInfo, products, brands, suppliers, error } = state;
-  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
-  error && enqueueSnackbar(error, { variant: "error" });
+
   const [id, setid] = useState(null);
+  const { enqueueSnackbar } = useSnackbar();
 
   useEffect(() => {
     !userInfo && router.push("/auth");
     setid(query.id);
-    getProduct(dispatch);
+    getProduct({ dispatch: dispatch, enqueueSnackbar: enqueueSnackbar });
   }, [query.id]);
 
   return (

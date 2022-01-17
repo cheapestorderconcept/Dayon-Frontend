@@ -19,14 +19,13 @@ const EditBrand = () => {
   const { query } = useRouter();
   const router = useRouter();
   const { userInfo, brands, error } = state;
-  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
-  error && enqueueSnackbar(error, { variant: "error" });
-  const [id, setid] = useState(null);
 
+  const [id, setid] = useState(null);
+  const { enqueueSnackbar } = useSnackbar();
   useEffect(() => {
     !userInfo && router.push("/auth");
     setid(query.id);
-    getBrands(dispatch);
+    getBrands({ dispatch: dispatch, enqueueSnackbar: enqueueSnackbar });
   }, [query.id]);
 
   return (

@@ -5,10 +5,9 @@ import { getBrands } from "./brand-action";
 import { getProduct } from "./product-action";
 import { getPurchase } from "./purchase-action";
 import { getStaff } from "./register-staff-action";
-import { getStores } from "./store-outlet-action";
 import { getSuppliers } from "./supplier-action";
 
-export const loginAction = async (loginDetails, dispatch) => {
+export const loginAction = async ({ loginDetails, dispatch, enqueueSnackbar }) => {
   try {
     dispatch({
       type: LOGIN_REQUEST,
@@ -24,15 +23,15 @@ export const loginAction = async (loginDetails, dispatch) => {
     });
 
     Cookies.set("user", data.data.token);
-    getProduct(dispatch);
-    getSuppliers(dispatch);
-    getBrands(dispatch);
-    getPurchase(dispatch);
-    getStaff(dispatch);
+    getProduct({ dispatch: dispatch, enqueueSnackbar: enqueueSnackbar });
+    getSuppliers({ dispatch: dispatch, enqueueSnackbar: enqueueSnackbar });
+    getBrands({ dispatch: dispatch, enqueueSnackbar: enqueueSnackbar });
+    getPurchase({ dispatch: dispatch, enqueueSnackbar: enqueueSnackbar });
+    getStaff({ dispatch: dispatch, enqueueSnackbar: enqueueSnackbar });
   } catch (error) {
-    dispatch({
-      type: LOGIN_FAIL,
-      payload: error?.response?.data?.response_message || error.message,
-    });
+    error &&
+      enqueueSnackbar(error?.response?.data?.response_message || error.message, {
+        variant: "error",
+      });
   }
 };

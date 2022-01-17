@@ -14,7 +14,7 @@ import {
   UPDATE_SUPPLIERS_FAIL,
 } from "../constants/index";
 
-export const getSuppliers = async (dispatch) => {
+export const getSuppliers = async ({ dispatch, enqueueSnackbar }) => {
   try {
     dispatch({
       type: GET_SUPPLIERS_REQUEST,
@@ -26,14 +26,14 @@ export const getSuppliers = async (dispatch) => {
       payload: data.data.supplier,
     });
   } catch (error) {
-    dispatch({
-      type: GET_SUPPLIERS_FAIL,
-      payload: error?.response?.data?.response_message || error.message,
-    });
+    error &&
+      enqueueSnackbar(error?.response?.data?.response_message || error.message, {
+        variant: "error",
+      });
   }
 };
 
-export const addSupplier = async (dispatch, supplier, Router) => {
+export const addSupplier = async ({ dispatch, supplier, Router, enqueueSnackbar }) => {
   try {
     dispatch({
       type: ADD_SUPPLIERS_REQUEST,
@@ -47,16 +47,20 @@ export const addSupplier = async (dispatch, supplier, Router) => {
       type: ADD_SUPPLIERS_SUCCESS,
       payload: data.data,
     });
-    Router.reload(window.location.pathname);
+    data &&
+      enqueueSnackbar(data?.response_message, {
+        variant: "success",
+      });
+    // Router.reload(window.location.pathname);
   } catch (error) {
-    dispatch({
-      type: ADD_SUPPLIERS_FAIL,
-      payload: error?.response?.data?.response_message || error.message,
-    });
+    error &&
+      enqueueSnackbar(error?.response?.data?.response_message || error.message, {
+        variant: "error",
+      });
   }
 };
 
-export const deleteSupplier = async (dispatch, supId, Router) => {
+export const deleteSupplier = async ({ dispatch, supId, Router, enqueueSnackbar }) => {
   try {
     dispatch({
       type: DELETE_SUPPLIERS_REQUEST,
@@ -69,18 +73,21 @@ export const deleteSupplier = async (dispatch, supId, Router) => {
       type: DELETE_SUPPLIERS_SUCCESS,
       payload: data.data._id,
     });
-    console.log(data.data);
-    Router.reload(window.location.pathname);
+    data &&
+      enqueueSnackbar(data?.response_message, {
+        variant: "success",
+      });
+    // Router.reload(window.location.pathname);
   } catch (error) {
     console.log(error);
-    dispatch({
-      type: DELETE_SUPPLIERS_FAIL,
-      payload: error?.response?.data?.response_message || error.message,
-    });
+    error &&
+      enqueueSnackbar(error?.response?.data?.response_message || error.message, {
+        variant: "error",
+      });
   }
 };
 
-export const updateSupplier = async ({ dispatch, supplier, supId, Router }) => {
+export const updateSupplier = async ({ dispatch, supplier, supId, Router, enqueueSnackbar }) => {
   try {
     dispatch({
       type: UPDATE_SUPPLIER_REQUEST,
@@ -96,11 +103,15 @@ export const updateSupplier = async ({ dispatch, supplier, supId, Router }) => {
       type: UPDATE_SUPPLIERS_SUCCESS,
       payload: data.data,
     });
-    Router.reload(window.location.pathname);
+    data &&
+      enqueueSnackbar(data?.response_message, {
+        variant: "success",
+      });
+    // Router.reload(window.location.pathname);
   } catch (error) {
-    dispatch({
-      type: UPDATE_SUPPLIERS_FAIL,
-      payload: error?.response?.data?.response_message || error.message,
-    });
+    error &&
+      enqueueSnackbar(error?.response?.data?.response_message || error.message, {
+        variant: "error",
+      });
   }
 };

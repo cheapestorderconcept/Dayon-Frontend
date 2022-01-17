@@ -28,6 +28,7 @@ import { Store } from "src/statesManagement/store/store";
 import NextLink from "next/link";
 import { useRouter } from "next/router";
 import AlertBox from "../alert";
+import { useSnackbar } from "notistack";
 
 const FORM_VALIDATIONS = yup.object().shape({
   name: yup.string().required("Please enter supllier Name"),
@@ -45,7 +46,7 @@ export const AddSuppliers = (props) => {
   const { title, id } = props;
   const { dispatch, state } = useContext(Store);
   const { loading, suppliers } = state;
-
+  const { enqueueSnackbar } = useSnackbar();
   console.log(id);
   let mySupplier = {};
   if (id != null) {
@@ -63,7 +64,13 @@ export const AddSuppliers = (props) => {
       supplier_email: values.email,
       contact_person: values.contactPerson,
     };
-    updateSupplier({ dispatch: dispatch, supplier: supplier, supId: id, Router: Router });
+    updateSupplier({
+      dispatch: dispatch,
+      supplier: supplier,
+      supId: id,
+      Router: Router,
+      enqueueSnackbar: enqueueSnackbar,
+    });
   };
   const handleSubmit = (values) => {
     const supplier = {
@@ -73,7 +80,12 @@ export const AddSuppliers = (props) => {
       supplier_email: values.email,
       contact_person: values.contactPerson,
     };
-    addSupplier(dispatch, supplier, Router);
+    addSupplier({
+      dispatch: dispatch,
+      supplier: supplier,
+      Router: Router,
+      enqueueSnackbar: enqueueSnackbar,
+    });
   };
 
   const populateForm = {

@@ -27,11 +27,12 @@ import { getProductByBarcode } from "src/statesManagement/store/actions/product-
 import { Store } from "src/statesManagement/store/store";
 import { addSupplier } from "src/statesManagement/store/actions/supplier-action";
 import { addSales, addSalesData } from "src/statesManagement/store/actions/sales-action";
-import AlertBox from "../../components/alert";
+import { useSnackbar } from "notistack";
 
 // console.log(barcodeInput)
 
 export const AddSales = (props) => {
+  const { paymentType } = props;
   const { dispatch, state } = useContext(Store);
   const { branch, productByBarcode } = state;
 
@@ -76,6 +77,8 @@ export const AddSales = (props) => {
     ),
   });
 
+  const { enqueueSnackbar } = useSnackbar();
+
   const addMoreItems = (values, setValues) => {
     const items = [...values.items];
 
@@ -93,8 +96,7 @@ export const AddSales = (props) => {
   };
 
   const Submit = (values) => {
-    addSalesData({ dispatch: dispatch, sales: values });
-    console.log(values);
+    addSalesData({ dispatch: dispatch, sales: values, enqueueSnackbar: enqueueSnackbar });
   };
 
   const formRef = useRef(null);
@@ -102,7 +104,16 @@ export const AddSales = (props) => {
   const [open, setopen] = useState(true);
 
   useEffect(() => {
-    const timeOutId = setTimeout(() => getProductByBarcode(dispatch, barcode), 500);
+    const timeOutId = setTimeout(
+      () =>
+        barcode != "" &&
+        getProductByBarcode({
+          dispatch: dispatch,
+          barcode: barcode,
+          enqueueSnackbar: enqueueSnackbar,
+        }),
+      500
+    );
     return () => clearTimeout(timeOutId);
   }, [barcode]);
 
@@ -122,24 +133,6 @@ export const AddSales = (props) => {
           <Typography>Item {i + 1}</Typography>
         </Grid>
 
-        {/* <Grid item xs={6}>
-          <form onSubmit={(e) => e.preventDefault()}>
-            <TextField
-              name="barcodeNum"
-              label="Scan Barcode"
-              value={barcode}
-              autoFocus={true}
-              onChange={handleChange}
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <ListIcon />
-                  </InputAdornment>
-                ),
-              }}
-            />
-          </form>
-        </Grid> */}
         <Grid item xs={6}>
           <CustomTextField
             name={`items.${i}.barcode`}
@@ -147,12 +140,6 @@ export const AddSales = (props) => {
             onKeyPress={(e) => {
               e.key === "Enter" && e.preventDefault();
             }}
-            // value={barcode}
-            // onChange={(e) => {
-            //   setbarcode(e.currentTarget.value);
-
-            //   handleChange(e);
-            // }}
             autoFocus={true}
             InputProps={{
               endAdornment: (
@@ -192,9 +179,11 @@ export const AddSales = (props) => {
         <Grid item xs={6}>
           <CustomTextField name={`items.${i}.quantity`} label="Quantity" />
           {productByBarcode.length > 0 && typeof productByBarcode[i] != "undefined"
-            ? Number(items.quantity) > productByBarcode[i].current_product_quantity && (
-                <AlertBox open={open} severity="error" setopen={setopen} message="out of stock" />
-              )
+            ? Number(items.quantity) > productByBarcode[i].current_product_quantity &&
+              enqueueSnackbar("provided quantity is out of stock", {
+                variant: "warning",
+                preventDuplicate: true,
+              })
             : null}
         </Grid>
 
@@ -315,7 +304,7 @@ export const AddSales = (props) => {
                         <CustomSelect
                           name="payment_type"
                           label="Payment Type"
-                          options={paymentMethods}
+                          options={paymentType}
                         />
                       </Grid>
 

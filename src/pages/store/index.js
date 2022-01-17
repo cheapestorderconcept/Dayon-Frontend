@@ -5,9 +5,10 @@ import { AddStoreOutlets } from "src/components/storeoutlets/add-store";
 import StoreOuletLists from "src/components/storeoutlets/store-lists";
 import dynamic from "next/dynamic";
 import { makeNetworkCall, networkCall } from "src/network";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { Store } from "src/statesManagement/store/store";
 import { useSnackbar } from "notistack";
+import { getStores } from "src/statesManagement/store/actions/store-outlet-action";
 
 const DynamicComponentWithNoSSR = dynamic(() => import("src/components/navbar-branch-indicator"), {
   ssr: false,
@@ -16,8 +17,11 @@ const DynamicComponentWithNoSSR = dynamic(() => import("src/components/navbar-br
 const Branch = () => {
   const { dispatch, state } = useContext(Store);
   const { branch, error } = state;
-  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
-  error && enqueueSnackbar(error, { variant: "error" });
+  const { enqueueSnackbar } = useSnackbar();
+
+  useEffect(() => {
+    getStores({ dispatch: dispatch, enqueueSnackbar: enqueueSnackbar });
+  }, []);
 
   return (
     <>

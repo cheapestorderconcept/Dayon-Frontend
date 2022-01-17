@@ -16,9 +16,9 @@ const DynamicComponentWithNoSSR = dynamic(() => import("src/components/navbar-br
 const Sales = () => {
   const { dispatch, state } = useContext(Store);
   const router = useRouter();
-  const { userInfo, error } = state;
-  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
-  error && enqueueSnackbar(error, { variant: "error" });
+  const { userInfo, paymentType } = state;
+  console.log(paymentType);
+
   useEffect(() => {
     !userInfo && router.push("/auth");
     // getTotalSales(dispatch);
@@ -37,7 +37,7 @@ const Sales = () => {
       >
         <DynamicComponentWithNoSSR />
         <Container maxWidth={true}>
-          <AddSales />
+          <AddSales paymentType={paymentType} />
         </Container>
       </Box>
     </>

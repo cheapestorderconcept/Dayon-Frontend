@@ -1,7 +1,7 @@
 import Cookies from "js-cookie";
 import { LOGOUT } from "../constants/index";
 
-export const logoutAction = async (dispatch, router) => {
+export const logoutAction = async ({ dispatch, router, enqueueSnackbar }) => {
   try {
     dispatch({
       type: LOGOUT,
@@ -9,6 +9,9 @@ export const logoutAction = async (dispatch, router) => {
     Cookies.remove("user");
     router.push("/auth");
   } catch (error) {
-    console.log(error);
+    error &&
+      enqueueSnackbar(error?.response?.data?.response_message || error.message, {
+        variant: "error",
+      });
   }
 };

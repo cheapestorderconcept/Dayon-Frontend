@@ -19,13 +19,14 @@ const AddPurchasePage = () => {
   const { state, dispatch } = useContext(Store);
   const router = useRouter();
 
+  const { enqueueSnackbar } = useSnackbar();
+
   const { userInfo, branch, suppliers, products, purchase, error } = state;
-  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
-  error && enqueueSnackbar(error, { variant: "error" });
+
   console.log(purchase);
   useEffect(() => {
     !userInfo && router.push("/auth");
-    getProduct(dispatch);
+    getProduct({ dispatch: dispatch, enqueueSnackbar: enqueueSnackbar });
   }, []);
   return (
     <>

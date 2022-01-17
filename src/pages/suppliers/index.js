@@ -18,15 +18,14 @@ const Supplier = () => {
   const { state, dispatch } = useContext(Store);
   const router = useRouter();
 
+  const { enqueueSnackbar } = useSnackbar();
   const { userInfo, suppliers, error } = state;
 
   useEffect(() => {
     !userInfo && router.push("/auth");
-    getSuppliers(dispatch);
+    getSuppliers({ dispatch: dispatch, enqueueSnackbar: enqueueSnackbar });
   }, []);
 
-  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
-  error && enqueueSnackbar(error, { variant: "error" });
   return (
     <>
       <Head>
@@ -70,22 +69,3 @@ const Supplier = () => {
 Supplier.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
 
 export default Supplier;
-
-// export async function getStaticProps(context) {
-//   try {
-//     const { data } = await makeNetworkCall({ method: "GET", path: "/view-supplier" });
-//     const suppliers = data.data;
-//     return {
-//       props: {
-//         suppliers,
-//       },
-//     };
-//   } catch (error) {
-//     console.log(error);
-//     return {
-//       props: {
-//         suppliers: null,
-//       },
-//     };
-//   }
-// }

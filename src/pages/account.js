@@ -7,15 +7,16 @@ import { useContext, useEffect } from "react";
 import { Store } from "src/statesManagement/store/store";
 import { getProfile } from "src/statesManagement/store/actions/profile-action";
 import { useRouter } from "next/router";
+import { useSnackbar } from "notistack";
 
 const Account = () => {
   const { dispatch, state } = useContext(Store);
   const { userInfo, profile } = state;
-  console.log(profile);
+  const { enqueueSnackbar } = useSnackbar();
   const router = useRouter();
   useEffect(() => {
     !userInfo && router.push("/auth");
-    getProfile(dispatch);
+    getProfile({ dispatch: dispatch, enqueueSnackbar: enqueueSnackbar });
   }, []);
 
   return (

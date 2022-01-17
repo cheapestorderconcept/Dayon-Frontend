@@ -76,6 +76,30 @@ import {
   ADD_STORE_REQUEST,
   ADD_STORE_FAIL,
   ADD_STORE_SUCCESS,
+  GET_PAYMENT_TYPE_REQUEST,
+  GET_PAYMENT_TYPE_SUCCESS,
+  GET_PAYMENT_TYPE_FAIL,
+  ADD_PAYMENT_TYPE_FAIL,
+  ADD_PAYMENT_TYPE_SUCCESS,
+  ADD_PAYMENT_TYPE_REQUEST,
+  GET_EXPENSES_CARTEGORY_REQUEST,
+  GET_EXPENSES_CARTEGORY_SUCCESS,
+  GET_EXPENSES_CARTEGORY_FAIL,
+  GET_EXPENSES_REQUEST,
+  GET_EXPENSES_SUCCESS,
+  GET_EXPENSES_FAIL,
+  ADD_EXPENSES_CATEGORY_REQUEST,
+  ADD_EXPENSES_CATEGORY_SUCCESS,
+  ADD_EXPENSES_CATEGORY_FAIL,
+  ADD_EXPENSES_REQUEST,
+  ADD_EXPENSES_SUCCESS,
+  ADD_EXPENSES_FAIL,
+  DELETE_EXPENSES_REQUEST,
+  DELETE_EXPENSES_SUCCESS,
+  DELETE_EXPENSES_FAIL,
+  UPDATE_EXPENSES_REQUEST,
+  UPDATE_EXPENSES_SUCCESS,
+  UPDATE_EXPENSES_FAIL,
 } from "../constants";
 
 // const rootReducers = combineReducers({
@@ -188,6 +212,7 @@ const rootReducers = (state, action) => {
     }
     case GET_PRODUCT_FAIL:
       return { ...state, loading: false, error: action.payload };
+
     case ADD_PRODUCT_REQUEST:
       return { ...state, loading: true };
     case ADD_PRODUCT_SUCCESS:
@@ -198,8 +223,8 @@ const rootReducers = (state, action) => {
       return { ...state, loading: true };
     case UPDATE_PRODUCT_SUCCESS:
       return { ...state, loading: false };
-    case UPDATE_PRODUCT_FAIL:
-      return { ...state, loading: false, error: action.payload };
+    // case UPDATE_PRODUCT_FAIL:
+    //   return { ...state, loading: false, error: action.payload };
     case DELETE_PRODUCT_REQUEST:
       return { ...state, loading: true };
     case DELETE_PRODUCT_SUCCESS:
@@ -321,6 +346,87 @@ const rootReducers = (state, action) => {
     case GET_TOTAL_SALES_SUCCESS:
       return { ...state, loading: false, totalSales: action?.payload };
     case GET_TOTAL_SALES_FAIL:
+      return { ...state, loading: false, error: action.payload };
+
+    // Paymnet MMethod Redcuer
+
+    case GET_PAYMENT_TYPE_REQUEST:
+      return { ...state, loading: true };
+    case GET_PAYMENT_TYPE_SUCCESS: {
+      if (Cookies.get("paymentType")) {
+        Cookies.remove("paymentType");
+        Cookies.set("paymentType", JSON.stringify(action.payload));
+      } else {
+        Cookies.set("paymentType", JSON.stringify(action.payload));
+      }
+      return { ...state, loading: false, paymentType: action?.payload };
+    }
+    case GET_PAYMENT_TYPE_FAIL:
+      return { ...state, loading: false, error: action.payload };
+
+    case ADD_PAYMENT_TYPE_REQUEST:
+      return { ...state, loading: true };
+    case ADD_PAYMENT_TYPE_SUCCESS:
+      return { ...state, loading: false };
+    case ADD_PAYMENT_TYPE_FAIL:
+      return { ...state, loading: false, error: action.payload };
+
+    // Expenses Reducers
+
+    case GET_EXPENSES_CARTEGORY_REQUEST:
+      return { ...state, loading: true };
+    case GET_EXPENSES_CARTEGORY_SUCCESS: {
+      if (Cookies.get("expensesCategories")) {
+        Cookies.remove("expensesCategories");
+        Cookies.set("expensesCategories", JSON.stringify(action.payload));
+      } else {
+        Cookies.set("expensesCategories", JSON.stringify(action.payload));
+      }
+      return { ...state, loading: false, expensesCategories: action?.payload };
+    }
+    case GET_EXPENSES_CARTEGORY_FAIL:
+      return { ...state, loading: false, error: action.payload };
+
+    case GET_EXPENSES_REQUEST:
+      return { ...state, loading: true };
+    case GET_EXPENSES_SUCCESS: {
+      if (Cookies.get("expenses")) {
+        Cookies.remove("expenses");
+        Cookies.set("expenses", JSON.stringify(action.payload));
+      } else {
+        Cookies.set("expenses", JSON.stringify(action.payload));
+      }
+      return { ...state, loading: false, expenses: action?.payload };
+    }
+    case GET_EXPENSES_FAIL:
+      return { ...state, loading: false, error: action.payload };
+
+    case ADD_EXPENSES_CATEGORY_REQUEST:
+      return { ...state, loading: true };
+    case ADD_EXPENSES_CATEGORY_SUCCESS:
+      return { ...state, loading: false };
+    case ADD_EXPENSES_CATEGORY_FAIL:
+      return { ...state, loading: false, error: action.payload };
+
+    case ADD_EXPENSES_REQUEST:
+      return { ...state, loading: true };
+    case ADD_EXPENSES_SUCCESS:
+      return { ...state, loading: false };
+    case ADD_EXPENSES_FAIL:
+      return { ...state, loading: false, error: action.payload };
+
+    case DELETE_EXPENSES_REQUEST:
+      return { ...state, loading: true };
+    case DELETE_EXPENSES_SUCCESS:
+      return { ...state, loading: false };
+    case DELETE_EXPENSES_FAIL:
+      return { ...state, loading: false, error: action.payload };
+
+    case UPDATE_EXPENSES_REQUEST:
+      return { ...state, loading: true };
+    case UPDATE_EXPENSES_SUCCESS:
+      return { ...state, loading: false };
+    case UPDATE_EXPENSES_FAIL:
       return { ...state, loading: false, error: action.payload };
 
     default:

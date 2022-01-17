@@ -27,6 +27,7 @@ import { Store } from "src/statesManagement/store/store";
 import { useRouter } from "next/router";
 import { registerStaff } from "src/statesManagement/store/actions/register-staff-action";
 import AlertBox from "../alert";
+import { useSnackbar } from "notistack";
 
 const INITIAL_FORM_STATE = {
   firstName: "",
@@ -52,7 +53,7 @@ export const AddStaff = (props) => {
   const { branch } = props;
   const { dispatch, state } = useContext(Store);
   const { loading, error, notification, success } = state;
-
+  const { enqueueSnackbar } = useSnackbar();
   const roles = [{ name: "Super Admin" }, { name: "Admin" }];
 
   const Router = useRouter();
@@ -68,7 +69,12 @@ export const AddStaff = (props) => {
       password: values.password,
     };
 
-    registerStaff({ dispatch: dispatch, staff: staff, Router: Router });
+    registerStaff({
+      dispatch: dispatch,
+      staff: staff,
+      Router: Router,
+      enqueueSnackbar: enqueueSnackbar,
+    });
   };
   return (
     <Box {...props}>

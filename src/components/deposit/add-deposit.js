@@ -32,6 +32,7 @@ import { Store } from "src/statesManagement/store/store";
 import { addSupplier } from "src/statesManagement/store/actions/supplier-action";
 import { addSales, addSalesData } from "src/statesManagement/store/actions/sales-action";
 import AlertBox from "../../components/alert";
+import { useSnackbar } from "notistack";
 
 // console.log(barcodeInput)
 
@@ -97,16 +98,25 @@ export const AddDeposit = (props) => {
   };
 
   const Submit = (values) => {
-    addSalesData({ dispatch: dispatch, sales: values });
+    // addSalesData({ dispatch: dispatch, sales: values });
     console.log(values);
   };
 
   const formRef = useRef(null);
 
   const [open, setopen] = useState(true);
+  const { enqueueSnackbar } = useSnackbar();
 
   useEffect(() => {
-    const timeOutId = setTimeout(() => getProductByBarcode(dispatch, barcode), 500);
+    const timeOutId = setTimeout(
+      () =>
+        getProductByBarcode({
+          dispatch: dispatch,
+          barcode: barcode,
+          enqueueSnackbar: enqueueSnackbar,
+        }),
+      500
+    );
     return () => clearTimeout(timeOutId);
   }, [barcode]);
 
@@ -237,20 +247,20 @@ export const AddDeposit = (props) => {
         }}
       >
         <Typography sx={{ m: 1 }} variant="h4">
-          Add Sales
+          Add Deposit
         </Typography>
         <Box sx={{ m: 1 }}>
           <Button startIcon={<UploadIcon fontSize="small" />} sx={{ mr: 1 }}>
             Home
           </Button>
           <Button startIcon={<DownloadIcon fontSize="small" />} sx={{ mr: 1 }}>
-            Sales
+            Deposit
           </Button>
         </Box>
       </Box>
       <Box sx={{ mt: 3 }}>
         <Card>
-          <CardHeader title="Add Sales" />
+          <CardHeader title="Add Deposit" />
           <Divider />
           <CardContent>
             <Box sx={{ maxWidth: 800 }}>
@@ -271,22 +281,15 @@ export const AddDeposit = (props) => {
                         <CustomTextField name="invoice_number" label="Invoice Number" />
                       </Grid>
                       <Grid item xs={4}>
-                        <CustomSelect name="branch" label="Branch" options={branch} />
+                        <CustomTextField name="amount_deposited" label="Amount Deposited" />
                       </Grid>
                       <Grid item xs={4}>
-                        <Field name="number of items">
-                          {({ field }) => (
-                            <Button
-                              variant="contained"
-                              color="primary"
-                              onClick={() => addMoreItems(values, setValues)}
-                              startIcon={<DownloadIcon fontSize="small" />}
-                            >
-                              Add More Products
-                            </Button>
-                          )}
-                        </Field>
+                        <CustomTextField name="customer_name" label="Customer Name" />
                       </Grid>
+                      <Grid item xs={4}>
+                        <CustomTextField name="phone_number" label="Customer Phone" />
+                      </Grid>
+
                       <FieldArray name="items">
                         {() =>
                           values.items.map((item, index) => (
@@ -299,33 +302,54 @@ export const AddDeposit = (props) => {
                           ))
                         }
                       </FieldArray>
-                      <Grid item xs={6}>
-                        <CustomTextField
-                          name="total_amount"
-                          label="Total Purchase Amount"
-                          disabled
-                          value={
-                            productByBarcode.length > 0
-                              ? (values.total_amount = values.items.reduce(
-                                  (a, c) => a + c.amount,
-                                  0
-                                ))
-                              : ""
-                          }
-                        />
+                      <Grid xs={12} sx={{ mt: 2 }} spacing={2} container>
+                        <Grid item xs={6}>
+                          <CustomTextField
+                            name="total_amount"
+                            label="Total Purchase Amount"
+                            disabled
+                            value={
+                              productByBarcode.length > 0
+                                ? (values.total_amount = values.items.reduce(
+                                    (a, c) => a + c.amount,
+                                    0
+                                  ))
+                                : ""
+                            }
+                          />
+                        </Grid>
+                        <Grid item xs={6}>
+                          <Field name="number of items">
+                            {({ field }) => (
+                              <Button
+                                variant="contained"
+                                color="primary"
+                                onClick={() => addMoreItems(values, setValues)}
+                                startIcon={<DownloadIcon fontSize="small" />}
+                              >
+                                Add More Products
+                              </Button>
+                            )}
+                          </Field>
+                        </Grid>
                       </Grid>
-                      <Grid item xs={6}>
+                      {/* <Grid item xs={6}>
                         <CustomSelect
                           name="payment_type"
                           label="Payment Type"
                           options={paymentMethods}
                         />
-                      </Grid>
+                      </Grid> */}
 
                       <Grid item xs={12}>
-                        <Button variant="contained" type="submit" onClick={() => Submit(values)}>
+                        <Button
+                          fullWidth={true}
+                          variant="contained"
+                          type="submit"
+                          onClick={() => Submit(values)}
+                        >
                           {" "}
-                          Process Sales
+                          Process Deposit
                         </Button>
                       </Grid>
                     </Grid>

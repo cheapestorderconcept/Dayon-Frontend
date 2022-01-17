@@ -5,7 +5,7 @@ import dynamic from "next/dynamic";
 import ExpensesContainer from "src/components/expenses/expense-container";
 import ListOfExpensesCategory from "src/components/expenses/list-of-expenses-category";
 import ManageExpenses from "src/components/expenses/manage-expenses";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Store } from "src/statesManagement/store/store";
 import { useRouter } from "next/router";
 import {
@@ -18,21 +18,25 @@ const DynamicComponentWithNoSSR = dynamic(() => import("src/components/navbar-br
   ssr: false,
 });
 
-const Expenses = () => {
+const EditExpenses = () => {
   const { state, dispatch } = useContext(Store);
+  const { query } = useRouter();
   const router = useRouter();
+  const [id, setid] = useState(null);
+
   const { enqueueSnackbar } = useSnackbar();
 
-  const { userInfo, expenses, expensesCategories } = state;
+  const { userInfo, expensesCategories } = state;
 
   useEffect(() => {
     !userInfo && router.push("/auth");
+    setid(query.id);
     getExpensesCategory({ dispatch: dispatch, enqueueSnackbar: enqueueSnackbar });
-  }, []);
+  }, [query.id]);
   return (
     <>
       <Head>
-        <title>Expenses | Adeshex Global</title>
+        <title>Edit Expenses | Adeshex Global</title>
       </Head>
       <Box
         component="main"
@@ -43,15 +47,12 @@ const Expenses = () => {
       >
         <DynamicComponentWithNoSSR />
         <Container maxWidth={true}>
-          <ExpensesContainer expensesCategories={expensesCategories} />
-          <Box sx={{ mt: 3 }}>
-            <ListOfExpensesCategory expensesCategories={expensesCategories} />
-          </Box>
+          <ExpensesContainer edit={true} id={id} expensesCategories={expensesCategories} />
         </Container>
       </Box>
     </>
   );
 };
-Expenses.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
+EditExpenses.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
 
-export default Expenses;
+export default EditExpenses;

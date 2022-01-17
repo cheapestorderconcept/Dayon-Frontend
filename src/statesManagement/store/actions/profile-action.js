@@ -1,7 +1,7 @@
 import { makeNetworkCall } from "src/network";
 import { GET_PROFILE_FAIL, GET_PROFILE_REQUEST, GET_PROFILE_SUCCESS } from "../constants";
 
-export const getProfile = async (dispatch) => {
+export const getProfile = async ({ dispatch, enqueueSnackbar }) => {
   try {
     dispatch({
       type: GET_PROFILE_REQUEST,
@@ -14,9 +14,9 @@ export const getProfile = async (dispatch) => {
       payload: data.data,
     });
   } catch (error) {
-    dispatch({
-      type: GET_PROFILE_FAIL,
-      payload: error?.response?.data?.response_message || error.message,
-    });
+    error &&
+      enqueueSnackbar(error?.response?.data?.response_message || error.message, {
+        variant: "error",
+      });
   }
 };

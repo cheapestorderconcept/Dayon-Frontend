@@ -1,21 +1,26 @@
 import MUIDataTable from "mui-datatables";
 import { useEffect, useState } from "react";
 
-const columns = ["METHOD NAME"];
-
-const data = [["POS"], ["CASH"], ["ATM"], ["BANK TRANSFER"], ["CHEQUE"]];
-
-const options = {
-  filter: true,
-  sort: true,
-};
-
-const PaymentMethodList = () => {
+const PaymentMethodList = ({ paymentType }) => {
   const [ready, setready] = useState(false);
   useEffect(() => {
     setready(true);
   }, []);
+  const options = {
+    filter: true,
+    sort: true,
+  };
 
+  const columns = [
+    {
+      name: "ID",
+    },
+    {
+      name: "PAYMENT TYPE",
+    },
+  ];
+  const payments = paymentType.map((pmt) => Object.values(pmt));
+  const data = [...payments];
   return (
     <>
       {ready == true && (

@@ -26,12 +26,10 @@ const Products = () => {
   const router = useRouter();
 
   const { userInfo, products, suppliers, brands, loading, error } = state;
-  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
-  error && enqueueSnackbar(error, { variant: "error" });
-
+  const { enqueueSnackbar } = useSnackbar();
   useEffect(() => {
     !userInfo && router.push("/auth");
-    getProduct(dispatch);
+    getProduct({ dispatch: dispatch, enqueueSnackbar: enqueueSnackbar });
     // getProductPrice(dispatch);
     // getOutOfStock(dispatch);
   }, []);

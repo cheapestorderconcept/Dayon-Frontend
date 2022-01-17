@@ -21,15 +21,15 @@ const Editproduct = () => {
   const { state, dispatch } = useContext(Store);
   const { query } = useRouter();
   const router = useRouter();
-  const { userInfo, products, suppliers, brands, error } = state;
-  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
-  error && enqueueSnackbar(error, { variant: "error" });
+  const { userInfo, products, suppliers, brands } = state;
+
   const [id, setid] = useState(null);
+  const { enqueueSnackbar } = useSnackbar();
 
   useEffect(() => {
     !userInfo && router.push("/auth");
     setid(query.id);
-    getProduct(dispatch);
+    getProduct({ dispatch: dispatch, enqueueSnackbar: enqueueSnackbar });
     getSuppliers(dispatch);
     getBrands(dispatch);
   }, [query.id]);
@@ -63,9 +63,7 @@ const Editproduct = () => {
               justifyContent: "center",
               pt: 3,
             }}
-          >
-            <Pagination color="primary" count={3} size="small" />
-          </Box>
+          ></Box>
         </Container>
       </Box>
     </>

@@ -40,15 +40,9 @@ const PurchaseList = ({ purchase }) => {
   ];
 
   const myPurchase = purchase.map((purch) => Object.values(purch));
-  myPurchase.map((purch) =>
-    purch.map((val) => {
-      if (typeof val === "object") {
-        const myArray = [];
-        myArray.push(val);
-        console.log(myArray);
-      }
-    })
-  );
+  console.log(myPurchase);
+  const myArray = [];
+  myPurchase.map((purch) => console.log(purch[2].branch_name));
 
   const data = [...myPurchase];
 

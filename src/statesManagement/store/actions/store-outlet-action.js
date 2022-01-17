@@ -9,7 +9,7 @@ import {
   GET_STORE_SUCCESS,
 } from "../constants";
 
-export const getStores = async ({ dispatch }) => {
+export const getStores = async ({ dispatch, enqueueSnackbar }) => {
   try {
     dispatch({
       type: GET_STORE_REQUEST,
@@ -22,14 +22,14 @@ export const getStores = async ({ dispatch }) => {
     });
     // localStorage.setItem("branch", JSON.stringify(data.data));
   } catch (error) {
-    dispatch({
-      type: GET_STORE_FAIL,
-      payload: error?.response?.data?.response_message || error.message,
-    });
+    error &&
+      enqueueSnackbar(error?.response?.data?.response_message || error.message, {
+        variant: "error",
+      });
   }
 };
 
-export const addStore = async ({ dispatch, store, Router }) => {
+export const addStore = async ({ dispatch, store, Router, enqueueSnackbar }) => {
   try {
     dispatch({
       type: ADD_STORE_REQUEST,
@@ -43,11 +43,15 @@ export const addStore = async ({ dispatch, store, Router }) => {
       type: ADD_STORE_SUCCESS,
       payload: data.data,
     });
-    Router.reload(window.location.pathname);
+    data &&
+      enqueueSnackbar(data?.response_message, {
+        variant: "success",
+      });
+    // Router.reload(window.location.pathname);
   } catch (error) {
-    dispatch({
-      type: ADD_STORE_FAIL,
-      payload: error?.response?.data?.response_message || error.message,
-    });
+    error &&
+      enqueueSnackbar(error?.response?.data?.response_message || error.message, {
+        variant: "error",
+      });
   }
 };

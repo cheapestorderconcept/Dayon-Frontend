@@ -24,6 +24,7 @@ import AlertBox from "../alert";
 import { addPurchase } from "src/statesManagement/store/actions/purchase-action";
 import { useRouter } from "next/router";
 import Loading from "../loading/Loading";
+import { useSnackbar } from "notistack";
 
 const INITIAL_FORM_VALUES = {
   date: "",
@@ -60,6 +61,8 @@ export const AddPurchase = (props) => {
   const { dispatch, state } = useContext(Store);
   const { loading, error, success, notification } = state;
 
+  const { enqueueSnackbar } = useSnackbar();
+
   const Router = useRouter();
 
   const handleSubmit = (values) => {
@@ -73,8 +76,13 @@ export const AddPurchase = (props) => {
       discount: values.discount,
       total_purchase_value: values.totalPurchaseValue,
     };
-    console.log(purchase);
-    addPurchase(dispatch, purchase, Router);
+
+    addPurchase({
+      dispatch: dispatch,
+      purchase: purchase,
+      Router: Router,
+      enqueueSnackbar: enqueueSnackbar,
+    });
   };
   return (
     <Box {...props}>
@@ -160,7 +168,7 @@ export const AddPurchase = (props) => {
                       <CustomTextField name="totalPurchaseValue" label="Total Purchase Value" />
                     </Grid>
                     <Grid item xs={12}>
-                      <CustomButton>{loading ? <Loading /> : "Submit"}</CustomButton>
+                      <CustomButton> Submit</CustomButton>
                     </Grid>
                   </Grid>
                 </Form>

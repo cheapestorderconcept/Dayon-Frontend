@@ -29,6 +29,7 @@ import Loading from "../loading/Loading";
 import { Store } from "src/statesManagement/store/store";
 import { loginAction } from "../../statesManagement/store/actions/login-action";
 import { getStores } from "src/statesManagement/store/actions/store-outlet-action";
+import { useSnackbar } from "notistack";
 
 // copyright
 function Copyright(props) {
@@ -82,13 +83,14 @@ export default function Login() {
   const router = useRouter();
   const { dispatch, state } = useContext(Store);
   const { userInfo, loading, error, branch } = state;
+  const { enqueueSnackbar } = useSnackbar();
 
   if (userInfo) {
     router.push("/");
   }
 
   useEffect(() => {
-    getStores({ dispatch: dispatch });
+    getStores({ dispatch: dispatch, enqueueSnackbar: enqueueSnackbar });
   }, []);
 
   const classes = useStyles();
@@ -113,7 +115,11 @@ export default function Login() {
       password: values.password,
       branch_id: values.branch_id,
     };
-    loginAction(loginDetails, dispatch);
+    loginAction({
+      loginDetails: loginDetails,
+      dispatch: dispatch,
+      enqueueSnackbar: enqueueSnackbar,
+    });
   };
   return (
     <Grid container component="main" sx={{ height: "100vh" }}>

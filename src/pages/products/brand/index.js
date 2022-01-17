@@ -17,15 +17,13 @@ const DynamicComponentWithNoSSR = dynamic(() => import("src/components/navbar-br
 const Brand = () => {
   const { state, dispatch } = useContext(Store);
   const router = useRouter();
-
+  const { enqueueSnackbar } = useSnackbar();
   const { brands, userInfo, error } = state;
-  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
-  error && enqueueSnackbar(error, { variant: "error" });
 
   console.log(brands);
   useEffect(() => {
     !userInfo && router.push("/auth");
-    getBrands(dispatch);
+    getBrands({ dispatch: dispatch, enqueueSnackbar: enqueueSnackbar });
   }, []);
 
   return (

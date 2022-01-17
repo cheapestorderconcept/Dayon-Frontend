@@ -23,7 +23,7 @@ import {
   GET_OUT_OF_STOCK_FAIL,
 } from "../constants/index";
 
-export const getProductWithBarcode = async (dispatch) => {
+export const getProductWithBarcode = async ({ dispatch, enqueueSnackbar }) => {
   try {
     dispatch({
       type: GET_PRODUCT_REQUEST,
@@ -35,14 +35,14 @@ export const getProductWithBarcode = async (dispatch) => {
       payload: data.data,
     });
   } catch (error) {
-    dispatch({
-      type: GET_PRODUCT_FAIL,
-      payload: error?.response?.data?.response_message || error.message,
-    });
+    error &&
+      enqueueSnackbar(error?.response?.data?.response_message || error.message, {
+        variant: "error",
+      });
   }
 };
 
-export const getProduct = async (dispatch) => {
+export const getProduct = async ({ dispatch, enqueueSnackbar }) => {
   try {
     dispatch({
       type: GET_PRODUCT_REQUEST,
@@ -54,14 +54,14 @@ export const getProduct = async (dispatch) => {
       payload: data.data,
     });
   } catch (error) {
-    dispatch({
-      type: GET_PRODUCT_FAIL,
-      payload: error?.response?.data?.response_message || error.message,
-    });
+    error &&
+      enqueueSnackbar(error?.response?.data?.response_message || error.message, {
+        variant: "error",
+      });
   }
 };
 
-export const getProductByBarcode = async (dispatch, barcode) => {
+export const getProductByBarcode = async ({ dispatch, barcode, enqueueSnackbar }) => {
   try {
     dispatch({
       type: GET_PRODUCT_BY_BARCODE_REQUEST,
@@ -77,14 +77,14 @@ export const getProductByBarcode = async (dispatch, barcode) => {
       payload: data.data,
     });
   } catch (error) {
-    dispatch({
-      type: GET_PRODUCT_BY_BARCODE_FAIL,
-      payload: error?.response?.data?.response_message || error.message,
-    });
+    error &&
+      enqueueSnackbar(error?.response?.data?.response_message || error.message, {
+        variant: "error",
+      });
   }
 };
 
-export const addProduct = async (dispatch, product, Router) => {
+export const addProduct = async ({ dispatch, product, Router, enqueueSnackbar }) => {
   try {
     dispatch({
       type: ADD_PRODUCT_REQUEST,
@@ -99,16 +99,20 @@ export const addProduct = async (dispatch, product, Router) => {
       type: ADD_PRODUCT_SUCCESS,
       payload: data.data,
     });
-    Router.reload(window.location.pathname);
+    data &&
+      enqueueSnackbar(data?.response_message, {
+        variant: "success",
+      });
+    // Router.reload(window.location.pathname);
   } catch (error) {
-    dispatch({
-      type: ADD_PRODUCT_FAIL,
-      payload: error?.response?.data?.response_message || error.message,
-    });
+    error &&
+      enqueueSnackbar(error?.response?.data?.response_message || error.message, {
+        variant: "error",
+      });
   }
 };
 
-export const getProductPrice = async (dispatch) => {
+export const getProductPrice = async ({ dispatch, enqueueSnackbar }) => {
   try {
     dispatch({
       type: GET_PRODUCT_PRICE_REQUEST,
@@ -120,14 +124,14 @@ export const getProductPrice = async (dispatch) => {
       payload: data.data,
     });
   } catch (error) {
-    dispatch({
-      type: GET_PRODUCT_PRICE_FAIL,
-      payload: error?.response?.data?.response_message || error.message,
-    });
+    error &&
+      enqueueSnackbar(error?.response?.data?.response_message || error.message, {
+        variant: "error",
+      });
   }
 };
 
-export const getOutOfStock = async (dispatch) => {
+export const getOutOfStock = async ({ dispatch, enqueueSnackbar }) => {
   try {
     dispatch({
       type: GET_OUT_OF_STOCK_REQUEST,
@@ -139,14 +143,14 @@ export const getOutOfStock = async (dispatch) => {
       payload: data.data,
     });
   } catch (error) {
-    dispatch({
-      type: GET_OUT_OF_STOCK_FAIL,
-      payload: error?.response?.data?.response_message || error.message,
-    });
+    error &&
+      enqueueSnackbar(error?.response?.data?.response_message || error.message, {
+        variant: "error",
+      });
   }
 };
 
-export const updateProduct = async ({ dispatch, product, productId, Router }) => {
+export const updateProduct = async ({ dispatch, product, productId, Router, enqueueSnackbar }) => {
   try {
     dispatch({
       type: UPDATE_PRODUCT_REQUEST,
@@ -162,12 +166,17 @@ export const updateProduct = async ({ dispatch, product, productId, Router }) =>
       type: UPDATE_PRODUCT_SUCCESS,
       payload: data.data,
     });
-    Router.reload(window.location.pathname);
+    data &&
+      enqueueSnackbar(data?.response_message, {
+        variant: "success",
+      });
+
+    // Router.reload(window.location.pathname);
   } catch (error) {
-    dispatch({
-      type: UPDATE_PRODUCT_FAIL,
-      payload: error?.response?.data?.response_message || error.message,
-    });
+    error &&
+      enqueueSnackbar(error?.response?.data?.response_message || error.message, {
+        variant: "error",
+      });
   }
 };
 // export const deleteProduct = async (dispatch, productId, Router) => {

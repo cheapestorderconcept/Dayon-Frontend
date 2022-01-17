@@ -19,14 +19,13 @@ const EditSupplier = () => {
   const { query } = useRouter();
   const router = useRouter();
   const { userInfo, suppliers, error } = state;
-  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
-  error && enqueueSnackbar(error, { variant: "error" });
+  const { enqueueSnackbar } = useSnackbar();
   const [id, setid] = useState(null);
 
   useEffect(() => {
     !userInfo && router.push("/auth");
     setid(query.id);
-    getSuppliers(dispatch);
+    getSuppliers({ dispatch: dispatch, enqueueSnackbar: enqueueSnackbar });
   }, [query.id]);
 
   return (

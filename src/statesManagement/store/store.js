@@ -20,15 +20,19 @@ const initialState = {
   notification: false,
   loading: false,
   success: null,
-  error: null,
   suppliers: Cookies.get("suppliers") ? JSON.parse(Cookies.get("suppliers")) : [],
   brands: Cookies.get("brands") ? JSON.parse(Cookies.get("brands")) : [],
   products: Cookies.get("products") ? JSON.parse(Cookies.get("products")) : [],
   productByBarcode: [],
   profile: {},
+  paymentType: Cookies.get("paymentType") ? JSON.parse(Cookies.get("paymentType")) : [],
   staff: Cookies.get("staff") ? JSON.parse(Cookies.get("staff")) : [],
   purchase: Cookies.get("purchases") ? JSON.parse(Cookies.get("purchases")) : [],
   branch: Cookies.get("branch") ? JSON.parse(Cookies.get("branch")) : [],
+  expenses: Cookies.get("expenses") ? JSON.parse(Cookies.get("expenses")) : [],
+  expensesCategories: Cookies.get("expensesCategories")
+    ? JSON.parse(Cookies.get("expensesCategories"))
+    : [],
   totalSales: [],
   cart: {
     cartItems: Cookies.get("cartItems") ? JSON.parse(Cookies.get("cartItems")) : [],

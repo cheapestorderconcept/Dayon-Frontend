@@ -7,7 +7,7 @@ import {
   GET_STAFF_SUCCESS,
 } from "../constants";
 
-export const registerStaff = async ({ dispatch, staff, Router }) => {
+export const registerStaff = async ({ dispatch, staff, Router, enqueueSnackbar }) => {
   try {
     dispatch({
       type: ADD_STAFF_REQUEST,
@@ -22,16 +22,20 @@ export const registerStaff = async ({ dispatch, staff, Router }) => {
       type: ADD_STAFF_SUCCESS,
       payload: data.data,
     });
-    Router.reload(window.location.pathname);
+    data &&
+      enqueueSnackbar(data?.response_message, {
+        variant: "success",
+      });
+    // Router.reload(window.location.pathname);
   } catch (error) {
-    dispatch({
-      type: ADD_STAFF_FAIL,
-      payload: error?.response?.data?.response_message || error.message,
-    });
+    error &&
+      enqueueSnackbar(error?.response?.data?.response_message || error.message, {
+        variant: "error",
+      });
   }
 };
 
-export const getStaff = async (dispatch) => {
+export const getStaff = async ({ dispatch, enqueueSnackbar }) => {
   try {
     dispatch({
       type: GET_STAFF_REQUEST,
@@ -43,14 +47,14 @@ export const getStaff = async (dispatch) => {
       payload: data.data,
     });
   } catch (error) {
-    dispatch({
-      type: GET_STAFF_FAIL,
-      payload: error?.response?.data?.response_message || error.message,
-    });
+    error &&
+      enqueueSnackbar(error?.response?.data?.response_message || error.message, {
+        variant: "error",
+      });
   }
 };
 
-export const deleteStaff = async (dispatch, staffId, Router) => {
+export const deleteStaff = async ({ dispatch, staffId, Router, enqueueSnackbar }) => {
   try {
     dispatch({
       type: DELETE_PRODUCT_REQUEST,
@@ -63,13 +67,16 @@ export const deleteStaff = async (dispatch, staffId, Router) => {
       type: DELETE_PRODUCT_SUCCESS,
       payload: data.data._id,
     });
-    console.log(data.data);
-    Router.reload(window.location.pathname);
+    data &&
+      enqueueSnackbar(data?.response_message, {
+        variant: "success",
+      });
+    // Router.reload(window.location.pathname);
   } catch (error) {
     console.log(error);
-    dispatch({
-      type: DELETE_PRODUCT_FAIL,
-      payload: error?.response?.data?.response_message || error.message,
-    });
+    error &&
+      enqueueSnackbar(error?.response?.data?.response_message || error.message, {
+        variant: "error",
+      });
   }
 };
