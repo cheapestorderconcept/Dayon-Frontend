@@ -33,26 +33,70 @@ import { addSupplier } from "src/statesManagement/store/actions/supplier-action"
 import { addSales, addSalesData } from "src/statesManagement/store/actions/sales-action";
 import AlertBox from "../../components/alert";
 import { useSnackbar } from "notistack";
-import { addDepositData, getTotalDeposit } from "src/statesManagement/store/actions/deposit-action";
+import {
+  addDepositData,
+  getTotalDeposit,
+  updateDeposit,
+} from "src/statesManagement/store/actions/deposit-action";
 import { Router } from "next/router";
 
 // console.log(barcodeInput)
 
-export const AddDeposit = (props) => {
+export const EditDepositView = (props) => {
+  const { deposits, id } = props;
   const { dispatch, state } = useContext(Store);
   const { branch, productByBarcode, paymentType } = state;
+  let oneDeposit = [];
+  oneDeposit = deposits.filter((dep) => dep._id === id);
 
   const [barcode, setbarcode] = useState("");
+  let itemsArray = [];
+
+  const publishItems = () => {
+    if (oneDeposit.length > 0 && typeof oneDeposit[0] != "undefined") {
+      for (let index = 0; index < oneDeposit[0].items.length; index++) {
+        itemsArray.push({
+          barcode: oneDeposit[0].items[index].barcode,
+          product: oneDeposit[0].items[index].product,
+          quantity: Number(oneDeposit[0].items[index].quantity),
+          selling_price: oneDeposit[0].items[index].selling_price,
+          product_id: oneDeposit[0].items[index].product_id,
+        });
+      }
+    }
+  };
+  publishItems();
 
   const INITIAL_FORM_VALUES = {
     created_at: "",
-    invoice_number: "",
-    amount_deposited: "",
-    customer_name: "",
-    // customer_phone: "",
-    branch: "",
-    payment_type: "",
-    items: [{ barcode: "", product: "", product_id: "", quantity: "", selling_price: "" }],
+    invoice_number:
+      oneDeposit.length > 0 && typeof oneDeposit[0] != "undefined"
+        ? oneDeposit[0].invoice_number
+        : "",
+    amount_deposited:
+      oneDeposit.length > 0 && typeof oneDeposit[0] != "undefined"
+        ? oneDeposit[0].amount_deposited
+        : "",
+    amount_to_balance:
+      oneDeposit.length > 0 && typeof oneDeposit[0] != "undefined"
+        ? oneDeposit[0].amount_to_balance
+        : "",
+    customer_name:
+      oneDeposit.length > 0 && typeof oneDeposit[0] != "undefined"
+        ? oneDeposit[0].customer_name
+        : "",
+    total_amount:
+      oneDeposit.length > 0 && typeof oneDeposit[0] != "undefined"
+        ? oneDeposit[0].total_amount
+        : "",
+    payment_type:
+      oneDeposit.length > 0 && typeof oneDeposit[0] != "undefined"
+        ? oneDeposit[0].payment_type
+        : "",
+    branch:
+      oneDeposit.length > 0 && typeof oneDeposit[0] != "undefined" ? oneDeposit[0].branch : "",
+
+    items: [...itemsArray],
   };
 
   const FORM_VALIDATIONS = yup.object().shape({
@@ -65,12 +109,18 @@ export const AddDeposit = (props) => {
       .integer()
       .typeError("Amount must be a number")
       .required("please enter amount deposited"),
+    total_amount: yup
+      .number()
+      .integer()
+      .typeError("Total Amount must be a number")
+      .required("please enter total amount "),
     // customer_phone: yup.string().required("please enter Cutomer Phone number"),
     customer_name: yup.string().required("please enter customer name"),
     items: yup.array().of(
       yup.object().shape({
         barcode: yup.string(),
         product_id: yup.string().required("please select a product"),
+        product: yup.string().required("please select a product"),
 
         selling_price: yup
           .number()
@@ -105,18 +155,18 @@ export const AddDeposit = (props) => {
 
   const removeItems = (values, setValues) => {
     const items = [...values.items];
-    items.pop();
-    setValues({ ...values, items });
+    console.log(items);
   };
   const [open, setopen] = useState(true);
   const { enqueueSnackbar } = useSnackbar();
+
   const Submit = (values) => {
-    addDepositData({
-      deposit: values,
-      enqueueSnackbar: enqueueSnackbar,
+    updateDeposit({
       dispatch: dispatch,
+      price: { price: values.amount_deposited },
+      enqueueSnackbar: enqueueSnackbar,
+      depId: id,
     });
-    // console.log(values);
   };
 
   const formRef = useRef(null);
@@ -132,6 +182,7 @@ export const AddDeposit = (props) => {
         }),
       500
     );
+
     return () => clearTimeout(timeOutId);
   }, [barcode]);
 
@@ -152,27 +203,28 @@ export const AddDeposit = (props) => {
         </Grid>
 
         {/* <Grid item xs={6}>
-          <form onSubmit={(e) => e.preventDefault()}>
-            <TextField
-              name="barcodeNum"
-              label="Scan Barcode"
-              value={barcode}
-              autoFocus={true}
-              onChange={handleChange}
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <ListIcon />
-                  </InputAdornment>
-                ),
-              }}
-            />
-          </form>
-        </Grid> */}
+            <form onSubmit={(e) => e.preventDefault()}>
+              <TextField
+                name="barcodeNum"
+                label="Scan Barcode"
+                value={barcode}
+                autoFocus={true}
+                onChange={handleChange}
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <ListIcon />
+                    </InputAdornment>
+                  ),
+                }}
+              />
+            </form>
+          </Grid> */}
         <Grid item xs={6}>
           <CustomTextField
             name={`items.${i}.barcode`}
             label="Barcode"
+            disabled
             onKeyPress={(e) => {
               e.key === "Enter" && e.preventDefault();
             }}
@@ -191,12 +243,11 @@ export const AddDeposit = (props) => {
           <CustomTextField
             name={`items.${i}.product`}
             disabled
-            value={
-              (items.product =
-                productByBarcode.length > 0 && typeof productByBarcode[i] != "undefined"
-                  ? productByBarcode[i].product_name
-                  : "")
-            }
+            // value={
+            //   productByBarcode.length > 0 && typeof productByBarcode[i] != "undefined"
+            //     ? (items.product_name = productByBarcode[i].product_name)
+            //     : ""
+            // }
             label="Product"
           />
         </Grid>
@@ -210,15 +261,17 @@ export const AddDeposit = (props) => {
                 ? (items.product_id = productByBarcode[i]._id)
                 : ""
             }
-            label="Product Id"
+            label="Product"
           />
         </Grid>
         <Grid item xs={6}>
           <CustomTextField name={`items.${i}.quantity`} label="Quantity" />
           {productByBarcode.length > 0 && typeof productByBarcode[i] != "undefined"
-            ? Number(items.quantity) > productByBarcode[i].current_product_quantity && (
-                <AlertBox open={open} severity="error" setopen={setopen} message="out of stock" />
-              )
+            ? Number(items.quantity) > productByBarcode[i].current_product_quantity &&
+              enqueueSnackbar("Quantity is out of stock", {
+                variant: "error",
+                preventDuplicate: true,
+              })
             : null}
         </Grid>
 
@@ -230,7 +283,7 @@ export const AddDeposit = (props) => {
           />
         </Grid>
 
-        <Grid item xs={6}>
+        {/* <Grid item xs={6}>
           <CustomTextField
             name={`items.${i}.amount`}
             label="Amount"
@@ -240,7 +293,7 @@ export const AddDeposit = (props) => {
                 : ""
             }
           />
-        </Grid>
+        </Grid> */}
       </React.Fragment>
     );
   };
@@ -257,7 +310,7 @@ export const AddDeposit = (props) => {
         }}
       >
         <Typography sx={{ m: 1 }} variant="h4">
-          Add Deposit
+          Edit Deposit
         </Typography>
         <Box sx={{ m: 1 }}>
           <Button startIcon={<UploadIcon fontSize="small" />} sx={{ mr: 1 }}>
@@ -270,7 +323,7 @@ export const AddDeposit = (props) => {
       </Box>
       <Box sx={{ mt: 3 }}>
         <Card>
-          <CardHeader title="Add Deposit" />
+          <CardHeader title="Edit Deposit" />
           <Divider />
           <CardContent>
             <Box sx={{ maxWidth: 800 }}>
@@ -291,17 +344,24 @@ export const AddDeposit = (props) => {
                         <CustomSelect name="branch" options={branch} label="Select Branch" />
                       </Grid>
                       <Grid item xs={4}>
-                        <CustomTextField name="invoice_number" label="Invoice Number" />
+                        <CustomTextField name="invoice_number" disabled label="Invoice Number" />
                       </Grid>
                       <Grid item xs={4}>
                         <CustomTextField name="amount_deposited" label="Amount Deposited" />
                       </Grid>
                       <Grid item xs={4}>
+                        <CustomTextField
+                          name="amount_to_balance"
+                          disabled
+                          label="Amount To Balance"
+                        />
+                      </Grid>
+                      <Grid item xs={4}>
                         <CustomTextField name="customer_name" label="Customer Name" />
                       </Grid>
                       {/* <Grid item xs={4}>
-                        <CustomTextField name="customer_phone" label="Customer Phone" />
-                      </Grid> */}
+                          <CustomTextField name="customer_phone" label="Customer Phone" />
+                        </Grid> */}
 
                       <FieldArray name="items">
                         {() =>
@@ -311,6 +371,8 @@ export const AddDeposit = (props) => {
                               items={item}
                               i={index}
                               handleChange={handleChange}
+                              values={values}
+                              setValues={setValues}
                             />
                           ))
                         }
@@ -320,18 +382,18 @@ export const AddDeposit = (props) => {
                         <CustomTextField
                           name="total_amount"
                           label="Total Purchase Amount"
-                          disabled
-                          value={
-                            productByBarcode.length > 0
-                              ? (values.total_amount = values.items.reduce(
-                                  (a, c) => a + c.amount,
-                                  0
-                                ))
-                              : ""
-                          }
+
+                          //   value={
+                          //     productByBarcode.length > 0
+                          //       ? (values.total_amount = values.items.reduce(
+                          //           (a, c) => a + c.amount,
+                          //           0
+                          //         ))
+                          //       : ""
+                          //   }
                         />
                       </Grid>
-
+                      {/* 
                       <Grid item xs={6}>
                         <Field name="number of items">
                           {({ field }) => (
@@ -346,8 +408,8 @@ export const AddDeposit = (props) => {
                             </Button>
                           )}
                         </Field>
-                      </Grid>
-                      <Grid item xs={6}>
+                      </Grid> */}
+                      {/* <Grid item xs={6}>
                         <Field name="number of items">
                           {({ field }) => (
                             <Button
@@ -361,7 +423,7 @@ export const AddDeposit = (props) => {
                             </Button>
                           )}
                         </Field>
-                      </Grid>
+                      </Grid> */}
                       <Grid item xs={12}>
                         <CustomSelect
                           name="payment_type"
@@ -378,7 +440,7 @@ export const AddDeposit = (props) => {
                           onClick={() => Submit(values)}
                         >
                           {" "}
-                          Process Deposit
+                          Update Deposit
                         </Button>
                       </Grid>
                     </Grid>

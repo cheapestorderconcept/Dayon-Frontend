@@ -98,6 +98,11 @@ export const AddSales = (props) => {
   const Submit = (values) => {
     addSalesData({ dispatch: dispatch, sales: values, enqueueSnackbar: enqueueSnackbar });
   };
+  const removeItems = (values, setValues) => {
+    const items = [...values.items];
+    items.pop();
+    setValues({ ...values, items });
+  };
 
   const formRef = useRef(null);
 
@@ -156,9 +161,10 @@ export const AddSales = (props) => {
             name={`items.${i}.product`}
             disabled
             value={
-              productByBarcode.length > 0 && typeof productByBarcode[i] != "undefined"
-                ? productByBarcode[i].product_name
-                : ""
+              (items.product =
+                productByBarcode.length > 0 && typeof productByBarcode[i] != "undefined"
+                  ? productByBarcode[i].product_name
+                  : "")
             }
             label="Product"
           />
@@ -292,10 +298,26 @@ export const AddSales = (props) => {
                             <Button
                               variant="contained"
                               color="primary"
+                              fullWidth={true}
                               onClick={() => addMoreItems(values, setValues)}
                               startIcon={<DownloadIcon fontSize="small" />}
                             >
                               Add More Products
+                            </Button>
+                          )}
+                        </Field>
+                      </Grid>
+                      <Grid item xs={6}>
+                        <Field name="number of items">
+                          {({ field }) => (
+                            <Button
+                              variant="contained"
+                              fullWidth={true}
+                              color="primary"
+                              onClick={() => removeItems(values, setValues)}
+                              startIcon={<DownloadIcon fontSize="small" />}
+                            >
+                              Remove Products
                             </Button>
                           )}
                         </Field>

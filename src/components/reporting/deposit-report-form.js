@@ -12,12 +12,19 @@ import { Download as DownloadIcon } from "../../icons/download";
 
 import { Upload as UploadIcon } from "../../icons/upload";
 
-import { useState } from "react";
+import { useContext, useState } from "react";
 import ReactDatePicker from "../dateslibrary/react-date-range";
 
 import { addDays, subDays } from "date-fns";
+import { getDepositReport } from "src/statesManagement/store/actions/reportingActions/deposit-repoort-action";
+import { Store } from "src/statesManagement/store/store";
+import { useSnackbar } from "notistack";
+import { useRouter } from "next/router";
 
 export const Deposit_Report_Form = (props) => {
+  const { dispatch, state } = useContext(Store);
+  const { enqueueSnackbar } = useSnackbar();
+  const Router = useRouter();
   const [formvalues, setformvalues] = useState({
     startDate: null,
     endDate: null,
@@ -45,6 +52,13 @@ export const Deposit_Report_Form = (props) => {
   //handle form submit
   const handleSubmit = (e) => {
     e.preventDefault();
+    getDepositReport({
+      dispatch: dispatch,
+      enqueueSnackbar: enqueueSnackbar,
+      from: formvalues.startDate,
+      to: formvalues.endDate,
+      Router: Router,
+    });
     console.log(formvalues);
   };
 

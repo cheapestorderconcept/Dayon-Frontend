@@ -11,12 +11,13 @@ import { CustomSelect } from "../basicInputs";
 import { CustomButton } from "../basicInputs";
 import { CustomTextField } from "../basicInputs";
 
-const AddExpenses = ({ expensesCategories, edit, id }) => {
+const AddExpenses = ({ expensesCategories, edit, id, branch }) => {
   const INITIAL_VALUES = {
     date: "",
     amount: "",
     expenses_type: "",
     additional_details: "",
+    branch_name: "",
   };
 
   const VALIDATIONS = yup.object().shape({
@@ -27,6 +28,7 @@ const AddExpenses = ({ expensesCategories, edit, id }) => {
       .typeError("this field must be a number")
       .required("please enter amount"),
     expenses_type: yup.string().required("please choose expenses type"),
+    branch_name: yup.string().required("please choose Store Branch "),
     additional_details: yup.string().required("Please provide additional details"),
   });
 
@@ -58,6 +60,8 @@ const AddExpenses = ({ expensesCategories, edit, id }) => {
       >
         <Form>
           <CustomDate name="date" />
+          <Box mt={2} />
+          <CustomSelect name="branch_name" label="Branch" options={branch} />
           <Box mt={2} />
           <CustomTextField name="amount" label="Amount" />
           <Box mt={2} />

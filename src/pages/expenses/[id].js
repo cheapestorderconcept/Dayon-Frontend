@@ -26,7 +26,7 @@ const EditExpenses = () => {
 
   const { enqueueSnackbar } = useSnackbar();
 
-  const { userInfo, expensesCategories } = state;
+  const { userInfo, expensesCategories, branch } = state;
 
   useEffect(() => {
     !userInfo && router.push("/auth");
@@ -47,7 +47,12 @@ const EditExpenses = () => {
       >
         <DynamicComponentWithNoSSR />
         <Container maxWidth={true}>
-          <ExpensesContainer edit={true} id={id} expensesCategories={expensesCategories} />
+          <ExpensesContainer
+            edit={true}
+            id={id}
+            branch={branch}
+            expensesCategories={expensesCategories}
+          />
         </Container>
       </Box>
     </>

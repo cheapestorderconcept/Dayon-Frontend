@@ -86,17 +86,17 @@ export const DashboardNavbar = (props) => {
             <MenuIcon fontSize="small" />
           </IconButton>
 
-          <NextLink className={classes.link} href="/addsales">
+          <NextLink className={classes.link} href="/sales">
             <Typography sx={{ flexGrow: 1 }} variant="h6" color="black">
               Add Sales
             </Typography>
           </NextLink>
 
           <Box sx={{ flexGrow: 1 }} />
-          <NextLink href="/sales/process-sales">
+          <NextLink href="/sales/manage-sales">
             <Badge badgeContent={cart.cartItems.length} color="success" sx={{ mr: 2 }}>
               <Typography color={"black"} variant="h6">
-                Sales
+                View Sales
               </Typography>
             </Badge>
           </NextLink>

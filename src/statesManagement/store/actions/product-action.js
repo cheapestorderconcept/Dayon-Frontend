@@ -118,11 +118,15 @@ export const getProductPrice = async ({ dispatch, enqueueSnackbar }) => {
       type: GET_PRODUCT_PRICE_REQUEST,
     });
     const { data } = await makeNetworkCall({ method: "GET", path: "/view-product-price" });
-    console.log(data.data);
+    console.log(data.data.mProduct);
     dispatch({
       type: GET_PRODUCT_PRICE_SUCCESS,
-      payload: data.data,
+      payload: data.data.mProduct,
     });
+    data &&
+      enqueueSnackbar(data?.response_message, {
+        variant: "success",
+      });
   } catch (error) {
     error &&
       enqueueSnackbar(error?.response?.data?.response_message || error.message, {
@@ -131,7 +135,7 @@ export const getProductPrice = async ({ dispatch, enqueueSnackbar }) => {
   }
 };
 
-export const getOutOfStock = async ({ dispatch, enqueueSnackbar }) => {
+export const getOutOfStock = async ({ dispatch, enqueueSnackbar, branch, Router }) => {
   try {
     dispatch({
       type: GET_OUT_OF_STOCK_REQUEST,
@@ -140,7 +144,15 @@ export const getOutOfStock = async ({ dispatch, enqueueSnackbar }) => {
     console.log(data.data);
     dispatch({
       type: GET_OUT_OF_STOCK_SUCCESS,
-      payload: data.data,
+      payload: data.data.outOfStock,
+    });
+    data &&
+      enqueueSnackbar(data?.response_message, {
+        variant: "success",
+      });
+    Router.push({
+      pathname: "/reporting/out-of-stock-print-report",
+      query: { branch },
     });
   } catch (error) {
     error &&

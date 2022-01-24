@@ -7,7 +7,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 
-export default function ProductPriceListTable({ productPrice }) {
+export default function BasicTable({ outOfStocks }) {
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -23,7 +23,7 @@ export default function ProductPriceListTable({ productPrice }) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {productPrice.map((row) => (
+          {outOfStocks.map((row) => (
             <TableRow key={row._id} sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
               <TableCell component="th" scope="row">
                 {row.product_name}

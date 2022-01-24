@@ -5,62 +5,54 @@ import { useContext, useEffect, useState } from "react";
 import { addSalesData } from "src/statesManagement/store/actions/sales-action";
 import { Store } from "src/statesManagement/store/store";
 
-const SalesList = ({ cart }) => {
+const SalesList = ({ salesList }) => {
   const { dispatch, state } = useContext(Store);
   const { enqueueSnackbar } = useSnackbar();
-  const handleSubmitSalesData = () => {
-    cart.cartItems.map((data) => {
-      const salesData = {
-        product_name: data.product_name,
-        product_barcode: data.product_barcode,
-        invoice_number: data.invoice_number,
-        unit_price: `${data.unit_price}`,
-        purchased_qty: data.purchased_qty,
-        total_amount: data.total_amount,
-        payment_type: data.payment_type,
-        created_at: data.created_at,
-        branch: data.branch,
-      };
 
-      addSalesData({ dispatch: dispatch, salesData: salesData, enqueueSnackbar: enqueueSnackbar });
-    });
-  };
   const columns = [
     {
-      name: "Date",
+      name: "Sales Id",
     },
     {
-      name: "Invoice no",
-    },
-    {
-      name: "Branch",
-    },
-    {
-      name: "Product Name",
-    },
-    {
-      name: "Quantity",
-    },
-    {
-      name: "Price Per Unit",
-    },
-    {
-      name: "Payment Method",
+      name: "Invoice Number ",
     },
     {
       name: "Total Amount",
     },
     {
-      name: "Barcode",
+      name: "Payment Type",
+    },
+    {
+      name: "Branch",
+    },
+    {
+      name: "Date",
     },
   ];
   const [ready, setready] = useState(false);
   useEffect(() => {
     setready(true);
   }, []);
-  const sales = cart.cartItems.map((item) => Object.values(item));
+  const sales = salesList.map((item) => Object.values(item));
+  console.log(sales);
+  const newArray = sales.map((arr) =>
+    arr.filter((arr) => {
+      return typeof arr !== "object";
+    })
+  );
 
-  const data = [...sales];
+  let itemsArray;
+
+  itemsArray = sales.map((arr) =>
+    arr.filter((arr) => {
+      if (typeof arr === "object") {
+        return arr;
+      }
+    })
+  );
+  console.log(itemsArray);
+
+  const data = [...newArray];
 
   const options = {
     filter: true,
@@ -74,9 +66,6 @@ const SalesList = ({ cart }) => {
       {ready == true && (
         <>
           <MUIDataTable title={"Lists Of Sales"} data={data} columns={columns} options={options} />
-          <Button variant="contained" fullWidth={true} onClick={handleSubmitSalesData}>
-            <Typography variant="h6"> Submit Sales Data</Typography>
-          </Button>
         </>
       )}
     </>

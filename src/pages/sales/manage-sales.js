@@ -10,6 +10,7 @@ import dynamic from "next/dynamic";
 import { useContext, useEffect } from "react";
 import { Store } from "src/statesManagement/store/store";
 import { getTotalSales } from "src/statesManagement/store/actions/sales-action";
+import { useSnackbar } from "notistack";
 
 const DynamicComponentWithNoSSR = dynamic(() => import("src/components/navbar-branch-indicator"), {
   ssr: false,
@@ -17,10 +18,11 @@ const DynamicComponentWithNoSSR = dynamic(() => import("src/components/navbar-br
 
 const SalesListPage = () => {
   const { dispatch, state } = useContext(Store);
-  const { totalSales, cart } = state;
-  console.log(totalSales);
+  const { totalSales } = state;
+  const { enqueueSnackbar } = useSnackbar();
+
   useEffect(() => {
-    // getTotalSales(dispatch);
+    getTotalSales({ dispatch: dispatch, enqueueSnackbar: enqueueSnackbar });
   }, []);
 
   return (
@@ -60,7 +62,7 @@ const SalesListPage = () => {
             </Box>
           </Box>
           <Box sx={{ pt: 3 }}>
-            <SalesList cart={cart} />
+            <SalesList salesList={totalSales} />
           </Box>
         </Container>
       </Box>

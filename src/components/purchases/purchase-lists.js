@@ -34,17 +34,41 @@ const PurchaseList = ({ purchase }) => {
     {
       name: "DATE",
     },
-    // {
-    //   name: "DATE",
-    // },
+    {
+      name: "PURCHASE QUANTITY",
+    },
+    {
+      name: "INVOICE NUMBER",
+    },
+    {
+      name: "TOTAL PURCHASE VALUE",
+    },
+    {
+      name: "DISCOUNT",
+    },
   ];
-
+  console.log(purchase);
   const myPurchase = purchase.map((purch) => Object.values(purch));
-  console.log(myPurchase);
+
   const myArray = [];
   myPurchase.map((purch) => console.log(purch[2].branch_name));
 
-  const data = [...myPurchase];
+  const newArray = myPurchase.map((arr) =>
+    arr.filter((arr) => {
+      return typeof arr !== "object";
+    })
+  );
+
+  // const itemsArray = myDeposits.map((arr) =>
+  //   arr.filter((arr) => {
+  //     if (typeof arr === "object") {
+  //       return arr;
+  //     }
+  //   })
+  // );
+  // itemsArray.map((item) => console.log(item.length));
+
+  const data = [...newArray];
 
   const options = {
     filter: true,

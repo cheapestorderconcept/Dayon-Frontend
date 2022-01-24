@@ -14,10 +14,18 @@ import { Download as DownloadIcon } from "../../icons/download";
 
 import { Upload as UploadIcon } from "../../icons/upload";
 
-import { useState } from "react";
-import { stores } from "src/__mocks__/stores";
+import { useContext, useState } from "react";
+
+import { getStockLevelReport } from "src/statesManagement/store/actions/reportingActions/stock-level-report-action";
+import { Store } from "src/statesManagement/store/store";
+import { useSnackbar } from "notistack";
+import { useRouter } from "next/router";
 
 export const Stock_level_Balance_Form = (props) => {
+  const { dispatch, state } = useContext(Store);
+  const { branch } = state;
+  const { enqueueSnackbar } = useSnackbar();
+  const Router = useRouter();
   const [formvalues, setformvalues] = useState({
     store: "",
   });
@@ -25,6 +33,12 @@ export const Stock_level_Balance_Form = (props) => {
   //handle form submit
   const handleSubmit = (e) => {
     e.preventDefault();
+    getStockLevelReport({
+      dispatch: dispatch,
+      enqueueSnackbar: enqueueSnackbar,
+      Router: Router,
+      branch: formvalues.store,
+    });
     console.log(formvalues);
   };
 
@@ -72,10 +86,10 @@ export const Stock_level_Balance_Form = (props) => {
                       value={formvalues.store}
                       onChange={(e) => setformvalues({ ...formvalues, store: e.target.value })}
                     >
-                      {stores.map((option) => {
+                      {branch.map((option) => {
                         return (
-                          <MenuItem key={option.id} value={option.name}>
-                            {option.name}
+                          <MenuItem key={option.id} value={option.branch_name}>
+                            {option.branch_name}
                           </MenuItem>
                         );
                       })}

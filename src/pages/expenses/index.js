@@ -23,7 +23,7 @@ const Expenses = () => {
   const router = useRouter();
   const { enqueueSnackbar } = useSnackbar();
 
-  const { userInfo, expenses, expensesCategories } = state;
+  const { userInfo, branch, expensesCategories } = state;
 
   useEffect(() => {
     !userInfo && router.push("/auth");
@@ -43,7 +43,7 @@ const Expenses = () => {
       >
         <DynamicComponentWithNoSSR />
         <Container maxWidth={true}>
-          <ExpensesContainer expensesCategories={expensesCategories} />
+          <ExpensesContainer branch={branch} expensesCategories={expensesCategories} />
           <Box sx={{ mt: 3 }}>
             <ListOfExpensesCategory expensesCategories={expensesCategories} />
           </Box>

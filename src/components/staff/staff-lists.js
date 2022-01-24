@@ -29,23 +29,23 @@ const ListOfStaff = ({ staff }) => {
   };
 
   const columns = [
-    {
-      name: "Delete",
-      options: {
-        filter: true,
-        sort: false,
-        empty: true,
-        customBodyRender: (value, tableMeta, updateValue) => {
-          return (
-            <Button onClick={handleDelete(tableMeta)} variant="contained" color="error">
-              <Typography variant="body1" color="inherit">
-                Delete
-              </Typography>
-            </Button>
-          );
-        },
-      },
-    },
+    // {
+    //   name: "Delete",
+    //   options: {
+    //     filter: true,
+    //     sort: false,
+    //     empty: true,
+    //     customBodyRender: (value, tableMeta, updateValue) => {
+    //       return (
+    //         <Button onClick={handleDelete(tableMeta)} variant="contained" color="error">
+    //           <Typography variant="body1" color="inherit">
+    //             Delete
+    //           </Typography>
+    //         </Button>
+    //       );
+    //     },
+    //   },
+    // },
 
     {
       name: "ID",

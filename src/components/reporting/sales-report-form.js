@@ -12,19 +12,25 @@ import {
 } from "@mui/material";
 import { Download as DownloadIcon } from "../../icons/download";
 import { Upload as UploadIcon } from "../../icons/upload";
-import { stores } from "../../__mocks__/stores";
-import { products } from "src/__mocks__/products";
 
-import { useState } from "react";
+import { useContext, useState } from "react";
 import ReactDatePicker from "../dateslibrary/react-date-range";
 import { addDays, subDays } from "date-fns";
+import { Store } from "src/statesManagement/store/store";
+import { useSnackbar } from "notistack";
+import { getSalesReport } from "src/statesManagement/store/actions/reportingActions/sales-report-action";
+import { useRouter } from "next/router";
 
 export const SalesReportForm = (props) => {
+  const { dispatch, state } = useContext(Store);
+  const { branch } = state;
+  const { enqueueSnackbar } = useSnackbar();
+  const Router = useRouter();
   const [formvalues, setformvalues] = useState({
     startDate: null,
     endDate: null,
     store: "",
-    product: "",
+    // product: "",
   });
 
   const [selectionValue, setselectionValue] = useState([
@@ -49,6 +55,14 @@ export const SalesReportForm = (props) => {
   //handle form submit
   const handleSubmit = (e) => {
     e.preventDefault();
+    getSalesReport({
+      dispatch: dispatch,
+      enqueueSnackbar: enqueueSnackbar,
+      from: formvalues.startDate,
+      to: formvalues.endDate,
+      Router: Router,
+      branch: formvalues.store,
+    });
     console.log(formvalues);
   };
 
@@ -108,17 +122,17 @@ export const SalesReportForm = (props) => {
                       value={formvalues.store}
                       onChange={(e) => setformvalues({ ...formvalues, store: e.target.value })}
                     >
-                      {stores.map((option) => {
+                      {branch.map((option) => {
                         return (
-                          <MenuItem key={option.id} value={option.name}>
-                            {option.name}
+                          <MenuItem key={option.id} value={option.branch_name}>
+                            {option.branch_name}
                           </MenuItem>
                         );
                       })}
                     </TextField>
                   </Grid>
 
-                  <Grid item xs={6} sx={{ mb: 4 }}>
+                  {/* <Grid item xs={6} sx={{ mb: 4 }}>
                     <TextField
                       required
                       select={true}
@@ -130,13 +144,13 @@ export const SalesReportForm = (props) => {
                     >
                       {products.map((option) => {
                         return (
-                          <MenuItem key={option.id} value={option.name}>
-                            {option.name}
+                          <MenuItem key={option.id} value={option.product_name}>
+                            {option.product_name}
                           </MenuItem>
                         );
                       })}
                     </TextField>
-                  </Grid>
+                  </Grid> */}
 
                   <Grid item xs={12}>
                     <Button type="submit" fullWidth={true} variant="contained">

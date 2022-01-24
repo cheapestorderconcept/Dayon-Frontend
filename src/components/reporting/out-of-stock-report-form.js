@@ -14,17 +14,31 @@ import { Download as DownloadIcon } from "../../icons/download";
 
 import { Upload as UploadIcon } from "../../icons/upload";
 
-import { useState } from "react";
-import { stores } from "src/__mocks__/stores";
+import { useContext, useState } from "react";
+import { getOutOfStock } from "src/statesManagement/store/actions/product-action";
+import { Store } from "src/statesManagement/store/store";
+import { useSnackbar } from "notistack";
+import { useRouter } from "next/router";
 
 export const Out_Of_Report_Form = (props) => {
   const [formvalues, setformvalues] = useState({
     store: "",
   });
 
+  const { dispatch, state } = useContext(Store);
+  const { branch } = state;
+  const { enqueueSnackbar } = useSnackbar();
+  const Router = useRouter();
+
   //handle form submit
   const handleSubmit = (e) => {
     e.preventDefault();
+    getOutOfStock({
+      dispatch: dispatch,
+      enqueueSnackbar: enqueueSnackbar,
+      branch: formvalues.store,
+      Router: Router,
+    });
     console.log(formvalues);
   };
 
@@ -72,10 +86,10 @@ export const Out_Of_Report_Form = (props) => {
                       value={formvalues.store}
                       onChange={(e) => setformvalues({ ...formvalues, store: e.target.value })}
                     >
-                      {stores.map((option) => {
+                      {branch.map((option) => {
                         return (
-                          <MenuItem key={option.id} value={option.name}>
-                            {option.name}
+                          <MenuItem key={option.id} value={option.branch_name}>
+                            {option.branch_name}
                           </MenuItem>
                         );
                       })}

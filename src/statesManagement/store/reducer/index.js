@@ -100,6 +100,33 @@ import {
   UPDATE_EXPENSES_REQUEST,
   UPDATE_EXPENSES_SUCCESS,
   UPDATE_EXPENSES_FAIL,
+  ADD_DEPOSIT_REQUEST,
+  ADD_DEPOSIT_SUCCESS,
+  ADD_DEPOSIT_FAIL,
+  UPDATE_DEPOSIT_REQUEST,
+  UPDATE_DEPOSIT_SUCCESS,
+  UPDATE_DEPOSIT_FAIL,
+  GET_TOTAL_DEPOSIT_REQUEST,
+  GET_TOTAL_DEPOSIT_SUCCESS,
+  GET_TOTAL_DEPOSIT_FAIL,
+  GET_SALES_REPORT_REQUEST,
+  GET_SALES_REPORT_SUCCESS,
+  GET_DEPOSIT_REPORT_REQUEST,
+  GET_DEPOSIT_REPORT_SUCCESS,
+  GET_DEPOSIT_REPORT_FAIL,
+  GET_SALES_REPORT_FAIL,
+  GET_OUT_OF_STOCK_REQUEST,
+  GET_OUT_OF_STOCK_SUCCESS,
+  GET_OUT_OF_STOCK_FAIL,
+  GET_PRODUCT_PRICE_REQUEST,
+  GET_PRODUCT_PRICE_SUCCESS,
+  GET_PRODUCT_PRICE_FAIL,
+  GET_STOCK_LEVEL_REPORT_REQUEST,
+  GET_STOCK_LEVEL_REPORT_SUCCESS,
+  GET_STOCK_LEVEL_REPORT_FAIL,
+  DELETE_STAFF_REQUEST,
+  DELETE_STAFF_SUCCESS,
+  DELETE_STAFF_FAIL,
 } from "../constants";
 
 // const rootReducers = combineReducers({
@@ -259,6 +286,13 @@ const rootReducers = (state, action) => {
       return { ...state, loading: false, staff: action?.payload };
     }
     case GET_STAFF_FAIL:
+      return { ...state, loading: false, error: action.payload };
+
+    case DELETE_STAFF_REQUEST:
+      return { ...state, loading: true };
+    case DELETE_STAFF_SUCCESS:
+      return { ...state, loading: false };
+    case DELETE_STAFF_FAIL:
       return { ...state, loading: false, error: action.payload };
 
     // Puerchase Reducer
@@ -429,6 +463,79 @@ const rootReducers = (state, action) => {
     case UPDATE_EXPENSES_FAIL:
       return { ...state, loading: false, error: action.payload };
 
+    // deposits reducers
+
+    case ADD_DEPOSIT_REQUEST:
+      return { ...state, loading: true, notification: false };
+    case ADD_DEPOSIT_SUCCESS: {
+      return { ...state, loading: false, notification: true, success: action.payload };
+    }
+    case ADD_DEPOSIT_FAIL:
+      return { ...state, loading: false, notification: true, success: null, error: action.payload };
+
+    case GET_TOTAL_DEPOSIT_REQUEST:
+      return { ...state, loading: true };
+    case GET_TOTAL_DEPOSIT_SUCCESS: {
+      if (Cookies.get("deposits")) {
+        Cookies.remove("deposits");
+        Cookies.set("deposits", JSON.stringify(action.payload));
+      } else {
+        Cookies.set("deposits", JSON.stringify(action.payload));
+      }
+      return { ...state, loading: false, deposits: action?.payload };
+    }
+    case GET_TOTAL_DEPOSIT_FAIL:
+      return { ...state, loading: false, error: action.payload };
+
+    case UPDATE_DEPOSIT_REQUEST:
+      return { ...state, loading: true };
+    case UPDATE_DEPOSIT_SUCCESS:
+      return { ...state, loading: false };
+    case UPDATE_DEPOSIT_FAIL:
+      return { ...state, loading: false, error: action.payload };
+
+    // Sales reporting
+    case GET_SALES_REPORT_REQUEST:
+      return { ...state, loading: true };
+    case GET_SALES_REPORT_SUCCESS:
+      return { ...state, loading: false, salesReport: action?.payload };
+    case GET_SALES_REPORT_FAIL:
+      return { ...state, loading: false, error: action.payload };
+
+    // deposits reports
+
+    case GET_DEPOSIT_REPORT_REQUEST:
+      return { ...state, loading: true };
+    case GET_DEPOSIT_REPORT_SUCCESS:
+      return { ...state, loading: false, depositReport: action?.payload };
+    case GET_DEPOSIT_REPORT_FAIL:
+      return { ...state, loading: false, error: action.payload };
+
+    // Out Of Stokcs
+    case GET_OUT_OF_STOCK_REQUEST:
+      return { ...state, loading: true };
+    case GET_OUT_OF_STOCK_SUCCESS:
+      return { ...state, loading: false, outOfStocksReport: action?.payload };
+    case GET_OUT_OF_STOCK_FAIL:
+      return { ...state, loading: false, error: action.payload };
+
+    // product price
+
+    case GET_PRODUCT_PRICE_REQUEST:
+      return { ...state, loading: true };
+    case GET_PRODUCT_PRICE_SUCCESS:
+      return { ...state, loading: false, productPrice: action?.payload };
+    case GET_PRODUCT_PRICE_FAIL:
+      return { ...state, loading: false, error: action.payload };
+
+    // STOCK LEVEL REPORT
+
+    case GET_STOCK_LEVEL_REPORT_REQUEST:
+      return { ...state, loading: true };
+    case GET_STOCK_LEVEL_REPORT_SUCCESS:
+      return { ...state, loading: false, stockLevel: action?.payload };
+    case GET_STOCK_LEVEL_REPORT_FAIL:
+      return { ...state, loading: false, error: action.payload };
     default:
       state;
   }

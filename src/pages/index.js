@@ -3,7 +3,7 @@ import { Typography, Box, Container, Grid } from "@mui/material";
 import { Budget } from "../components/dashboard/budget";
 import { ProductProgress } from "../components/dashboard/Product";
 import { TotalCustomers } from "../components/dashboard/total-customers";
-import { TotalProfit } from "../components/dashboard/total-profit";
+import { TotalSales } from "../components/dashboard/total-profit";
 import { TrafficByDevice } from "../components/dashboard/traffic-by-device";
 import { DashboardLayout } from "../components/dashboard-layout";
 import dynamic from "next/dynamic";
@@ -11,6 +11,8 @@ import { useRouter } from "next/router";
 import { useContext, useEffect } from "react";
 import { Store } from "src/statesManagement/store/store";
 import { useSnackbar } from "notistack";
+import SalesList from "src/components/sales/sales-list";
+import { getTotalSales } from "src/statesManagement/store/actions/sales-action";
 
 const DynamicComponentWithNoSSR = dynamic(() => import("src/components/navbar-branch-indicator"), {
   ssr: false,
@@ -18,11 +20,13 @@ const DynamicComponentWithNoSSR = dynamic(() => import("src/components/navbar-br
 
 const Dashboard = () => {
   const router = useRouter();
-  const { state } = useContext(Store);
-  const { userInfo, products, error } = state;
+  const { state, dispatch } = useContext(Store);
+  const { userInfo, products, totalSales } = state;
+  const { enqueueSnackbar } = useSnackbar();
 
   useEffect(() => {
     !userInfo && router.push("/auth");
+    getTotalSales({ dispatch: dispatch, enqueueSnackbar: enqueueSnackbar });
   }, []);
 
   // !userInfo && router.push("/auth");
@@ -51,7 +55,7 @@ const Dashboard = () => {
               <ProductProgress products={products} />
             </Grid>
             <Grid item xl={3} lg={3} sm={6} xs={12}>
-              <TotalProfit sx={{ height: "100%" }} />
+              <TotalSales totalSales={totalSales} sx={{ height: "100%" }} />
             </Grid>
             {/* <Grid
             item
@@ -62,8 +66,15 @@ const Dashboard = () => {
           >
             <Sales />
           </Grid> */}
-            <Grid item lg={12} md={6} xl={3} xs={12}>
-              <TrafficByDevice sx={{ height: "100%" }} />
+
+            <Grid item xs={12}>
+              {!totalSales ? (
+                <TrafficByDevice sx={{ height: "100%" }} />
+              ) : (
+                <Box sx={{ pt: 3 }}>
+                  <SalesList salesList={totalSales} />
+                </Box>
+              )}
             </Grid>
             {/* <Grid item lg={4} md={6} xl={3} xs={12}>
             <LatestProducts sx={{ height: "100%" }} />

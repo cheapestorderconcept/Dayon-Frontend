@@ -35,6 +35,10 @@ export const getTotalSales = async ({ dispatch, enqueueSnackbar }) => {
       type: GET_TOTAL_SALES_SUCCESS,
       payload: data.data,
     });
+    data &&
+      enqueueSnackbar(data?.response_message, {
+        variant: "success",
+      });
   } catch (error) {
     error &&
       enqueueSnackbar(error?.response?.data?.response_message || error.message, {

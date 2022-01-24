@@ -2,6 +2,9 @@ import { makeNetworkCall } from "src/network";
 import {
   ADD_STAFF_FAIL,
   ADD_STAFF_REQUEST,
+  ADD_STAFF_SUCCESS,
+  DELETE_STAFF_REQUEST,
+  DELETE_STAFF_SUCCESS,
   GET_STAFF_FAIL,
   GET_STAFF_REQUEST,
   GET_STAFF_SUCCESS,
@@ -57,14 +60,14 @@ export const getStaff = async ({ dispatch, enqueueSnackbar }) => {
 export const deleteStaff = async ({ dispatch, staffId, Router, enqueueSnackbar }) => {
   try {
     dispatch({
-      type: DELETE_PRODUCT_REQUEST,
+      type: DELETE_STAFF_REQUEST,
     });
     const { data } = await makeNetworkCall({
       method: "DELETE",
       path: `/delete-staff/${staffId}`,
     });
     dispatch({
-      type: DELETE_PRODUCT_SUCCESS,
+      type: DELETE_STAFF_SUCCESS,
       payload: data.data._id,
     });
     data &&
