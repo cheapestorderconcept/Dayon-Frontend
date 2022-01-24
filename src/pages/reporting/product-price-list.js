@@ -5,7 +5,7 @@ import { Download as DownloadIcon } from "src/icons/download";
 import { Upload as UploadIcon } from "src/icons/upload";
 import ProductPriceListTable from "src/components/reporting/product-price-list-report";
 
-const ManageSupplierLists = () => (
+const ProductPriceListPage = () => (
   <>
     <Head>
       <title>Product Price Lists| Material Kit</title>
@@ -48,6 +48,6 @@ const ManageSupplierLists = () => (
   </>
 );
 
-ManageSupplierLists.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
+ProductPriceListPage.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
 
-export default ManageSupplierLists;
+export default ProductPriceListPage;
