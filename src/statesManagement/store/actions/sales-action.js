@@ -75,7 +75,6 @@ export const addSalesData = async ({ dispatch, sales, Router, enqueueSnackbar })
 
     Router.push({
       pathname: "/sales/reciept-print-page",
-
       query: { sales: JSON.stringify(sales) },
     });
   } catch (error) {
