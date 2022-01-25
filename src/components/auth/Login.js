@@ -141,25 +141,25 @@ export default function Login() {
       >
         <div className={classes.wrapper}>
           <Typography variant="h4" className={classes.title}>
-            18A Nigeria Limited
+            Adeshex Global
           </Typography>
 
           <div className={classes.details}>
             <HomeIcon className={classes.icon} />
             <Typography variant="subtitle1" className={classes.text}>
-              Parakin Junction, Ile-Ife, Osun State
+              Shop 1 and two oranmiayan tower lagere ile ife
             </Typography>
           </div>
           <div className={classes.details}>
             <CallIcon className={classes.icon} />
             <Typography variant="subtitle1" className={classes.text}>
-              08023456789
+              +2348107895502
             </Typography>
           </div>
           <div className={classes.details}>
             <EmailIcon className={classes.icon} />
             <Typography variant="subtitle1" className={classes.text}>
-              18alimited@gmail.com
+              Adeshexglobalconcept@gmail.com
             </Typography>
           </div>
         </div>
@@ -209,8 +209,14 @@ export default function Login() {
                 control={<Checkbox value="remember" color="primary" />}
                 label="Remember me"
               />
-              <CustomButton type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
-                {loading ? <Loading /> : "Submit"}
+              <CustomButton
+                disabled={loading && true}
+                type="submit"
+                fullWidth
+                variant="contained"
+                sx={{ mt: 3, mb: 2 }}
+              >
+                Submit
               </CustomButton>
               <Grid container>
                 <Grid item xs>

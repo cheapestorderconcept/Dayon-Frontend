@@ -76,6 +76,7 @@ const ManageExpenses = ({ expenses }) => {
   const options = {
     filter: true,
     sort: true,
+    responsive: "simple",
   };
   useEffect(() => {
     setready(true);

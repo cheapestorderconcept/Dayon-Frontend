@@ -33,6 +33,9 @@ export const getExpensesCategory = async ({ dispatch, enqueueSnackbar }) => {
       payload: data.data,
     });
   } catch (error) {
+    dispatch({
+      type: GET_EXPENSES_CARTEGORY_FAIL,
+    });
     error &&
       enqueueSnackbar(error?.response?.data?.response_message || error.message, {
         variant: "error",
@@ -52,6 +55,9 @@ export const getExpenses = async ({ dispatch, enqueueSnackbar }) => {
       payload: data.data,
     });
   } catch (error) {
+    dispatch({
+      type: GET_EXPENSES_FAIL,
+    });
     error &&
       enqueueSnackbar(error?.response?.data?.response_message || error.message, {
         variant: "error",
@@ -77,8 +83,12 @@ export const addExpensesCategory = async ({ dispatch, category, Router, enqueueS
       enqueueSnackbar(data?.response_message, {
         variant: "success",
       });
+    getExpensesCategory({ dispatch: dispatch, enqueueSnackbar: enqueueSnackbar });
     // Router.reload(window.location.pathname);
   } catch (error) {
+    dispatch({
+      type: ADD_EXPENSES_CATEGORY_FAIL,
+    });
     error &&
       enqueueSnackbar(error?.response?.data?.response_message || error.message, {
         variant: "error",
@@ -106,6 +116,9 @@ export const addExpenses = async ({ dispatch, expenses, Router, enqueueSnackbar 
       });
     //   Router.reload(window.location.pathname);
   } catch (error) {
+    dispatch({
+      type: ADD_EXPENSES_FAIL,
+    });
     error &&
       enqueueSnackbar(error?.response?.data?.response_message || error.message, {
         variant: "error",
@@ -132,6 +145,9 @@ export const deleteExpenses = async ({ dispatch, expId, Router, enqueueSnackbar 
       });
     console.log(data.data);
   } catch (error) {
+    dispatch({
+      type: DELETE_EXPENSES_FAIL,
+    });
     error &&
       enqueueSnackbar(error?.response?.data?.response_message || error.message, {
         variant: "error",
@@ -160,6 +176,9 @@ export const updateExpenses = async ({ dispatch, expenses, expId, Router, enqueu
         variant: "success",
       });
   } catch (error) {
+    dispatch({
+      type: UPDATE_EXPENSES_FAIL,
+    });
     error &&
       enqueueSnackbar(error?.response?.data?.response_message || error.message, {
         variant: "error",

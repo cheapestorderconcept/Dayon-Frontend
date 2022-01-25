@@ -37,7 +37,7 @@ function Row(props) {
           <Collapse in={open} timeout="auto" unmountOnExit>
             <Box sx={{ margin: 1 }}>
               <Typography variant="h6" gutterBottom component="div">
-                Products
+                Items
               </Typography>
               <Table size="small" aria-label="purchases">
                 <TableHead>
@@ -47,12 +47,15 @@ function Row(props) {
                     <TableCell>Quantity</TableCell>
                     <TableCell>Cost Price</TableCell>
                     <TableCell>Selling Price</TableCell>
-                    <TableCell>Total</TableCell>
+                    <TableCell>Total Cost Price</TableCell>
+                    <TableCell>Total Selling Price</TableCell>
+                    <TableCell>Profit/Loss</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
                   {row?.items?.map((item, i) => {
-                    const total = Number(item.selling_price) * Number(item.quantity);
+                    const total_costPrice = Number(item.cost_price) * Number(item.quantity);
+                    const profit_or_loss = Number(item.amount) - Number(total_costPrice);
                     return (
                       <TableRow key={item.barcode}>
                         <TableCell component="th" scope="row">
@@ -62,10 +65,13 @@ function Row(props) {
                         <TableCell>{item.quantity}</TableCell>
                         <TableCell>{item.cost_price}</TableCell>
                         <TableCell>{item.selling_price}</TableCell>
-                        <TableCell>{total}</TableCell>
-                        {/* <TableCell align="right">
-                        {Math.round(historyRow.amount * row.price * 100) / 100}
-                      </TableCell> */}
+                        <TableCell>{total_costPrice}</TableCell>
+                        <TableCell>{item.amount}</TableCell>
+                        <TableCell
+                          style={{ color: item.amount > total_costPrice ? "green" : "red" }}
+                        >
+                          {profit_or_loss}
+                        </TableCell>
                       </TableRow>
                     );
                   })}
@@ -90,7 +96,19 @@ function Row(props) {
                     </TableCell>
                     <TableCell>
                       <Typography variant="h6">{`₦${row?.items?.reduce(
+                        (a, c) => a + Number(c.cost_price * c.quantity),
+                        0
+                      )}`}</Typography>
+                    </TableCell>
+                    <TableCell>
+                      <Typography variant="h6">{`₦${row?.items?.reduce(
                         (a, c) => a + Number(c.selling_price * c.quantity),
+                        0
+                      )}`}</Typography>
+                    </TableCell>
+                    <TableCell>
+                      <Typography variant="h6">{`₦${row?.items?.reduce(
+                        (a, c) => a + Number(c.amount - c.cost_price * c.quantity),
                         0
                       )}`}</Typography>
                     </TableCell>
@@ -105,7 +123,7 @@ function Row(props) {
   );
 }
 
-export default function CollapsibleTable({ salesReport }) {
+export default function CollapsibleTable({ profitOrLossReport }) {
   return (
     <TableContainer component={Paper}>
       <Table aria-label="collapsible table">
@@ -118,7 +136,7 @@ export default function CollapsibleTable({ salesReport }) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {salesReport.map((row, index) => (
+          {profitOrLossReport.map((row, index) => (
             <Row key={row._id} row={row} index={index} />
           ))}
         </TableBody>

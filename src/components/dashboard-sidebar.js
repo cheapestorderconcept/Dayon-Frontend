@@ -44,8 +44,8 @@ const items = [
     hasdropdown: true,
     title2: "Product Brand",
     href2: "products/brand",
-    title3: "Manage Product Price",
-    href3: "#",
+    // title3: "Manage Product Price",
+    // href3: "#",
   },
   {
     icon: <AccountBalanceWalletIcon fontSize="small" />,
@@ -215,7 +215,7 @@ export const DashboardSidebar = (props) => {
             >
               <div>
                 <Typography color="inherit" variant="h6">
-                  Dayon Techonology.
+                  Adeshex Global Concept.
                 </Typography>
                 <Typography color="neutral.400" variant="body2">
                   Daycon Consult : Available

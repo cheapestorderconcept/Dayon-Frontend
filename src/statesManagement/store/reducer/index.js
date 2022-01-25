@@ -1,6 +1,3 @@
-// const { combineReducers } = require("redux");
-// import loginReducer from "./login-reducers";
-// import supplierReducer from "./suppliers-reducers";
 import Cookies from "js-cookie";
 import {
   LOGIN_FAIL,
@@ -127,6 +124,9 @@ import {
   DELETE_STAFF_REQUEST,
   DELETE_STAFF_SUCCESS,
   DELETE_STAFF_FAIL,
+  GET_PROFIT_OR_LOSS_LEVEL_REPORT_REQUEST,
+  GET_PROFIT_OR_LOSS_LEVEL_REPORT_SUCCESS,
+  GET_PROFIT_OR_LOSS_LEVEL_REPORT_FAIL,
 } from "../constants";
 
 // const rootReducers = combineReducers({
@@ -235,7 +235,7 @@ const rootReducers = (state, action) => {
         Cookies.set("products", JSON.stringify(action.payload));
       }
 
-      return { ...state, loading: false, products: action.payload };
+      return { ...state, loading: false, products: action?.payload };
     }
     case GET_PRODUCT_FAIL:
       return { ...state, loading: false, error: action.payload };
@@ -250,8 +250,8 @@ const rootReducers = (state, action) => {
       return { ...state, loading: true };
     case UPDATE_PRODUCT_SUCCESS:
       return { ...state, loading: false };
-    // case UPDATE_PRODUCT_FAIL:
-    //   return { ...state, loading: false, error: action.payload };
+    case UPDATE_PRODUCT_FAIL:
+      return { ...state, loading: false, error: action.payload };
     case DELETE_PRODUCT_REQUEST:
       return { ...state, loading: true };
     case DELETE_PRODUCT_SUCCESS:
@@ -345,35 +345,33 @@ const rootReducers = (state, action) => {
     case ADD_SALES_DATA_REQUEST:
       return { ...state, loading: true, notification: false };
     case ADD_SALES_DATASUCCESS: {
-      Cookies.remove("cartItems");
-
       return { ...state, loading: false, notification: true, success: action.payload };
     }
     case ADD_SALES_DATA_FAIL:
       return { ...state, loading: false, notification: true, success: null, error: action.payload };
 
-    case ADD_SALES_SUCCESS: {
-      const newSales = action.payload;
-      const existingProduct = state.cart.cartItems.find(
-        (sale) => sale.product_barcode === newSales.product_barcode
-      );
-      const cartItems = existingProduct
-        ? state.cart.cartItems.map((sale) =>
-            sale.product_barcode === existingProduct.product_barcode
-              ? {
-                  ...newSales,
-                  purchased_qty: Number(sale.purchased_qty) + Number(newSales.purchased_qty),
-                  total_amount: Number(sale.unit_price) * Number(newSales.purchased_qty),
-                }
-              : sale
-          )
-        : [...state.cart.cartItems, newSales];
-      Cookies.set("cartItems", JSON.stringify(cartItems));
-      return { ...state, cart: { ...state.cart, cartItems } };
-    }
+    // case ADD_SALES_SUCCESS: {
+    //   const newSales = action.payload;
+    //   const existingProduct = state.cart.cartItems.find(
+    //     (sale) => sale.product_barcode === newSales.product_barcode
+    //   );
+    //   const cartItems = existingProduct
+    //     ? state.cart.cartItems.map((sale) =>
+    //         sale.product_barcode === existingProduct.product_barcode
+    //           ? {
+    //               ...newSales,
+    //               purchased_qty: Number(sale.purchased_qty) + Number(newSales.purchased_qty),
+    //               total_amount: Number(sale.unit_price) * Number(newSales.purchased_qty),
+    //             }
+    //           : sale
+    //       )
+    //     : [...state.cart.cartItems, newSales];
+    //   Cookies.set("cartItems", JSON.stringify(cartItems));
+    //   return { ...state, cart: { ...state.cart, cartItems } };
+    // }
 
-    case ADD_SALES_FAIL:
-      return { ...state, loading: false, error: action.payload };
+    // case ADD_SALES_FAIL:
+    //   return { ...state, loading: false, error: action.payload };
 
     case GET_TOTAL_SALES_REQUEST:
       return { ...state, loading: true };
@@ -535,6 +533,14 @@ const rootReducers = (state, action) => {
     case GET_STOCK_LEVEL_REPORT_SUCCESS:
       return { ...state, loading: false, stockLevel: action?.payload };
     case GET_STOCK_LEVEL_REPORT_FAIL:
+      return { ...state, loading: false, error: action.payload };
+
+    //PROFIT OR LOSS REPORT
+    case GET_PROFIT_OR_LOSS_LEVEL_REPORT_REQUEST:
+      return { ...state, loading: true };
+    case GET_PROFIT_OR_LOSS_LEVEL_REPORT_SUCCESS:
+      return { ...state, loading: false, profitOrLossReport: action?.payload };
+    case GET_PROFIT_OR_LOSS_LEVEL_REPORT_FAIL:
       return { ...state, loading: false, error: action.payload };
     default:
       state;

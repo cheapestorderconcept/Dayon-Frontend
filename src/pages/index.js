@@ -13,6 +13,7 @@ import { Store } from "src/statesManagement/store/store";
 import { useSnackbar } from "notistack";
 import SalesList from "src/components/sales/sales-list";
 import { getTotalSales } from "src/statesManagement/store/actions/sales-action";
+import { getProduct } from "src/statesManagement/store/actions/product-action";
 
 const DynamicComponentWithNoSSR = dynamic(() => import("src/components/navbar-branch-indicator"), {
   ssr: false,
@@ -22,11 +23,13 @@ const Dashboard = () => {
   const router = useRouter();
   const { state, dispatch } = useContext(Store);
   const { userInfo, products, totalSales } = state;
+  const totalsales = totalSales;
   const { enqueueSnackbar } = useSnackbar();
 
   useEffect(() => {
     !userInfo && router.push("/auth");
     getTotalSales({ dispatch: dispatch, enqueueSnackbar: enqueueSnackbar });
+    getProduct({ dispatch: dispatch, enqueueSnackbar: enqueueSnackbar });
   }, []);
 
   // !userInfo && router.push("/auth");
@@ -45,34 +48,25 @@ const Dashboard = () => {
         <DynamicComponentWithNoSSR />
         <Container maxWidth={false}>
           <Grid container spacing={3}>
-            <Grid item lg={3} sm={6} xl={3} xs={12}>
+            {/* <Grid item lg={3} sm={6} xl={3} xs={12}>
               <Budget />
             </Grid>
             <Grid item xl={3} lg={3} sm={6} xs={12}>
               <TotalCustomers />
-            </Grid>
-            <Grid item xl={3} lg={3} sm={6} xs={12}>
+            </Grid> */}
+            <Grid item xl={3} lg={6} sm={6} xs={12}>
               <ProductProgress products={products} />
             </Grid>
-            <Grid item xl={3} lg={3} sm={6} xs={12}>
-              <TotalSales totalSales={totalSales} sx={{ height: "100%" }} />
+            <Grid item xl={3} lg={6} sm={6} xs={12}>
+              <TotalSales totalsales={totalsales} sx={{ height: "100%" }} />
             </Grid>
-            {/* <Grid
-            item
-            lg={8}
-            md={12}
-            xl={9}
-            xs={12}
-          >
-            <Sales />
-          </Grid> */}
 
             <Grid item xs={12}>
-              {!totalSales ? (
+              {!totalsales ? (
                 <TrafficByDevice sx={{ height: "100%" }} />
               ) : (
                 <Box sx={{ pt: 3 }}>
-                  <SalesList salesList={totalSales} />
+                  <SalesList salesList={totalsales} />
                 </Box>
               )}
             </Grid>

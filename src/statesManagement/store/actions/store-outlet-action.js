@@ -22,6 +22,9 @@ export const getStores = async ({ dispatch, enqueueSnackbar }) => {
     });
     // localStorage.setItem("branch", JSON.stringify(data.data));
   } catch (error) {
+    dispatch({
+      type: GET_STORE_FAIL,
+    });
     error &&
       enqueueSnackbar(error?.response?.data?.response_message || error.message, {
         variant: "error",
@@ -49,6 +52,9 @@ export const addStore = async ({ dispatch, store, Router, enqueueSnackbar }) => 
       });
     // Router.reload(window.location.pathname);
   } catch (error) {
+    dispatch({
+      type: ADD_STORE_FAIL,
+    });
     error &&
       enqueueSnackbar(error?.response?.data?.response_message || error.message, {
         variant: "error",

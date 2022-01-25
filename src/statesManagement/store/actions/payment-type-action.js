@@ -23,6 +23,9 @@ export const getPaymentMethod = async ({ dispatch, enqueueSnackbar }) => {
       payload: data.data,
     });
   } catch (error) {
+    dispatch({
+      type: GET_PAYMENT_TYPE_FAIL,
+    });
     error &&
       enqueueSnackbar(error?.response?.data?.response_message || error.message, {
         variant: "error",
@@ -50,6 +53,9 @@ export const addPaymentMethod = async ({ dispatch, method, Router, enqueueSnackb
       });
     // Router.reload(window.location.pathname);
   } catch (error) {
+    dispatch({
+      type: ADD_PAYMENT_TYPE_FAIL,
+    });
     error &&
       enqueueSnackbar(error?.response?.data?.response_message || error.message, {
         variant: "error",

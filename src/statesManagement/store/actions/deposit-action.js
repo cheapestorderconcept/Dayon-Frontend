@@ -1,9 +1,12 @@
 import { makeNetworkCall } from "src/network";
 import {
+  ADD_DEPOSIT_FAIL,
   ADD_DEPOSIT_REQUEST,
   ADD_DEPOSIT_SUCCESS,
+  GET_TOTAL_DEPOSIT_FAIL,
   GET_TOTAL_DEPOSIT_REQUEST,
   GET_TOTAL_DEPOSIT_SUCCESS,
+  UPDATE_DEPOSIT_FAIL,
   UPDATE_DEPOSIT_REQUEST,
   UPDATE_DEPOSIT_SUCCESS,
 } from "../constants";
@@ -24,6 +27,9 @@ export const getTotalDeposit = async ({ dispatch, enqueueSnackbar }) => {
         variant: "success",
       });
   } catch (error) {
+    dispatch({
+      type: GET_TOTAL_DEPOSIT_FAIL,
+    });
     error &&
       enqueueSnackbar(error?.response?.data?.response_message || error.message, {
         variant: "error",
@@ -53,6 +59,9 @@ export const addDepositData = async ({ dispatch, deposit, Router, enqueueSnackba
 
     // Router.reload(window.location.pathname);
   } catch (error) {
+    dispatch({
+      type: ADD_DEPOSIT_FAIL,
+    });
     error &&
       enqueueSnackbar(error?.response?.data?.response_message || error.message, {
         variant: "error",
@@ -81,6 +90,9 @@ export const updateDeposit = async ({ dispatch, depId, price, enqueueSnackbar })
         variant: "success",
       });
   } catch (error) {
+    dispatch({
+      type: UPDATE_DEPOSIT_FAIL,
+    });
     error &&
       enqueueSnackbar(error?.response?.data?.response_message || error.message, {
         variant: "error",

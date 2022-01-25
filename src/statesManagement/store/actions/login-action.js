@@ -2,6 +2,7 @@ import Cookies from "js-cookie";
 import { makeNetworkCall } from "src/network";
 import { LOGIN_FAIL, LOGIN_SUCCESS, LOGIN_REQUEST } from "../constants/index";
 import { getBrands } from "./brand-action";
+import { getPaymentMethod } from "./payment-type-action";
 import { getProduct } from "./product-action";
 import { getPurchase } from "./purchase-action";
 import { getStaff } from "./register-staff-action";
@@ -28,7 +29,11 @@ export const loginAction = async ({ loginDetails, dispatch, enqueueSnackbar }) =
     getBrands({ dispatch: dispatch, enqueueSnackbar: enqueueSnackbar });
     getPurchase({ dispatch: dispatch, enqueueSnackbar: enqueueSnackbar });
     getStaff({ dispatch: dispatch, enqueueSnackbar: enqueueSnackbar });
+    getPaymentMethod({ dispatch: dispatch, enqueueSnackbar: enqueueSnackbar });
   } catch (error) {
+    dispatch({
+      type: LOGIN_FAIL,
+    });
     error &&
       enqueueSnackbar(error?.response?.data?.response_message || error.message, {
         variant: "error",

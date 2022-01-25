@@ -203,7 +203,9 @@ export const AddSuppliers = (props) => {
                       />
                     </Grid>
                     <Grid item xs={12}>
-                      <CustomButton>{id != null ? "Update" : "Submit"}</CustomButton>
+                      <CustomButton disabled={loading ? true : false}>
+                        {id != null ? "Update" : "Submit"}
+                      </CustomButton>
                     </Grid>
                   </Grid>
                 </Form>

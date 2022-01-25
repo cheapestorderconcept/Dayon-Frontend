@@ -1,5 +1,9 @@
 import { makeNetworkCall } from "src/network";
-import { GET_SALES_REPORT_REQUEST, GET_SALES_REPORT_SUCCESS } from "../../constants";
+import {
+  GET_SALES_REPORT_FAIL,
+  GET_SALES_REPORT_REQUEST,
+  GET_SALES_REPORT_SUCCESS,
+} from "../../constants";
 
 export const getSalesReport = async ({ dispatch, enqueueSnackbar, from, to, Router, branch }) => {
   try {
@@ -24,6 +28,9 @@ export const getSalesReport = async ({ dispatch, enqueueSnackbar, from, to, Rout
       query: { branch, from: JSON.stringify(from), to: JSON.stringify(to) },
     });
   } catch (error) {
+    dispatch({
+      type: GET_SALES_REPORT_FAIL,
+    });
     error &&
       enqueueSnackbar(error?.response?.data?.response_message || error.message, {
         variant: "error",

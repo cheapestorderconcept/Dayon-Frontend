@@ -50,7 +50,6 @@ const SalesList = ({ salesList }) => {
       }
     })
   );
-  console.log(itemsArray);
 
   const data = [...newArray];
 
@@ -58,7 +57,7 @@ const SalesList = ({ salesList }) => {
     filter: true,
     sort: true,
     selectableRowsHeader: false,
-    responsive: true,
+    responsive: "simple",
   };
 
   return (

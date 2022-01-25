@@ -9,6 +9,7 @@ const PaymentMethodList = ({ paymentType }) => {
   const options = {
     filter: true,
     sort: true,
+    responsive: "simple",
   };
 
   const columns = [

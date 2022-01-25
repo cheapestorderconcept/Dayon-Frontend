@@ -21,12 +21,11 @@ const Sales = () => {
 
   useEffect(() => {
     !userInfo && router.push("/auth");
-    // getTotalSales(dispatch);
   }, []);
   return (
     <>
       <Head>
-        <title>Sales| Material Kit</title>
+        <title>Sales| Adeshex Global</title>
       </Head>
       <Box
         component="main"

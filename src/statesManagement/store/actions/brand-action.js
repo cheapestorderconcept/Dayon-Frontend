@@ -26,6 +26,9 @@ export const getBrands = async ({ dispatch, enqueueSnackbar }) => {
       payload: data.data,
     });
   } catch (error) {
+    dispatch({
+      type: GET_BRAND_FAIL,
+    });
     error &&
       enqueueSnackbar(error?.response?.data?.response_message || error.message, {
         variant: "error",
@@ -55,6 +58,9 @@ export const addBrand = async ({ dispatch, brand, Router, enqueueSnackbar }) => 
       });
     // Router.reload(window.location.pathname);
   } catch (error) {
+    dispatch({
+      type: ADD_BRAND_FAIL,
+    });
     error &&
       enqueueSnackbar(error?.response?.data?.response_message || error.message, {
         variant: "error",
@@ -81,7 +87,10 @@ export const deleteBrand = async ({ dispatch, brandId, Router, enqueueSnackbar }
       });
     // Router.reload(window.location.pathname);
   } catch (error) {
-    console.log(error);
+    dispatch({
+      type: DELETE_BRAND_FAIL,
+    });
+
     error &&
       enqueueSnackbar(error?.response?.data?.response_message || error.message, {
         variant: "error",
@@ -100,7 +109,7 @@ export const updateBrand = async ({ dispatch, brand, brandId, Router, enqueueSna
       path: `/update-brand/${brandId}`,
       requestBody: brand,
     });
-    console.log(data);
+
     dispatch({
       type: UPDATE_BRAND_SUCCESS,
       payload: data.data,
@@ -111,6 +120,9 @@ export const updateBrand = async ({ dispatch, brand, brandId, Router, enqueueSna
       });
     // Router.reload(window.location.pathname);
   } catch (error) {
+    dispatch({
+      type: UPDATE_BRAND_FAIL,
+    });
     error &&
       enqueueSnackbar(error?.response?.data?.response_message || error.message, {
         variant: "error",

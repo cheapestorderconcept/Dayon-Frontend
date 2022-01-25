@@ -187,7 +187,7 @@ export const AddStaff = (props) => {
                     </Grid>
 
                     <Grid item xs={12}>
-                      <CustomButton>Submit</CustomButton>
+                      <CustomButton disabled={loading ? true : false}>Submit</CustomButton>
                     </Grid>
                   </Grid>
                 </Form>

@@ -141,7 +141,7 @@ export const EditProductForm = (props) => {
                     </Grid>
 
                     <Grid item xs={12}>
-                      <CustomButton> Update Product</CustomButton>
+                      <CustomButton disabled={loading ? true : false}> Update Product</CustomButton>
                     </Grid>
                   </Grid>
                 </Form>

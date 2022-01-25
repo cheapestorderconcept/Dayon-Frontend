@@ -74,6 +74,7 @@ const PurchaseList = ({ purchase }) => {
     filter: true,
     sort: true,
     selectableRowsHeader: false,
+    responsive: "simple",
   };
 
   return (

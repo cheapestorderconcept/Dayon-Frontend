@@ -30,6 +30,7 @@ const StoreOuletLists = ({ branch }) => {
   const options = {
     filter: true,
     sort: true,
+    responsive: "simple",
   };
   return (
     <>

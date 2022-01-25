@@ -2,7 +2,7 @@ import { Avatar, Card, CardContent, Grid, Typography } from "@mui/material";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 
 export const TotalSales = (props) => {
-  const { totalSales } = props;
+  const { totalsales } = props;
   return (
     <Card {...props}>
       <CardContent>
@@ -12,7 +12,7 @@ export const TotalSales = (props) => {
               TOTAL SALES
             </Typography>
             <Typography color="textPrimary" variant="h4">
-              {totalSales ? totalSales.length : 0}
+              {totalsales ? totalsales.length : 0}
             </Typography>
           </Grid>
           <Grid item>

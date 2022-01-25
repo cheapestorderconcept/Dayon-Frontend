@@ -26,9 +26,9 @@ function Row(props) {
             {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </IconButton>
         </TableCell>
-        <TableCell component="th" scope="row">
+        {/* <TableCell component="th" scope="row">
           {index + 1}
-        </TableCell>
+        </TableCell> */}
         <TableCell>{row.created_at}</TableCell>
         <TableCell>{row.invoice_number}</TableCell>
       </TableRow>
@@ -45,54 +45,35 @@ function Row(props) {
                     <TableCell>Product Barcode</TableCell>
                     <TableCell>Product Name</TableCell>
                     <TableCell>Quantity</TableCell>
-                    <TableCell>Cost Price</TableCell>
-                    <TableCell>Selling Price</TableCell>
-                    <TableCell>Total</TableCell>
+                    <TableCell>Cost Price Per Unit</TableCell>
+                    <TableCell> Total Price</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {row?.items?.map((item, i) => {
-                    const total = Number(item.selling_price) * Number(item.quantity);
-                    return (
-                      <TableRow key={item.barcode}>
-                        <TableCell component="th" scope="row">
-                          {item.barcode}
-                        </TableCell>
-                        <TableCell>{item.product}</TableCell>
-                        <TableCell>{item.quantity}</TableCell>
-                        <TableCell>{item.cost_price}</TableCell>
-                        <TableCell>{item.selling_price}</TableCell>
-                        <TableCell>{total}</TableCell>
-                        {/* <TableCell align="right">
+                  {row?.items?.map((item, i) => (
+                    <TableRow key={item.barcode}>
+                      <TableCell component="th" scope="row">
+                        {item.barcode}
+                      </TableCell>
+                      <TableCell>{item.product}</TableCell>
+                      <TableCell>{item.quantity}</TableCell>
+                      <TableCell>{item.selling_price}</TableCell>
+                      <TableCell>{item.amount}</TableCell>
+                      {/* <TableCell align="right">
                         {Math.round(historyRow.amount * row.price * 100) / 100}
                       </TableCell> */}
-                      </TableRow>
-                    );
-                  })}
+                    </TableRow>
+                  ))}
                   <TableRow>
                     <TableCell></TableCell>
                     <TableCell></TableCell>
-                    {/* <TableCell></TableCell> */}
+                    <TableCell></TableCell>
                     <TableCell>
-                      <Typography variant="h6">Total </Typography>
+                      <Typography variant="h6">Total Purchase Price</Typography>
                     </TableCell>
                     <TableCell>
-                      <Typography variant="h6">{`₦${row?.items?.reduce(
-                        (a, c) => a + c.cost_price,
-                        0
-                      )}`}</Typography>
-                    </TableCell>
-                    <TableCell>
-                      <Typography variant="h6">{`₦${row?.items?.reduce(
-                        (a, c) => a + Number(c.selling_price),
-                        0
-                      )}`}</Typography>
-                    </TableCell>
-                    <TableCell>
-                      <Typography variant="h6">{`₦${row?.items?.reduce(
-                        (a, c) => a + Number(c.selling_price * c.quantity),
-                        0
-                      )}`}</Typography>
+                      {" "}
+                      <Typography variant="h6">{`₦${row.total_amount}`}</Typography>
                     </TableCell>
                   </TableRow>
                 </TableBody>
@@ -105,22 +86,20 @@ function Row(props) {
   );
 }
 
-export default function CollapsibleTable({ salesReport }) {
+export default function CollapsibleTable({ salesReciept }) {
   return (
     <TableContainer component={Paper}>
       <Table aria-label="collapsible table">
         <TableHead>
           <TableRow>
             <TableCell />
-            <TableCell>S/N</TableCell>
+            {/* <TableCell>S/N</TableCell> */}
             <TableCell>Date</TableCell>
             <TableCell>Invoice</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {salesReport.map((row, index) => (
-            <Row key={row._id} row={row} index={index} />
-          ))}
+          <Row row={salesReciept} />
         </TableBody>
       </Table>
     </TableContainer>

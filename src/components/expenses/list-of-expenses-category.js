@@ -82,6 +82,7 @@ const ListOfExpensesCategory = ({ expensesCategories }) => {
   const options = {
     filter: true,
     sort: true,
+    responsive: "simple",
   };
 
   const exp = expensesCategories.map((exp) => Object.values(exp));

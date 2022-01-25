@@ -23,7 +23,7 @@ import { useRouter } from "next/router";
 
 export const SalesReportForm = (props) => {
   const { dispatch, state } = useContext(Store);
-  const { branch } = state;
+  const { branch, loading } = state;
   const { enqueueSnackbar } = useSnackbar();
   const Router = useRouter();
   const [formvalues, setformvalues] = useState({
@@ -153,7 +153,12 @@ export const SalesReportForm = (props) => {
                   </Grid> */}
 
                   <Grid item xs={12}>
-                    <Button type="submit" fullWidth={true} variant="contained">
+                    <Button
+                      disabled={loading ? true : false}
+                      type="submit"
+                      fullWidth={true}
+                      variant="contained"
+                    >
                       View now
                     </Button>
                   </Grid>

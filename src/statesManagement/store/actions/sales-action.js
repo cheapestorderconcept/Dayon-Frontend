@@ -17,6 +17,9 @@ export const addSales = async ({ dispatch, sales, enqueueSnackbar }) => {
       payload: { ...sales },
     });
   } catch (error) {
+    dispatch({
+      type: ADD_SALES_FAIL,
+    });
     error &&
       enqueueSnackbar(error?.response?.data?.response_message || error.message, {
         variant: "error",
@@ -40,6 +43,9 @@ export const getTotalSales = async ({ dispatch, enqueueSnackbar }) => {
         variant: "success",
       });
   } catch (error) {
+    dispatch({
+      type: GET_TOTAL_SALES_FAIL,
+    });
     error &&
       enqueueSnackbar(error?.response?.data?.response_message || error.message, {
         variant: "error",
@@ -67,8 +73,15 @@ export const addSalesData = async ({ dispatch, sales, Router, enqueueSnackbar })
         variant: "success",
       });
 
-    // Router.reload(window.location.pathname);
+    Router.push({
+      pathname: "/sales/reciept-print-page",
+
+      query: { sales: JSON.stringify(sales) },
+    });
   } catch (error) {
+    dispatch({
+      type: ADD_SALES_DATA_FAIL,
+    });
     error &&
       enqueueSnackbar(error?.response?.data?.response_message || error.message, {
         variant: "error",

@@ -44,8 +44,8 @@ export default function BasicTable({ depositReport }) {
               <TableCell align="right">{row.branch}</TableCell>
               <TableCell align="right">{row.customer_name}</TableCell>
               <TableCell align="right">{row.items.length}</TableCell>
-              <TableCell align="right">{row.amount_deposited}</TableCell>
-              <TableCell align="right">{row.amount_to_balance}</TableCell>
+              <TableCell align="right">{`₦${row.amount_deposited}`}</TableCell>
+              <TableCell align="right">{`₦${row.amount_to_balance}`}</TableCell>
             </TableRow>
           ))}
         </TableBody>

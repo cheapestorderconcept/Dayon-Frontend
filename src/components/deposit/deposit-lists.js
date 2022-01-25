@@ -12,6 +12,7 @@ const DepositList = ({ deposits }) => {
   const options = {
     filter: true,
     sort: true,
+    responsive: "simple",
   };
 
   const columns = [

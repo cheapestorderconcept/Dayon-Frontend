@@ -35,6 +35,7 @@ export const AddPaymentMethod = (props) => {
   });
 
   const { dispatch, state } = useContext(Store);
+  const { loading } = state;
   const { enqueueSnackbar } = useSnackbar();
   const Router = useRouter();
   const handleSubmit = (values) => {
@@ -96,7 +97,7 @@ export const AddPaymentMethod = (props) => {
                     </Grid>
 
                     <Grid item xs={12}>
-                      <CustomButton>Submit</CustomButton>
+                      <CustomButton disabled={loading ? true : false}>Submit</CustomButton>
                     </Grid>
                   </Grid>
                 </Form>

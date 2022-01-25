@@ -45,7 +45,7 @@ import { Router } from "next/router";
 export const EditDepositView = (props) => {
   const { deposits, id } = props;
   const { dispatch, state } = useContext(Store);
-  const { branch, productByBarcode, paymentType } = state;
+  const { branch, productByBarcode, paymentType, loading } = state;
   let oneDeposit = [];
   oneDeposit = deposits.filter((dep) => dep._id === id);
 
@@ -437,6 +437,7 @@ export const EditDepositView = (props) => {
                           fullWidth={true}
                           variant="contained"
                           type="submit"
+                          disabled={loading ? true : false}
                           onClick={() => Submit(values)}
                         >
                           {" "}

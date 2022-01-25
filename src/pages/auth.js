@@ -1,5 +1,6 @@
 import React from "react";
 import dynamic from "next/dynamic";
+import Head from "next/head";
 
 const DynamicComponentWithNoSSR = dynamic(() => import("src/components/auth/Login"), {
   ssr: false,
@@ -10,6 +11,9 @@ const Auth = () => {
 
   return (
     <>
+      <Head>
+        <title>Login | Adeshex Global</title>
+      </Head>
       <DynamicComponentWithNoSSR />
     </>
   );

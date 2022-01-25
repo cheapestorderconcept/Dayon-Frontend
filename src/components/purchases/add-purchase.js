@@ -59,7 +59,7 @@ export const AddPurchase = (props) => {
   const { branch, suppliers, products } = props;
 
   const { dispatch, state } = useContext(Store);
-  const { loading, error, success, notification } = state;
+  const { loading } = state;
 
   const { enqueueSnackbar } = useSnackbar();
 
@@ -168,7 +168,7 @@ export const AddPurchase = (props) => {
                       <CustomTextField name="totalPurchaseValue" label="Total Purchase Value" />
                     </Grid>
                     <Grid item xs={12}>
-                      <CustomButton> Submit</CustomButton>
+                      <CustomButton disabled={loading ? true : false}> Submit</CustomButton>
                     </Grid>
                   </Grid>
                 </Form>

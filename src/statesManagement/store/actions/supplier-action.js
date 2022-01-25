@@ -26,6 +26,9 @@ export const getSuppliers = async ({ dispatch, enqueueSnackbar }) => {
       payload: data.data.supplier,
     });
   } catch (error) {
+    dispatch({
+      type: GET_SUPPLIERS_FAIL,
+    });
     error &&
       enqueueSnackbar(error?.response?.data?.response_message || error.message, {
         variant: "error",
@@ -53,6 +56,9 @@ export const addSupplier = async ({ dispatch, supplier, Router, enqueueSnackbar 
       });
     // Router.reload(window.location.pathname);
   } catch (error) {
+    dispatch({
+      type: ADD_SUPPLIERS_FAIL,
+    });
     error &&
       enqueueSnackbar(error?.response?.data?.response_message || error.message, {
         variant: "error",
@@ -79,7 +85,9 @@ export const deleteSupplier = async ({ dispatch, supId, Router, enqueueSnackbar 
       });
     // Router.reload(window.location.pathname);
   } catch (error) {
-    console.log(error);
+    dispatch({
+      type: DELETE_SUPPLIERS_FAIL,
+    });
     error &&
       enqueueSnackbar(error?.response?.data?.response_message || error.message, {
         variant: "error",
@@ -109,6 +117,9 @@ export const updateSupplier = async ({ dispatch, supplier, supId, Router, enqueu
       });
     // Router.reload(window.location.pathname);
   } catch (error) {
+    dispatch({
+      type: UPDATE_SUPPLIERS_FAIL,
+    });
     error &&
       enqueueSnackbar(error?.response?.data?.response_message || error.message, {
         variant: "error",

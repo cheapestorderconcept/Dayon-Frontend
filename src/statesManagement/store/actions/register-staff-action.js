@@ -1,8 +1,10 @@
 import { makeNetworkCall } from "src/network";
 import {
+  ADD_SALES_DATA_FAIL,
   ADD_STAFF_FAIL,
   ADD_STAFF_REQUEST,
   ADD_STAFF_SUCCESS,
+  DELETE_STAFF_FAIL,
   DELETE_STAFF_REQUEST,
   DELETE_STAFF_SUCCESS,
   GET_STAFF_FAIL,
@@ -31,6 +33,9 @@ export const registerStaff = async ({ dispatch, staff, Router, enqueueSnackbar }
       });
     // Router.reload(window.location.pathname);
   } catch (error) {
+    dispatch({
+      type: ADD_SALES_DATA_FAIL,
+    });
     error &&
       enqueueSnackbar(error?.response?.data?.response_message || error.message, {
         variant: "error",
@@ -50,6 +55,9 @@ export const getStaff = async ({ dispatch, enqueueSnackbar }) => {
       payload: data.data,
     });
   } catch (error) {
+    dispatch({
+      type: GET_STAFF_FAIL,
+    });
     error &&
       enqueueSnackbar(error?.response?.data?.response_message || error.message, {
         variant: "error",
@@ -76,7 +84,9 @@ export const deleteStaff = async ({ dispatch, staffId, Router, enqueueSnackbar }
       });
     // Router.reload(window.location.pathname);
   } catch (error) {
-    console.log(error);
+    dispatch({
+      type: DELETE_STAFF_FAIL,
+    });
     error &&
       enqueueSnackbar(error?.response?.data?.response_message || error.message, {
         variant: "error",

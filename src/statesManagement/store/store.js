@@ -28,6 +28,7 @@ const initialState = {
   salesReport: [],
   depositReport: [],
   outOfStocksReport: [],
+  profitOrLossReport: [],
   productPrice: [],
   stockLevel: [],
   paymentType: Cookies.get("paymentType") ? JSON.parse(Cookies.get("paymentType")) : [],
@@ -40,9 +41,6 @@ const initialState = {
     ? JSON.parse(Cookies.get("expensesCategories"))
     : [],
   totalSales: [],
-  cart: {
-    cartItems: Cookies.get("cartItems") ? JSON.parse(Cookies.get("cartItems")) : [],
-  },
 };
 
 export const StoreProvider = (props) => {

@@ -17,7 +17,8 @@ const ExpensesCategory = () => {
     expenses_category: yup.string().required("Please enter a category"),
   });
 
-  const { dispatch } = useContext(Store);
+  const { dispatch, state } = useContext(Store);
+  const { loading } = state;
   const { enqueueSnackbar } = useSnackbar();
   const handleSubmit = (values) => {
     addExpensesCategory({ dispatch: dispatch, enqueueSnackbar: enqueueSnackbar, category: values });
@@ -31,7 +32,7 @@ const ExpensesCategory = () => {
       <Form>
         <CustomTextField name="expenses_category" label="Add Category" />
         <Box mt={2} />
-        <CustomButton>Submit</CustomButton>
+        <CustomButton disabled={loading ? true : false}>Submit</CustomButton>
       </Form>
     </Formik>
   );

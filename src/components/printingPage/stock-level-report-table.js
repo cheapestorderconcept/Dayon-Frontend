@@ -32,11 +32,11 @@ export default function BasicTable({ stockLevel }) {
               <TableCell align="right">{row.product_barcode}</TableCell>
               <TableCell align="right">{row.product_brand}</TableCell>
               <TableCell align="right">{row.supplier}</TableCell>
-              <TableCell align="right">{row.product_price}</TableCell>
+              <TableCell align="right">{`₦${row.product_price}`}</TableCell>
               <TableCell align="right">{row.current_product_quantity}</TableCell>
               <TableCell align="right">{row.previous_product_quantity}</TableCell>
               <TableCell align="right">
-                {Number(row.current_product_quantity) * Number(row.product_price)}
+                {`₦${Number(row.current_product_quantity) * Number(row.product_price)}`}
               </TableCell>
             </TableRow>
           ))}

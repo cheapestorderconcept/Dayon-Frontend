@@ -14,20 +14,26 @@ import { Download as DownloadIcon } from "../../icons/download";
 
 import { Upload as UploadIcon } from "../../icons/upload";
 
-import { stores } from "../../__mocks__/stores";
-
-import { useState } from "react";
+import { useContext, useState } from "react";
 import ReactDatePicker from "../dateslibrary/react-date-range";
 
 import { addDays, subDays } from "date-fns";
+import { getProfitOrLossReport } from "src/statesManagement/store/actions/reportingActions/profit-or-loss-report-action";
+import { Store } from "src/statesManagement/store/store";
+import { useSnackbar } from "notistack";
+import { useRouter } from "next/router";
 
 export const Profit_LossReport_Form = (props) => {
+  const { dispatch, state } = useContext(Store);
+  const { loading } = state;
+  const { enqueueSnackbar } = useSnackbar();
+  const Router = useRouter();
+  const { branch } = props;
   const [formvalues, setformvalues] = useState({
     startDate: null,
     endDate: null,
     store: "",
   });
-
   const [selectionValue, setselectionValue] = useState([
     {
       startDate: subDays(new Date(), 7),
@@ -50,6 +56,14 @@ export const Profit_LossReport_Form = (props) => {
   //handle form submit
   const handleSubmit = (e) => {
     e.preventDefault();
+    getProfitOrLossReport({
+      dispatch: dispatch,
+      enqueueSnackbar: enqueueSnackbar,
+      branch: formvalues.store,
+      from: formvalues.startDate,
+      to: formvalues.endDate,
+      Router: Router,
+    });
     console.log(formvalues);
   };
 
@@ -109,10 +123,10 @@ export const Profit_LossReport_Form = (props) => {
                       value={formvalues.store}
                       onChange={(e) => setformvalues({ ...formvalues, store: e.target.value })}
                     >
-                      {stores.map((option) => {
+                      {branch.map((option) => {
                         return (
-                          <MenuItem key={option.id} value={option.name}>
-                            {option.name}
+                          <MenuItem key={option._id} value={option.branch_name}>
+                            {option.branch_name}
                           </MenuItem>
                         );
                       })}
@@ -120,7 +134,12 @@ export const Profit_LossReport_Form = (props) => {
                   </Grid>
 
                   <Grid item xs={12}>
-                    <Button type="submit" fullWidth={true} variant="contained">
+                    <Button
+                      disabled={loading ? true : false}
+                      type="submit"
+                      fullWidth={true}
+                      variant="contained"
+                    >
                       View now
                     </Button>
                   </Grid>

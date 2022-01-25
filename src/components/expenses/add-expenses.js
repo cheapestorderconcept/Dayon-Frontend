@@ -32,7 +32,8 @@ const AddExpenses = ({ expensesCategories, edit, id, branch }) => {
     additional_details: yup.string().required("Please provide additional details"),
   });
 
-  const { dispatch } = useContext(Store);
+  const { dispatch, state } = useContext(Store);
+  const { loading } = state;
   const { enqueueSnackbar } = useSnackbar();
 
   const handleSubmit = (values) => {
@@ -74,7 +75,9 @@ const AddExpenses = ({ expensesCategories, edit, id, branch }) => {
             label="Additional Details"
           />
           <Box mt={2} />
-          <CustomButton>{edit ? "Update" : "Submit"}</CustomButton>
+          <CustomButton disabled={loading ? true : false}>
+            {edit ? "Update" : "Submit"}
+          </CustomButton>
         </Form>
       </Formik>
     </>

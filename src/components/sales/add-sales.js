@@ -25,16 +25,17 @@ import { paymentMethods } from "src/__mocks__/paymentMethods";
 import React, { useContext, useEffect, useMemo, useRef, useState } from "react";
 import { getProductByBarcode } from "src/statesManagement/store/actions/product-action";
 import { Store } from "src/statesManagement/store/store";
-import { addSupplier } from "src/statesManagement/store/actions/supplier-action";
-import { addSales, addSalesData } from "src/statesManagement/store/actions/sales-action";
+
+import { addSalesData } from "src/statesManagement/store/actions/sales-action";
 import { useSnackbar } from "notistack";
+import { useRouter } from "next/router";
 
 // console.log(barcodeInput)
 
 export const AddSales = (props) => {
   const { paymentType } = props;
   const { dispatch, state } = useContext(Store);
-  const { branch, productByBarcode } = state;
+  const { branch, productByBarcode, loading } = state;
 
   const [barcode, setbarcode] = useState("");
 
@@ -42,42 +43,55 @@ export const AddSales = (props) => {
     created_at: "",
     branch: "",
     invoice_number: "",
-    total_amount: 0,
+    total_amount: "",
     payment_type: "",
     items: [
-      { barcode: "", product: "", product_id: "", selling_price: "", amount: "", quantity: "" },
+      {
+        barcode: "",
+        product: "",
+        product_id: "",
+        cost_price: "",
+        selling_price: "",
+        amount: "",
+        quantity: "",
+      },
     ],
   };
 
   const FORM_VALIDATIONS = yup.object().shape({
-    numOfItems: yup.string().required("Please enter number of items"),
+    // numOfItems: yup.string().required("Please enter number of items"),
     created_at: yup.date().required("please select date"),
     invoice_number: yup.string().required("please provide invoice number"),
     store: yup.string().required("please select store"),
     payment_type: yup.string().required("please choose a payment method"),
+    total_amount: yup.number().integer().typeError("Total amount must be a number"),
     items: yup.array().of(
       yup.object().shape({
         barcode: yup.string(),
-
         product_id: yup.string().required("please select a product"),
-
+        product: yup.string().required("please select a product"),
         selling_price: yup
           .number()
           .integer()
           .typeError("Price must be a number")
           .required("Please provide Selling price"),
-        amount: yup.number().integer().typeError("Total must be a number"),
+        cost_price: yup
+          .number()
+          .integer()
+          .typeError("Cost must be a number")
+          .required("Please provide Cost price"),
+        amount: yup.number().integer().typeError("Amount must be a number"),
         quantity: yup
           .number()
           .integer()
           .typeError("Price must be a number")
           .required("Please provide product quantity"),
-        total_amount: yup.number().integer(),
       })
     ),
   });
 
   const { enqueueSnackbar } = useSnackbar();
+  const Router = useRouter();
 
   const addMoreItems = (values, setValues) => {
     const items = [...values.items];
@@ -86,17 +100,23 @@ export const AddSales = (props) => {
       barcode: "",
       product: "",
       product_id: "",
+      cost_price: "",
       selling_price: "",
       amount: "",
       quantity: "",
-      total_amount: "",
     });
 
     setValues({ ...values, items });
   };
 
   const Submit = (values) => {
-    addSalesData({ dispatch: dispatch, sales: values, enqueueSnackbar: enqueueSnackbar });
+    addSalesData({
+      dispatch: dispatch,
+      sales: values,
+      enqueueSnackbar: enqueueSnackbar,
+      Router: Router,
+    });
+    console.log(values);
   };
   const removeItems = (values, setValues) => {
     const items = [...values.items];
@@ -105,8 +125,6 @@ export const AddSales = (props) => {
   };
 
   const formRef = useRef(null);
-
-  const [open, setopen] = useState(true);
 
   useEffect(() => {
     const timeOutId = setTimeout(
@@ -179,7 +197,20 @@ export const AddSales = (props) => {
                 ? (items.product_id = productByBarcode[i]._id)
                 : ""
             }
-            label="Product"
+            label="Product Id"
+          />
+        </Grid>
+        <Grid item xs={6} style={{ display: "none" }}>
+          <CustomTextField
+            name={`items.${i}.cost_price`}
+            disabled
+            value={
+              (items.cost_price =
+                productByBarcode.length > 0 && typeof productByBarcode[i] != "undefined"
+                  ? (items.product_id = productByBarcode[i].product_price)
+                  : "")
+            }
+            label="Cost price"
           />
         </Grid>
         <Grid item xs={6}>
@@ -283,12 +314,13 @@ export const AddSales = (props) => {
                           label="Total Purchase Amount"
                           disabled
                           value={
-                            productByBarcode.length > 0
-                              ? (values.total_amount = values.items.reduce(
-                                  (a, c) => a + c.amount,
-                                  0
-                                ))
-                              : ""
+                            (values.total_amount =
+                              productByBarcode.length > 0
+                                ? (values.total_amount = values.items.reduce(
+                                    (a, c) => a + c.amount,
+                                    0
+                                  ))
+                                : "")
                           }
                         />
                       </Grid>
@@ -335,6 +367,7 @@ export const AddSales = (props) => {
                           fullWidth={true}
                           variant="contained"
                           type="submit"
+                          disabled={loading ? true : false}
                           onClick={() => Submit(values)}
                         >
                           {" "}

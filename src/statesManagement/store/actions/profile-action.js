@@ -14,6 +14,9 @@ export const getProfile = async ({ dispatch, enqueueSnackbar }) => {
       payload: data.data,
     });
   } catch (error) {
+    dispatch({
+      type: GET_PROFILE_FAIL,
+    });
     error &&
       enqueueSnackbar(error?.response?.data?.response_message || error.message, {
         variant: "error",

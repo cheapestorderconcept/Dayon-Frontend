@@ -35,6 +35,9 @@ export const getProductWithBarcode = async ({ dispatch, enqueueSnackbar }) => {
       payload: data.data,
     });
   } catch (error) {
+    dispatch({
+      type: GET_PRODUCT_FAIL,
+    });
     error &&
       enqueueSnackbar(error?.response?.data?.response_message || error.message, {
         variant: "error",
@@ -54,6 +57,9 @@ export const getProduct = async ({ dispatch, enqueueSnackbar }) => {
       payload: data.data,
     });
   } catch (error) {
+    dispatch({
+      type: GET_PRODUCT_FAIL,
+    });
     error &&
       enqueueSnackbar(error?.response?.data?.response_message || error.message, {
         variant: "error",
@@ -77,6 +83,9 @@ export const getProductByBarcode = async ({ dispatch, barcode, enqueueSnackbar }
       payload: data.data,
     });
   } catch (error) {
+    dispatch({
+      type: GET_PRODUCT_BY_BARCODE_FAIL,
+    });
     error &&
       enqueueSnackbar(error?.response?.data?.response_message || error.message, {
         variant: "error",
@@ -105,6 +114,9 @@ export const addProduct = async ({ dispatch, product, Router, enqueueSnackbar })
       });
     // Router.reload(window.location.pathname);
   } catch (error) {
+    dispatch({
+      type: ADD_PRODUCT_FAIL,
+    });
     error &&
       enqueueSnackbar(error?.response?.data?.response_message || error.message, {
         variant: "error",
@@ -128,6 +140,9 @@ export const getProductPrice = async ({ dispatch, enqueueSnackbar }) => {
         variant: "success",
       });
   } catch (error) {
+    dispatch({
+      type: GET_PRODUCT_PRICE_FAIL,
+    });
     error &&
       enqueueSnackbar(error?.response?.data?.response_message || error.message, {
         variant: "error",
@@ -155,6 +170,9 @@ export const getOutOfStock = async ({ dispatch, enqueueSnackbar, branch, Router 
       query: { branch },
     });
   } catch (error) {
+    dispatch({
+      type: GET_OUT_OF_STOCK_FAIL,
+    });
     error &&
       enqueueSnackbar(error?.response?.data?.response_message || error.message, {
         variant: "error",
@@ -185,6 +203,9 @@ export const updateProduct = async ({ dispatch, product, productId, Router, enqu
 
     // Router.reload(window.location.pathname);
   } catch (error) {
+    dispatch({
+      type: UPDATE_PRODUCT_FAIL,
+    });
     error &&
       enqueueSnackbar(error?.response?.data?.response_message || error.message, {
         variant: "error",

@@ -40,7 +40,7 @@ import { Router } from "next/router";
 
 export const AddDeposit = (props) => {
   const { dispatch, state } = useContext(Store);
-  const { branch, productByBarcode, paymentType } = state;
+  const { branch, productByBarcode, paymentType, loading } = state;
 
   const [barcode, setbarcode] = useState("");
 
@@ -375,6 +375,7 @@ export const AddDeposit = (props) => {
                           fullWidth={true}
                           variant="contained"
                           type="submit"
+                          disabled={loading ? true : false}
                           onClick={() => Submit(values)}
                         >
                           {" "}

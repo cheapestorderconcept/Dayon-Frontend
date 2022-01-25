@@ -20,6 +20,9 @@ export const getPurchase = async ({ dispatch, enqueueSnackbar }) => {
       payload: data.data,
     });
   } catch (error) {
+    dispatch({
+      type: GET_PURCHASE_FAIL,
+    });
     error &&
       enqueueSnackbar(error?.response?.data?.response_message || error.message, {
         variant: "error",
@@ -49,6 +52,9 @@ export const addPurchase = async ({ dispatch, purchase, Router, enqueueSnackbar 
 
     // Router.reload(window.location.pathname);
   } catch (error) {
+    dispatch({
+      type: ADD_PURCHASE_FAIL,
+    });
     error &&
       enqueueSnackbar(error?.response?.data?.response_message || error.message, {
         variant: "error",

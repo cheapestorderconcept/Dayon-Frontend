@@ -111,6 +111,7 @@ const ProductTable = ({ products, editable }) => {
     filter: true,
     sort: true,
     selectableRowsHeader: false,
+    responsive: "simple",
   };
 
   return (

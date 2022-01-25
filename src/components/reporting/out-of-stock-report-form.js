@@ -26,7 +26,7 @@ export const Out_Of_Report_Form = (props) => {
   });
 
   const { dispatch, state } = useContext(Store);
-  const { branch } = state;
+  const { branch, loading } = state;
   const { enqueueSnackbar } = useSnackbar();
   const Router = useRouter();
 
@@ -97,7 +97,12 @@ export const Out_Of_Report_Form = (props) => {
                   </Grid>
 
                   <Grid item xs={6}>
-                    <Button type="submit" fullWidth={true} variant="contained">
+                    <Button
+                      disabled={loading ? true : false}
+                      type="submit"
+                      fullWidth={true}
+                      variant="contained"
+                    >
                       View now
                     </Button>
                   </Grid>
