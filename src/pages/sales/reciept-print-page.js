@@ -22,7 +22,8 @@ const ReceiptPrintReport = (props) => {
   const { salesReport } = state;
   const printRef = useRef();
   const { router } = props;
-  const salesReciept = router ? JSON.parse(router?.query?.sales) : {};
+  const salesReciept =
+    router && typeof router.query != "undefined" ? JSON.parse(router?.query?.sales) : {};
   console.log(salesReciept);
   return (
     <>
