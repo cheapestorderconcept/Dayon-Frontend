@@ -34,7 +34,7 @@ const SalesList = ({ salesList }) => {
     setready(true);
   }, []);
   const sales = salesList.map((item) => Object.values(item));
-  console.log(sales);
+
   const newArray = sales.map((arr) =>
     arr.filter((arr) => {
       return typeof arr !== "object";

@@ -33,7 +33,7 @@ export const getTotalSales = async ({ dispatch, enqueueSnackbar }) => {
       type: GET_TOTAL_SALES_REQUEST,
     });
     const { data } = await makeNetworkCall({ method: "GET", path: "/view-sales" });
-    console.log(data.data);
+
     dispatch({
       type: GET_TOTAL_SALES_SUCCESS,
       payload: data.data,
