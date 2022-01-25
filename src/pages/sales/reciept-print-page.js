@@ -21,10 +21,10 @@ const ReceiptPrintReport = (props) => {
   const { state } = useContext(Store);
   const { salesReport } = state;
   const printRef = useRef();
-  const { router } = props;
+  // const { router } = props;
   let salesReciept;
-  if (typeof router !== "undefined") {
-    salesReciept = JSON.parse(router.query.sales);
+  if (typeof props !== "undefined") {
+    salesReciept = JSON.parse(props.router.query.sales);
   }
   console.log(salesReciept);
   return (
