@@ -6,7 +6,7 @@ import dynamic from "next/dynamic";
 import PrintingHeader from "src/components/printingPage/printing-header";
 import DenseTable from "src/components/printingPage/sales-report-table";
 import { withRouter } from "next/router";
-import { useContext, useRef } from "react";
+import { useContext, useRef, useState } from "react";
 import { Store } from "src/statesManagement/store/store";
 import ReactToPrint from "react-to-print";
 import CollapsibleTable from "src/components/printingPage/reciept-print-table";
@@ -19,13 +19,11 @@ const DynamicComponentWithNoSSR = dynamic(() => import("src/components/navbar-br
 
 const ReceiptPrintReport = (props) => {
   const { state } = useContext(Store);
-  const { salesReport } = state;
   const printRef = useRef();
-  // const { router } = props;
-  let salesReciept;
-  if (typeof props !== "undefined") {
-    salesReciept = JSON.parse(props.router.query.sales);
-  }
+  const { router } = props;
+  const salesReciept =
+    process.env.NEXT_PHASE !== "phase-production-build" ? JSON.parse(router.query.sales) : {};
+
   console.log(salesReciept);
   return (
     <>
