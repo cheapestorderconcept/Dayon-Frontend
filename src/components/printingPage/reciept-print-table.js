@@ -29,8 +29,8 @@ function Row(props) {
         {/* <TableCell component="th" scope="row">
           {index + 1}
         </TableCell> */}
-        <TableCell>{row.created_at}</TableCell>
-        <TableCell>{row.invoice_number}</TableCell>
+        <TableCell>{row?.created_at}</TableCell>
+        <TableCell>{row?.invoice_number}</TableCell>
       </TableRow>
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>

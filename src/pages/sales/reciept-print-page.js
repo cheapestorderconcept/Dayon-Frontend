@@ -22,7 +22,7 @@ const ReceiptPrintReport = (props) => {
   const { salesReport } = state;
   const printRef = useRef();
   const { router } = props;
-  const salesReciept = JSON.parse(router?.query?.sales) || {};
+  const salesReciept = router ? JSON.parse(router?.query?.sales) : {};
   console.log(salesReciept);
   return (
     <>
@@ -37,7 +37,7 @@ const ReceiptPrintReport = (props) => {
         }}
       >
         <Container ref={printRef} maxWidth={true}>
-          <PrintingHeader title={`Sales Reciept at ${salesReciept.branch}`} />
+          <PrintingHeader title={`Sales Reciept at ${salesReciept?.branch}`} />
           <CollapsibleTable salesReciept={salesReciept} />
         </Container>
         <Container
