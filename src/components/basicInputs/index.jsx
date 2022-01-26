@@ -41,27 +41,27 @@ export const CustomSelect = ({ name, options, i, ...other }) => {
   }
   return (
     <TextField {...defaultConfiq}>
-      {options.map((option, index) => {
+      {options?.map((option, index) => {
         return (
           <MenuItem
             key={option._id || index}
             value={
-              option.branch_name ||
-              option.brand_name ||
-              option.supplier_name ||
-              option.product_name ||
-              option.payment_type ||
-              option.expenses_category ||
-              option.name
+              option?.branch_name ||
+              option?.brand_name ||
+              option?.supplier_name ||
+              option?.product_name ||
+              option?.payment_type ||
+              option?.expenses_category ||
+              option?.name
             }
           >
-            {option.branch_name ||
-              option.brand_name ||
-              option.supplier_name ||
-              option.product_name ||
-              option.payment_type ||
-              option.expenses_category ||
-              option.name}
+            {option?.branch_name ||
+              option?.brand_name ||
+              option?.supplier_name ||
+              option?.product_name ||
+              option?.payment_type ||
+              option?.expenses_category ||
+              option?.name}
           </MenuItem>
         );
       })}

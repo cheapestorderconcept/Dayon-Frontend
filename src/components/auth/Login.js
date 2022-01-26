@@ -82,7 +82,7 @@ export default function Login() {
   const [openAlert, setopenAlert] = useState(true);
   const router = useRouter();
   const { dispatch, state } = useContext(Store);
-  const { userInfo, loading, error, branch } = state;
+  const { userInfo, loading, branch } = state;
   const { enqueueSnackbar } = useSnackbar();
 
   if (userInfo) {
@@ -174,9 +174,6 @@ export default function Login() {
             alignItems: "center",
           }}
         >
-          {error && (
-            <AlertBox severity="error" message={error} open={openAlert} setopen={setopenAlert} />
-          )}
           <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
             <PersonIcon />
           </Avatar>

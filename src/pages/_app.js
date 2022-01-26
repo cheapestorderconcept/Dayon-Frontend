@@ -21,7 +21,7 @@ const App = (props) => {
       <StoreProvider>
         <CacheProvider value={emotionCache}>
           <Head>
-            <title>18A Nigeria Limited</title>
+            <title>Adeshex Global Concept</title>
             <meta name="viewport" content="initial-scale=1, width=device-width" />
           </Head>
           <LocalizationProvider dateAdapter={AdapterDateFns}>
