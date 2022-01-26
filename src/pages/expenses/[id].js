@@ -26,12 +26,13 @@ const EditExpenses = () => {
 
   const { enqueueSnackbar } = useSnackbar();
 
-  const { userInfo, expensesCategories, branch } = state;
+  const { userInfo, expensesCategories, branch, expenses } = state;
 
   useEffect(() => {
     !userInfo && router.push("/auth");
     setid(query.id);
     getExpensesCategory({ dispatch: dispatch, enqueueSnackbar: enqueueSnackbar });
+    getExpenses({ dispatch: dispatch, enqueueSnackbar: enqueueSnackbar });
   }, [query.id]);
   return (
     <>
@@ -52,6 +53,7 @@ const EditExpenses = () => {
             id={id}
             branch={branch}
             expensesCategories={expensesCategories}
+            expenses={expenses}
           />
         </Container>
       </Box>

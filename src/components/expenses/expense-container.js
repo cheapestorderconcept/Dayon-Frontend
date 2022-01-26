@@ -15,7 +15,7 @@ import ExpensesCategory from "./add-expenses-category";
 import AddExpenses from "./add-expenses";
 
 const ExpensesContainer = (props) => {
-  const { expensesCategories, edit, id, branch } = props;
+  const { expensesCategories, edit, id, branch, expenses } = props;
   return (
     <Box {...props}>
       <Box
@@ -58,6 +58,7 @@ const ExpensesContainer = (props) => {
                     edit={edit}
                     id={id}
                     branch={branch}
+                    expenses={expenses}
                     expensesCategories={expensesCategories}
                   />
                 </Grid>

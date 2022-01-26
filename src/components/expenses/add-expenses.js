@@ -1,7 +1,7 @@
 import { Box, Typography } from "@mui/material";
 import { Form, Formik } from "formik";
 import { useSnackbar } from "notistack";
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { addExpenses, updateExpenses } from "src/statesManagement/store/actions/expense-action";
 import { Store } from "src/statesManagement/store/store";
 import { expenses } from "src/__mocks__/expense";
@@ -11,14 +11,16 @@ import { CustomSelect } from "../basicInputs";
 import { CustomButton } from "../basicInputs";
 import { CustomTextField } from "../basicInputs";
 
-const AddExpenses = ({ expensesCategories, edit, id, branch }) => {
-  const INITIAL_VALUES = {
-    date: "",
-    amount: "",
-    expenses_type: "",
-    additional_details: "",
-    branch_name: "",
-  };
+const AddExpenses = ({ expensesCategories, edit, id, branch, expenses }) => {
+  // const [oneExpenses, setoneExpenses] = useState([]);
+
+  // edit &&
+  //   useEffect(async () => {
+  //     const myExpenses = await expenses.filter((exp) => exp._id === id);
+  //     setoneExpenses(myExpenses);
+  //   }, []);
+
+  // console.log(oneExpenses);
 
   const VALIDATIONS = yup.object().shape({
     date: yup.date().required("please select date"),
@@ -35,6 +37,22 @@ const AddExpenses = ({ expensesCategories, edit, id, branch }) => {
   const { dispatch, state } = useContext(Store);
   const { loading } = state;
   const { enqueueSnackbar } = useSnackbar();
+
+  const INITIAL_VALUES = {
+    date: "",
+    amount: "",
+    expenses_type: "",
+    additional_details: "",
+    branch_name: "",
+  };
+
+  // const editInitialValues = {
+  //   date: oneExpenses[0]?.date,
+  //   amount: oneExpenses[0]?.amount,
+  //   expenses_type: oneExpenses[0]?.expenses_type,
+  //   additional_details: oneExpenses[0]?.additional_details,
+  //   branch_name: oneExpenses[0]?.branch_name,
+  // };
 
   const handleSubmit = (values) => {
     addExpenses({ dispatch: dispatch, expenses: values, enqueueSnackbar: enqueueSnackbar });
