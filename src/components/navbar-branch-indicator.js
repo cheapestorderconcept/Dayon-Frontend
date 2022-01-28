@@ -50,7 +50,7 @@ const BranchIndicator = () => {
         <span className={classes.left_items_icon}>
           <HouseIcon />
         </span>
-        <Typography>You are currently logged into: {branch[0].branch_name || ""}</Typography>
+        <Typography>You are currently logged into: {branch[0]?.branch_name || ""}</Typography>
       </div>
       <div className={classes.right_items}>
         <Formik initialValues={{ ...INIITAL_VALUE }}>

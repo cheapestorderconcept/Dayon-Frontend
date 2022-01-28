@@ -20,6 +20,10 @@ export const getStores = async ({ dispatch, enqueueSnackbar }) => {
       type: GET_STORE_SUCCESS,
       payload: data.data,
     });
+    data &&
+      enqueueSnackbar(data?.response_message, {
+        variant: "success",
+      });
     // localStorage.setItem("branch", JSON.stringify(data.data));
   } catch (error) {
     dispatch({
