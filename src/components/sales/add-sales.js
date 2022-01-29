@@ -29,19 +29,20 @@ import { Store } from "src/statesManagement/store/store";
 import { addSalesData } from "src/statesManagement/store/actions/sales-action";
 import { useSnackbar } from "notistack";
 import { useRouter } from "next/router";
+import Cookies from "js-cookie";
 
 // console.log(barcodeInput)
 
 export const AddSales = (props) => {
   const { paymentType } = props;
   const { dispatch, state } = useContext(Store);
-  const { branch, productByBarcode, loading } = state;
+  const { productByBarcode, products, loading } = state;
 
   const [barcode, setbarcode] = useState("");
 
   const INITIAL_FORM_VALUES = {
     created_at: "",
-    branch: "",
+    branch: Cookies.get("selectedBranch"),
     invoice_number: "",
     total_amount: "",
     payment_type: "",
@@ -49,6 +50,9 @@ export const AddSales = (props) => {
       {
         barcode: "",
         product: "",
+        products: "",
+        serial_number: "",
+        invoice_number: "",
         product_id: "",
         cost_price: "",
         selling_price: "",
@@ -68,8 +72,11 @@ export const AddSales = (props) => {
     items: yup.array().of(
       yup.object().shape({
         barcode: yup.string(),
+        products: yup.string(),
         product_id: yup.string().required("please select a product"),
         product: yup.string().required("please select a product"),
+        serial_number: yup.string().required("please provide serial number"),
+        invoice_number: yup.string(),
         selling_price: yup
           .number()
           .integer()
@@ -99,8 +106,12 @@ export const AddSales = (props) => {
     items.push({
       barcode: "",
       product: "",
+      products: "",
+      serial_number: "",
+      invoice_number: "",
       product_id: "",
       cost_price: "",
+
       selling_price: "",
       amount: "",
       quantity: "",
@@ -140,7 +151,7 @@ export const AddSales = (props) => {
     return () => clearTimeout(timeOutId);
   }, [barcode]);
 
-  const RenderForm = ({ items, i }) => {
+  const RenderForm = ({ items, i, values }) => {
     setbarcode(items.barcode);
 
     return (
@@ -185,6 +196,21 @@ export const AddSales = (props) => {
                   : "")
             }
             label="Product"
+          />
+        </Grid>
+        <Grid item xs={6}>
+          <CustomSelect name={`items.${i}.products`} options={products} label="Choose Products" />
+        </Grid>
+
+        <Grid item xs={6}>
+          <CustomTextField name={`items.${i}.serial_number`} label="Serial Number" />
+        </Grid>
+        <Grid item xs={6}>
+          <CustomTextField
+            name={`items.${i}.invoice_number`}
+            label="Invoice Number"
+            disabled
+            value={values.invoice_number}
           />
         </Grid>
 
@@ -293,7 +319,7 @@ export const AddSales = (props) => {
                         <CustomTextField name="invoice_number" label="Invoice Number" />
                       </Grid>
                       <Grid item xs={4}>
-                        <CustomSelect name="branch" label="Branch" options={branch} />
+                        <CustomTextField name="branch" value={values.branch} />
                       </Grid>
 
                       <FieldArray name="items">
@@ -303,6 +329,7 @@ export const AddSales = (props) => {
                               key={index}
                               items={item}
                               i={index}
+                              values={values}
                               handleChange={handleChange}
                             />
                           ))
@@ -324,35 +351,44 @@ export const AddSales = (props) => {
                           }
                         />
                       </Grid>
-                      <Grid item xs={6}>
-                        <Field name="number of items">
-                          {({ field }) => (
-                            <Button
-                              variant="contained"
-                              color="primary"
-                              fullWidth={true}
-                              onClick={() => addMoreItems(values, setValues)}
-                              startIcon={<DownloadIcon fontSize="small" />}
-                            >
-                              Add More Products
-                            </Button>
-                          )}
-                        </Field>
-                      </Grid>
-                      <Grid item xs={6}>
-                        <Field name="number of items">
-                          {({ field }) => (
-                            <Button
-                              variant="contained"
-                              fullWidth={true}
-                              color="primary"
-                              onClick={() => removeItems(values, setValues)}
-                              startIcon={<DownloadIcon fontSize="small" />}
-                            >
-                              Remove Products
-                            </Button>
-                          )}
-                        </Field>
+                      <Grid
+                        container
+                        spacing={2}
+                        sx={{
+                          mt: 2,
+                          pl: 2,
+                        }}
+                      >
+                        <Grid item xs={6}>
+                          <Field name="number of items">
+                            {({ field }) => (
+                              <Button
+                                variant="contained"
+                                color="primary"
+                                fullWidth={true}
+                                onClick={() => addMoreItems(values, setValues)}
+                                startIcon={<DownloadIcon fontSize="small" />}
+                              >
+                                Add More Products
+                              </Button>
+                            )}
+                          </Field>
+                        </Grid>
+                        <Grid item xs={6}>
+                          <Field name="number of items">
+                            {({ field }) => (
+                              <Button
+                                variant="contained"
+                                fullWidth={true}
+                                color="primary"
+                                onClick={() => removeItems(values, setValues)}
+                                startIcon={<DownloadIcon fontSize="small" />}
+                              >
+                                Remove Products
+                              </Button>
+                            )}
+                          </Field>
+                        </Grid>
                       </Grid>
                       <Grid item xs={12}>
                         <CustomSelect

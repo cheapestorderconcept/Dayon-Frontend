@@ -45,23 +45,24 @@ const FORM_VALIDATIONS = yup.object().shape({
   supplier: yup.string().required("Please provide product supplier"),
 });
 export const ProductListToolbar = (props) => {
-  const { title, suppliers, brands } = props;
+  const { title, suppliers, brands, edit } = props;
   const { dispatch, state } = useContext(Store);
   const { loading } = state;
   const { enqueueSnackbar } = useSnackbar();
   const Router = useRouter();
 
-  // const handleUpdate = (values) => {
-  //   const product = {
-  //     product_name: values.name,
-  //     product_price: values.price,
-  //     product_brand: values.brand,
-  //     product_barcode: values.barcode,
-  //     supplier: values.supplier,
-  //   };
+  const handleUpdate = (values) => {
+    const product = {
+      product_name: values.name,
+      product_price: values.price,
+      product_brand: values.brand,
+      product_barcode: values.barcode,
+      supplier: values.supplier,
+    };
 
-  //   updateProduct({ dispatch: dispatch, product: product, productId: id, Router: Router });
-  // };
+    updateProduct({ dispatch: dispatch, product: product, productId: id, Router: Router });
+  };
+
   const handleSubmit = (values) => {
     const product = {
       product_name: values.name,
@@ -97,7 +98,7 @@ export const ProductListToolbar = (props) => {
           </Button>
           <Button startIcon={<DownloadIcon fontSize="small" />} sx={{ mr: 1 }}>
             <NextLink href="/products">
-              <Typography>Add Product</Typography>
+              <Typography>{edit ? "Edit Products" : "Add Product"}</Typography>
             </NextLink>
           </Button>
           {/* <Button color="primary" variant="contained">
@@ -114,7 +115,7 @@ export const ProductListToolbar = (props) => {
             <Box sx={{ maxWidth: 500 }}>
               <Formik
                 initialValues={{ ...INITIAL_FORM_VALUES }}
-                onSubmit={handleSubmit}
+                onSubmit={edit ? handleUpdate : handleSubmit}
                 validationSchema={FORM_VALIDATIONS}
               >
                 <Form>
@@ -187,7 +188,7 @@ export const ProductListToolbar = (props) => {
                       />
                     </Grid>
                     <Grid item xs={12}>
-                      <CustomButton> Submit</CustomButton>
+                      <CustomButton> {edit ? "Update Product" : "Submit"}</CustomButton>
                     </Grid>
                   </Grid>
                 </Form>

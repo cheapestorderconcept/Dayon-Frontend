@@ -21,7 +21,8 @@ const AddPurchasePage = () => {
 
   const { enqueueSnackbar } = useSnackbar();
 
-  const { userInfo, branch, suppliers, products, purchase, error } = state;
+  const { userInfo, selectedBranch, suppliers, products, purchase, error } = state;
+  console.log(selectedBranch);
 
   console.log(purchase);
   useEffect(() => {
@@ -42,7 +43,7 @@ const AddPurchasePage = () => {
       >
         <DynamicComponentWithNoSSR />
         <Container maxWidth={true}>
-          <AddPurchase suppliers={suppliers} branch={branch} products={products} />
+          <AddPurchase suppliers={suppliers} selectedBranch={selectedBranch} products={products} />
         </Container>
       </Box>
     </>

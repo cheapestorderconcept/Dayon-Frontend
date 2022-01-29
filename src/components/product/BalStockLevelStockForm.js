@@ -20,30 +20,23 @@ import { useContext, useState } from "react";
 import { Store } from "src/statesManagement/store/store";
 import { useRouter } from "next/router";
 import NextLink from "next/link";
-import { updateProduct } from "src/statesManagement/store/actions/product-action";
+import {
+  balanceStockLevel,
+  updateProduct,
+} from "src/statesManagement/store/actions/product-action";
 import { useSnackbar } from "notistack";
 
-export const EditProductForm = (props) => {
+export const BalStockLevelStockForm = (props) => {
   const { title, id } = props;
 
   const { dispatch, state } = useContext(Store);
   const { loading, suppliers, brands } = state;
 
   const INITIAL_FORM_VALUES = {
-    product_name: "",
-    price: "",
-    product_brand: "",
-    product_barcode: "",
-    supplier: "",
     quantity: "",
   };
 
   const FORM_VALIDATIONS = yup.object().shape({
-    product_name: yup.string(),
-    product_barcode: yup.string(),
-    product_brand: yup.string(),
-    supplier: yup.string(),
-    price: yup.number().integer().typeError("Price must be a number"),
     quantity: yup.number().integer().typeError("Quantity must be a number"),
   });
 
@@ -51,11 +44,9 @@ export const EditProductForm = (props) => {
   const { enqueueSnackbar } = useSnackbar();
   const handleSubmit = (values) => {
     const product = {
-      ...values,
-      price: Number(values.price),
       quantity: Number(values.quantity),
     };
-    updateProduct({
+    balanceStockLevel({
       dispatch: dispatch,
       product: product,
       productId: id,
@@ -88,8 +79,8 @@ export const EditProductForm = (props) => {
             </NextLink>
           </Button>
           {/* <Button color="primary" variant="contained">
-            Add products
-          </Button> */}
+              Add products
+            </Button> */}
         </Box>
       </Box>
       <Box sx={{ mt: 3 }}>
@@ -107,28 +98,14 @@ export const EditProductForm = (props) => {
                 <Form>
                   <Grid container spacing={2}>
                     <Grid item xs={12}>
-                      <CustomTextField name="product_name" label="Product Name" />
+                      <CustomTextField name="quantity" label="Balance Stock Level" />
                     </Grid>
 
                     <Grid item xs={12}>
-                      <CustomTextField name="product_barcode" label="Product Barcode" />
-                    </Grid>
-                    <Grid item xs={12}>
-                      <CustomSelect name="product_brand" label="Product Brand " options={brands} />
-                    </Grid>
-                    <Grid item xs={12}>
-                      <CustomSelect name="supplier" options={suppliers} label="Supplier" />
-                    </Grid>
-
-                    <Grid item xs={12}>
-                      <CustomTextField name="price" label="Cost Price" />
-                    </Grid>
-                    <Grid item xs={12}>
-                      <CustomTextField name="quantity" label="Quantity" />
-                    </Grid>
-
-                    <Grid item xs={12}>
-                      <CustomButton disabled={loading ? true : false}> Update Product</CustomButton>
+                      <CustomButton disabled={loading ? true : false}>
+                        {" "}
+                        Balance Stock Level
+                      </CustomButton>
                     </Grid>
                   </Grid>
                 </Form>

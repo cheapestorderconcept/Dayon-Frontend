@@ -212,53 +212,62 @@ export const updateProduct = async ({ dispatch, product, productId, Router, enqu
       });
   }
 };
-// export const deleteProduct = async (dispatch, productId, Router) => {
-//   try {
-//     dispatch({
-//       type: DELETE_PRODUCT_REQUEST,
-//     });
-//     const { data } = await makeNetworkCall({
-//       method: "DELETE",
-//       path: `/delete-product/${productId}`,
-//     });
-//     dispatch({
-//       type: DELETE_PRODUCT_SUCCESS,
-//       payload: data.data._id,
-//     });
-//     console.log(data.data);
-//     Router.reload(window.location.pathname);
-//   } catch (error) {
-//     console.log(error);
-//     dispatch({
-//       type: DELETE_PRODUCT_FAIL,
-//       payload: error?.response?.data?.response_message,
-//     });
-//   }
-// };
 
-// export const updateProduct = async ({ dispatch, product, productId, Router }) => {
-//   try {
-//     dispatch({
-//       type: UPDATE_PRODUCT_REQUEST,
-//     });
+export const balanceStockLevel = async ({ dispatch, product, productId, enqueueSnackbar }) => {
+  try {
+    dispatch({
+      type: UPDATE_PRODUCT_REQUEST,
+    });
 
-//     const { data } = await makeNetworkCall({
-//       method: "PUT",
-//       path: `/update-product/${productId}`,
-//       requestBody: product,
-//     });
-//     alert("cliked");
-//     console.log(data);
-//     dispatch({
-//       type: UPDATE_PRODUCT_SUCCESS,
-//       payload: data.data,
-//     });
-//     Router.reload(window.location.pathname);
-//   } catch (error) {
-//     console.log(error);
-//     dispatch({
-//       type: UPDATE_PRODUCT_FAIL,
-//       payload: error?.response?.data?.response_message,
-//     });
-//   }
-// };
+    const { data } = await makeNetworkCall({
+      method: "PUT",
+      path: `/balance-stock-level/${productId}`,
+      requestBody: product,
+    });
+    console.log(data);
+    dispatch({
+      type: UPDATE_PRODUCT_SUCCESS,
+      payload: data.data,
+    });
+    data &&
+      enqueueSnackbar(data?.response_message, {
+        variant: "success",
+      });
+
+    // Router.reload(window.location.pathname);
+  } catch (error) {
+    dispatch({
+      type: UPDATE_PRODUCT_FAIL,
+    });
+    error &&
+      enqueueSnackbar(error?.response?.data?.response_message || error.message, {
+        variant: "error",
+      });
+  }
+};
+export const deleteProduct = async ({ dispatch, productId, Router, enqueueSnackbar }) => {
+  try {
+    dispatch({
+      type: DELETE_PRODUCT_REQUEST,
+    });
+    const { data } = await makeNetworkCall({
+      method: "DELETE",
+      path: `/delete-product/${productId}`,
+    });
+    dispatch({
+      type: DELETE_PRODUCT_SUCCESS,
+      payload: data.data._id,
+    });
+    console.log(data.data);
+    Router.reload(window.location.pathname);
+  } catch (error) {
+    error &&
+      enqueueSnackbar(error?.response?.data?.response_message || error.message, {
+        variant: "error",
+      });
+    dispatch({
+      type: DELETE_PRODUCT_FAIL,
+      payload: error?.response?.data?.response_message,
+    });
+  }
+};

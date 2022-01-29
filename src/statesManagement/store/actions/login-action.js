@@ -24,6 +24,13 @@ export const loginAction = async ({ loginDetails, dispatch, enqueueSnackbar }) =
     });
 
     Cookies.set("user", data.data.token);
+    if (Cookies.get("selectedBranch")) {
+      Cookies.remove("selectedBranch");
+      Cookies.set("selectedBranch", loginDetails.branch_id);
+    } else {
+      Cookies.set("selectedBranch", loginDetails.branch_id);
+    }
+
     getProduct({ dispatch: dispatch, enqueueSnackbar: enqueueSnackbar });
     getSuppliers({ dispatch: dispatch, enqueueSnackbar: enqueueSnackbar });
     getBrands({ dispatch: dispatch, enqueueSnackbar: enqueueSnackbar });

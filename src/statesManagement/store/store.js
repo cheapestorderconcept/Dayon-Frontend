@@ -35,6 +35,7 @@ const initialState = {
   staff: Cookies.get("staff") ? JSON.parse(Cookies.get("staff")) : [],
   purchase: Cookies.get("purchases") ? JSON.parse(Cookies.get("purchases")) : [],
   branch: Cookies.get("branch") ? JSON.parse(Cookies.get("branch")) : [],
+  selectedBranch: Cookies.get("selectedBranch") || "",
   expenses: Cookies.get("expenses") ? JSON.parse(Cookies.get("expenses")) : [],
   deposits: Cookies.get("deposits") ? JSON.parse(Cookies.get("deposits")) : [],
   expensesCategories: Cookies.get("expensesCategories")

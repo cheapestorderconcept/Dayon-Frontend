@@ -5,6 +5,9 @@ import {
   ADD_SALES_DATA_REQUEST,
   ADD_SALES_FAIL,
   ADD_SALES_SUCCESS,
+  DELETE_SALES_FAIL,
+  DELETE_SALES_REQUEST,
+  DELETE_SALES_SUCCESS,
   GET_TOTAL_SALES_FAIL,
   GET_TOTAL_SALES_REQUEST,
   GET_TOTAL_SALES_SUCCESS,
@@ -80,6 +83,35 @@ export const addSalesData = async ({ dispatch, sales, Router, enqueueSnackbar })
   } catch (error) {
     dispatch({
       type: ADD_SALES_DATA_FAIL,
+    });
+    error &&
+      enqueueSnackbar(error?.response?.data?.response_message || error.message, {
+        variant: "error",
+      });
+  }
+};
+
+export const deleteSales = async ({ dispatch, salesId, Router, enqueueSnackbar }) => {
+  try {
+    dispatch({
+      type: DELETE_SALES_REQUEST,
+    });
+    const { data } = await makeNetworkCall({
+      method: "DELETE",
+      path: `/delte-sales/${salesId}`,
+    });
+    console.log(data);
+    dispatch({
+      type: DELETE_SALES_SUCCESS,
+      payload: data,
+    });
+    data &&
+      enqueueSnackbar(data?.response_message, {
+        variant: "success",
+      });
+  } catch (error) {
+    dispatch({
+      type: DELETE_SALES_FAIL,
     });
     error &&
       enqueueSnackbar(error?.response?.data?.response_message || error.message, {

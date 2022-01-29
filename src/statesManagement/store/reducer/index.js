@@ -127,6 +127,15 @@ import {
   GET_PROFIT_OR_LOSS_LEVEL_REPORT_REQUEST,
   GET_PROFIT_OR_LOSS_LEVEL_REPORT_SUCCESS,
   GET_PROFIT_OR_LOSS_LEVEL_REPORT_FAIL,
+  UPDATE_STORE_REQUEST,
+  UPDATE_STORE_SUCCESS,
+  UPDATE_STORE_FAIL,
+  DELETE_STORE_FAIL,
+  DELETE_STORE_SUCCESS,
+  DELETE_STORE_REQUEST,
+  DELETE_SALES_REQUEST,
+  DELETE_SALES_SUCCESS,
+  DELETE_SALES_FAIL,
 } from "../constants";
 
 // const rootReducers = combineReducers({
@@ -340,6 +349,20 @@ const rootReducers = (state, action) => {
     case ADD_STORE_FAIL:
       return { ...state, loading: false, notification: true, success: null, error: action.payload };
 
+    case UPDATE_STORE_REQUEST:
+      return { ...state, loading: true, notification: false };
+    case UPDATE_STORE_SUCCESS:
+      return { ...state, loading: false, notification: true, success: action.payload };
+    case UPDATE_STORE_FAIL:
+      return { ...state, loading: false, notification: true, success: null, error: action.payload };
+
+    case DELETE_STORE_REQUEST:
+      return { ...state, loading: true, notification: false };
+    case DELETE_STORE_SUCCESS:
+      return { ...state, loading: false, notification: true, success: action.payload };
+    case DELETE_STORE_FAIL:
+      return { ...state, loading: false, notification: true, success: null, error: action.payload };
+
     // Get Sales Reducer
 
     case ADD_SALES_DATA_REQUEST:
@@ -378,6 +401,13 @@ const rootReducers = (state, action) => {
     case GET_TOTAL_SALES_SUCCESS:
       return { ...state, loading: false, totalSales: action?.payload };
     case GET_TOTAL_SALES_FAIL:
+      return { ...state, loading: false, error: action.payload };
+
+    case DELETE_SALES_REQUEST:
+      return { ...state, loading: true };
+    case DELETE_SALES_SUCCESS:
+      return { ...state, loading: false };
+    case DELETE_SALES_FAIL:
       return { ...state, loading: false, error: action.payload };
 
     // Paymnet MMethod Redcuer

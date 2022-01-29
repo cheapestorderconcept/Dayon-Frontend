@@ -2,14 +2,39 @@ import { Button, Typography } from "@mui/material";
 import MUIDataTable from "mui-datatables";
 import { useSnackbar } from "notistack";
 import { useContext, useEffect, useState } from "react";
-import { addSalesData } from "src/statesManagement/store/actions/sales-action";
+import { addSalesData, deleteSales } from "src/statesManagement/store/actions/sales-action";
 import { Store } from "src/statesManagement/store/store";
 
 const SalesList = ({ salesList }) => {
   const { dispatch, state } = useContext(Store);
   const { enqueueSnackbar } = useSnackbar();
-
+  const handleDelete = (tableMeta) => (e) => {
+    confirm("Are you sure you want to delete");
+    const salesId = tableMeta.rowData[2];
+    deleteSales({
+      dispatch: dispatch,
+      salesId: salesId,
+      enqueueSnackbar: enqueueSnackbar,
+    });
+  };
   const columns = [
+    {
+      name: "Delete",
+      options: {
+        filter: true,
+        sort: false,
+        empty: true,
+        customBodyRender: (value, tableMeta, updateValue) => {
+          return (
+            <Button onClick={handleDelete(tableMeta)} variant="contained" color="error">
+              <Typography variant="body1" color="inherit">
+                Delete
+              </Typography>
+            </Button>
+          );
+        },
+      },
+    },
     {
       name: "Sales Id",
     },

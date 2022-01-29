@@ -8,6 +8,7 @@ import { Store } from "src/statesManagement/store/store";
 
 import { useRouter } from "next/router";
 import { useSnackbar } from "notistack";
+import { getProduct } from "src/statesManagement/store/actions/product-action";
 
 const DynamicComponentWithNoSSR = dynamic(() => import("src/components/navbar-branch-indicator"), {
   ssr: false,
@@ -17,10 +18,11 @@ const Sales = () => {
   const { dispatch, state } = useContext(Store);
   const router = useRouter();
   const { userInfo, paymentType } = state;
-  console.log(paymentType);
+  const { enqueueSnackbar } = useSnackbar();
 
   useEffect(() => {
     !userInfo && router.push("/auth");
+    getProduct({ dispatch: dispatch, enqueueSnackbar: enqueueSnackbar });
   }, []);
   return (
     <>

@@ -23,21 +23,34 @@ import PhoneIcon from "@mui/icons-material/Phone";
 
 import { CustomTextField } from "../basicInputs";
 import { CustomButton } from "../basicInputs";
-import { addStore } from "src/statesManagement/store/actions/store-outlet-action";
+import { addStore, updateStore } from "src/statesManagement/store/actions/store-outlet-action";
 import { Router, useRouter } from "next/router";
 import { useContext } from "react";
 import { useSnackbar } from "notistack";
 import { Store } from "src/statesManagement/store/store";
 
 export const AddStoreOutlets = (props) => {
+  const { edit, id } = props;
   const { dispatch, state } = useContext(Store);
   const { loading } = state;
   const { enqueueSnackbar } = useSnackbar();
 
   const Router = useRouter();
+
   const handleSubmit = (values) => {
     addStore({
       dispatch: dispatch,
+      store: values,
+      Router: Router,
+      enqueueSnackbar: enqueueSnackbar,
+    });
+    console.log(values);
+  };
+
+  const handleUpdate = (values) => {
+    updateStore({
+      dispatch: dispatch,
+      storeID: id,
       store: values,
       Router: Router,
       enqueueSnackbar: enqueueSnackbar,
@@ -73,7 +86,7 @@ export const AddStoreOutlets = (props) => {
         }}
       >
         <Typography sx={{ m: 1 }} variant="h4">
-          Stores
+          {edit ? "Edit Store" : "Add Store"}
         </Typography>
         <Box sx={{ m: 1 }}>
           <Button startIcon={<UploadIcon fontSize="small" />} sx={{ mr: 1 }}>
@@ -92,7 +105,7 @@ export const AddStoreOutlets = (props) => {
             <Box sx={{ maxWidth: 500 }}>
               <Formik
                 initialValues={{ ...INITIAL_FORM_STATE }}
-                onSubmit={handleSubmit}
+                onSubmit={edit ? handleUpdate : handleSubmit}
                 validationSchema={FORM_VALIDATIONS}
               >
                 <Form>
@@ -150,7 +163,9 @@ export const AddStoreOutlets = (props) => {
                       />
                     </Grid>
                     <Grid item xs={12}>
-                      <CustomButton disabled={loading ? true : false}>Submit</CustomButton>
+                      <CustomButton disabled={loading ? true : false}>
+                        {edit ? "Update" : "Submit"}
+                      </CustomButton>
                     </Grid>
                   </Grid>
                 </Form>

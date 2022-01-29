@@ -35,12 +35,13 @@ import AlertBox from "../../components/alert";
 import { useSnackbar } from "notistack";
 import { addDepositData, getTotalDeposit } from "src/statesManagement/store/actions/deposit-action";
 import { Router } from "next/router";
+import Cookies from "js-cookie";
 
 // console.log(barcodeInput)
 
 export const AddDeposit = (props) => {
   const { dispatch, state } = useContext(Store);
-  const { branch, productByBarcode, paymentType, loading } = state;
+  const { productByBarcode, paymentType, loading } = state;
 
   const [barcode, setbarcode] = useState("");
 
@@ -50,7 +51,7 @@ export const AddDeposit = (props) => {
     amount_deposited: "",
     customer_name: "",
     // customer_phone: "",
-    branch: "",
+    branch: Cookies.get("selectedBranch"),
     payment_type: "",
     items: [{ barcode: "", product: "", product_id: "", quantity: "", selling_price: "" }],
   };
@@ -288,7 +289,7 @@ export const AddDeposit = (props) => {
                         <CustomDate name="created_at" />
                       </Grid>
                       <Grid item xs={4}>
-                        <CustomSelect name="branch" options={branch} label="Select Branch" />
+                        <CustomTextField name="branch" value={values.branch} />
                       </Grid>
                       <Grid item xs={4}>
                         <CustomTextField name="invoice_number" label="Invoice Number" />
