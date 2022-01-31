@@ -1,5 +1,6 @@
 import { Box, Typography } from "@mui/material";
 import { Form, Formik } from "formik";
+import Cookies from "js-cookie";
 import { useSnackbar } from "notistack";
 import React, { useContext, useEffect, useState } from "react";
 import { addExpenses, updateExpenses } from "src/statesManagement/store/actions/expense-action";
@@ -43,7 +44,7 @@ const AddExpenses = ({ expensesCategories, edit, id, branch, expenses }) => {
     amount: "",
     expenses_type: "",
     additional_details: "",
-    branch_name: "",
+    branch_name: Cookies.get("selectedBranch"),
   };
 
   // const editInitialValues = {
@@ -77,26 +78,28 @@ const AddExpenses = ({ expensesCategories, edit, id, branch, expenses }) => {
         validationSchema={VALIDATIONS}
         onSubmit={edit ? handleUpdate : handleSubmit}
       >
-        <Form>
-          <CustomDate name="date" />
-          <Box mt={2} />
-          <CustomSelect name="branch_name" label="Branch" options={branch} />
-          <Box mt={2} />
-          <CustomTextField name="amount" label="Amount" />
-          <Box mt={2} />
-          <CustomSelect name="expenses_type" label="Expense Type" options={expensesCategories} />
-          <Box mt={2} />
-          <CustomTextField
-            multiline={true}
-            row={4}
-            name="additional_details"
-            label="Additional Details"
-          />
-          <Box mt={2} />
-          <CustomButton disabled={loading ? true : false}>
-            {edit ? "Update" : "Submit"}
-          </CustomButton>
-        </Form>
+        {({ errors, values, handleChange, setValues }) => (
+          <Form>
+            <CustomDate name="date" />
+            <Box mt={2} />
+            <CustomTextField name="branch_name" value={values.branch_name} />
+            <Box mt={2} />
+            <CustomTextField name="amount" label="Amount" />
+            <Box mt={2} />
+            <CustomSelect name="expenses_type" label="Expense Type" options={expensesCategories} />
+            <Box mt={2} />
+            <CustomTextField
+              multiline={true}
+              row={4}
+              name="additional_details"
+              label="Additional Details"
+            />
+            <Box mt={2} />
+            <CustomButton disabled={loading ? true : false}>
+              {edit ? "Update" : "Submit"}
+            </CustomButton>
+          </Form>
+        )}
       </Formik>
     </>
   );

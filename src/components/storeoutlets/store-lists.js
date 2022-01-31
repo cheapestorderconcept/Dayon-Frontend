@@ -16,7 +16,7 @@ const StoreOuletLists = ({ branch }) => {
   const { enqueueSnackbar } = useSnackbar();
   const handleDelete = (tableMeta) => (e) => {
     confirm("Are you sure you want to delete");
-    const storeID = tableMeta.rowData[2];
+    const storeID = tableMeta.rowData[0];
     deleteStore({
       dispatch: dispatch,
       storeID: storeID,
@@ -26,7 +26,7 @@ const StoreOuletLists = ({ branch }) => {
   };
   const columns = [
     {
-      name: "Delete",
+      name: "delete",
       options: {
         filter: true,
         sort: false,
@@ -43,7 +43,7 @@ const StoreOuletLists = ({ branch }) => {
       },
     },
     {
-      name: "Edit",
+      name: "update",
       options: {
         filter: true,
         sort: false,
@@ -52,7 +52,7 @@ const StoreOuletLists = ({ branch }) => {
           return (
             <Button variant="contained">
               <NextLink
-                href={`/store/${tableMeta.rowData[2]}`}
+                href={`/store/${tableMeta.rowData[1]}`}
                 style={{ textDecoration: "none", color: "white" }}
               >
                 <Typography variant="body1" color="inherit">
@@ -65,25 +65,34 @@ const StoreOuletLists = ({ branch }) => {
       },
     },
     {
-      name: "ID",
+      name: "name",
+      label: "Branch Name",
     },
     {
-      name: "STORE NAME",
+      name: "address",
+      label: "Address",
     },
     {
-      name: "ADDRESS",
+      name: "manager_name",
+      label: "Manager/Contact Person",
     },
+
     {
-      name: "MANAGER/CONTACT PERSON",
-    },
-    {
-      name: "PHONE",
+      name: "phone",
+      label: "Phone",
     },
   ];
 
-  const myBranch = branch.map((brch) => Object.values(brch));
-  const data = [...myBranch];
-
+  const myBranch = branch.map((brch, i) => {
+    return {
+      delete: `${brch._id}`,
+      update: `${brch._id}`,
+      name: `${brch.branch_name}`,
+      manager_name: `${brch.manager_name}`,
+      phone: `${brch.manager_phone}`,
+      address: `${brch.address}`,
+    };
+  });
   const options = {
     filter: true,
     sort: true,
@@ -92,7 +101,12 @@ const StoreOuletLists = ({ branch }) => {
   return (
     <>
       {ready == true && (
-        <MUIDataTable title={"Lists Of Stores"} data={data} columns={columns} options={options} />
+        <MUIDataTable
+          title={"Lists Of Stores"}
+          data={myBranch}
+          columns={columns}
+          options={options}
+        />
       )}
     </>
   );

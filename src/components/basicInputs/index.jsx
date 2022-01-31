@@ -17,7 +17,7 @@ export const CustomTextField = ({ name, ...other }) => {
 };
 
 // custom select
-export const CustomSelect = ({ name, options, i, ...other }) => {
+export const CustomSelect = ({ name, options, i, useId, ...other }) => {
   const [field, meta] = useField(name);
   const { setFieldValue } = useFormikContext();
 
@@ -49,7 +49,7 @@ export const CustomSelect = ({ name, options, i, ...other }) => {
               option?.branch_name ||
               option?.brand_name ||
               option?.supplier_name ||
-              option?.product_name ||
+              (useId ? option?._id : option?.product_name) ||
               option?.payment_type ||
               option?.expenses_category ||
               option?.name

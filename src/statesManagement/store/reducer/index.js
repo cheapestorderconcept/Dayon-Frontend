@@ -136,6 +136,12 @@ import {
   DELETE_SALES_REQUEST,
   DELETE_SALES_SUCCESS,
   DELETE_SALES_FAIL,
+  GET_PRODUCT_BY_ID_REQUEST,
+  GET_PRODUCT_BY_ID_SUCCESS,
+  GET_PRODUCT_BY_ID_FAIL,
+  SUSPEND_STAFF_REQUEST,
+  SUSPEND_STAFF_SUCCESS,
+  SUSPEND_STAFF_FAIL,
 } from "../constants";
 
 // const rootReducers = combineReducers({
@@ -234,6 +240,17 @@ const rootReducers = (state, action) => {
     case GET_PRODUCT_BY_BARCODE_FAIL:
       return { ...state, loading: false, error: action.payload };
 
+    case GET_PRODUCT_BY_ID_REQUEST:
+      return { ...state, loading: true };
+    case GET_PRODUCT_BY_ID_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        productById: [...state.productById, action.payload],
+      };
+    case GET_PRODUCT_BY_ID_FAIL:
+      return { ...state, loading: false, error: action.payload };
+
     case GET_PRODUCT_REQUEST:
       return { ...state, loading: true };
     case GET_PRODUCT_SUCCESS: {
@@ -302,6 +319,13 @@ const rootReducers = (state, action) => {
     case DELETE_STAFF_SUCCESS:
       return { ...state, loading: false };
     case DELETE_STAFF_FAIL:
+      return { ...state, loading: false, error: action.payload };
+
+    case SUSPEND_STAFF_REQUEST:
+      return { ...state, loading: true };
+    case SUSPEND_STAFF_SUCCESS:
+      return { ...state, loading: false };
+    case SUSPEND_STAFF_FAIL:
       return { ...state, loading: false, error: action.payload };
 
     // Puerchase Reducer

@@ -14,18 +14,28 @@ const PaymentMethodList = ({ paymentType }) => {
 
   const columns = [
     {
-      name: "ID",
-    },
-    {
-      name: "PAYMENT TYPE",
+      name: "name",
+      label: "Payment Type",
     },
   ];
-  const payments = paymentType.map((pmt) => Object.values(pmt));
-  const data = [...payments];
+
+  const payments = paymentType?.map((pro, i) => {
+    return {
+      delete: `${pro._id}`,
+      Update_brand: `${pro._id}`,
+      name: `${pro.payment_type}`,
+    };
+  });
+
   return (
     <>
       {ready == true && (
-        <MUIDataTable title={"Payment Methods"} data={data} columns={columns} options={options} />
+        <MUIDataTable
+          title={"Payment Methods"}
+          data={payments}
+          columns={columns}
+          options={options}
+        />
       )}
     </>
   );

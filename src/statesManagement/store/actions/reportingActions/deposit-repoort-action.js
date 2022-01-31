@@ -12,7 +12,7 @@ export const getDepositReport = async ({ dispatch, enqueueSnackbar, from, to, Ro
     });
     const { data } = await makeNetworkCall({
       method: "GET",
-      path: `/view-deposit-reports?from=${from}&to=${to}`,
+      path: `/view-deposit-reports?from=${from}&to=${to}&branch=${branch}`,
     });
     console.log(data.data);
     dispatch({

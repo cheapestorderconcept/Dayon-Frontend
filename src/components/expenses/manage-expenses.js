@@ -12,13 +12,13 @@ const ManageExpenses = ({ expenses }) => {
   const [ready, setready] = useState(false);
   const handleDelete = (tableMeta) => (e) => {
     confirm("Are you sure you want to delete");
-    const expId = tableMeta.rowData[2];
+    const expId = tableMeta.rowData[0];
     // console.log(expId);
     deleteExpenses({ dispatch: dispatch, expId: expId, enqueueSnackbar: enqueueSnackbar });
   };
   const columns = [
     {
-      name: "Delete",
+      name: "delete",
       options: {
         filter: true,
         sort: false,
@@ -33,7 +33,7 @@ const ManageExpenses = ({ expenses }) => {
       },
     },
     {
-      name: "Edit",
+      name: "update",
       options: {
         filter: true,
         sort: false,
@@ -42,7 +42,7 @@ const ManageExpenses = ({ expenses }) => {
           return (
             <Button variant="contained">
               <NextLink
-                href={`/expenses/${tableMeta.rowData[2]}`}
+                href={`/expenses/${tableMeta.rowData[1]}`}
                 style={{ textDecoration: "none", color: "white" }}
               >
                 <Typography variant="body1" color="inherit">
@@ -55,24 +55,41 @@ const ManageExpenses = ({ expenses }) => {
       },
     },
     {
-      name: "ID",
+      name: "name",
+      label: "Expenses",
     },
     {
-      name: "DATE CREATED",
+      name: "exp_type",
+      label: "Category",
     },
     {
-      name: "AMOUNT",
+      name: "amount",
+      label: "Amount",
     },
     {
-      name: "CATEGORY",
+      name: "add_details",
+      label: "Details",
     },
     {
-      name: "ADDITIONAL DETAILS",
+      name: "date",
+      label: "Date",
     },
   ];
 
-  const exp = expenses.map((exp) => Object.values(exp));
-  const data = [...exp];
+  // const exp = expenses.map((exp) => Object.values(exp));
+  // console.log(expenses);
+  const exp = expenses.map((exp, i) => {
+    return {
+      delete: `${exp._id}`,
+      update: `${exp._id}`,
+      name: `${exp.branch_name}`,
+      exp_type: `${exp.expenses_type}`,
+      amount: `${exp.amount}`,
+      add_details: `${exp.additional_details}`,
+      date: `${exp.date}`,
+    };
+  });
+
   const options = {
     filter: true,
     sort: true,
@@ -85,7 +102,7 @@ const ManageExpenses = ({ expenses }) => {
   return (
     <>
       {ready == true && (
-        <MUIDataTable title={"Lists Of Expenses"} data={data} columns={columns} options={options} />
+        <MUIDataTable title={"Lists Of Expenses"} data={exp} columns={columns} options={options} />
       )}
     </>
   );

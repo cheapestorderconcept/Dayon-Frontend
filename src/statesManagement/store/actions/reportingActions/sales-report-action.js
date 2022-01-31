@@ -12,7 +12,7 @@ export const getSalesReport = async ({ dispatch, enqueueSnackbar, from, to, Rout
     });
     const { data } = await makeNetworkCall({
       method: "GET",
-      path: `/view-sales-report?from=${from}&to=${to}`,
+      path: `/view-sales-report?from=${from}&to=${to}&branch=${branch}`,
     });
     console.log(data.data);
     dispatch({

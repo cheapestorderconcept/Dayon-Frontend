@@ -27,7 +27,10 @@ import { CustomSelect, CustomButton } from "../basicInputs";
 import { CustomDate } from "../basicInputs";
 import { paymentMethods } from "src/__mocks__/paymentMethods";
 import React, { useContext, useEffect, useMemo, useRef, useState } from "react";
-import { getProductByBarcode } from "src/statesManagement/store/actions/product-action";
+import {
+  getProductByBarcode,
+  getProductById,
+} from "src/statesManagement/store/actions/product-action";
 import { Store } from "src/statesManagement/store/store";
 import { addSupplier } from "src/statesManagement/store/actions/supplier-action";
 import { addSales, addSalesData } from "src/statesManagement/store/actions/sales-action";
@@ -41,9 +44,10 @@ import Cookies from "js-cookie";
 
 export const AddDeposit = (props) => {
   const { dispatch, state } = useContext(Store);
-  const { productByBarcode, paymentType, loading } = state;
+  const { productByBarcode, productById, paymentType, loading, products } = state;
 
   const [barcode, setbarcode] = useState("");
+  const [selectedProduct, setselectedProduct] = useState("");
 
   const INITIAL_FORM_VALUES = {
     created_at: "",
@@ -53,7 +57,18 @@ export const AddDeposit = (props) => {
     // customer_phone: "",
     branch: Cookies.get("selectedBranch"),
     payment_type: "",
-    items: [{ barcode: "", product: "", product_id: "", quantity: "", selling_price: "" }],
+    items: [
+      {
+        barcode: "",
+        product: "",
+        selectedProduct: "",
+        serial_number: "",
+        invoice_number: "",
+        product_id: "",
+        quantity: "",
+        selling_price: "",
+      },
+    ],
   };
 
   const FORM_VALIDATIONS = yup.object().shape({
@@ -72,7 +87,9 @@ export const AddDeposit = (props) => {
       yup.object().shape({
         barcode: yup.string(),
         product_id: yup.string().required("please select a product"),
-
+        selectedProduct: yup.string(),
+        serial_number: yup.string().required("please provide serial number"),
+        invoice_number: yup.string().required("please provide invoice number"),
         selling_price: yup
           .number()
           .integer()
@@ -95,6 +112,9 @@ export const AddDeposit = (props) => {
       barcode: "",
       product: "",
       product_id: "",
+      selectedProduct: "",
+      serial_number: "",
+      invoice_number: "",
       selling_price: "",
       quantity: "",
     });
@@ -122,6 +142,22 @@ export const AddDeposit = (props) => {
 
   const formRef = useRef(null);
 
+  // get a product by id
+
+  useEffect(() => {
+    const timeOutId = setTimeout(
+      () => console.log(selectedProduct),
+      getProductById({
+        dispatch: dispatch,
+        id: selectedProduct,
+        enqueueSnackbar: enqueueSnackbar,
+      }),
+      500
+    );
+    return () => clearTimeout(timeOutId);
+  }, [selectedProduct]);
+
+  // get a product by barcode
   useEffect(() => {
     getTotalDeposit({ dispatch: dispatch, enqueueSnackbar: enqueueSnackbar });
     const timeOutId = setTimeout(
@@ -136,8 +172,9 @@ export const AddDeposit = (props) => {
     return () => clearTimeout(timeOutId);
   }, [barcode]);
 
-  const RenderForm = ({ items, i }) => {
+  const RenderForm = ({ items, i, values }) => {
     setbarcode(items.barcode);
+    setselectedProduct(items.selectedProduct);
 
     return (
       <React.Fragment key={i}>
@@ -196,12 +233,32 @@ export const AddDeposit = (props) => {
               (items.product =
                 productByBarcode.length > 0 && typeof productByBarcode[i] != "undefined"
                   ? productByBarcode[i].product_name
+                  : "" || (productById.length > 0 && typeof productById[i] != "undefined")
+                  ? productById[i].product_name
                   : "")
             }
             label="Product"
           />
         </Grid>
-
+        <Grid item xs={6}>
+          <CustomSelect
+            name={`items.${i}.selectedProduct`}
+            useId={true}
+            options={products}
+            label="Choose Products"
+          />
+        </Grid>
+        <Grid item xs={6}>
+          <CustomTextField name={`items.${i}.serial_number`} label="Serial Number" />
+        </Grid>
+        <Grid item xs={6}>
+          <CustomTextField
+            name={`items.${i}.invoice_number`}
+            label="Invoice Number"
+            disabled
+            value={(items.invoice_number = values.invoice_number)}
+          />
+        </Grid>
         <Grid item xs={6} style={{ display: "none" }}>
           <CustomTextField
             name={`items.${i}.product_id`}
@@ -209,6 +266,8 @@ export const AddDeposit = (props) => {
             value={
               productByBarcode.length > 0 && typeof productByBarcode[i] != "undefined"
                 ? (items.product_id = productByBarcode[i]._id)
+                : "" || (productById.length > 0 && typeof productById[i] != "undefined")
+                ? productById[i]._id
                 : ""
             }
             label="Product Id"
@@ -218,6 +277,10 @@ export const AddDeposit = (props) => {
           <CustomTextField name={`items.${i}.quantity`} label="Quantity" />
           {productByBarcode.length > 0 && typeof productByBarcode[i] != "undefined"
             ? Number(items.quantity) > productByBarcode[i].current_product_quantity && (
+                <AlertBox open={open} severity="error" setopen={setopen} message="out of stock" />
+              )
+            : null || (productById.length > 0 && typeof productById[i] != "undefined")
+            ? Number(items.quantity) > productById[i].current_product_quantity && (
                 <AlertBox open={open} severity="error" setopen={setopen} message="out of stock" />
               )
             : null}
@@ -237,6 +300,8 @@ export const AddDeposit = (props) => {
             label="Amount"
             value={
               productByBarcode.length > 0 && typeof productByBarcode[i] != "undefined"
+                ? (items.amount = items.quantity * items.selling_price)
+                : "" || (productById.length > 0 && typeof productById[i] != "undefined")
                 ? (items.amount = items.quantity * items.selling_price)
                 : ""
             }
@@ -311,6 +376,7 @@ export const AddDeposit = (props) => {
                               key={index}
                               items={item}
                               i={index}
+                              values={values}
                               handleChange={handleChange}
                             />
                           ))
@@ -332,36 +398,44 @@ export const AddDeposit = (props) => {
                           }
                         />
                       </Grid>
-
-                      <Grid item xs={6}>
-                        <Field name="number of items">
-                          {({ field }) => (
-                            <Button
-                              variant="contained"
-                              fullWidth={true}
-                              color="primary"
-                              onClick={() => addMoreItems(values, setValues)}
-                              startIcon={<DownloadIcon fontSize="small" />}
-                            >
-                              Add More Products
-                            </Button>
-                          )}
-                        </Field>
-                      </Grid>
-                      <Grid item xs={6}>
-                        <Field name="number of items">
-                          {({ field }) => (
-                            <Button
-                              variant="contained"
-                              fullWidth={true}
-                              color="primary"
-                              onClick={() => removeItems(values, setValues)}
-                              startIcon={<DownloadIcon fontSize="small" />}
-                            >
-                              Remove Products
-                            </Button>
-                          )}
-                        </Field>
+                      <Grid
+                        container
+                        spacing={2}
+                        sx={{
+                          mt: 2,
+                          pl: 2,
+                        }}
+                      >
+                        <Grid item xs={6}>
+                          <Field name="number of items">
+                            {({ field }) => (
+                              <Button
+                                variant="contained"
+                                fullWidth={true}
+                                color="primary"
+                                onClick={() => addMoreItems(values, setValues)}
+                                startIcon={<DownloadIcon fontSize="small" />}
+                              >
+                                Add More Products
+                              </Button>
+                            )}
+                          </Field>
+                        </Grid>
+                        <Grid item xs={6}>
+                          <Field name="number of items">
+                            {({ field }) => (
+                              <Button
+                                variant="contained"
+                                fullWidth={true}
+                                color="primary"
+                                onClick={() => removeItems(values, setValues)}
+                                startIcon={<DownloadIcon fontSize="small" />}
+                              >
+                                Remove Products
+                              </Button>
+                            )}
+                          </Field>
+                        </Grid>
                       </Grid>
                       <Grid item xs={12}>
                         <CustomSelect

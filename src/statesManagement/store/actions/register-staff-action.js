@@ -10,6 +10,9 @@ import {
   GET_STAFF_FAIL,
   GET_STAFF_REQUEST,
   GET_STAFF_SUCCESS,
+  SUSPEND_STAFF_FAIL,
+  SUSPEND_STAFF_REQUEST,
+  SUSPEND_STAFF_SUCCESS,
 } from "../constants";
 
 export const registerStaff = async ({ dispatch, staff, Router, enqueueSnackbar }) => {
@@ -86,6 +89,35 @@ export const deleteStaff = async ({ dispatch, staffId, Router, enqueueSnackbar }
   } catch (error) {
     dispatch({
       type: DELETE_STAFF_FAIL,
+    });
+    error &&
+      enqueueSnackbar(error?.response?.data?.response_message || error.message, {
+        variant: "error",
+      });
+  }
+};
+
+export const suspendStaff = async ({ dispatch, staffId, Router, enqueueSnackbar }) => {
+  try {
+    dispatch({
+      type: SUSPEND_STAFF_REQUEST,
+    });
+    const { data } = await makeNetworkCall({
+      method: "PUT",
+      path: `/suspend-staff/${staffId}`,
+    });
+    dispatch({
+      type: SUSPEND_STAFF_SUCCESS,
+      payload: data.data._id,
+    });
+    data &&
+      enqueueSnackbar(data?.response_message, {
+        variant: "success",
+      });
+    // Router.reload(window.location.pathname);
+  } catch (error) {
+    dispatch({
+      type: SUSPEND_STAFF_FAIL,
     });
     error &&
       enqueueSnackbar(error?.response?.data?.response_message || error.message, {

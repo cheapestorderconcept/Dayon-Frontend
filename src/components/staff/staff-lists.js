@@ -3,7 +3,10 @@ import MUIDataTable from "mui-datatables";
 import { useRouter } from "next/router";
 import { useSnackbar } from "notistack";
 import { useContext, useEffect, useState } from "react";
-import { deleteStaff } from "src/statesManagement/store/actions/register-staff-action";
+import {
+  deleteStaff,
+  suspendStaff,
+} from "src/statesManagement/store/actions/register-staff-action";
 import { Store } from "src/statesManagement/store/store";
 
 const ListOfStaff = ({ staff }) => {
@@ -19,7 +22,7 @@ const ListOfStaff = ({ staff }) => {
 
   const handleDelete = (tableMeta) => (e) => {
     confirm("Are you sure you want to delete Staff");
-    const staffId = tableMeta.rowData[2];
+    const staffId = tableMeta.rowData[1];
     deleteStaff({
       dispatch: dispatch,
       staffId: staffId,
@@ -28,44 +31,81 @@ const ListOfStaff = ({ staff }) => {
     });
   };
 
+  const handleSuspend = (tableMeta) => (e) => {
+    confirm("Are you sure you want to suspend Staff");
+    const staffId = tableMeta.rowData[0];
+    suspendStaff({
+      dispatch: dispatch,
+      staffId: staffId,
+      Router: Router,
+      enqueueSnackbar: enqueueSnackbar,
+    });
+  };
+
   const columns = [
-    // {
-    //   name: "Delete",
-    //   options: {
-    //     filter: true,
-    //     sort: false,
-    //     empty: true,
-    //     customBodyRender: (value, tableMeta, updateValue) => {
-    //       return (
-    //         <Button onClick={handleDelete(tableMeta)} variant="contained" color="error">
-    //           <Typography variant="body1" color="inherit">
-    //             Delete
-    //           </Typography>
-    //         </Button>
-    //       );
-    //     },
-    //   },
-    // },
+    {
+      name: "update",
+      options: {
+        filter: true,
+        sort: false,
+        empty: true,
+        customBodyRender: (value, tableMeta, updateValue) => {
+          return (
+            <Button onClick={handleSuspend(tableMeta)} variant="contained" color="warning">
+              <Typography variant="body1" color="inherit">
+                Suspend
+              </Typography>
+            </Button>
+          );
+        },
+      },
+    },
+    {
+      name: "delete",
+      options: {
+        filter: true,
+        sort: false,
+        empty: true,
+        customBodyRender: (value, tableMeta, updateValue) => {
+          return (
+            <Button onClick={handleDelete(tableMeta)} variant="contained" color="error">
+              <Typography variant="body1" color="inherit">
+                Delete
+              </Typography>
+            </Button>
+          );
+        },
+      },
+    },
 
     {
-      name: "ID",
+      name: "first_name",
+      label: "First Name",
     },
     {
-      name: "FIRST NAME",
+      name: "last_name",
+      label: "Last Name",
     },
     {
-      name: "LAST NAME",
+      name: "role",
+      label: "Role",
     },
     {
-      name: "USERNAME",
-    },
-    {
-      name: "EMAIL",
+      name: "username",
+      label: "Username",
     },
   ];
 
-  const mystaff = staff.map((stf) => Object.values(stf));
-  const data = [...mystaff];
+  const mystaff = staff.map((stf, i) => {
+    return {
+      delete: `${stf._id}`,
+      update: `${stf._id}`,
+      first_name: `${stf.first_name}`,
+      last_name: `${stf.last_name}`,
+      role: `${stf.role}`,
+      username: `${stf.username}`,
+    };
+  });
 
   const options = {
     filter: true,
@@ -77,7 +117,7 @@ const ListOfStaff = ({ staff }) => {
   return (
     <>
       {ready == true && (
-        <MUIDataTable title={"Lists Of Staff"} data={data} columns={columns} options={options} />
+        <MUIDataTable title={"Lists Of Staff"} data={mystaff} columns={columns} options={options} />
       )}
     </>
   );

@@ -7,6 +7,8 @@ import {
   Divider,
   Typography,
   Grid,
+  MenuItem,
+  TextField,
 } from "@mui/material";
 import { Download as DownloadIcon } from "../../icons/download";
 
@@ -23,12 +25,13 @@ import { useRouter } from "next/router";
 
 export const Deposit_Report_Form = (props) => {
   const { dispatch, state } = useContext(Store);
-  const { loading } = state;
+  const { loading, branch } = state;
   const { enqueueSnackbar } = useSnackbar();
   const Router = useRouter();
   const [formvalues, setformvalues] = useState({
     startDate: null,
     endDate: null,
+    store: "",
   });
 
   const [selectionValue, setselectionValue] = useState([
@@ -59,6 +62,7 @@ export const Deposit_Report_Form = (props) => {
       from: formvalues.startDate,
       to: formvalues.endDate,
       Router: Router,
+      branch: formvalues.store,
     });
     console.log(formvalues);
   };
@@ -107,6 +111,25 @@ export const Deposit_Report_Form = (props) => {
                       selectionRange={selectionValue}
                       handleSelect={handleSelect}
                     />
+                  </Grid>
+                  <Grid item xs={6} sx={{ mb: 4 }}>
+                    <TextField
+                      select={true}
+                      fullWidth={true}
+                      name="store"
+                      label="Select Store"
+                      required
+                      value={formvalues.store}
+                      onChange={(e) => setformvalues({ ...formvalues, store: e.target.value })}
+                    >
+                      {branch.map((option) => {
+                        return (
+                          <MenuItem key={option.id} value={option.branch_name}>
+                            {option.branch_name}
+                          </MenuItem>
+                        );
+                      })}
+                    </TextField>
                   </Grid>
 
                   <Grid item xs={12}>

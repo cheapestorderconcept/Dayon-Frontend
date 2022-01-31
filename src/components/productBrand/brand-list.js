@@ -23,7 +23,7 @@ const BrandTable = ({ brands }) => {
 
   const handleDelete = (tableMeta) => (e) => {
     confirm("Are you sure you want to delete");
-    const brandId = tableMeta.rowData[2];
+    const brandId = tableMeta.rowData[0];
     deleteBrand({
       dispatch: dispatch,
       brandId: brandId,
@@ -34,7 +34,7 @@ const BrandTable = ({ brands }) => {
 
   const columns = [
     {
-      name: "Delete",
+      name: "delete",
       options: {
         filter: true,
         sort: false,
@@ -51,7 +51,7 @@ const BrandTable = ({ brands }) => {
       },
     },
     {
-      name: "Edit",
+      name: "Update_brand",
       options: {
         filter: true,
         sort: false,
@@ -60,7 +60,7 @@ const BrandTable = ({ brands }) => {
           return (
             <Button variant="contained">
               <NextLink
-                href={`/products/brand/${tableMeta.rowData[2]}`}
+                href={`/products/brand/${tableMeta.rowData[1]}`}
                 style={{ textDecoration: "none", color: "white" }}
               >
                 <Typography variant="body1" color="inherit">
@@ -72,20 +72,20 @@ const BrandTable = ({ brands }) => {
         },
       },
     },
+
     {
-      name: "ID",
-    },
-    {
-      name: "NAME",
-    },
-    {
-      name: "INDEX",
+      name: "name",
+      label: "Name",
     },
   ];
 
-  const brand = brands.map((brand) => Object.values(brand));
-  console.log(brand);
-  const data = [...brand];
+  const brand = brands?.map((pro, i) => {
+    return {
+      delete: `${pro._id}`,
+      Update_brand: `${pro._id}`,
+      name: `${pro.brand_name}`,
+    };
+  });
 
   const options = {
     filter: true,
@@ -96,7 +96,7 @@ const BrandTable = ({ brands }) => {
   return (
     <>
       {ready == true && (
-        <MUIDataTable title={"Lists Of Brands"} data={data} columns={columns} options={options} />
+        <MUIDataTable title={"Lists Of Brands"} data={brand} columns={columns} options={options} />
       )}
     </>
   );

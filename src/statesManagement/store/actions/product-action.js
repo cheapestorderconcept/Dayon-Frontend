@@ -21,6 +21,9 @@ import {
   GET_OUT_OF_STOCK_REQUEST,
   GET_OUT_OF_STOCK_SUCCESS,
   GET_OUT_OF_STOCK_FAIL,
+  GET_PRODUCT_BY_ID_REQUEST,
+  GET_PRODUCT_BY_ID_SUCCESS,
+  GET_PRODUCT_BY_ID_FAIL,
 } from "../constants/index";
 
 export const getProductWithBarcode = async ({ dispatch, enqueueSnackbar }) => {
@@ -85,6 +88,32 @@ export const getProductByBarcode = async ({ dispatch, barcode, enqueueSnackbar }
   } catch (error) {
     dispatch({
       type: GET_PRODUCT_BY_BARCODE_FAIL,
+    });
+    error &&
+      enqueueSnackbar(error?.response?.data?.response_message || error.message, {
+        variant: "error",
+      });
+  }
+};
+
+export const getProductById = async ({ dispatch, id, enqueueSnackbar }) => {
+  try {
+    dispatch({
+      type: GET_PRODUCT_BY_ID_REQUEST,
+    });
+
+    const { data } = await makeNetworkCall({
+      method: "GET",
+      path: `/view-single-product-by-id/${id}`,
+    });
+    console.log(data.data);
+    dispatch({
+      type: GET_PRODUCT_BY_ID_SUCCESS,
+      payload: data.data,
+    });
+  } catch (error) {
+    dispatch({
+      type: GET_PRODUCT_BY_ID_FAIL,
     });
     error &&
       enqueueSnackbar(error?.response?.data?.response_message || error.message, {
@@ -258,8 +287,10 @@ export const deleteProduct = async ({ dispatch, productId, Router, enqueueSnackb
       type: DELETE_PRODUCT_SUCCESS,
       payload: data.data._id,
     });
-    console.log(data.data);
-    Router.reload(window.location.pathname);
+    data &&
+      enqueueSnackbar(data?.response_message, {
+        variant: "success",
+      });
   } catch (error) {
     error &&
       enqueueSnackbar(error?.response?.data?.response_message || error.message, {

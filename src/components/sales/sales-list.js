@@ -36,47 +36,53 @@ const SalesList = ({ salesList }) => {
       },
     },
     {
-      name: "Sales Id",
+      name: "Name",
+      label: "Product Name",
     },
     {
-      name: "Invoice Number ",
+      name: "Invoice",
+      label: "Invoice Number",
     },
     {
-      name: "Total Amount",
+      name: "Barcode",
+      label: "Product Barcode",
     },
     {
-      name: "Payment Type",
+      name: "amount",
+      label: "Total Amount",
     },
     {
-      name: "Branch",
+      name: "Price",
+      label: "Cost Price",
     },
     {
-      name: "Date",
+      name: "selling_price",
+      label: "Selling Price",
+    },
+    {
+      name: "serial_number",
+      label: "Serial Number",
     },
   ];
   const [ready, setready] = useState(false);
   useEffect(() => {
     setready(true);
   }, []);
-  const sales = salesList.map((item) => Object.values(item));
 
-  const newArray = sales.map((arr) =>
-    arr.filter((arr) => {
-      return typeof arr !== "object";
-    })
-  );
+  console.log(salesList);
 
-  let itemsArray;
-
-  itemsArray = sales.map((arr) =>
-    arr.filter((arr) => {
-      if (typeof arr === "object") {
-        return arr;
-      }
-    })
-  );
-
-  const data = [...newArray];
+  const mySales = salesList.map((sale, i) => {
+    return {
+      Name: `${sale.product}`,
+      Barcode: `${sale.barcode}`,
+      amount: `${sale.amount}`,
+      Price: `${sale.cost_price}`,
+      Invoice: `${sale.invoice_number}`,
+      serial_number: `${sale.serial_number}`,
+      selling_price: `${sale.selling_price}`,
+    };
+  });
+  console.log(mySales);
 
   const options = {
     filter: true,
@@ -89,7 +95,12 @@ const SalesList = ({ salesList }) => {
     <>
       {ready == true && (
         <>
-          <MUIDataTable title={"Lists Of Sales"} data={data} columns={columns} options={options} />
+          <MUIDataTable
+            title={"Lists Of Sales"}
+            data={mySales}
+            columns={columns}
+            options={options}
+          />
         </>
       )}
     </>

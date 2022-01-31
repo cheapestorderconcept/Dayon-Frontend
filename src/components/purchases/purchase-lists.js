@@ -29,46 +29,44 @@ const PurchaseList = ({ purchase }) => {
 
   const columns = [
     {
-      name: "ID",
+      name: "invoice",
+      label: "Invoice Number",
     },
     {
-      name: "DATE",
+      name: "supplier",
+      label: "Suppler",
     },
     {
-      name: "PURCHASE QUANTITY",
+      name: "product",
+      label: "Product",
+    },
+
+    {
+      name: "purch_qty",
+      label: "Purchase Quantity",
     },
     {
-      name: "INVOICE NUMBER",
+      name: "total_purch_val",
+      label: "Total Purchase Value",
     },
     {
-      name: "TOTAL PURCHASE VALUE",
-    },
-    {
-      name: "DISCOUNT",
+      name: "discount",
+      label: "Discount",
     },
   ];
-  console.log(purchase);
-  const myPurchase = purchase.map((purch) => Object.values(purch));
+  // console.log(purchase);
+  // const myPurchase = purchase.map((purch) => Object.values(purch));
 
-  const myArray = [];
-  myPurchase.map((purch) => console.log(purch[2].branch_name));
-
-  const newArray = myPurchase.map((arr) =>
-    arr.filter((arr) => {
-      return typeof arr !== "object";
-    })
-  );
-
-  // const itemsArray = myDeposits.map((arr) =>
-  //   arr.filter((arr) => {
-  //     if (typeof arr === "object") {
-  //       return arr;
-  //     }
-  //   })
-  // );
-  // itemsArray.map((item) => console.log(item.length));
-
-  const data = [...newArray];
+  const myPurchase = purchase.map((purch, i) => {
+    return {
+      invoice: `${purch.invoice_number}`,
+      supplier: `${purch.supplier}`,
+      product: `${purch.product}`,
+      purch_qty: `${purch.purchase_quantity}`,
+      total_purch_val: `${purch.total_purchase_value}`,
+      discount: `${purch.discount}`,
+    };
+  });
 
   const options = {
     filter: true,
@@ -82,7 +80,7 @@ const PurchaseList = ({ purchase }) => {
       {ready == true && (
         <MUIDataTable
           title={"Lists Of Purchases"}
-          data={data}
+          data={myPurchase}
           columns={columns}
           options={options}
         />

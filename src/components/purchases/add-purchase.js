@@ -44,6 +44,7 @@ export const AddPurchase = (props) => {
 
     items: [
       {
+        invoice_number: "",
         supplier: "",
         product: "",
         purchase_quantity: "",
@@ -60,6 +61,7 @@ export const AddPurchase = (props) => {
 
     items: yup.array().of(
       yup.object().shape({
+        invoice_number: yup.string().required("please provide invoice number"),
         supplier: yup.string().required("Please choose a supplier"),
         product: yup.string().required("Please choose a product"),
         purchase_quantity: yup
@@ -81,6 +83,7 @@ export const AddPurchase = (props) => {
     const items = [...values.items];
 
     items.push({
+      invoice_number: "",
       supplier: "",
       product: "",
       purchase_quantity: "",
@@ -107,7 +110,7 @@ export const AddPurchase = (props) => {
     });
   };
 
-  const RenderForm = ({ items, i }) => {
+  const RenderForm = ({ items, i, values }) => {
     return (
       <>
         <Grid
@@ -121,10 +124,23 @@ export const AddPurchase = (props) => {
           <Typography>Item {i + 1}</Typography>
         </Grid>
         <Grid item xs={6}>
+          <CustomTextField
+            name={`items.${i}.invoice_number`}
+            label="Invoice Number"
+            disabled
+            value={(items.invoice_number = values.invoice_number)}
+          />
+        </Grid>
+        <Grid item xs={6}>
           <CustomSelect name={`items.${i}.supplier`} label="Supplier" options={suppliers} />
         </Grid>
         <Grid item xs={6}>
-          <CustomSelect name={`items.${i}.product`} label="Select Product" options={products} />
+          <CustomSelect
+            name={`items.${i}.product`}
+            label="Select Product"
+            useId={true}
+            options={products}
+          />
         </Grid>
         <Grid item xs={6}>
           <CustomTextField name={`items.${i}.purchase_quantity`} label="Quantity" />
@@ -207,7 +223,7 @@ export const AddPurchase = (props) => {
                       <FieldArray name="items">
                         {() =>
                           values.items.map((item, index) => (
-                            <RenderForm key={index} items={item} i={index} />
+                            <RenderForm key={index} values={values} items={item} i={index} />
                           ))
                         }
                       </FieldArray>

@@ -23,7 +23,10 @@ import { CustomSelect, CustomButton } from "../basicInputs";
 import { CustomDate } from "../basicInputs";
 import { paymentMethods } from "src/__mocks__/paymentMethods";
 import React, { useContext, useEffect, useMemo, useRef, useState } from "react";
-import { getProductByBarcode } from "src/statesManagement/store/actions/product-action";
+import {
+  getProductByBarcode,
+  getProductById,
+} from "src/statesManagement/store/actions/product-action";
 import { Store } from "src/statesManagement/store/store";
 
 import { addSalesData } from "src/statesManagement/store/actions/sales-action";
@@ -36,9 +39,10 @@ import Cookies from "js-cookie";
 export const AddSales = (props) => {
   const { paymentType } = props;
   const { dispatch, state } = useContext(Store);
-  const { productByBarcode, products, loading } = state;
+  const { productByBarcode, productById, products, loading } = state;
 
   const [barcode, setbarcode] = useState("");
+  const [selectedProduct, setselectedProduct] = useState("");
 
   const INITIAL_FORM_VALUES = {
     created_at: "",
@@ -136,7 +140,20 @@ export const AddSales = (props) => {
   };
 
   const formRef = useRef(null);
+  // get a product by id
 
+  useEffect(() => {
+    const timeOutId = setTimeout(
+      () => console.log(selectedProduct),
+      getProductById({
+        dispatch: dispatch,
+        id: selectedProduct,
+        enqueueSnackbar: enqueueSnackbar,
+      }),
+      500
+    );
+    return () => clearTimeout(timeOutId);
+  }, [selectedProduct]);
   useEffect(() => {
     const timeOutId = setTimeout(
       () =>
@@ -153,7 +170,7 @@ export const AddSales = (props) => {
 
   const RenderForm = ({ items, i, values }) => {
     setbarcode(items.barcode);
-
+    setselectedProduct(items.selectedProduct);
     return (
       <React.Fragment key={i}>
         <Grid
@@ -193,13 +210,20 @@ export const AddSales = (props) => {
               (items.product =
                 productByBarcode.length > 0 && typeof productByBarcode[i] != "undefined"
                   ? productByBarcode[i].product_name
+                  : "" || (productById.length > 0 && typeof productById[i] != "undefined")
+                  ? productById[i].product_name
                   : "")
             }
             label="Product"
           />
         </Grid>
         <Grid item xs={6}>
-          <CustomSelect name={`items.${i}.products`} options={products} label="Choose Products" />
+          <CustomSelect
+            name={`items.${i}.selectedProduct`}
+            options={products}
+            useId={true}
+            label="Choose Products"
+          />
         </Grid>
 
         <Grid item xs={6}>
@@ -210,7 +234,7 @@ export const AddSales = (props) => {
             name={`items.${i}.invoice_number`}
             label="Invoice Number"
             disabled
-            value={values.invoice_number}
+            value={(items.invoice_number = values.invoice_number)}
           />
         </Grid>
 
@@ -221,6 +245,8 @@ export const AddSales = (props) => {
             value={
               productByBarcode.length > 0 && typeof productByBarcode[i] != "undefined"
                 ? (items.product_id = productByBarcode[i]._id)
+                : "" || (productById.length > 0 && typeof productById[i] != "undefined")
+                ? productById[i]._id
                 : ""
             }
             label="Product Id"
@@ -234,6 +260,8 @@ export const AddSales = (props) => {
               (items.cost_price =
                 productByBarcode.length > 0 && typeof productByBarcode[i] != "undefined"
                   ? (items.product_id = productByBarcode[i].product_price)
+                  : "" || (productById.length > 0 && typeof productById[i] != "undefined")
+                  ? productById[i].product_price
                   : "")
             }
             label="Cost price"
@@ -243,6 +271,12 @@ export const AddSales = (props) => {
           <CustomTextField name={`items.${i}.quantity`} label="Quantity" />
           {productByBarcode.length > 0 && typeof productByBarcode[i] != "undefined"
             ? Number(items.quantity) > productByBarcode[i].current_product_quantity &&
+              enqueueSnackbar("provided quantity is out of stock", {
+                variant: "warning",
+                preventDuplicate: true,
+              })
+            : null || (productById.length > 0 && typeof productById[i] != "undefined")
+            ? Number(items.quantity) > productById[i].current_product_quantity &&
               enqueueSnackbar("provided quantity is out of stock", {
                 variant: "warning",
                 preventDuplicate: true,
@@ -264,6 +298,8 @@ export const AddSales = (props) => {
             label="Amount"
             value={
               productByBarcode.length > 0 && typeof productByBarcode[i] != "undefined"
+                ? (items.amount = items.quantity * items.selling_price)
+                : "" || (productById.length > 0 && typeof productById[i] != "undefined")
                 ? (items.amount = items.quantity * items.selling_price)
                 : ""
             }

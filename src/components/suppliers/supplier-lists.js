@@ -22,7 +22,7 @@ const SuppliersList = () => {
 
   const handleDelete = (tableMeta) => (e) => {
     confirm("Are you sure you want to delete");
-    const supId = tableMeta.rowData[2];
+    const supId = tableMeta.rowData[0];
     deleteSupplier({
       dispatch: dispatch,
       supId: supId,
@@ -33,7 +33,7 @@ const SuppliersList = () => {
 
   const columns = [
     {
-      name: "Delete",
+      name: "delete",
       options: {
         filter: true,
         sort: false,
@@ -50,7 +50,7 @@ const SuppliersList = () => {
       },
     },
     {
-      name: "Edit",
+      name: "update",
       options: {
         filter: true,
         sort: false,
@@ -59,7 +59,7 @@ const SuppliersList = () => {
           return (
             <Button variant="contained">
               <NextLink
-                href={`/suppliers/${tableMeta.rowData[2]}`}
+                href={`/suppliers/${tableMeta.rowData[1]}`}
                 style={{ textDecoration: "none", color: "white" }}
               >
                 <Typography variant="body1" color="inherit">
@@ -72,27 +72,40 @@ const SuppliersList = () => {
       },
     },
     {
-      name: "ID",
+      name: "supplier_name",
+      label: "Supplier Name",
     },
     {
-      name: "NAME",
+      name: "supplier_email",
+      label: "Email",
     },
     {
-      name: "ADDRESS",
+      name: "supplier_phone",
+      label: "Phone",
     },
     {
-      name: "PHONE",
+      name: "supplier_address",
+      label: "Address",
     },
     {
-      name: "EMAIL",
-    },
-    {
-      name: "CONTACT PERSON",
+      name: "contact_person",
+      label: "Contact Person",
     },
   ];
 
-  const supp = suppliers.map((supp) => Object.values(supp));
-  const data = [...supp];
+  // const supp = suppliers.map((supp) => Object.values(supp));
+  // console.log(suppliers);
+  const supp = suppliers.map((supp, i) => {
+    return {
+      delete: `${supp._id}`,
+      update: `${supp._id}`,
+      supplier_name: `${supp.supplier_name}`,
+      supplier_email: `${supp.supplier_email}`,
+      supplier_phone: `${supp.supplier_phone}`,
+      supplier_address: `${supp.supplier_address}`,
+      contact_person: `${supp.contact_person}`,
+    };
+  });
 
   const options = {
     filter: true,
@@ -106,7 +119,7 @@ const SuppliersList = () => {
       {ready == true && (
         <MUIDataTable
           title={"Lists Of Suppliers"}
-          data={data}
+          data={supp}
           columns={columns}
           options={options}
         />

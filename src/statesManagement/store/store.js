@@ -24,6 +24,7 @@ const initialState = {
   brands: Cookies.get("brands") ? JSON.parse(Cookies.get("brands")) : [],
   products: Cookies.get("products") ? JSON.parse(Cookies.get("products")) : [],
   productByBarcode: [],
+  productById: [],
   profile: {},
   salesReport: [],
   depositReport: [],

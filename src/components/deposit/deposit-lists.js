@@ -69,8 +69,19 @@ const DepositList = ({ deposits }) => {
   ];
 
   const myDeposits = deposits.map((item) => Object.values(item));
+  console.log(deposits);
 
-  // const data = [...myDeposits];
+  // const myDeposits = deposits.map((dep, i) => {
+  //   return {
+  //     name: `${dep.product}`,
+  //     Barcode: `${dep.barcode}`,
+  //     amount: `${dep.amount}`,
+  //     Price: `${dep.cost_price}`,
+  //     Invoice: `${dep.invoice_number}`,
+  //     serial_number: `${dep.serial_number}`,
+  //     selling_price: `${dep.selling_price}`,
+  //   };
+  // });
 
   const newArray = myDeposits.map((arr) =>
     arr.filter((arr) => {
