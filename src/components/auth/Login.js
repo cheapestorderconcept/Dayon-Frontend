@@ -199,6 +199,7 @@ export default function Login() {
                 className={classes.form}
                 name="branch_id"
                 options={branch}
+                id="branch"
                 label="Select Branch"
               />
 
