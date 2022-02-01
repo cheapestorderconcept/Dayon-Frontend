@@ -180,10 +180,10 @@ export const AddStaff = (props) => {
                       />
                     </Grid>
                     <Grid item xs={12}>
-                      <CustomSelect name="role" label="Role" options={roles} />
+                      <CustomSelect name="role" label="Role" id="roles" options={roles} />
                     </Grid>
                     <Grid item xs={12}>
-                      <CustomSelect name="branch" label="Branch" options={branch} />
+                      <CustomSelect name="branch" label="Branch" id="branch" options={branch} />
                     </Grid>
 
                     <Grid item xs={12}>

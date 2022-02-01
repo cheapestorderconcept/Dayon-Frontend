@@ -10,7 +10,8 @@ const SalesList = ({ salesList }) => {
   const { enqueueSnackbar } = useSnackbar();
   const handleDelete = (tableMeta) => (e) => {
     confirm("Are you sure you want to delete");
-    const salesId = tableMeta.rowData[2];
+    const salesId = tableMeta.rowData[0];
+    console.log(salesId);
     deleteSales({
       dispatch: dispatch,
       salesId: salesId,
@@ -19,7 +20,7 @@ const SalesList = ({ salesList }) => {
   };
   const columns = [
     {
-      name: "Delete",
+      name: "delete",
       options: {
         filter: true,
         sort: false,
@@ -60,6 +61,10 @@ const SalesList = ({ salesList }) => {
       label: "Selling Price",
     },
     {
+      name: "qty",
+      label: "Quantity",
+    },
+    {
       name: "serial_number",
       label: "Serial Number",
     },
@@ -73,16 +78,17 @@ const SalesList = ({ salesList }) => {
 
   const mySales = salesList.map((sale, i) => {
     return {
+      delete: `${sale.product_id}`,
       Name: `${sale.product}`,
       Barcode: `${sale.barcode}`,
       amount: `${sale.amount}`,
+      qty: `${sale.quantity}`,
       Price: `${sale.cost_price}`,
       Invoice: `${sale.invoice_number}`,
       serial_number: `${sale.serial_number}`,
       selling_price: `${sale.selling_price}`,
     };
   });
-  console.log(mySales);
 
   const options = {
     filter: true,

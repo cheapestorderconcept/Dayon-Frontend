@@ -25,31 +25,33 @@ import NextLink from "next/link";
 import { useSnackbar } from "notistack";
 import Loading from "../loading/Loading";
 
-const INITIAL_FORM_VALUES = {
-  name: "",
-  price: "",
-  brand: "",
-  barcode: "",
-  supplier: "",
-};
-
-const FORM_VALIDATIONS = yup.object().shape({
-  name: yup.string().required("Please provide product name"),
-  brand: yup.string().required("Please provide product brand"),
-  barcode: yup.string().required("Please provide product barcode"),
-  price: yup
-    .number()
-    .integer()
-    .typeError("Price must be a number")
-    .required("Please provide product price"),
-  supplier: yup.string().required("Please provide product supplier"),
-});
 export const ProductListToolbar = (props) => {
+  const INITIAL_FORM_VALUES = {
+    name: "",
+    price: "",
+    brand: "",
+    barcode: "",
+    supplier: "",
+  };
+
+  const FORM_VALIDATIONS = yup.object().shape({
+    name: yup.string().required("Please provide product name"),
+    brand: yup.string().required("Please provide product brand"),
+    barcode: yup.string().required("Please provide product barcode"),
+    price: yup
+      .number()
+      .integer()
+      .typeError("Price must be a number")
+      .required("Please provide product price"),
+    supplier: yup.string().required("Please provide product supplier"),
+  });
+
   const { title, suppliers, brands, edit } = props;
   const { dispatch, state } = useContext(Store);
   const { loading } = state;
   const { enqueueSnackbar } = useSnackbar();
   const Router = useRouter();
+  console.log(suppliers);
 
   const handleUpdate = (values) => {
     const product = {
@@ -164,6 +166,7 @@ export const ProductListToolbar = (props) => {
                         name="brand"
                         options={brands}
                         label="Brand Name"
+                        id="brands"
                         // InputProps={{
                         //   endAdornment: (
                         //     <InputAdornment position="end">
@@ -177,6 +180,7 @@ export const ProductListToolbar = (props) => {
                       <CustomSelect
                         name="supplier"
                         options={suppliers}
+                        id="suppliers"
                         label="Supplier Name"
                         // InputProps={{
                         //   endAdornment: (

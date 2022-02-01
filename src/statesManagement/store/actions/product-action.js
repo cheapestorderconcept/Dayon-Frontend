@@ -184,7 +184,7 @@ export const getOutOfStock = async ({ dispatch, enqueueSnackbar, branch, Router 
     dispatch({
       type: GET_OUT_OF_STOCK_REQUEST,
     });
-    const { data } = await makeNetworkCall({ method: "GET", path: "/view-out-of-stock" });
+    const { data } = await makeNetworkCall({ method: "GET", path: `/view-out-of-stock/${branch}` });
     console.log(data.data);
     dispatch({
       type: GET_OUT_OF_STOCK_SUCCESS,

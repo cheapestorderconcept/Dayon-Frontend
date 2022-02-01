@@ -86,7 +86,12 @@ const AddExpenses = ({ expensesCategories, edit, id, branch, expenses }) => {
             <Box mt={2} />
             <CustomTextField name="amount" label="Amount" />
             <Box mt={2} />
-            <CustomSelect name="expenses_type" label="Expense Type" options={expensesCategories} />
+            <CustomSelect
+              name="expenses_type"
+              label="Expense Type"
+              id="expensesCategories"
+              options={expensesCategories}
+            />
             <Box mt={2} />
             <CustomTextField
               multiline={true}

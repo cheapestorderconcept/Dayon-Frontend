@@ -1,5 +1,7 @@
 import { TextField, MenuItem, Button } from "@mui/material";
 import { useField, useFormikContext } from "formik";
+import { getBrands } from "src/statesManagement/store/actions/brand-action";
+import { products } from "src/__mocks__/products";
 
 export const CustomTextField = ({ name, ...other }) => {
   const [field, meta] = useField(name);
@@ -17,7 +19,7 @@ export const CustomTextField = ({ name, ...other }) => {
 };
 
 // custom select
-export const CustomSelect = ({ name, options, i, useId, ...other }) => {
+export const CustomSelect = ({ name, options, id, i, useId, ...other }) => {
   const [field, meta] = useField(name);
   const { setFieldValue } = useFormikContext();
 
@@ -35,6 +37,28 @@ export const CustomSelect = ({ name, options, i, useId, ...other }) => {
     onChange: handleChange,
   };
 
+  const returnSelect = ({ id, useId, option }) => {
+    switch (id) {
+      case "suppliers":
+        return option.supplier_name;
+      case "products":
+        return useId ? option._id : option.product_name;
+      case "brands":
+        return option.brand_name;
+      case "branch":
+        return option.branch_name;
+      case "paymentType":
+        return option.payment_type;
+      case "expensesCategories":
+        return option.expenses_category;
+      case "roles":
+        return option.name;
+
+      default:
+        "";
+    }
+  };
+
   if (meta && meta.touched && meta.error) {
     defaultConfiq.error = true;
     defaultConfiq.helperText = meta.error;
@@ -45,23 +69,9 @@ export const CustomSelect = ({ name, options, i, useId, ...other }) => {
         return (
           <MenuItem
             key={option._id || index}
-            value={
-              option?.branch_name ||
-              option?.brand_name ||
-              option?.supplier_name ||
-              (useId ? option?._id : option?.product_name) ||
-              option?.payment_type ||
-              option?.expenses_category ||
-              option?.name
-            }
+            value={returnSelect({ id: id, useId: useId, option: option })}
           >
-            {option?.branch_name ||
-              option?.brand_name ||
-              option?.supplier_name ||
-              option?.product_name ||
-              option?.payment_type ||
-              option?.expenses_category ||
-              option?.name}
+            {returnSelect({ id: id, option: option })}
           </MenuItem>
         );
       })}

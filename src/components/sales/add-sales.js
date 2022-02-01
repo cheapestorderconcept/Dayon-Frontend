@@ -54,7 +54,7 @@ export const AddSales = (props) => {
       {
         barcode: "",
         product: "",
-        products: "",
+        selectedProduct: "",
         serial_number: "",
         invoice_number: "",
         product_id: "",
@@ -76,10 +76,10 @@ export const AddSales = (props) => {
     items: yup.array().of(
       yup.object().shape({
         barcode: yup.string(),
-        products: yup.string(),
-        product_id: yup.string().required("please select a product"),
-        product: yup.string().required("please select a product"),
-        serial_number: yup.string().required("please provide serial number"),
+        selectedProduct: yup.string(),
+        product_id: yup.string(),
+        product: yup.string(),
+        serial_number: yup.string(),
         invoice_number: yup.string(),
         selling_price: yup
           .number()
@@ -110,7 +110,7 @@ export const AddSales = (props) => {
     items.push({
       barcode: "",
       product: "",
-      products: "",
+      selectedProduct: "",
       serial_number: "",
       invoice_number: "",
       product_id: "",
@@ -145,11 +145,12 @@ export const AddSales = (props) => {
   useEffect(() => {
     const timeOutId = setTimeout(
       () => console.log(selectedProduct),
-      getProductById({
-        dispatch: dispatch,
-        id: selectedProduct,
-        enqueueSnackbar: enqueueSnackbar,
-      }),
+      selectedProduct != "" &&
+        getProductById({
+          dispatch: dispatch,
+          id: selectedProduct,
+          enqueueSnackbar: enqueueSnackbar,
+        }),
       500
     );
     return () => clearTimeout(timeOutId);
@@ -168,7 +169,7 @@ export const AddSales = (props) => {
     return () => clearTimeout(timeOutId);
   }, [barcode]);
 
-  const RenderForm = ({ items, i, values }) => {
+  const RenderForm = ({ items, i, values, setValues }) => {
     setbarcode(items.barcode);
     setselectedProduct(items.selectedProduct);
     return (
@@ -191,7 +192,7 @@ export const AddSales = (props) => {
             onKeyPress={(e) => {
               e.key === "Enter" && e.preventDefault();
             }}
-            autoFocus={true}
+            // autoFocus={true}
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">
@@ -207,12 +208,11 @@ export const AddSales = (props) => {
             name={`items.${i}.product`}
             disabled
             value={
-              (items.product =
-                productByBarcode.length > 0 && typeof productByBarcode[i] != "undefined"
-                  ? productByBarcode[i].product_name
-                  : "" || (productById.length > 0 && typeof productById[i] != "undefined")
-                  ? productById[i].product_name
-                  : "")
+              productByBarcode.length > 0 && typeof productByBarcode[i] != "undefined"
+                ? (items.product = productByBarcode[i].product_name)
+                : "" || (productById.length > 0 && typeof productById[i] != "undefined")
+                ? (items.product = productById[i].product_name)
+                : ""
             }
             label="Product"
           />
@@ -222,6 +222,7 @@ export const AddSales = (props) => {
             name={`items.${i}.selectedProduct`}
             options={products}
             useId={true}
+            id="products"
             label="Choose Products"
           />
         </Grid>
@@ -246,7 +247,7 @@ export const AddSales = (props) => {
               productByBarcode.length > 0 && typeof productByBarcode[i] != "undefined"
                 ? (items.product_id = productByBarcode[i]._id)
                 : "" || (productById.length > 0 && typeof productById[i] != "undefined")
-                ? productById[i]._id
+                ? (items.product_id = productById[i]._id)
                 : ""
             }
             label="Product Id"
@@ -257,12 +258,11 @@ export const AddSales = (props) => {
             name={`items.${i}.cost_price`}
             disabled
             value={
-              (items.cost_price =
-                productByBarcode.length > 0 && typeof productByBarcode[i] != "undefined"
-                  ? (items.product_id = productByBarcode[i].product_price)
-                  : "" || (productById.length > 0 && typeof productById[i] != "undefined")
-                  ? productById[i].product_price
-                  : "")
+              productByBarcode.length > 0 && typeof productByBarcode[i] != "undefined"
+                ? (items.cost_price = productByBarcode[i].product_price)
+                : "" || (productById.length > 0 && typeof productById[i] != "undefined")
+                ? (items.cost_price = productById[i].product_price)
+                : ""
             }
             label="Cost price"
           />
@@ -366,6 +366,7 @@ export const AddSales = (props) => {
                               items={item}
                               i={index}
                               values={values}
+                              setValues={setValues}
                               handleChange={handleChange}
                             />
                           ))
@@ -378,7 +379,7 @@ export const AddSales = (props) => {
                           disabled
                           value={
                             (values.total_amount =
-                              productByBarcode.length > 0
+                              productByBarcode.length > 0 || productById.length > 0
                                 ? (values.total_amount = values.items.reduce(
                                     (a, c) => a + c.amount,
                                     0
@@ -431,6 +432,7 @@ export const AddSales = (props) => {
                           name="payment_type"
                           label="Payment Type"
                           options={paymentType}
+                          id="paymentType"
                         />
                       </Grid>
 

@@ -17,7 +17,7 @@ const DepositList = ({ deposits }) => {
 
   const columns = [
     {
-      name: "Edit",
+      name: "update",
       options: {
         filter: true,
         sort: false,
@@ -26,7 +26,7 @@ const DepositList = ({ deposits }) => {
           return (
             <Button variant="contained">
               <NextLink
-                href={`/deposit/${tableMeta.rowData[1]}`}
+                href={`/deposit/${tableMeta.rowData[0]}`}
                 style={{ textDecoration: "none", color: "white" }}
               >
                 <Typography variant="body1" color="inherit">
@@ -39,71 +39,62 @@ const DepositList = ({ deposits }) => {
       },
     },
     {
-      name: "Deposit Id",
+      name: "invoice",
+      label: "Invoice Number",
     },
     {
-      name: "Invoice no",
+      name: "name",
+      label: "Product",
     },
     {
-      name: "Customer Name",
+      name: "barcode",
+      label: "Product Barcode",
     },
     {
-      name: "Amount Deposited",
+      name: "amount",
+      label: "Amount Deposited",
     },
     {
-      name: "Total Amount",
+      name: "price",
+      label: "Selling Price",
     },
 
     {
-      name: "Payment Method",
+      name: "quantity",
+      label: "Quantity",
     },
     {
-      name: "Store Branch",
-    },
-    {
-      name: "Date",
-    },
-    {
-      name: "Amount To Balance",
+      name: "serial_number",
+      label: "Serial Number",
     },
   ];
 
-  const myDeposits = deposits.map((item) => Object.values(item));
+  // const myDeposits = deposits.map((item) => Object.values(item));
   console.log(deposits);
 
-  // const myDeposits = deposits.map((dep, i) => {
-  //   return {
-  //     name: `${dep.product}`,
-  //     Barcode: `${dep.barcode}`,
-  //     amount: `${dep.amount}`,
-  //     Price: `${dep.cost_price}`,
-  //     Invoice: `${dep.invoice_number}`,
-  //     serial_number: `${dep.serial_number}`,
-  //     selling_price: `${dep.selling_price}`,
-  //   };
-  // });
-
-  const newArray = myDeposits.map((arr) =>
-    arr.filter((arr) => {
-      return typeof arr !== "object";
-    })
-  );
-
-  const itemsArray = myDeposits.map((arr) =>
-    arr.filter((arr) => {
-      if (typeof arr === "object") {
-        return arr;
-      }
-    })
-  );
-  itemsArray.map((item) => console.log(item.length));
-
-  const data = [...newArray];
+  const myDeposits = deposits.map((dep, i) => {
+    return {
+      delete: `${dep.product_id}`,
+      update: `${dep.product_id}`,
+      name: `${dep.product}`,
+      barcode: `${dep.barcode}`,
+      amount: `${dep.amount}`,
+      price: `${dep.selling_price}`,
+      invoice: `${dep.invoice_number}`,
+      serial_number: `${dep.serial_number}`,
+      quantity: `${dep.quantity}`,
+    };
+  });
 
   return (
     <>
       {ready == true && (
-        <MUIDataTable title={"Lists Of Deposits"} data={data} columns={columns} options={options} />
+        <MUIDataTable
+          title={"Lists Of Deposits"}
+          data={myDeposits}
+          columns={columns}
+          options={options}
+        />
       )}
     </>
   );

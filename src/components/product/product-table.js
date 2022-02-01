@@ -39,7 +39,7 @@ const ProductTable = ({ products, editable }) => {
           return (
             <Button variant="contained">
               <NextLink
-                href={`/purchase/stock/${tableMeta.rowData[1]}`}
+                href={`/purchase/stock/${tableMeta.rowData[0]}`}
                 style={{ textDecoration: "none", color: "white" }}
               >
                 <Typography variant="body1" color="inherit">
@@ -61,7 +61,7 @@ const ProductTable = ({ products, editable }) => {
           return (
             <Button variant="contained">
               <NextLink
-                href={`/purchase/stock/bal-stock-level/${tableMeta.rowData[1]}`}
+                href={`/purchase/stock/bal-stock-level/${tableMeta.rowData[0]}`}
                 style={{ textDecoration: "none", color: "white" }}
               >
                 <Typography variant="body1" color="inherit">

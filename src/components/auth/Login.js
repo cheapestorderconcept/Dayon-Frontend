@@ -147,7 +147,7 @@ export default function Login() {
           <div className={classes.details}>
             <HomeIcon className={classes.icon} />
             <Typography variant="subtitle1" className={classes.text}>
-              Shop 1 and two oranmiayan tower lagere ile ife
+              Shop 1 and 2 oranmiayan tower lagere ile ife
             </Typography>
           </div>
           <div className={classes.details}>

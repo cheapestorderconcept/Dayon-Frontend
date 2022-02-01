@@ -132,12 +132,18 @@ export const AddPurchase = (props) => {
           />
         </Grid>
         <Grid item xs={6}>
-          <CustomSelect name={`items.${i}.supplier`} label="Supplier" options={suppliers} />
+          <CustomSelect
+            name={`items.${i}.supplier`}
+            label="Supplier"
+            id="suppliers"
+            options={suppliers}
+          />
         </Grid>
         <Grid item xs={6}>
           <CustomSelect
             name={`items.${i}.product`}
             label="Select Product"
+            id="products"
             useId={true}
             options={products}
           />

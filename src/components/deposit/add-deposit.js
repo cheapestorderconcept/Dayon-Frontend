@@ -45,7 +45,7 @@ import Cookies from "js-cookie";
 export const AddDeposit = (props) => {
   const { dispatch, state } = useContext(Store);
   const { productByBarcode, productById, paymentType, loading, products } = state;
-
+  console.log(productById);
   const [barcode, setbarcode] = useState("");
   const [selectedProduct, setselectedProduct] = useState("");
 
@@ -86,9 +86,9 @@ export const AddDeposit = (props) => {
     items: yup.array().of(
       yup.object().shape({
         barcode: yup.string(),
-        product_id: yup.string().required("please select a product"),
+        product_id: yup.string(),
         selectedProduct: yup.string(),
-        serial_number: yup.string().required("please provide serial number"),
+        serial_number: yup.string(),
         invoice_number: yup.string().required("please provide invoice number"),
         selling_price: yup
           .number()
@@ -111,8 +111,8 @@ export const AddDeposit = (props) => {
     items.push({
       barcode: "",
       product: "",
-      product_id: "",
       selectedProduct: "",
+      product_id: "",
       serial_number: "",
       invoice_number: "",
       selling_price: "",
@@ -175,6 +175,8 @@ export const AddDeposit = (props) => {
   const RenderForm = ({ items, i, values }) => {
     setbarcode(items.barcode);
     setselectedProduct(items.selectedProduct);
+    console.log(items.product);
+    // console.log(items.product)
 
     return (
       <React.Fragment key={i}>
@@ -214,7 +216,7 @@ export const AddDeposit = (props) => {
             onKeyPress={(e) => {
               e.key === "Enter" && e.preventDefault();
             }}
-            autoFocus={true}
+            // autoFocus={true}
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">
@@ -230,12 +232,11 @@ export const AddDeposit = (props) => {
             name={`items.${i}.product`}
             disabled
             value={
-              (items.product =
-                productByBarcode.length > 0 && typeof productByBarcode[i] != "undefined"
-                  ? productByBarcode[i].product_name
-                  : "" || (productById.length > 0 && typeof productById[i] != "undefined")
-                  ? productById[i].product_name
-                  : "")
+              productByBarcode.length > 0 && typeof productByBarcode[i] != "undefined"
+                ? (items.product = productByBarcode[i].product_name)
+                : productById.length > 0 && typeof productById[i] != "undefined"
+                ? (items.product = productById[i].product_name)
+                : ""
             }
             label="Product"
           />
@@ -245,6 +246,7 @@ export const AddDeposit = (props) => {
             name={`items.${i}.selectedProduct`}
             useId={true}
             options={products}
+            id="products"
             label="Choose Products"
           />
         </Grid>
@@ -266,8 +268,6 @@ export const AddDeposit = (props) => {
             value={
               productByBarcode.length > 0 && typeof productByBarcode[i] != "undefined"
                 ? (items.product_id = productByBarcode[i]._id)
-                : "" || (productById.length > 0 && typeof productById[i] != "undefined")
-                ? productById[i]._id
                 : ""
             }
             label="Product Id"
@@ -301,7 +301,7 @@ export const AddDeposit = (props) => {
             value={
               productByBarcode.length > 0 && typeof productByBarcode[i] != "undefined"
                 ? (items.amount = items.quantity * items.selling_price)
-                : "" || (productById.length > 0 && typeof productById[i] != "undefined")
+                : productById.length > 0 && typeof productById[i] != "undefined"
                 ? (items.amount = items.quantity * items.selling_price)
                 : ""
             }
@@ -389,7 +389,7 @@ export const AddDeposit = (props) => {
                           label="Total Purchase Amount"
                           disabled
                           value={
-                            productByBarcode.length > 0
+                            productByBarcode.length > 0 || productById.length > 0
                               ? (values.total_amount = values.items.reduce(
                                   (a, c) => a + c.amount,
                                   0
@@ -442,6 +442,7 @@ export const AddDeposit = (props) => {
                           name="payment_type"
                           label="Payment Type"
                           options={paymentType}
+                          id="paymentType"
                         />
                       </Grid>
 
