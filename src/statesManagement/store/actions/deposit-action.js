@@ -17,7 +17,7 @@ export const getTotalDeposit = async ({ dispatch, enqueueSnackbar }) => {
       type: GET_TOTAL_DEPOSIT_REQUEST,
     });
     const { data } = await makeNetworkCall({ method: "GET", path: "/view-deposit" });
-    console.log(data.data);
+
     dispatch({
       type: GET_TOTAL_DEPOSIT_SUCCESS,
       payload: data.data,
@@ -25,6 +25,7 @@ export const getTotalDeposit = async ({ dispatch, enqueueSnackbar }) => {
     data &&
       enqueueSnackbar(data?.response_message, {
         variant: "success",
+        preventDuplicate: true,
       });
   } catch (error) {
     dispatch({
@@ -33,6 +34,7 @@ export const getTotalDeposit = async ({ dispatch, enqueueSnackbar }) => {
     error &&
       enqueueSnackbar(error?.response?.data?.response_message || error.message, {
         variant: "error",
+        preventDuplicate: true,
       });
   }
 };
@@ -47,7 +49,7 @@ export const addDepositData = async ({ dispatch, deposit, Router, enqueueSnackba
       path: "/add-deposit",
       requestBody: deposit,
     });
-    console.log(data);
+
     dispatch({
       type: ADD_DEPOSIT_SUCCESS,
       payload: data,
@@ -55,6 +57,7 @@ export const addDepositData = async ({ dispatch, deposit, Router, enqueueSnackba
     data &&
       enqueueSnackbar(data?.response_message, {
         variant: "success",
+        preventDuplicate: true,
       });
 
     // Router.reload(window.location.pathname);
@@ -65,6 +68,7 @@ export const addDepositData = async ({ dispatch, deposit, Router, enqueueSnackba
     error &&
       enqueueSnackbar(error?.response?.data?.response_message || error.message, {
         variant: "error",
+        preventDuplicate: true,
       });
   }
 };
@@ -80,7 +84,7 @@ export const updateDeposit = async ({ dispatch, depId, price, enqueueSnackbar })
       path: `/update-deposit/${depId}`,
       requestBody: price,
     });
-    console.log(data);
+
     dispatch({
       type: UPDATE_DEPOSIT_SUCCESS,
       payload: data.data,
@@ -88,6 +92,7 @@ export const updateDeposit = async ({ dispatch, depId, price, enqueueSnackbar })
     data &&
       enqueueSnackbar(data?.response_message, {
         variant: "success",
+        preventDuplicate: true,
       });
   } catch (error) {
     dispatch({
@@ -96,6 +101,7 @@ export const updateDeposit = async ({ dispatch, depId, price, enqueueSnackbar })
     error &&
       enqueueSnackbar(error?.response?.data?.response_message || error.message, {
         variant: "error",
+        preventDuplicate: true,
       });
   }
 };

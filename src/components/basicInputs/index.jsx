@@ -40,7 +40,7 @@ export const CustomSelect = ({ name, options, id, i, useId, ...other }) => {
   const returnSelect = ({ id, useId, option }) => {
     switch (id) {
       case "suppliers":
-        return option.supplier_name;
+        return option.supplier_name || option.supplier;
       case "products":
         return useId ? option._id : option.product_name;
       case "brands":

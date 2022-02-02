@@ -27,7 +27,7 @@ const Deposit = () => {
   return (
     <>
       <Head>
-        <title>Deposit| Material Kit</title>
+        <title>Deposit| Adeshex Global</title>
       </Head>
       <Box
         component="main"

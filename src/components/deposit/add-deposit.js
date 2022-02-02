@@ -45,7 +45,6 @@ import Cookies from "js-cookie";
 export const AddDeposit = (props) => {
   const { dispatch, state } = useContext(Store);
   const { productByBarcode, productById, paymentType, loading, products } = state;
-  console.log(productById);
   const [barcode, setbarcode] = useState("");
   const [selectedProduct, setselectedProduct] = useState("");
 
@@ -54,7 +53,6 @@ export const AddDeposit = (props) => {
     invoice_number: "",
     amount_deposited: "",
     customer_name: "",
-    // customer_phone: "",
     branch: Cookies.get("selectedBranch"),
     payment_type: "",
     items: [
@@ -137,7 +135,6 @@ export const AddDeposit = (props) => {
       enqueueSnackbar: enqueueSnackbar,
       dispatch: dispatch,
     });
-    // console.log(values);
   };
 
   const formRef = useRef(null);
@@ -146,12 +143,13 @@ export const AddDeposit = (props) => {
 
   useEffect(() => {
     const timeOutId = setTimeout(
-      () => console.log(selectedProduct),
-      getProductById({
-        dispatch: dispatch,
-        id: selectedProduct,
-        enqueueSnackbar: enqueueSnackbar,
-      }),
+      () =>
+        selectedProduct != "" &&
+        getProductById({
+          dispatch: dispatch,
+          id: selectedProduct,
+          enqueueSnackbar: enqueueSnackbar,
+        }),
       500
     );
     return () => clearTimeout(timeOutId);
@@ -162,6 +160,7 @@ export const AddDeposit = (props) => {
     getTotalDeposit({ dispatch: dispatch, enqueueSnackbar: enqueueSnackbar });
     const timeOutId = setTimeout(
       () =>
+        barcode != "" &&
         getProductByBarcode({
           dispatch: dispatch,
           barcode: barcode,
@@ -172,11 +171,9 @@ export const AddDeposit = (props) => {
     return () => clearTimeout(timeOutId);
   }, [barcode]);
 
-  const RenderForm = ({ items, i, values }) => {
+  const RenderComponentForm = ({ items, i, values }) => {
     setbarcode(items.barcode);
     setselectedProduct(items.selectedProduct);
-    console.log(items.product);
-    // console.log(items.product)
 
     return (
       <React.Fragment key={i}>
@@ -191,24 +188,6 @@ export const AddDeposit = (props) => {
           <Typography>Item {i + 1}</Typography>
         </Grid>
 
-        {/* <Grid item xs={6}>
-          <form onSubmit={(e) => e.preventDefault()}>
-            <TextField
-              name="barcodeNum"
-              label="Scan Barcode"
-              value={barcode}
-              autoFocus={true}
-              onChange={handleChange}
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <ListIcon />
-                  </InputAdornment>
-                ),
-              }}
-            />
-          </form>
-        </Grid> */}
         <Grid item xs={6}>
           <CustomTextField
             name={`items.${i}.barcode`}
@@ -276,13 +255,17 @@ export const AddDeposit = (props) => {
         <Grid item xs={6}>
           <CustomTextField name={`items.${i}.quantity`} label="Quantity" />
           {productByBarcode.length > 0 && typeof productByBarcode[i] != "undefined"
-            ? Number(items.quantity) > productByBarcode[i].current_product_quantity && (
-                <AlertBox open={open} severity="error" setopen={setopen} message="out of stock" />
-              )
+            ? Number(items.quantity) > productByBarcode[i].current_product_quantity &&
+              enqueueSnackbar("provided quantity is out of stock", {
+                variant: "warning",
+                preventDuplicate: true,
+              })
             : null || (productById.length > 0 && typeof productById[i] != "undefined")
-            ? Number(items.quantity) > productById[i].current_product_quantity && (
-                <AlertBox open={open} severity="error" setopen={setopen} message="out of stock" />
-              )
+            ? Number(items.quantity) > productById[i].current_product_quantity &&
+              enqueueSnackbar("provided quantity is out of stock", {
+                variant: "warning",
+                preventDuplicate: true,
+              })
             : null}
         </Grid>
 
@@ -371,15 +354,13 @@ export const AddDeposit = (props) => {
 
                       <FieldArray name="items">
                         {() =>
-                          values.items.map((item, index) => (
-                            <RenderForm
-                              key={index}
-                              items={item}
-                              i={index}
-                              values={values}
-                              handleChange={handleChange}
-                            />
-                          ))
+                          values.items.map((item, index) =>
+                            RenderComponentForm({
+                              values: values,
+                              items: item,
+                              i: index,
+                            })
+                          )
                         }
                       </FieldArray>
 

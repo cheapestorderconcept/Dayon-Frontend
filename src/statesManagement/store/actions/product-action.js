@@ -32,7 +32,7 @@ export const getProductWithBarcode = async ({ dispatch, enqueueSnackbar }) => {
       type: GET_PRODUCT_REQUEST,
     });
     const { data } = await makeNetworkCall({ method: "GET", path: "/view-product/barcode" });
-    console.log(data.data);
+
     dispatch({
       type: GET_PRODUCT_SUCCESS,
       payload: data.data,
@@ -80,7 +80,7 @@ export const getProductByBarcode = async ({ dispatch, barcode, enqueueSnackbar }
       method: "GET",
       path: `/view-product-by-barcode/${barcode}`,
     });
-    console.log(data.data);
+
     dispatch({
       type: GET_PRODUCT_BY_BARCODE_SUCCESS,
       payload: data.data,
@@ -106,7 +106,7 @@ export const getProductById = async ({ dispatch, id, enqueueSnackbar }) => {
       method: "GET",
       path: `/view-single-product-by-id/${id}`,
     });
-    console.log(data.data);
+
     dispatch({
       type: GET_PRODUCT_BY_ID_SUCCESS,
       payload: data.data,
@@ -159,7 +159,7 @@ export const getProductPrice = async ({ dispatch, enqueueSnackbar }) => {
       type: GET_PRODUCT_PRICE_REQUEST,
     });
     const { data } = await makeNetworkCall({ method: "GET", path: "/view-product-price" });
-    console.log(data.data.mProduct);
+
     dispatch({
       type: GET_PRODUCT_PRICE_SUCCESS,
       payload: data.data.mProduct,
@@ -185,7 +185,7 @@ export const getOutOfStock = async ({ dispatch, enqueueSnackbar, branch, Router 
       type: GET_OUT_OF_STOCK_REQUEST,
     });
     const { data } = await makeNetworkCall({ method: "GET", path: `/view-out-of-stock/${branch}` });
-    console.log(data.data);
+
     dispatch({
       type: GET_OUT_OF_STOCK_SUCCESS,
       payload: data.data.outOfStock,

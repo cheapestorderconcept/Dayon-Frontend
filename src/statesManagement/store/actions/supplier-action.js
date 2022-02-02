@@ -20,7 +20,7 @@ export const getSuppliers = async ({ dispatch, enqueueSnackbar }) => {
       type: GET_SUPPLIERS_REQUEST,
     });
     const { data } = await makeNetworkCall({ method: "GET", path: "/view-supplier" });
-    console.log(data.data);
+
     dispatch({
       type: GET_SUPPLIERS_SUCCESS,
       payload: data.data.supplier,
@@ -106,7 +106,7 @@ export const updateSupplier = async ({ dispatch, supplier, supId, Router, enqueu
       path: `/update-supplier/${supId}`,
       requestBody: supplier,
     });
-    console.log(data);
+
     dispatch({
       type: UPDATE_SUPPLIERS_SUCCESS,
       payload: data.data,

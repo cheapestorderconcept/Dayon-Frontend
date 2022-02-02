@@ -40,7 +40,6 @@ export const AddSales = (props) => {
   const { paymentType } = props;
   const { dispatch, state } = useContext(Store);
   const { productByBarcode, productById, products, loading } = state;
-
   const [barcode, setbarcode] = useState("");
   const [selectedProduct, setselectedProduct] = useState("");
 
@@ -151,25 +150,24 @@ export const AddSales = (props) => {
           id: selectedProduct,
           enqueueSnackbar: enqueueSnackbar,
         }),
-      500
+      2000
     );
     return () => clearTimeout(timeOutId);
   }, [selectedProduct]);
+
   useEffect(() => {
-    const timeOutId = setTimeout(
-      () =>
-        barcode != "" &&
+    const timeOutId = setTimeout(() => {
+      barcode != "" &&
         getProductByBarcode({
           dispatch: dispatch,
           barcode: barcode,
           enqueueSnackbar: enqueueSnackbar,
-        }),
-      500
-    );
+        });
+    }, 2000);
     return () => clearTimeout(timeOutId);
   }, [barcode]);
 
-  const RenderForm = ({ items, i, values, setValues }) => {
+  const RenderForm = ({ items, i, values }) => {
     setbarcode(items.barcode);
     setselectedProduct(items.selectedProduct);
     return (
@@ -360,16 +358,13 @@ export const AddSales = (props) => {
 
                       <FieldArray name="items">
                         {() =>
-                          values.items.map((item, index) => (
-                            <RenderForm
-                              key={index}
-                              items={item}
-                              i={index}
-                              values={values}
-                              setValues={setValues}
-                              handleChange={handleChange}
-                            />
-                          ))
+                          values.items.map((item, index) =>
+                            RenderForm({
+                              values: values,
+                              items: item,
+                              i: index,
+                            })
+                          )
                         }
                       </FieldArray>
                       <Grid item xs={6}>

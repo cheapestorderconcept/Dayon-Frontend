@@ -27,7 +27,7 @@ export const getExpensesCategory = async ({ dispatch, enqueueSnackbar }) => {
       type: GET_EXPENSES_CARTEGORY_REQUEST,
     });
     const { data } = await makeNetworkCall({ method: "GET", path: "/view-expenses-categories" });
-    console.log(data.data);
+
     dispatch({
       type: GET_EXPENSES_CARTEGORY_SUCCESS,
       payload: data.data,
@@ -49,7 +49,7 @@ export const getExpenses = async ({ dispatch, enqueueSnackbar }) => {
       type: GET_EXPENSES_REQUEST,
     });
     const { data } = await makeNetworkCall({ method: "GET", path: "/view-expenses" });
-    console.log(data.data);
+
     dispatch({
       type: GET_EXPENSES_SUCCESS,
       payload: data.data,
@@ -143,7 +143,6 @@ export const deleteExpenses = async ({ dispatch, expId, Router, enqueueSnackbar 
       enqueueSnackbar(data?.response_message, {
         variant: "success",
       });
-    console.log(data.data);
   } catch (error) {
     dispatch({
       type: DELETE_EXPENSES_FAIL,
@@ -166,7 +165,7 @@ export const updateExpenses = async ({ dispatch, expenses, expId, Router, enqueu
       path: `/update-expenses/${expId}`,
       requestBody: expenses,
     });
-    console.log(data);
+
     dispatch({
       type: UPDATE_EXPENSES_SUCCESS,
       payload: data.data,

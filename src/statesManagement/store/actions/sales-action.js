@@ -66,7 +66,7 @@ export const addSalesData = async ({ dispatch, sales, Router, enqueueSnackbar })
       path: "/add-sales",
       requestBody: sales,
     });
-    console.log(data);
+
     dispatch({
       type: ADD_SALES_DATASUCCESS,
       payload: data,
@@ -98,9 +98,9 @@ export const deleteSales = async ({ dispatch, salesId, Router, enqueueSnackbar }
     });
     const { data } = await makeNetworkCall({
       method: "DELETE",
-      path: `/delte-sales/${salesId}`,
+      path: `/delete-sales/${salesId}`,
     });
-    console.log(data);
+
     dispatch({
       type: DELETE_SALES_SUCCESS,
       payload: data,
