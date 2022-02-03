@@ -10,14 +10,17 @@ import { useRouter } from "next/router";
 import { getStaff } from "src/statesManagement/store/actions/register-staff-action";
 import { getStores } from "src/statesManagement/store/actions/store-outlet-action";
 import { useSnackbar } from "notistack";
+import { useState } from "react";
 
 const DynamicComponentWithNoSSR = dynamic(() => import("src/components/navbar-branch-indicator"), {
   ssr: false,
 });
 
-const Staff = () => {
+const EditStaff = () => {
   const { state, dispatch } = useContext(Store);
   const router = useRouter();
+  const { query } = useRouter();
+  const [id, setid] = useState(null);
 
   const { userInfo, staff, branch, error } = state;
   const { enqueueSnackbar } = useSnackbar();
@@ -25,11 +28,12 @@ const Staff = () => {
     !userInfo && router.push("/auth");
     getStaff({ dispatch: dispatch, enqueueSnackbar: enqueueSnackbar });
     getStores({ dispatch: dispatch, enqueueSnackbar: enqueueSnackbar });
-  }, []);
+    setid(query.id);
+  }, [query.id]);
   return (
     <>
       <Head>
-        <title>Staff | Adeshex Global </title>
+        <title>Staff |Adeshex Global </title>
       </Head>
       <Box
         component="main"
@@ -40,7 +44,7 @@ const Staff = () => {
       >
         <DynamicComponentWithNoSSR />
         <Container maxWidth={false}>
-          <AddStaff branch={branch} />
+          <AddStaff branch={branch} edit={true} id={id} />
           <Box sx={{ mt: 3 }}>
             {!staff ? (
               <Card>
@@ -66,6 +70,6 @@ const Staff = () => {
     </>
   );
 };
-Staff.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
+EditStaff.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
 
-export default Staff;
+export default EditStaff;

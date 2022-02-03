@@ -8,6 +8,7 @@ import {
   suspendStaff,
 } from "src/statesManagement/store/actions/register-staff-action";
 import { Store } from "src/statesManagement/store/store";
+import NextLink from "next/link";
 
 const ListOfStaff = ({ staff }) => {
   const { dispatch } = useContext(Store);
@@ -55,6 +56,28 @@ const ListOfStaff = ({ staff }) => {
               <Typography variant="body1" color="inherit">
                 Suspend
               </Typography>
+            </Button>
+          );
+        },
+      },
+    },
+    {
+      name: "update",
+      options: {
+        filter: true,
+        sort: false,
+        empty: true,
+        customBodyRender: (value, tableMeta, updateValue) => {
+          return (
+            <Button variant="contained">
+              <NextLink
+                href={`/staff/${tableMeta.rowData[1]}`}
+                style={{ textDecoration: "none", color: "white" }}
+              >
+                <Typography variant="body1" color="inherit">
+                  Edit
+                </Typography>
+              </NextLink>
             </Button>
           );
         },

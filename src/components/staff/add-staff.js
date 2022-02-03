@@ -25,38 +25,63 @@ import { CustomSelect } from "../basicInputs";
 import { useContext, useState } from "react";
 import { Store } from "src/statesManagement/store/store";
 import { useRouter } from "next/router";
-import { registerStaff } from "src/statesManagement/store/actions/register-staff-action";
+import {
+  registerStaff,
+  updateStaff,
+} from "src/statesManagement/store/actions/register-staff-action";
 import AlertBox from "../alert";
 import { useSnackbar } from "notistack";
 
-const INITIAL_FORM_STATE = {
-  firstName: "",
-  lastName: "",
-  username: "",
-  email: "",
-  password: "",
-  role: "",
-  branch: "",
-};
-
-const FORM_VALIDATIONS = yup.object().shape({
-  firstName: yup.string().required("Please enter Firt Name"),
-  lastName: yup.string().required("Please enter Last Name"),
-  username: yup.string().required("Please enter staff username"),
-  email: yup.string().required("Please enter staff email"),
-  password: yup.string().required("Please enter supplier password"),
-  role: yup.string().required("Please enter staff role"),
-  branch: yup.string().required("Please choose staff branch"),
-});
-
 export const AddStaff = (props) => {
-  const { branch } = props;
+  const { branch, edit, id } = props;
   const { dispatch, state } = useContext(Store);
-  const { loading, error, notification, success } = state;
+  const { loading, staff } = state;
   const { enqueueSnackbar } = useSnackbar();
   const roles = [{ name: "Operator" }, { name: "Auditor" }, { name: "Super Admin" }];
+  let oneStaff = [];
+  oneStaff = staff.filter((stf) => stf._id === id);
+  const INITIAL_FORM_STATE = {
+    firstName:
+      oneStaff.length > 0 && typeof oneStaff[0] != "undefined" ? oneStaff[0].first_name : "",
+    lastName: oneStaff.length > 0 && typeof oneStaff[0] != "undefined" ? oneStaff[0].last_name : "",
+    username: oneStaff.length > 0 && typeof oneStaff[0] != "undefined" ? oneStaff[0].username : "",
+    email: oneStaff.length > 0 && typeof oneStaff[0] != "undefined" ? oneStaff[0].email : "",
+    password: oneStaff.length > 0 && typeof oneStaff[0] != "undefined" ? oneStaff[0].password : "",
+    role: oneStaff.length > 0 && typeof oneStaff[0] != "undefined" ? oneStaff[0].role : "",
+    branch: oneStaff.length > 0 && typeof oneStaff[0] != "undefined" ? oneStaff[0].branch : "",
+  };
+
+  const FORM_VALIDATIONS = yup.object().shape({
+    firstName: edit ? yup.string() : yup.string().required("Please enter Firt Name"),
+    lastName: edit ? yup.string() : yup.string().required("Please enter Last Name"),
+    username: edit ? yup.string() : yup.string().required("Please enter staff username"),
+    email: edit ? yup.string() : yup.string().required("Please enter staff email"),
+    password: edit ? yup.string() : yup.string().required("Please enter supplier password"),
+    role: edit ? yup.string() : yup.string().required("Please enter staff role"),
+    branch: edit ? yup.string() : yup.string().required("Please choose staff branch"),
+  });
 
   const Router = useRouter();
+
+  const handleUpdate = (values) => {
+    const staff = {
+      first_name: values.firstName,
+      last_name: values.lastName,
+      username: values.username,
+      email: values.email,
+      branch: values.branch,
+      role: values.role,
+      password: values.password,
+    };
+
+    updateStaff({
+      dispatch: dispatch,
+      staff: staff,
+      staffId: id,
+      Router: Router,
+      enqueueSnackbar: enqueueSnackbar,
+    });
+  };
 
   const handleSubmit = (values) => {
     const staff = {
@@ -101,14 +126,15 @@ export const AddStaff = (props) => {
       </Box>
       <Box sx={{ mt: 3 }}>
         <Card>
-          <CardHeader title="Add Staff" />
+          <CardHeader title={edit ? "Edit Staff" : "Add Staff"} />
           <Divider />
 
           <CardContent>
             <Box sx={{ maxWidth: 500 }}>
               <Formik
                 initialValues={{ ...INITIAL_FORM_STATE }}
-                onSubmit={handleSubmit}
+                onSubmit={edit ? handleUpdate : handleSubmit}
+                enableReinitialize={true}
                 validationSchema={FORM_VALIDATIONS}
               >
                 <Form>
@@ -187,7 +213,9 @@ export const AddStaff = (props) => {
                     </Grid>
 
                     <Grid item xs={12}>
-                      <CustomButton disabled={loading ? true : false}>Submit</CustomButton>
+                      <CustomButton disabled={loading ? true : false}>
+                        {edit ? "Update" : "Submit"}
+                      </CustomButton>
                     </Grid>
                   </Grid>
                 </Form>

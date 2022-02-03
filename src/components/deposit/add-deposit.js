@@ -261,6 +261,8 @@ export const AddDeposit = (props) => {
             value={
               productByBarcode.length > 0 && typeof productByBarcode[i] != "undefined"
                 ? (items.product_id = productByBarcode[i]._id)
+                : "" || (productById.length > 0 && typeof productById[i] != "undefined")
+                ? (items.product_id = productById[i]._id)
                 : ""
             }
             label="Product Id"

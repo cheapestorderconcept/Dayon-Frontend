@@ -13,6 +13,9 @@ import {
   SUSPEND_STAFF_FAIL,
   SUSPEND_STAFF_REQUEST,
   SUSPEND_STAFF_SUCCESS,
+  UPDATE_STAFF_FAIL,
+  UPDATE_STAFF_REQUEST,
+  UPDATE_STAFF_SUCCESS,
 } from "../constants";
 
 export const registerStaff = async ({ dispatch, staff, Router, enqueueSnackbar }) => {
@@ -122,6 +125,39 @@ export const suspendStaff = async ({ dispatch, staffId, Router, enqueueSnackbar 
     error &&
       enqueueSnackbar(error?.response?.data?.response_message || error.message, {
         variant: "error",
+      });
+  }
+};
+
+export const updateStaff = async ({ dispatch, staffId, staff, enqueueSnackbar }) => {
+  try {
+    dispatch({
+      type: UPDATE_STAFF_REQUEST,
+    });
+
+    const { data } = await makeNetworkCall({
+      method: "PUT",
+      path: `/update-staff/${staffId}`,
+      requestBody: staff,
+    });
+
+    dispatch({
+      type: UPDATE_STAFF_SUCCESS,
+      payload: data.data,
+    });
+    data &&
+      enqueueSnackbar(data?.response_message, {
+        variant: "success",
+        preventDuplicate: true,
+      });
+  } catch (error) {
+    dispatch({
+      type: UPDATE_STAFF_FAIL,
+    });
+    error &&
+      enqueueSnackbar(error?.response?.data?.response_message || error.message, {
+        variant: "error",
+        preventDuplicate: true,
       });
   }
 };

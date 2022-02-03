@@ -45,6 +45,7 @@ import { Router } from "next/router";
 export const EditSalesView = (props) => {
   const { totalSales, id } = props;
   const { dispatch, state } = useContext(Store);
+
   const { branch, products, paymentType, loading } = state;
   let oneSale = [];
   oneSale = totalSales.filter((sal) => sal._id === id);

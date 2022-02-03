@@ -151,6 +151,9 @@ import {
   UPDATE_SALES_REQUEST,
   UPDATE_SALES_SUCCESS,
   UPDATE_SALES_FAIL,
+  UPDATE_STAFF_REQUEST,
+  UPDATE_STAFF_SUCCESS,
+  UPDATE_STAFF_FAIL,
 } from "../constants";
 
 // const rootReducers = combineReducers({
@@ -335,6 +338,13 @@ const rootReducers = (state, action) => {
     case SUSPEND_STAFF_SUCCESS:
       return { ...state, loading: false };
     case SUSPEND_STAFF_FAIL:
+      return { ...state, loading: false, error: action.payload };
+
+    case UPDATE_STAFF_REQUEST:
+      return { ...state, loading: true };
+    case UPDATE_STAFF_SUCCESS:
+      return { ...state, loading: false };
+    case UPDATE_STAFF_FAIL:
       return { ...state, loading: false, error: action.payload };
 
     // Puerchase Reducer
