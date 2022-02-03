@@ -19,7 +19,7 @@ const ProductTable = ({ products, editable }) => {
   const handleDelete = (tableMeta) => (e) => {
     confirm("Are you sure you want to delete");
     const productId = tableMeta.rowData[0];
-    console.log(productId);
+
     deleteProduct({
       dispatch: dispatch,
       productId: productId,
@@ -29,28 +29,6 @@ const ProductTable = ({ products, editable }) => {
   };
 
   const columnsEditable = [
-    {
-      name: "Update_Product",
-      options: {
-        filter: true,
-        sort: false,
-        empty: true,
-        customBodyRender: (value, tableMeta, updateValue) => {
-          return (
-            <Button variant="contained">
-              <NextLink
-                href={`/purchase/stock/${tableMeta.rowData[0]}`}
-                style={{ textDecoration: "none", color: "white" }}
-              >
-                <Typography variant="body1" color="inherit">
-                  Update Product
-                </Typography>
-              </NextLink>
-            </Button>
-          );
-        },
-      },
-    },
     {
       name: "Update_Product",
       options: {
@@ -101,10 +79,6 @@ const ProductTable = ({ products, editable }) => {
       name: "current_qty",
       label: "Current Qty",
     },
-    {
-      name: "prev_qty",
-      label: "Previous Qty",
-    },
   ];
 
   const columns = [
@@ -120,6 +94,28 @@ const ProductTable = ({ products, editable }) => {
               <Typography variant="body1" color="inherit">
                 Delete
               </Typography>
+            </Button>
+          );
+        },
+      },
+    },
+    {
+      name: "Update_Product",
+      options: {
+        filter: true,
+        sort: false,
+        empty: true,
+        customBodyRender: (value, tableMeta, updateValue) => {
+          return (
+            <Button variant="contained">
+              <NextLink
+                href={`/purchase/stock/${tableMeta.rowData[1]}`}
+                style={{ textDecoration: "none", color: "white" }}
+              >
+                <Typography variant="body1" color="inherit">
+                  Update Product
+                </Typography>
+              </NextLink>
             </Button>
           );
         },
@@ -153,10 +149,6 @@ const ProductTable = ({ products, editable }) => {
       name: "current_qty",
       label: "Current Qty",
     },
-    {
-      name: "prev_qty",
-      label: "Previous Qty",
-    },
   ];
 
   // const product = products.map((pro) => Object.values(pro));
@@ -172,7 +164,7 @@ const ProductTable = ({ products, editable }) => {
       price: `${pro.product_price}`,
       supplier: `${pro.supplier}`,
       current_qty: `${pro.current_product_quantity}`,
-      prev_qty: `${pro.previous_product_quantity}`,
+      // prev_qty: `${pro.previous_product_quantity}`,
     };
   });
 

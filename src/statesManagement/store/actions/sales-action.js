@@ -11,6 +11,9 @@ import {
   GET_TOTAL_SALES_FAIL,
   GET_TOTAL_SALES_REQUEST,
   GET_TOTAL_SALES_SUCCESS,
+  UPDATE_SALES_FAIL,
+  UPDATE_SALES_REQUEST,
+  UPDATE_SALES_SUCCESS,
 } from "../constants";
 
 export const addSales = async ({ dispatch, sales, enqueueSnackbar }) => {
@@ -116,6 +119,39 @@ export const deleteSales = async ({ dispatch, salesId, Router, enqueueSnackbar }
     error &&
       enqueueSnackbar(error?.response?.data?.response_message || error.message, {
         variant: "error",
+      });
+  }
+};
+
+export const updateSales = async ({ dispatch, saleId, sales, enqueueSnackbar }) => {
+  try {
+    dispatch({
+      type: UPDATE_SALES_REQUEST,
+    });
+
+    const { data } = await makeNetworkCall({
+      method: "PUT",
+      path: `/update-sales/${saleId}`,
+      requestBody: sales,
+    });
+
+    dispatch({
+      type: UPDATE_SALES_SUCCESS,
+      payload: data.data,
+    });
+    data &&
+      enqueueSnackbar(data?.response_message, {
+        variant: "success",
+        preventDuplicate: true,
+      });
+  } catch (error) {
+    dispatch({
+      type: UPDATE_SALES_FAIL,
+    });
+    error &&
+      enqueueSnackbar(error?.response?.data?.response_message || error.message, {
+        variant: "error",
+        preventDuplicate: true,
       });
   }
 };

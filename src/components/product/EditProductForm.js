@@ -27,15 +27,33 @@ export const EditProductForm = (props) => {
   const { title, id } = props;
 
   const { dispatch, state } = useContext(Store);
-  const { loading, suppliers, brands } = state;
-
+  const { loading, suppliers, brands, products } = state;
+  let oneProduct = [];
+  oneProduct = products.filter((pro) => pro._id === id);
+  console.log(oneProduct);
   const INITIAL_FORM_VALUES = {
-    product_name: "",
-    price: "",
-    product_brand: "",
-    product_barcode: "",
-    supplier: "",
-    quantity: "",
+    product_name:
+      oneProduct.length > 0 && typeof oneProduct[0] != "undefined"
+        ? oneProduct[0].product_name
+        : "",
+    price:
+      oneProduct.length > 0 && typeof oneProduct[0] != "undefined"
+        ? oneProduct[0].product_price
+        : "",
+    product_brand:
+      oneProduct.length > 0 && typeof oneProduct[0] != "undefined"
+        ? oneProduct[0].product_brand
+        : "",
+    product_barcode:
+      oneProduct.length > 0 && typeof oneProduct[0] != "undefined"
+        ? oneProduct[0].product_barcode
+        : "",
+    supplier:
+      oneProduct.length > 0 && typeof oneProduct[0] != "undefined" ? oneProduct[0].supplier : "",
+    quantity:
+      oneProduct.length > 0 && typeof oneProduct[0] != "undefined"
+        ? oneProduct[0].current_product_quantity
+        : "",
   };
 
   const FORM_VALIDATIONS = yup.object().shape({
@@ -102,6 +120,7 @@ export const EditProductForm = (props) => {
               <Formik
                 initialValues={{ ...INITIAL_FORM_VALUES }}
                 onSubmit={handleSubmit}
+                enableReinitialize={true}
                 validationSchema={FORM_VALIDATIONS}
               >
                 <Form>
@@ -114,10 +133,20 @@ export const EditProductForm = (props) => {
                       <CustomTextField name="product_barcode" label="Product Barcode" />
                     </Grid>
                     <Grid item xs={12}>
-                      <CustomSelect name="product_brand" label="Product Brand " options={brands} />
+                      <CustomSelect
+                        name="product_brand"
+                        id="brands"
+                        label="Product Brand "
+                        options={brands}
+                      />
                     </Grid>
                     <Grid item xs={12}>
-                      <CustomSelect name="supplier" options={suppliers} label="Supplier" />
+                      <CustomSelect
+                        name="supplier"
+                        id="suppliers"
+                        options={suppliers}
+                        label="Supplier"
+                      />
                     </Grid>
 
                     <Grid item xs={12}>

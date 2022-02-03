@@ -19,7 +19,7 @@ export const getProfitOrLossReport = async ({
     });
     const { data } = await makeNetworkCall({
       method: "GET",
-      path: `/view-sales-report?from=${from}&to=${to}`,
+      path: `/view-sales-report?from=${from}&to=${to}&branch=${branch}`,
     });
     console.log(data.data);
     dispatch({

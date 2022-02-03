@@ -54,7 +54,7 @@ export const AddStaff = (props) => {
   const { dispatch, state } = useContext(Store);
   const { loading, error, notification, success } = state;
   const { enqueueSnackbar } = useSnackbar();
-  const roles = [{ name: "sales rep" }, { name: "manager" }];
+  const roles = [{ name: "Operator" }, { name: "Auditor" }, { name: "Super Admin" }];
 
   const Router = useRouter();
 

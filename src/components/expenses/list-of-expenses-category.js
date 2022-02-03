@@ -70,14 +70,7 @@ const ListOfExpensesCategory = ({ expensesCategories }) => {
       name: "CONTACT PERSON",
     },
   ];
-  const colums = [
-    {
-      name: "ID",
-    },
-    {
-      name: "CATEGORY NAME",
-    },
-  ];
+  const colums = [{ name: "name", label: "CATEGORY NAME" }];
 
   const options = {
     filter: true,
@@ -85,15 +78,20 @@ const ListOfExpensesCategory = ({ expensesCategories }) => {
     responsive: "simple",
   };
 
-  const exp = expensesCategories.map((exp) => Object.values(exp));
-  const data = [...exp];
+  // const exp = expensesCategories.map((exp) => Object.values(exp));
+  console.log(expensesCategories);
+  const exp = expensesCategories.map((exp, i) => {
+    return {
+      name: `${exp.expenses_category}`,
+    };
+  });
 
   return (
     <>
       {ready == true && (
         <MUIDataTable
           title={"List Of Expenses Category"}
-          data={data}
+          data={exp}
           columns={colums}
           options={options}
         />

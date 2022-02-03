@@ -1,7 +1,3 @@
-/** 
-TODO: FIX DEPOSIT PAGE 
-**/
-
 import {
   Box,
   Button,
@@ -30,7 +26,11 @@ import React, { useContext, useEffect, useMemo, useRef, useState } from "react";
 import { getProductByBarcode } from "src/statesManagement/store/actions/product-action";
 import { Store } from "src/statesManagement/store/store";
 import { addSupplier } from "src/statesManagement/store/actions/supplier-action";
-import { addSales, addSalesData } from "src/statesManagement/store/actions/sales-action";
+import {
+  addSales,
+  addSalesData,
+  updateSales,
+} from "src/statesManagement/store/actions/sales-action";
 import AlertBox from "../../components/alert";
 import { useSnackbar } from "notistack";
 import {
@@ -42,25 +42,22 @@ import { Router } from "next/router";
 
 // console.log(barcodeInput)
 
-export const EditDepositView = (props) => {
-  const { deposits, id } = props;
+export const EditSalesView = (props) => {
+  const { totalSales, id } = props;
   const { dispatch, state } = useContext(Store);
   const { branch, products, paymentType, loading } = state;
-  let oneDeposit = [];
-  oneDeposit = deposits.filter((dep) => dep._id === id);
-
-  const [barcode, setbarcode] = useState("");
-  let itemsArray = [];
+  let oneSale = [];
+  oneSale = totalSales.filter((sal) => sal._id === id);
 
   // const publishItems = () => {
-  //   if (oneDeposit.length > 0 && typeof oneDeposit[0] != "undefined") {
-  //     for (let index = 0; index < oneDeposit[0].items.length; index++) {
+  //   if (oneSale.length > 0 && typeof oneSale[0] != "undefined") {
+  //     for (let index = 0; index < oneSale[0].items.length; index++) {
   //       itemsArray.push({
-  //         barcode: oneDeposit[0].items[index].barcode,
-  //         product: oneDeposit[0].items[index].product,
-  //         quantity: Number(oneDeposit[0].items[index].quantity),
-  //         selling_price: oneDeposit[0].items[index].selling_price,
-  //         product_id: oneDeposit[0].items[index].product_id,
+  //         barcode: oneSale[0].items[index].barcode,
+  //         product: oneSale[0].items[index].product,
+  //         quantity: Number(oneSale[0].items[index].quantity),
+  //         selling_price: oneSale[0].items[index].selling_price,
+  //         product_id: oneSale[0].items[index].product_id,
   //       });
   //     }
   //   }
@@ -68,55 +65,31 @@ export const EditDepositView = (props) => {
   // publishItems();
 
   const INITIAL_FORM_VALUES = {
-    created_at: "",
+    created_at: oneSale.length > 0 && typeof oneSale[0] != "undefined" ? oneSale[0].created_at : "",
     invoice_number:
-      oneDeposit.length > 0 && typeof oneDeposit[0] != "undefined"
-        ? oneDeposit[0].invoice_number
-        : "",
-    price:
-      oneDeposit.length > 0 && typeof oneDeposit[0] != "undefined"
-        ? oneDeposit[0].amount_deposited
-        : "",
-    customer_name:
-      oneDeposit.length > 0 && typeof oneDeposit[0] != "undefined"
-        ? oneDeposit[0].customer_name
-        : "",
+      oneSale.length > 0 && typeof oneSale[0] != "undefined" ? oneSale[0].invoice_number : "",
+    amount: oneSale.length > 0 && typeof oneSale[0] != "undefined" ? oneSale[0].amount : "",
     total_amount:
-      oneDeposit.length > 0 && typeof oneDeposit[0] != "undefined"
-        ? oneDeposit[0].total_amount
-        : "",
+      oneSale.length > 0 && typeof oneSale[0] != "undefined" ? oneSale[0].total_amount : "",
     payment_type:
-      oneDeposit.length > 0 && typeof oneDeposit[0] != "undefined"
-        ? oneDeposit[0].payment_type
-        : "",
-    branch:
-      oneDeposit.length > 0 && typeof oneDeposit[0] != "undefined" ? oneDeposit[0].branch : "",
-    barcode:
-      oneDeposit.length > 0 && typeof oneDeposit[0] != "undefined" ? oneDeposit[0].barcode : "",
-    product:
-      oneDeposit.length > 0 && typeof oneDeposit[0] != "undefined" ? oneDeposit[0].product : "",
-    quantity:
-      oneDeposit.length > 0 && typeof oneDeposit[0] != "undefined" ? oneDeposit[0].quantity : "",
+      oneSale.length > 0 && typeof oneSale[0] != "undefined" ? oneSale[0].payment_type : "",
+    branch: oneSale.length > 0 && typeof oneSale[0] != "undefined" ? oneSale[0].branch : "",
+    barcode: oneSale.length > 0 && typeof oneSale[0] != "undefined" ? oneSale[0].barcode : "",
+    product: oneSale.length > 0 && typeof oneSale[0] != "undefined" ? oneSale[0].product : "",
+    quantity: oneSale.length > 0 && typeof oneSale[0] != "undefined" ? oneSale[0].quantity : "",
     selling_price:
-      oneDeposit.length > 0 && typeof oneDeposit[0] != "undefined"
-        ? oneDeposit[0].selling_price
-        : "",
+      oneSale.length > 0 && typeof oneSale[0] != "undefined" ? oneSale[0].selling_price : "",
     serial_number:
-      oneDeposit.length > 0 && typeof oneDeposit[0] != "undefined"
-        ? oneDeposit[0].serial_number
-        : "",
-    product_id: "",
+      oneSale.length > 0 && typeof oneSale[0] != "undefined" ? oneSale[0].serial_number : "",
   };
 
   const FORM_VALIDATIONS = yup.object().shape({
-    created_at: yup.date().required("please select date"),
+    created_at: yup.date(),
     invoice_number: yup.string(),
     branch: yup.string(),
     payment_type: yup.string(),
-    serial_number: yup.string(),
-    price: yup.number().integer().typeError("Amount must be a number"),
+    amount: yup.number().integer().typeError("Amount must be a number"),
     total_amount: yup.number().integer().typeError("Total Amount must be a number"),
-    customer_name: yup.string(),
 
     barcode: yup.string(),
     product_id: yup.string(),
@@ -130,19 +103,19 @@ export const EditDepositView = (props) => {
 
   const Submit = (values) => {
     console.log(id);
-    updateDeposit({
+    updateSales({
       dispatch: dispatch,
-      deposit: values,
+      sales: values,
       enqueueSnackbar: enqueueSnackbar,
-      depId: id,
+      saleId: id,
     });
   };
 
   const formRef = useRef(null);
 
-  useEffect(() => {
-    getTotalDeposit({ dispatch: dispatch, enqueueSnackbar: enqueueSnackbar });
-  }, []);
+  //   useEffect(() => {
+  //     getTotalDeposit({ dispatch: dispatch, enqueueSnackbar: enqueueSnackbar });
+  //   }, []);
 
   // const RenderForm = ({ items, i }) => {
   //   setbarcode(items.barcode);
@@ -268,7 +241,7 @@ export const EditDepositView = (props) => {
         }}
       >
         <Typography sx={{ m: 1 }} variant="h4">
-          Edit Deposit
+          Edit Sales
         </Typography>
         <Box sx={{ m: 1 }}>
           <Button startIcon={<UploadIcon fontSize="small" />} sx={{ mr: 1 }}>
@@ -281,12 +254,12 @@ export const EditDepositView = (props) => {
       </Box>
       <Box sx={{ mt: 3 }}>
         <Card>
-          <CardHeader title="Edit Deposit" />
+          <CardHeader title="Edit Sales" />
           <Divider />
           <CardContent>
             <Box sx={{ maxWidth: 800 }}>
               <Formik
-                initialValues={INITIAL_FORM_VALUES}
+                initialValues={{ ...INITIAL_FORM_VALUES }}
                 validationSchema={FORM_VALIDATIONS}
                 enableReinitialize={true}
                 onSubmit={Submit}
@@ -295,30 +268,20 @@ export const EditDepositView = (props) => {
                 {({ errors, values, handleChange, setValues }) => (
                   <Form>
                     <Grid container spacing={2}>
-                      <Grid item xs={4}>
+                      <Grid item xs={6}>
                         <CustomDate name="created_at" />
                       </Grid>
-                      <Grid item xs={4}>
+                      <Grid item xs={6}>
                         <CustomTextField name="branch" label="Branch" />
                       </Grid>
-                      <Grid item xs={4}>
+                      <Grid item xs={6}>
                         <CustomTextField name="invoice_number" disabled label="Invoice Number" />
                       </Grid>
-                      <Grid item xs={4}>
-                        <CustomTextField name="price" label="Amount Deposited" />
+                      <Grid item xs={6}>
+                        <CustomTextField name="amount" label="Amount" />
                       </Grid>
 
-                      <Grid item xs={4}>
-                        <CustomTextField name="customer_name" label="Customer Name" />
-                      </Grid>
-                      <Grid
-                        item
-                        xs={6}
-                        sx={{
-                          mb: 2,
-                          mt: 2,
-                        }}
-                      >
+                      <Grid item xs={6}>
                         <CustomTextField name="barcode" label="Barcode" />
                       </Grid>
                       <Grid item xs={6}>
@@ -341,9 +304,6 @@ export const EditDepositView = (props) => {
                       <Grid item xs={6}>
                         <CustomTextField name="selling_price" label="Selling Price" />
                       </Grid>
-                      <Grid item xs={6}>
-                        <CustomTextField name="total_amount" label="Total Purchase Amount" />
-                      </Grid>
 
                       <Grid item xs={12}>
                         <CustomSelect
@@ -362,7 +322,7 @@ export const EditDepositView = (props) => {
                           onClick={() => Submit(values)}
                         >
                           {" "}
-                          Update Deposit
+                          Update Sales
                         </Button>
                       </Grid>
                     </Grid>

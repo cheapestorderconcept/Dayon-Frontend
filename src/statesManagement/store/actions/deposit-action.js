@@ -73,7 +73,7 @@ export const addDepositData = async ({ dispatch, deposit, Router, enqueueSnackba
   }
 };
 
-export const updateDeposit = async ({ dispatch, depId, price, enqueueSnackbar }) => {
+export const updateDeposit = async ({ dispatch, depId, deposit, enqueueSnackbar }) => {
   try {
     dispatch({
       type: UPDATE_DEPOSIT_REQUEST,
@@ -82,7 +82,7 @@ export const updateDeposit = async ({ dispatch, depId, price, enqueueSnackbar })
     const { data } = await makeNetworkCall({
       method: "PUT",
       path: `/update-deposit/${depId}`,
-      requestBody: price,
+      requestBody: deposit,
     });
 
     dispatch({

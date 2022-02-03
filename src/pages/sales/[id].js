@@ -1,38 +1,37 @@
 import Head from "next/head";
 import { Box, Container } from "@mui/material";
 import { DashboardLayout } from "../../components/dashboard-layout";
-import { AddStoreOutlets } from "src/components/storeoutlets/add-store";
-import StoreOuletLists from "src/components/storeoutlets/store-lists";
+import { AddSales } from "src/components/sales/add-sales";
 import dynamic from "next/dynamic";
-import { makeNetworkCall, networkCall } from "src/network";
 import { useContext, useEffect, useState } from "react";
 import { Store } from "src/statesManagement/store/store";
-import { useSnackbar } from "notistack";
-import { getStores } from "src/statesManagement/store/actions/store-outlet-action";
+
 import { useRouter } from "next/router";
+import { useSnackbar } from "notistack";
+import { getProduct } from "src/statesManagement/store/actions/product-action";
+import { EditSalesView } from "src/components/sales/edit-sales";
 
 const DynamicComponentWithNoSSR = dynamic(() => import("src/components/navbar-branch-indicator"), {
   ssr: false,
 });
 
-const EditBranch = () => {
+const EditSales = () => {
   const { dispatch, state } = useContext(Store);
-  const { branch, userInfo } = state;
-  const { query } = useRouter();
   const router = useRouter();
+  const { query } = useRouter();
   const [id, setid] = useState(null);
+  const { userInfo, paymentType, totalSales } = state;
   const { enqueueSnackbar } = useSnackbar();
 
   useEffect(() => {
     !userInfo && router.push("/auth");
     setid(query.id);
-    getStores({ dispatch: dispatch, enqueueSnackbar: enqueueSnackbar });
+    getProduct({ dispatch: dispatch, enqueueSnackbar: enqueueSnackbar });
   }, [query.id]);
-
   return (
     <>
       <Head>
-        <title>Store | Adeshex Global</title>
+        <title>Sales| Adeshex Global</title>
       </Head>
       <Box
         component="main"
@@ -42,16 +41,14 @@ const EditBranch = () => {
         }}
       >
         <DynamicComponentWithNoSSR />
-        <Container maxWidth={false}>
-          <AddStoreOutlets edit={true} branch={branch} id={id} />
-          <Box sx={{ mt: 3 }}>
-            <StoreOuletLists branch={branch} />
-          </Box>
+        <Container maxWidth={true}>
+          <EditSalesView totalSales={totalSales} id={id} paymentType={paymentType} />
         </Container>
       </Box>
     </>
   );
 };
-EditBranch.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
 
-export default EditBranch;
+EditSales.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
+
+export default EditSales;

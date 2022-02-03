@@ -30,29 +30,26 @@ import { useRouter } from "next/router";
 import AlertBox from "../alert";
 import { useSnackbar } from "notistack";
 
-const FORM_VALIDATIONS = yup.object().shape({
-  name: yup.string().required("Please enter supllier Name"),
-  address: yup.string().required("Please enter supllier Address"),
-  email: yup.string().required("Please enter supplier email").email("please provide valid email"),
-  contactPerson: yup.string().required("Please provide a contact person "),
-  phone: yup
-    .number()
-    .integer()
-    .typeError("Please enter a valid phone number")
-    .required("Please enter Phone number"),
-});
-
 export const AddSuppliers = (props) => {
-  const { title, id } = props;
+  const { title, id, edit } = props;
   const { dispatch, state } = useContext(Store);
   const { loading, suppliers } = state;
   const { enqueueSnackbar } = useSnackbar();
-  console.log(id);
-  let mySupplier = {};
-  if (id != null) {
-    const supplier = suppliers.filter((sup) => sup._id == id);
-    mySupplier = { ...supplier[0] };
-  }
+  const FORM_VALIDATIONS = yup.object().shape({
+    name: edit ? yup.string() : yup.string().required("Please enter supllier Name"),
+    address: edit ? yup.string() : yup.string().required("Please enter supllier Address"),
+    email: edit
+      ? yup.string()
+      : yup.string().required("Please enter supplier email").email("please provide valid email"),
+    contactPerson: edit ? yup.string() : yup.string().required("Please provide a contact person "),
+    phone: edit
+      ? yup.number().integer().typeError("Please enter a valid phone number")
+      : yup
+          .number()
+          .integer()
+          .typeError("Please enter a valid phone number")
+          .required("Please enter Phone number"),
+  });
 
   const Router = useRouter();
 
@@ -88,12 +85,30 @@ export const AddSuppliers = (props) => {
     });
   };
 
+  let oneSupplier = [];
+  oneSupplier = suppliers.filter((sup) => sup._id === id);
+
   const populateForm = {
-    name: mySupplier.supplier_name,
-    address: mySupplier.supplier_address,
-    email: mySupplier.supplier_email,
-    phone: mySupplier.supplier_phone,
-    contactPerson: mySupplier.contact_person,
+    name:
+      oneSupplier.length > 0 && typeof oneSupplier[0] != "undefined"
+        ? oneSupplier[0].supplier_name
+        : "",
+    address:
+      oneSupplier.length > 0 && typeof oneSupplier[0] != "undefined"
+        ? oneSupplier[0].supplier_address
+        : "",
+    email:
+      oneSupplier.length > 0 && typeof oneSupplier[0] != "undefined"
+        ? oneSupplier[0].supplier_email
+        : "",
+    phone:
+      oneSupplier.length > 0 && typeof oneSupplier[0] != "undefined"
+        ? oneSupplier[0].supplier_phone
+        : "",
+    contactPerson:
+      oneSupplier.length > 0 && typeof oneSupplier[0] != "undefined"
+        ? oneSupplier[0].contact_person
+        : "",
   };
 
   console.log(populateForm);
@@ -133,6 +148,7 @@ export const AddSuppliers = (props) => {
               <Formik
                 initialValues={{ ...populateForm }}
                 onSubmit={id != null ? handleUpdate : handleSubmit}
+                enableReinitialize={true}
                 validationSchema={FORM_VALIDATIONS}
               >
                 <Form>

@@ -47,11 +47,12 @@ export const AddDeposit = (props) => {
   const { productByBarcode, productById, paymentType, loading, products } = state;
   const [barcode, setbarcode] = useState("");
   const [selectedProduct, setselectedProduct] = useState("");
+  const [FetcedProduct, setFetcedProduct] = useState("");
 
   const INITIAL_FORM_VALUES = {
     created_at: "",
     invoice_number: "",
-    amount_deposited: "",
+    // amount_deposited: "",
     customer_name: "",
     branch: Cookies.get("selectedBranch"),
     payment_type: "",
@@ -60,11 +61,13 @@ export const AddDeposit = (props) => {
         barcode: "",
         product: "",
         selectedProduct: "",
+        amount_deposited: "",
         serial_number: "",
         invoice_number: "",
         product_id: "",
         quantity: "",
         selling_price: "",
+        amount: "",
       },
     ],
   };
@@ -74,11 +77,11 @@ export const AddDeposit = (props) => {
     invoice_number: yup.string().required("please provide invoice number"),
     branch: yup.string().required("please choose store branch"),
     payment_type: yup.string().required("please choose payment method "),
-    amount_deposited: yup
-      .number()
-      .integer()
-      .typeError("Amount must be a number")
-      .required("please enter amount deposited"),
+    // amount_deposited: yup
+    //   .number()
+    //   .integer()
+    //   .typeError("Amount must be a number")
+    //   .required("please enter amount deposited"),
     // customer_phone: yup.string().required("please enter Cutomer Phone number"),
     customer_name: yup.string().required("please enter customer name"),
     items: yup.array().of(
@@ -87,12 +90,18 @@ export const AddDeposit = (props) => {
         product_id: yup.string(),
         selectedProduct: yup.string(),
         serial_number: yup.string(),
+        amount_deposited: yup.number().integer().typeError("Amount must be a number"),
         invoice_number: yup.string().required("please provide invoice number"),
         selling_price: yup
           .number()
           .integer()
           .typeError("Price must be a number")
           .required("Please provide Selling price"),
+        amount: yup
+          .number()
+          .integer()
+          .typeError("Amount must be a number")
+          .required("Please provide amount"),
 
         quantity: yup
           .number()
@@ -110,10 +119,12 @@ export const AddDeposit = (props) => {
       barcode: "",
       product: "",
       selectedProduct: "",
+      amount_deposited: "",
       product_id: "",
       serial_number: "",
       invoice_number: "",
       selling_price: "",
+      amount: "",
       quantity: "",
     });
 
@@ -213,7 +224,7 @@ export const AddDeposit = (props) => {
             value={
               productByBarcode.length > 0 && typeof productByBarcode[i] != "undefined"
                 ? (items.product = productByBarcode[i].product_name)
-                : productById.length > 0 && typeof productById[i] != "undefined"
+                : "" || (productById.length > 0 && typeof productById[i] != "undefined")
                 ? (items.product = productById[i].product_name)
                 : ""
             }
@@ -239,6 +250,9 @@ export const AddDeposit = (props) => {
             disabled
             value={(items.invoice_number = values.invoice_number)}
           />
+        </Grid>
+        <Grid item xs={6}>
+          <CustomTextField name={`items.${i}.amount_deposited`} label="Amount Deposited" />
         </Grid>
         <Grid item xs={6} style={{ display: "none" }}>
           <CustomTextField
@@ -342,9 +356,9 @@ export const AddDeposit = (props) => {
                       <Grid item xs={4}>
                         <CustomTextField name="invoice_number" label="Invoice Number" />
                       </Grid>
-                      <Grid item xs={4}>
+                      {/* <Grid item xs={4}>
                         <CustomTextField name="amount_deposited" label="Amount Deposited" />
-                      </Grid>
+                      </Grid> */}
                       <Grid item xs={4}>
                         <CustomTextField name="customer_name" label="Customer Name" />
                       </Grid>

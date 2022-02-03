@@ -4,6 +4,7 @@ import { useSnackbar } from "notistack";
 import { useContext, useEffect, useState } from "react";
 import { addSalesData, deleteSales } from "src/statesManagement/store/actions/sales-action";
 import { Store } from "src/statesManagement/store/store";
+import NextLink from "next/link";
 
 const SalesList = ({ salesList }) => {
   const { dispatch, state } = useContext(Store);
@@ -37,6 +38,28 @@ const SalesList = ({ salesList }) => {
       },
     },
     {
+      name: "update",
+      options: {
+        filter: true,
+        sort: false,
+        empty: true,
+        customBodyRender: (value, tableMeta, updateValue) => {
+          return (
+            <Button variant="contained">
+              <NextLink
+                href={`/sales/${tableMeta.rowData[1]}`}
+                style={{ textDecoration: "none", color: "white" }}
+              >
+                <Typography variant="body1" color="inherit">
+                  Edit
+                </Typography>
+              </NextLink>
+            </Button>
+          );
+        },
+      },
+    },
+    {
       name: "Name",
       label: "Product Name",
     },
@@ -52,10 +75,7 @@ const SalesList = ({ salesList }) => {
       name: "amount",
       label: "Total Amount",
     },
-    {
-      name: "Price",
-      label: "Cost Price",
-    },
+
     {
       name: "selling_price",
       label: "Selling Price",
@@ -78,12 +98,13 @@ const SalesList = ({ salesList }) => {
 
   const mySales = salesList.map((sale, i) => {
     return {
-      delete: `${sale.product_id}`,
+      delete: `${sale._id}`,
+      update: `${sale._id}`,
       Name: `${sale.product}`,
       Barcode: `${sale.barcode}`,
       amount: `${sale.amount}`,
       qty: `${sale.quantity}`,
-      Price: `${sale.cost_price}`,
+      // Price: `${sale.cost_price}`,
       Invoice: `${sale.invoice_number}`,
       serial_number: `${sale.serial_number}`,
       selling_price: `${sale.selling_price}`,

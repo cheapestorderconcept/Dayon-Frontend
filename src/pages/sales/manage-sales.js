@@ -28,7 +28,7 @@ const SalesListPage = () => {
   return (
     <>
       <Head>
-        <title>Sales Lists| Material Kit</title>
+        <title>Sales Lists| Adeshex Global</title>
       </Head>
 
       <Box

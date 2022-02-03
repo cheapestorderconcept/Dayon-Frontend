@@ -43,6 +43,10 @@ const DepositList = ({ deposits }) => {
       label: "Invoice Number",
     },
     {
+      name: "customer_name",
+      label: "Customer Name",
+    },
+    {
       name: "name",
       label: "Product",
     },
@@ -51,12 +55,20 @@ const DepositList = ({ deposits }) => {
       label: "Product Barcode",
     },
     {
-      name: "amount",
+      name: "price",
+      label: "Selling Price",
+    },
+    {
+      name: "amount_deposited",
       label: "Amount Deposited",
     },
     {
-      name: "price",
-      label: "Selling Price",
+      name: "amount_to_balance",
+      label: "Amount To Balance",
+    },
+    {
+      name: "total_amount",
+      label: "Total Amount",
     },
 
     {
@@ -74,15 +86,18 @@ const DepositList = ({ deposits }) => {
 
   const myDeposits = deposits.map((dep, i) => {
     return {
-      delete: `${dep.product_id}`,
-      update: `${dep.product_id}`,
+      delete: `${dep._id}`,
+      update: `${dep._id}`,
       name: `${dep.product}`,
       barcode: `${dep.barcode}`,
-      amount: `${dep.amount}`,
+      amount_deposited: `${dep.amount_deposited}`,
+      amount_to_balance: `${dep.amount_to_balance}`,
       price: `${dep.selling_price}`,
       invoice: `${dep.invoice_number}`,
       serial_number: `${dep.serial_number}`,
       quantity: `${dep.quantity}`,
+      total_amount: `${dep.total_amount}`,
+      customer_name: `${dep.customer_name}`,
     };
   });
 

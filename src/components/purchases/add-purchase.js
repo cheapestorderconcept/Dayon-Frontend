@@ -28,8 +28,8 @@ import { useSnackbar } from "notistack";
 import Cookies from "js-cookie";
 
 export const AddPurchase = (props) => {
-  const { suppliers, products } = props;
-
+  const { suppliers, products, edit } = props;
+  console.log(suppliers);
   const { dispatch, state } = useContext(Store);
   const { loading } = state;
 

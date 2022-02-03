@@ -142,6 +142,15 @@ import {
   SUSPEND_STAFF_REQUEST,
   SUSPEND_STAFF_SUCCESS,
   SUSPEND_STAFF_FAIL,
+  DELETE_PURCHASE_REQUEST,
+  DELETE_PURCHASE_FAIL,
+  DELETE_PURCHASE_SUCCESS,
+  UPDATE_PURCHASE_REQUEST,
+  UPDATE_PURCHASE_SUCCESS,
+  UPDATE_PURCHASE_FAIL,
+  UPDATE_SALES_REQUEST,
+  UPDATE_SALES_SUCCESS,
+  UPDATE_SALES_FAIL,
 } from "../constants";
 
 // const rootReducers = combineReducers({
@@ -350,6 +359,19 @@ const rootReducers = (state, action) => {
       return { ...state, loading: false, notification: true, success: action.payload };
     case ADD_PURCHASE_FAIL:
       return { ...state, loading: false, notification: true, success: null, error: action.payload };
+    case UPDATE_PURCHASE_REQUEST:
+      return { ...state, loading: true };
+    case UPDATE_PURCHASE_SUCCESS:
+      return { ...state, loading: false };
+    case UPDATE_PURCHASE_FAIL:
+      return { ...state, loading: false, error: action.payload };
+
+    case DELETE_PURCHASE_REQUEST:
+      return { ...state, loading: true };
+    case DELETE_PURCHASE_SUCCESS:
+      return { ...state, loading: false };
+    case DELETE_PURCHASE_FAIL:
+      return { ...state, loading: false, error: action.payload };
 
     // Store/Branch Reducer
     case GET_STORE_REQUEST:
@@ -423,6 +445,14 @@ const rootReducers = (state, action) => {
     case GET_TOTAL_SALES_REQUEST:
       return { ...state, loading: true };
     case GET_TOTAL_SALES_SUCCESS:
+      {
+        if (Cookies.get("sales")) {
+          Cookies.remove("sales");
+          Cookies.set("sales", JSON.stringify(action.payload));
+        } else {
+          Cookies.set("sales", JSON.stringify(action.payload));
+        }
+      }
       return { ...state, loading: false, totalSales: action?.payload };
     case GET_TOTAL_SALES_FAIL:
       return { ...state, loading: false, error: action.payload };
@@ -433,6 +463,13 @@ const rootReducers = (state, action) => {
       return { ...state, loading: false };
     case DELETE_SALES_FAIL:
       return { ...state, loading: false, error: action.payload };
+
+    case UPDATE_SALES_REQUEST:
+      return { ...state, loading: true, notification: false };
+    case UPDATE_SALES_SUCCESS:
+      return { ...state, loading: false, notification: true, success: action.payload };
+    case UPDATE_SALES_FAIL:
+      return { ...state, loading: false, notification: true, success: null, error: action.payload };
 
     // Paymnet MMethod Redcuer
 

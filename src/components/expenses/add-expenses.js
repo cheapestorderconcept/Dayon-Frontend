@@ -12,7 +12,7 @@ import { CustomSelect } from "../basicInputs";
 import { CustomButton } from "../basicInputs";
 import { CustomTextField } from "../basicInputs";
 
-const AddExpenses = ({ expensesCategories, edit, id, branch, expenses }) => {
+const AddExpenses = ({ expensesCategories, edit, id, branch }) => {
   // const [oneExpenses, setoneExpenses] = useState([]);
 
   // edit &&
@@ -24,27 +24,38 @@ const AddExpenses = ({ expensesCategories, edit, id, branch, expenses }) => {
   // console.log(oneExpenses);
 
   const VALIDATIONS = yup.object().shape({
-    date: yup.date().required("please select date"),
-    amount: yup
-      .number()
-      .integer()
-      .typeError("this field must be a number")
-      .required("please enter amount"),
-    expenses_type: yup.string().required("please choose expenses type"),
-    branch_name: yup.string().required("please choose Store Branch "),
-    additional_details: yup.string().required("Please provide additional details"),
+    date: edit ? yup.date() : yup.date().required("please select date"),
+    amount: edit
+      ? yup.number().integer().typeError("this field must be a number")
+      : yup
+          .number()
+          .integer()
+          .typeError("this field must be a number")
+          .required("please enter amount"),
+    expenses_type: edit ? yup.string() : yup.string().required("please choose expenses type"),
+    branch_name: edit ? yup.string() : yup.string().required("please choose Store Branch "),
+    additional_details: edit
+      ? yup.string()
+      : yup.string().required("Please provide additional details"),
   });
 
   const { dispatch, state } = useContext(Store);
-  const { loading } = state;
+  const { loading, expenses } = state;
   const { enqueueSnackbar } = useSnackbar();
-
+  let oneExp = [];
+  oneExp = expenses.filter((exp) => exp._id === id);
   const INITIAL_VALUES = {
     date: "",
-    amount: "",
-    expenses_type: "",
-    additional_details: "",
-    branch_name: Cookies.get("selectedBranch"),
+    amount: oneExp.length > 0 && typeof oneExp[0] != "undefined" ? oneExp[0].amount : "",
+    expenses_type:
+      oneExp.length > 0 && typeof oneExp[0] != "undefined" ? oneExp[0].expenses_type : "",
+    additional_details:
+      oneExp.length > 0 && typeof oneExp[0] != "undefined" ? oneExp[0].additional_details : "",
+    branch_name: edit
+      ? oneExp.length > 0 && typeof oneExp[0] != "undefined"
+        ? oneExp[0].branch_name
+        : ""
+      : Cookies.get("selectedBranch"),
   };
 
   // const editInitialValues = {
@@ -76,6 +87,7 @@ const AddExpenses = ({ expensesCategories, edit, id, branch, expenses }) => {
       <Formik
         initialValues={{ ...INITIAL_VALUES }}
         validationSchema={VALIDATIONS}
+        enableReinitialize={true}
         onSubmit={edit ? handleUpdate : handleSubmit}
       >
         {({ errors, values, handleChange, setValues }) => (

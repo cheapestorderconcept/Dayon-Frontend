@@ -37,7 +37,7 @@ const Branch = () => {
       >
         <DynamicComponentWithNoSSR />
         <Container maxWidth={false}>
-          <AddStoreOutlets />
+          <AddStoreOutlets branch={branch} />
           <Box sx={{ mt: 3 }}>
             <StoreOuletLists branch={branch} />
           </Box>

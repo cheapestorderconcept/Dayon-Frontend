@@ -42,7 +42,7 @@ const initialState = {
   expensesCategories: Cookies.get("expensesCategories")
     ? JSON.parse(Cookies.get("expensesCategories"))
     : [],
-  totalSales: [],
+  totalSales: Cookies.get("sales") ? JSON.parse(Cookies.get("sales")) : [],
 };
 
 export const StoreProvider = (props) => {

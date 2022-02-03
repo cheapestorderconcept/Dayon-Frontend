@@ -1,5 +1,10 @@
+import { Button, Typography } from "@mui/material";
 import MUIDataTable from "mui-datatables";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import NextLink from "next/link";
+import { deletePurchase } from "src/statesManagement/store/actions/purchase-action";
+import { Store } from "src/statesManagement/store/store";
+import { useSnackbar } from "notistack";
 
 // const columns = [
 //   "DATE",
@@ -23,11 +28,63 @@ import { useEffect, useState } from "react";
 
 const PurchaseList = ({ purchase }) => {
   const [ready, setready] = useState(false);
+
   useEffect(() => {
     setready(true);
   }, []);
+  const { dispatch } = useContext(Store);
+  const { enqueueSnackbar } = useSnackbar();
+  const handleDelete = (tableMeta) => (e) => {
+    confirm("Are you sure you want to delete");
+    const purchId = tableMeta.rowData[0];
+
+    deletePurchase({
+      dispatch: dispatch,
+      purchId: purchId,
+      enqueueSnackbar: enqueueSnackbar,
+    });
+  };
 
   const columns = [
+    {
+      name: "delete",
+      options: {
+        filter: true,
+        sort: false,
+        empty: true,
+        customBodyRender: (value, tableMeta, updateValue) => {
+          return (
+            <Button onClick={handleDelete(tableMeta)} variant="contained" color="error">
+              <Typography variant="body1" color="inherit">
+                Delete
+              </Typography>
+            </Button>
+          );
+        },
+      },
+    },
+    {
+      name: "update",
+      options: {
+        filter: true,
+        sort: false,
+        empty: true,
+        customBodyRender: (value, tableMeta, updateValue) => {
+          return (
+            <Button variant="contained">
+              <NextLink
+                href={`/purchase/${tableMeta.rowData[1]}`}
+                style={{ textDecoration: "none", color: "white" }}
+              >
+                <Typography variant="body1" color="inherit">
+                  Update
+                </Typography>
+              </NextLink>
+            </Button>
+          );
+        },
+      },
+    },
     {
       name: "invoice",
       label: "Invoice Number",
@@ -59,6 +116,8 @@ const PurchaseList = ({ purchase }) => {
 
   const myPurchase = purchase.map((purch, i) => {
     return {
+      delete: `${purch._id}`,
+      update: `${purch._id}`,
       invoice: `${purch.invoice_number}`,
       supplier: `${purch.supplier}`,
       product: `${purch.product}`,

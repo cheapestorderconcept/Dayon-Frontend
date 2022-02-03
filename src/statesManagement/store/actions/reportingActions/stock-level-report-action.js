@@ -12,7 +12,7 @@ export const getStockLevelReport = async ({ dispatch, enqueueSnackbar, Router, b
     });
     const { data } = await makeNetworkCall({
       method: "GET",
-      path: `/view-product`,
+      path: `/view-stock-level?branch=${branch}`,
     });
     console.log(data.data);
     dispatch({

@@ -30,7 +30,10 @@ import { useSnackbar } from "notistack";
 import { Store } from "src/statesManagement/store/store";
 
 export const AddStoreOutlets = (props) => {
-  const { edit, id } = props;
+  const { edit, id, branch } = props;
+  let oneBranch = [];
+  oneBranch = branch.filter((brch) => brch._id === id);
+
   const { dispatch, state } = useContext(Store);
   const { loading } = state;
   const { enqueueSnackbar } = useSnackbar();
@@ -55,24 +58,29 @@ export const AddStoreOutlets = (props) => {
       Router: Router,
       enqueueSnackbar: enqueueSnackbar,
     });
-    console.log(values);
   };
+
   const INITIAL_FORM_STATE = {
-    branch_name: "",
-    address: "",
-    manager_name: "",
-    manager_phone: "",
+    branch_name:
+      oneBranch.length > 0 && typeof oneBranch[0] != "undefined" ? oneBranch[0].branch_name : "",
+    address: oneBranch.length > 0 && typeof oneBranch[0] != "undefined" ? oneBranch[0].address : "",
+    manager_name:
+      oneBranch.length > 0 && typeof oneBranch[0] != "undefined" ? oneBranch[0].manager_name : "",
+    manager_phone:
+      oneBranch.length > 0 && typeof oneBranch[0] != "undefined" ? oneBranch[0].manager_phone : "",
   };
 
   const FORM_VALIDATIONS = yup.object().shape({
-    branch_name: yup.string().required("Please input Store Name"),
-    address: yup.string().required("Please input Store Address"),
-    manager_name: yup.string().required("Please inpu name of manager"),
-    manager_phone: yup
-      .number()
-      .integer()
-      .typeError("Please enter a valid phone number")
-      .required("Please enter Phone number"),
+    branch_name: edit ? yup.string() : yup.string().required("Please input Store Name"),
+    address: edit ? yup.string() : yup.string().required("Please input Store Address"),
+    manager_name: edit ? yup.string() : yup.string().required("Please inpu name of manager"),
+    manager_phone: edit
+      ? yup.number().integer().typeError("Please enter a valid phone number")
+      : yup
+          .number()
+          .integer()
+          .typeError("Please enter a valid phone number")
+          .required("Please enter Phone number"),
   });
   return (
     <Box {...props}>
@@ -104,8 +112,9 @@ export const AddStoreOutlets = (props) => {
           <CardContent>
             <Box sx={{ maxWidth: 500 }}>
               <Formik
-                initialValues={{ ...INITIAL_FORM_STATE }}
+                initialValues={INITIAL_FORM_STATE}
                 onSubmit={edit ? handleUpdate : handleSubmit}
+                enableReinitialize={true}
                 validationSchema={FORM_VALIDATIONS}
               >
                 <Form>

@@ -29,7 +29,7 @@ const Supplier = () => {
   return (
     <>
       <Head>
-        <title>Supplier | 1948 App</title>
+        <title>Supplier | Adeshex Global</title>
       </Head>
       <Box
         component="main"
