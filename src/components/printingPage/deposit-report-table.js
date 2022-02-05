@@ -32,7 +32,6 @@ export default function BasicTable({ depositReport }) {
             <TableCell align="right">Customer Name </TableCell>
             <TableCell align="right">Amount Paid</TableCell>
             <TableCell align="right">Amount To Balance</TableCell>
-            
           </TableRow>
         </TableHead>
         <TableBody>
