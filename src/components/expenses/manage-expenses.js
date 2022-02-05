@@ -79,6 +79,13 @@ const ManageExpenses = ({ expenses }) => {
   // const exp = expenses.map((exp) => Object.values(exp));
   // console.log(expenses);
   const exp = expenses.map((exp, i) => {
+    const strDate = new Date(exp?.date);
+    function convert(strDate) {
+      var date = new Date(strDate),
+        mnth = ("0" + (date.getMonth() + 1)).slice(-2),
+        day = ("0" + date.getDate()).slice(-2);
+      return [date.getFullYear(), mnth, day].join("-");
+    }
     return {
       delete: `${exp._id}`,
       update: `${exp._id}`,
@@ -86,7 +93,7 @@ const ManageExpenses = ({ expenses }) => {
       exp_type: `${exp.expenses_type}`,
       amount: `${exp.amount}`,
       add_details: `${exp.additional_details}`,
-      date: `${exp.date}`,
+      date: convert(strDate),
     };
   });
 

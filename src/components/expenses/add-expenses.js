@@ -44,8 +44,17 @@ const AddExpenses = ({ expensesCategories, edit, id, branch }) => {
   const { enqueueSnackbar } = useSnackbar();
   let oneExp = [];
   oneExp = expenses.filter((exp) => exp._id === id);
+  console.log(oneExp);
+  const strDate = new Date(oneExp[0]?.date);
+  function convert(strDate) {
+    var date = new Date(strDate),
+      mnth = ("0" + (date.getMonth() + 1)).slice(-2),
+      day = ("0" + date.getDate()).slice(-2);
+    return [date.getFullYear(), mnth, day].join("-");
+  }
+
   const INITIAL_VALUES = {
-    date: "",
+    date: oneExp.length > 0 && typeof oneExp[0] != "undefined" ? convert(strDate) : "",
     amount: oneExp.length > 0 && typeof oneExp[0] != "undefined" ? oneExp[0].amount : "",
     expenses_type:
       oneExp.length > 0 && typeof oneExp[0] != "undefined" ? oneExp[0].expenses_type : "",
