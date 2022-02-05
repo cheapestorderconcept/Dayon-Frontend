@@ -10,14 +10,15 @@ const SalesList = ({ salesList }) => {
   const { dispatch, state } = useContext(Store);
   const { enqueueSnackbar } = useSnackbar();
   const handleDelete = (tableMeta) => (e) => {
-    confirm("Are you sure you want to delete");
+  const validate =  confirm("Are you sure you want to delete");
+      if (!!validate) {
     const salesId = tableMeta.rowData[0];
-    console.log(salesId);
     deleteSales({
       dispatch: dispatch,
       salesId: salesId,
       enqueueSnackbar: enqueueSnackbar,
     });
+      }
   };
   const columns = [
     {

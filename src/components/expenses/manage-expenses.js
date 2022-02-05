@@ -11,10 +11,13 @@ const ManageExpenses = ({ expenses }) => {
   const { enqueueSnackbar } = useSnackbar();
   const [ready, setready] = useState(false);
   const handleDelete = (tableMeta) => (e) => {
-    confirm("Are you sure you want to delete");
-    const expId = tableMeta.rowData[0];
-    // console.log(expId);
-    deleteExpenses({ dispatch: dispatch, expId: expId, enqueueSnackbar: enqueueSnackbar });
+   const  validate = confirm("Are you sure you want to delete");
+   
+     if (validate==true) {
+      const expId = tableMeta.rowData[0];
+      // console.log(expId);
+      deleteExpenses({ dispatch: dispatch, expId: expId, enqueueSnackbar: enqueueSnackbar });
+     }
   };
   const columns = [
     {
