@@ -102,6 +102,7 @@ const SalesList = ({ salesList }) => {
       delete: `${sale._id}`,
       update: `${sale._id}`,
       Name: `${sale.product}`,
+      date: `${sale.created_at}`,
       Barcode: `${sale.barcode}`,
       amount: `${sale.amount}`,
       qty: `${sale.quantity}`,

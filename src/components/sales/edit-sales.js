@@ -49,6 +49,13 @@ export const EditSalesView = (props) => {
   const { branch, products, paymentType, loading } = state;
   let oneSale = [];
   oneSale = totalSales.filter((sal) => sal._id === id);
+  const strDate = new Date(oneSale[0]?.created_at);
+  function convert(strDate) {
+    var date = new Date(strDate),
+      mnth = ("0" + (date.getMonth() + 1)).slice(-2),
+      day = ("0" + date.getDate()).slice(-2);
+    return [date.getFullYear(), mnth, day].join("-");
+  }
 
   // const publishItems = () => {
   //   if (oneSale.length > 0 && typeof oneSale[0] != "undefined") {
@@ -66,7 +73,7 @@ export const EditSalesView = (props) => {
   // publishItems();
 
   const INITIAL_FORM_VALUES = {
-    created_at: oneSale.length > 0 && typeof oneSale[0] != "undefined" ? oneSale[0].created_at : "",
+    created_at: oneSale.length > 0 && typeof oneSale[0] != "undefined" ? convert(strDate) : "",
     invoice_number:
       oneSale.length > 0 && typeof oneSale[0] != "undefined" ? oneSale[0].invoice_number : "",
     amount: oneSale.length > 0 && typeof oneSale[0] != "undefined" ? oneSale[0].amount : "",

@@ -45,9 +45,6 @@ import Cookies from "js-cookie";
 export const AddDeposit = (props) => {
   const { dispatch, state } = useContext(Store);
   const { productByBarcode, productById, paymentType, loading, products } = state;
-  const [barcode, setbarcode] = useState("");
-  const [selectedProduct, setselectedProduct] = useState("");
-  const [FetcedProduct, setFetcedProduct] = useState("");
 
   const INITIAL_FORM_VALUES = {
     created_at: "",
@@ -63,6 +60,7 @@ export const AddDeposit = (props) => {
         selectedProduct: "",
         amount_deposited: "",
         serial_number: "",
+        created_at: "",
         invoice_number: "",
         product_id: "",
         quantity: "",
@@ -90,6 +88,7 @@ export const AddDeposit = (props) => {
         product_id: yup.string(),
         selectedProduct: yup.string(),
         serial_number: yup.string(),
+        created_at: yup.date(),
         amount_deposited: yup.number().integer().typeError("Amount must be a number"),
         invoice_number: yup.string().required("please provide invoice number"),
         selling_price: yup
@@ -123,6 +122,7 @@ export const AddDeposit = (props) => {
       product_id: "",
       serial_number: "",
       invoice_number: "",
+      created_at: "",
       selling_price: "",
       amount: "",
       quantity: "",
@@ -138,7 +138,7 @@ export const AddDeposit = (props) => {
     items.pop();
     setValues({ ...values, items });
   };
-  const [open, setopen] = useState(true);
+
   const { enqueueSnackbar } = useSnackbar();
   const Submit = (values) => {
     addDepositData({
@@ -150,41 +150,9 @@ export const AddDeposit = (props) => {
 
   const formRef = useRef(null);
 
-  // get a product by id
-
-  useEffect(() => {
-    const timeOutId = setTimeout(
-      () =>
-        selectedProduct != "" &&
-        getProductById({
-          dispatch: dispatch,
-          id: selectedProduct,
-          enqueueSnackbar: enqueueSnackbar,
-        }),
-      500
-    );
-    return () => clearTimeout(timeOutId);
-  }, [selectedProduct]);
-
-  // get a product by barcode
-  useEffect(() => {
-    getTotalDeposit({ dispatch: dispatch, enqueueSnackbar: enqueueSnackbar });
-    const timeOutId = setTimeout(
-      () =>
-        barcode != "" &&
-        getProductByBarcode({
-          dispatch: dispatch,
-          barcode: barcode,
-          enqueueSnackbar: enqueueSnackbar,
-        }),
-      500
-    );
-    return () => clearTimeout(timeOutId);
-  }, [barcode]);
-
   const RenderComponentForm = ({ items, i, values }) => {
-    setbarcode(items.barcode);
-    setselectedProduct(items.selectedProduct);
+    const retrieveProduct = products.filter((pro) => pro.product_barcode === items.barcode);
+    const retrieveProductById = products.filter((pro) => pro._id === items.selectedProduct);
 
     return (
       <React.Fragment key={i}>
@@ -222,13 +190,14 @@ export const AddDeposit = (props) => {
             name={`items.${i}.product`}
             disabled
             value={
-              productByBarcode.length > 0 && typeof productByBarcode[i] != "undefined"
-                ? (items.product = productByBarcode[i].product_name)
-                : "" || (productById.length > 0 && typeof productById[i] != "undefined")
-                ? (items.product = productById[i].product_name)
-                : ""
+              (items.product =
+                items.selectedProduct != "" && retrieveProductById != []
+                  ? retrieveProductById[0]?.product_name
+                  : retrieveProduct != []
+                  ? retrieveProduct[0]?.product_name
+                  : "")
             }
-            label="Product"
+            // label="Product"
           />
         </Grid>
         <Grid item xs={6}>
@@ -252,6 +221,14 @@ export const AddDeposit = (props) => {
           />
         </Grid>
         <Grid item xs={6}>
+          <CustomTextField
+            name={`items.${i}.created_at`}
+            label="Date"
+            disabled
+            value={(items.created_at = values.created_at)}
+          />
+        </Grid>
+        <Grid item xs={6}>
           <CustomTextField name={`items.${i}.amount_deposited`} label="Amount Deposited" />
         </Grid>
         <Grid item xs={6} style={{ display: "none" }}>
@@ -259,25 +236,26 @@ export const AddDeposit = (props) => {
             name={`items.${i}.product_id`}
             disabled
             value={
-              productByBarcode.length > 0 && typeof productByBarcode[i] != "undefined"
-                ? (items.product_id = productByBarcode[i]._id)
-                : "" || (productById.length > 0 && typeof productById[i] != "undefined")
-                ? (items.product_id = productById[i]._id)
-                : ""
+              (items.product_id =
+                items.selectedProduct != "" && retrieveProductById != []
+                  ? retrieveProductById[0]?._id
+                  : retrieveProduct != []
+                  ? retrieveProduct[0]?._id
+                  : "")
             }
             label="Product Id"
           />
         </Grid>
         <Grid item xs={6}>
           <CustomTextField name={`items.${i}.quantity`} label="Quantity" />
-          {productByBarcode.length > 0 && typeof productByBarcode[i] != "undefined"
-            ? Number(items.quantity) > productByBarcode[i].current_product_quantity &&
+          {items.selectedProduct != "" && retrieveProductById != []
+            ? Number(items.quantity) > retrieveProductById[0]?.current_product_quantity &&
               enqueueSnackbar("provided quantity is out of stock", {
                 variant: "warning",
                 preventDuplicate: true,
               })
-            : null || (productById.length > 0 && typeof productById[i] != "undefined")
-            ? Number(items.quantity) > productById[i].current_product_quantity &&
+            : retrieveProductById != []
+            ? Number(items.quantity) > retrieveProduct[0]?.current_product_quantity &&
               enqueueSnackbar("provided quantity is out of stock", {
                 variant: "warning",
                 preventDuplicate: true,
@@ -298,9 +276,9 @@ export const AddDeposit = (props) => {
             name={`items.${i}.amount`}
             label="Amount"
             value={
-              productByBarcode.length > 0 && typeof productByBarcode[i] != "undefined"
+              items.selectedProduct != "" && retrieveProductById != []
                 ? (items.amount = items.quantity * items.selling_price)
-                : productById.length > 0 && typeof productById[i] != "undefined"
+                : retrieveProductById != []
                 ? (items.amount = items.quantity * items.selling_price)
                 : ""
             }
@@ -342,11 +320,17 @@ export const AddDeposit = (props) => {
               <Formik
                 initialValues={INITIAL_FORM_VALUES}
                 validationSchema={FORM_VALIDATIONS}
-                enableReinitialize={true}
-                onSubmit={Submit}
+                // enableReinitialize={true}
+                onSubmit={(values, { setSubmitting, resetForm }) => {
+                  Submit(values, () => {
+                    resetForm(initialValues);
+                  });
+
+                  setSubmitting(false);
+                }}
                 innerRef={formRef}
               >
-                {({ errors, values, handleChange, setValues }) => (
+                {({ values, setValues }) => (
                   <Form>
                     <Grid container spacing={2}>
                       <Grid item xs={4}>
@@ -386,12 +370,7 @@ export const AddDeposit = (props) => {
                           label="Total Purchase Amount"
                           disabled
                           value={
-                            productByBarcode.length > 0 || productById.length > 0
-                              ? (values.total_amount = values.items.reduce(
-                                  (a, c) => a + c.amount,
-                                  0
-                                ))
-                              : ""
+                            (values.total_amount = values.items.reduce((a, c) => a + c.amount, 0))
                           }
                         />
                       </Grid>
@@ -410,6 +389,7 @@ export const AddDeposit = (props) => {
                                 variant="contained"
                                 fullWidth={true}
                                 color="primary"
+                                disabled={loading ? true : false}
                                 onClick={() => addMoreItems(values, setValues)}
                                 startIcon={<DownloadIcon fontSize="small" />}
                               >
@@ -424,6 +404,7 @@ export const AddDeposit = (props) => {
                               <Button
                                 variant="contained"
                                 fullWidth={true}
+                                disabled={loading ? true : false}
                                 color="primary"
                                 onClick={() => removeItems(values, setValues)}
                                 startIcon={<DownloadIcon fontSize="small" />}

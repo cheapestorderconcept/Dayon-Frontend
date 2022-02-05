@@ -39,9 +39,17 @@ export const EditPurchase = (props) => {
 
   let onePurchase = [];
   onePurchase = purchase.filter((pur) => pur._id === id);
+  const strDate = new Date(onePurchase[0]?.purchase_date);
+  function convert(strDate) {
+    var date = new Date(strDate),
+      mnth = ("0" + (date.getMonth() + 1)).slice(-2),
+      day = ("0" + date.getDate()).slice(-2);
+    return [date.getFullYear(), mnth, day].join("-");
+  }
 
   const INITIAL_FORM_VALUES = {
-    purchase_date: "",
+    purchase_date:
+      onePurchase.length > 0 && typeof onePurchase[0] != "undefined" ? convert(strDate) : "",
     invoice_number:
       onePurchase.length > 0 && typeof onePurchase[0] != "undefined"
         ? onePurchase[0].invoice_number
@@ -98,7 +106,6 @@ export const EditPurchase = (props) => {
   //   };
 
   const handleSubmit = (values) => {
-    console.log(values);
     updatePurchase({
       dispatch: dispatch,
       purchId: id,

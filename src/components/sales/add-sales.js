@@ -23,10 +23,7 @@ import { CustomSelect, CustomButton } from "../basicInputs";
 import { CustomDate } from "../basicInputs";
 import { paymentMethods } from "src/__mocks__/paymentMethods";
 import React, { useContext, useEffect, useMemo, useRef, useState } from "react";
-import {
-  getProductByBarcode,
-  getProductById,
-} from "src/statesManagement/store/actions/product-action";
+
 import { Store } from "src/statesManagement/store/store";
 
 import { addSalesData } from "src/statesManagement/store/actions/sales-action";
@@ -34,14 +31,12 @@ import { useSnackbar } from "notistack";
 import { useRouter } from "next/router";
 import Cookies from "js-cookie";
 
-// console.log(barcodeInput)
-
 export const AddSales = (props) => {
   const { paymentType } = props;
   const { dispatch, state } = useContext(Store);
-  const { productByBarcode, productById, products, loading } = state;
-  const [barcode, setbarcode] = useState("");
-  const [selectedProduct, setselectedProduct] = useState("");
+  const { products, loading } = state;
+  const { enqueueSnackbar } = useSnackbar();
+  const Router = useRouter();
 
   const INITIAL_FORM_VALUES = {
     created_at: "",
@@ -56,6 +51,7 @@ export const AddSales = (props) => {
         selectedProduct: "",
         serial_number: "",
         invoice_number: "",
+        created_at: "",
         product_id: "",
         cost_price: "",
         selling_price: "",
@@ -80,6 +76,7 @@ export const AddSales = (props) => {
         product: yup.string(),
         serial_number: yup.string(),
         invoice_number: yup.string(),
+        created_at: yup.date(),
         selling_price: yup
           .number()
           .integer()
@@ -100,9 +97,6 @@ export const AddSales = (props) => {
     ),
   });
 
-  const { enqueueSnackbar } = useSnackbar();
-  const Router = useRouter();
-
   const addMoreItems = (values, setValues) => {
     const items = [...values.items];
 
@@ -112,6 +106,7 @@ export const AddSales = (props) => {
       selectedProduct: "",
       serial_number: "",
       invoice_number: "",
+      created_at: "",
       product_id: "",
       cost_price: "",
 
@@ -130,7 +125,6 @@ export const AddSales = (props) => {
       enqueueSnackbar: enqueueSnackbar,
       Router: Router,
     });
-    console.log(values);
   };
   const removeItems = (values, setValues) => {
     const items = [...values.items];
@@ -139,37 +133,11 @@ export const AddSales = (props) => {
   };
 
   const formRef = useRef(null);
-  // get a product by id
-
-  useEffect(() => {
-    const timeOutId = setTimeout(
-      () => console.log(selectedProduct),
-      selectedProduct != "" &&
-        getProductById({
-          dispatch: dispatch,
-          id: selectedProduct,
-          enqueueSnackbar: enqueueSnackbar,
-        }),
-      2000
-    );
-    return () => clearTimeout(timeOutId);
-  }, [selectedProduct]);
-
-  useEffect(() => {
-    const timeOutId = setTimeout(() => {
-      barcode != "" &&
-        getProductByBarcode({
-          dispatch: dispatch,
-          barcode: barcode,
-          enqueueSnackbar: enqueueSnackbar,
-        });
-    }, 2000);
-    return () => clearTimeout(timeOutId);
-  }, [barcode]);
 
   const RenderForm = ({ items, i, values }) => {
-    setbarcode(items.barcode);
-    setselectedProduct(items.selectedProduct);
+    const retrieveProduct = products.filter((pro) => pro.product_barcode === items.barcode);
+    const retrieveProductById = products.filter((pro) => pro._id === items.selectedProduct);
+
     return (
       <React.Fragment key={i}>
         <Grid
@@ -205,14 +173,15 @@ export const AddSales = (props) => {
           <CustomTextField
             name={`items.${i}.product`}
             disabled
+            // label="Product"
             value={
-              productByBarcode.length > 0 && typeof productByBarcode[i] != "undefined"
-                ? (items.product = productByBarcode[i].product_name)
-                : "" || (productById.length > 0 && typeof productById[i] != "undefined")
-                ? (items.product = productById[i].product_name)
-                : ""
+              (items.product =
+                items.selectedProduct != "" && retrieveProductById != []
+                  ? retrieveProductById[0]?.product_name
+                  : retrieveProduct != []
+                  ? retrieveProduct[0]?.product_name
+                  : "")
             }
-            label="Product"
           />
         </Grid>
         <Grid item xs={6}>
@@ -236,17 +205,26 @@ export const AddSales = (props) => {
             value={(items.invoice_number = values.invoice_number)}
           />
         </Grid>
+        <Grid item xs={6}>
+          <CustomTextField
+            name={`items.${i}.created_at`}
+            label="Date"
+            disabled
+            value={(items.created_at = values.created_at)}
+          />
+        </Grid>
 
         <Grid item xs={6} style={{ display: "none" }}>
           <CustomTextField
             name={`items.${i}.product_id`}
             disabled
             value={
-              productByBarcode.length > 0 && typeof productByBarcode[i] != "undefined"
-                ? (items.product_id = productByBarcode[i]._id)
-                : "" || (productById.length > 0 && typeof productById[i] != "undefined")
-                ? (items.product_id = productById[i]._id)
-                : ""
+              (items.product_id =
+                items.selectedProduct != "" && retrieveProductById != []
+                  ? retrieveProductById[0]?._id
+                  : retrieveProduct != []
+                  ? retrieveProduct[0]?._id
+                  : "")
             }
             label="Product Id"
           />
@@ -256,25 +234,26 @@ export const AddSales = (props) => {
             name={`items.${i}.cost_price`}
             disabled
             value={
-              productByBarcode.length > 0 && typeof productByBarcode[i] != "undefined"
-                ? (items.cost_price = productByBarcode[i].product_price)
-                : "" || (productById.length > 0 && typeof productById[i] != "undefined")
-                ? (items.cost_price = productById[i].product_price)
-                : ""
+              (items.cost_price =
+                items.selectedProduct != "" && retrieveProductById != []
+                  ? retrieveProductById[0]?.product_price
+                  : retrieveProduct != []
+                  ? retrieveProduct[0]?.product_price
+                  : "")
             }
             label="Cost price"
           />
         </Grid>
         <Grid item xs={6}>
           <CustomTextField name={`items.${i}.quantity`} label="Quantity" />
-          {productByBarcode.length > 0 && typeof productByBarcode[i] != "undefined"
-            ? Number(items.quantity) > productByBarcode[i].current_product_quantity &&
+          {items.selectedProduct != "" && retrieveProductById != []
+            ? Number(items.quantity) > retrieveProductById[0]?.current_product_quantity &&
               enqueueSnackbar("provided quantity is out of stock", {
                 variant: "warning",
                 preventDuplicate: true,
               })
-            : null || (productById.length > 0 && typeof productById[i] != "undefined")
-            ? Number(items.quantity) > productById[i].current_product_quantity &&
+            : retrieveProductById != []
+            ? Number(items.quantity) > retrieveProduct[0]?.current_product_quantity &&
               enqueueSnackbar("provided quantity is out of stock", {
                 variant: "warning",
                 preventDuplicate: true,
@@ -295,9 +274,9 @@ export const AddSales = (props) => {
             name={`items.${i}.amount`}
             label="Amount"
             value={
-              productByBarcode.length > 0 && typeof productByBarcode[i] != "undefined"
+              items.selectedProduct != "" && retrieveProductById != []
                 ? (items.amount = items.quantity * items.selling_price)
-                : "" || (productById.length > 0 && typeof productById[i] != "undefined")
+                : retrieveProductById != []
                 ? (items.amount = items.quantity * items.selling_price)
                 : ""
             }
@@ -339,11 +318,10 @@ export const AddSales = (props) => {
               <Formik
                 initialValues={INITIAL_FORM_VALUES}
                 validationSchema={FORM_VALIDATIONS}
-                enableReinitialize={true}
                 onSubmit={Submit}
                 innerRef={formRef}
               >
-                {({ errors, values, handleChange, setValues }) => (
+                {({ values, setValues }) => (
                   <Form>
                     <Grid container spacing={2}>
                       <Grid item xs={4}>
@@ -373,13 +351,7 @@ export const AddSales = (props) => {
                           label="Total Purchase Amount"
                           disabled
                           value={
-                            (values.total_amount =
-                              productByBarcode.length > 0 || productById.length > 0
-                                ? (values.total_amount = values.items.reduce(
-                                    (a, c) => a + c.amount,
-                                    0
-                                  ))
-                                : "")
+                            (values.total_amount = values.items.reduce((a, c) => a + c.amount, 0))
                           }
                         />
                       </Grid>
@@ -397,6 +369,7 @@ export const AddSales = (props) => {
                               <Button
                                 variant="contained"
                                 color="primary"
+                                disabled={loading ? true : false}
                                 fullWidth={true}
                                 onClick={() => addMoreItems(values, setValues)}
                                 startIcon={<DownloadIcon fontSize="small" />}
@@ -413,6 +386,7 @@ export const AddSales = (props) => {
                                 variant="contained"
                                 fullWidth={true}
                                 color="primary"
+                                disabled={loading ? true : false}
                                 onClick={() => removeItems(values, setValues)}
                                 startIcon={<DownloadIcon fontSize="small" />}
                               >

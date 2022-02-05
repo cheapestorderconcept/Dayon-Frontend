@@ -37,7 +37,7 @@ export const ProductListToolbar = (props) => {
   const FORM_VALIDATIONS = yup.object().shape({
     name: yup.string().required("Please provide product name"),
     brand: yup.string().required("Please provide product brand"),
-    barcode: yup.string().required("Please provide product barcode"),
+    barcode: yup.string(),
     price: yup
       .number()
       .integer()
