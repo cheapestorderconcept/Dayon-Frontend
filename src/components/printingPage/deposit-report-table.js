@@ -29,7 +29,7 @@ export default function BasicTable({ depositReport }) {
             <TableCell>Date</TableCell>
             <TableCell align="right">Invoice Number</TableCell>
             <TableCell align="right">Store</TableCell>
-            <TableCell align="right">Customer Name</TableCell>
+            <TableCell align="right">Customer Name </TableCell>
             <TableCell align="right">Amount Paid</TableCell>
             <TableCell align="right">Amount To Balance</TableCell>
           </TableRow>
