@@ -25,28 +25,23 @@ import { Store } from "src/statesManagement/store/store";
 import NextLink from "next/link";
 import { useSnackbar } from "notistack";
 
-const INITIAL_FORM_VALUES = {
-  name: "",
-};
-
-const FORM_VALIDATIONS = yup.object().shape({
-  name: yup.string().required("Please provide brand name"),
-});
 export const ProductBrand = (props) => {
   const { title, id } = props;
   const { state, dispatch } = useContext(Store);
 
   const { loading, error, brands } = state;
 
-  // console.log(id);
-  let myBrand = {};
-  if (id != null) {
-    const brand = brands.filter((brand) => brand._id == id);
-    myBrand = { ...brand[0] };
-  }
+  let myBrand = [];
 
-  const [openAlert, setopenAlert] = useState(true);
-  error && console.log(error);
+  myBrand = brands.filter((brand) => brand._id == id);
+  const INITIAL_FORM_VALUES = {
+    name: myBrand.length > 0 && typeof myBrand[0] != "undefined" ? myBrand[0].brand_name : "",
+  };
+
+  const FORM_VALIDATIONS = yup.object().shape({
+    name: yup.string().required("Please provide brand name"),
+  });
+
   const Router = useRouter();
   const { enqueueSnackbar } = useSnackbar();
   const handleUpdate = (values) => {
@@ -108,6 +103,7 @@ export const ProductBrand = (props) => {
               <Formik
                 initialValues={INITIAL_FORM_VALUES}
                 onSubmit={id != null ? handleUpdate : handleSubmit}
+                enableReinitialize={true}
                 validationSchema={FORM_VALIDATIONS}
               >
                 <Form>
@@ -127,7 +123,9 @@ export const ProductBrand = (props) => {
                     </Grid>
 
                     <Grid item xs={12}>
-                      <CustomButton>{id != null ? "Update" : "Submit"}</CustomButton>
+                      <CustomButton disabled={loading ? true : false}>
+                        {id != null ? "Update" : "Submit"}
+                      </CustomButton>
                     </Grid>
                   </Grid>
                 </Form>

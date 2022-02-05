@@ -12,7 +12,7 @@ const SalesList = ({ salesList }) => {
   const handleDelete = (tableMeta) => (e) => {
     confirm("Are you sure you want to delete");
     const salesId = tableMeta.rowData[0];
-    console.log(salesId);
+
     deleteSales({
       dispatch: dispatch,
       salesId: salesId,
@@ -101,6 +101,7 @@ const SalesList = ({ salesList }) => {
       delete: `${sale._id}`,
       update: `${sale._id}`,
       Name: `${sale.product}`,
+      date: `${sale.created_at}`,
       Barcode: `${sale.barcode}`,
       amount: `${sale.amount}`,
       qty: `${sale.quantity}`,

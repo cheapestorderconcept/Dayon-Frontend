@@ -48,7 +48,13 @@ export const EditDepositView = (props) => {
   const { branch, products, paymentType, loading } = state;
   let oneDeposit = [];
   oneDeposit = deposits.filter((dep) => dep._id === id);
-
+  const strDate = new Date(oneDeposit[0]?.created_at);
+  function convert(strDate) {
+    var date = new Date(strDate),
+      mnth = ("0" + (date.getMonth() + 1)).slice(-2),
+      day = ("0" + date.getDate()).slice(-2);
+    return [date.getFullYear(), mnth, day].join("-");
+  }
   const [barcode, setbarcode] = useState("");
   let itemsArray = [];
 
@@ -68,7 +74,8 @@ export const EditDepositView = (props) => {
   // publishItems();
 
   const INITIAL_FORM_VALUES = {
-    created_at: "",
+    created_at:
+      oneDeposit.length > 0 && typeof oneDeposit[0] != "undefined" ? convert(strDate) : "",
     invoice_number:
       oneDeposit.length > 0 && typeof oneDeposit[0] != "undefined"
         ? oneDeposit[0].invoice_number
