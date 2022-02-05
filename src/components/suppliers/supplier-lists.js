@@ -21,14 +21,16 @@ const SuppliersList = () => {
   const { enqueueSnackbar } = useSnackbar();
 
   const handleDelete = (tableMeta) => (e) => {
-    confirm("Are you sure you want to delete");
+  const validate =  confirm("Are you sure you want to delete");
     const supId = tableMeta.rowData[0];
-    deleteSupplier({
-      dispatch: dispatch,
-      supId: supId,
-      enqueueSnackbar: enqueueSnackbar,
-      Router: Router,
-    });
+       if(!!validate){
+        deleteSupplier({
+          dispatch: dispatch,
+          supId: supId,
+          enqueueSnackbar: enqueueSnackbar,
+          Router: Router,
+        });
+       }
   };
 
   const columns = [

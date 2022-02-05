@@ -108,21 +108,34 @@ function Row(props) {
 export default function CollapsibleTable({ salesReport }) {
   return (
     <TableContainer component={Paper}>
-      <Table aria-label="collapsible table">
-        <TableHead>
-          <TableRow>
-            <TableCell />
-            <TableCell>S/N</TableCell>
-            <TableCell>Date</TableCell>
-            <TableCell>Invoice</TableCell>
+    <Table sx={{ minWidth: 650 }} aria-label="simple table">
+      <TableHead>
+        <TableRow>
+        <TableCell>S/N</TableCell>
+          <TableCell>Invoice</TableCell>
+          <TableCell>Date</TableCell>
+          <TableCell align="right">Product name</TableCell>
+          <TableCell align="right">Cost Price</TableCell>
+          <TableCell align="right">Selling Price</TableCell>
+          <TableCell align="right">Total Selling Price</TableCell>  
+        </TableRow>
+      </TableHead>
+      <TableBody>
+        {salesReport?.map((row, index) => (
+          <TableRow key={row._id} sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
+             <TableCell align="right">{index + 1}</TableCell>
+            <TableCell component="th" scope="row">
+              {row.invoice_number}
+            </TableCell>
+            <TableCell align="right">{row.created_at}</TableCell>
+            <TableCell align="right">{row.product}</TableCell>
+            <TableCell align="right">{row.cost_price}</TableCell>
+            <TableCell align="right">{`₦${row.selling_price}`}</TableCell>
+            <TableCell align="right">{row.quantity * row.selling_price}</TableCell>             
           </TableRow>
-        </TableHead>
-        <TableBody>
-          {salesReport.map((row, index) => (
-            <Row key={row._id} row={row} index={index} />
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+        ))}
+      </TableBody>
+    </Table>
+  </TableContainer>
   );
 }
