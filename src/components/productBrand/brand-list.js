@@ -22,7 +22,7 @@ const BrandTable = ({ brands }) => {
   const { enqueueSnackbar } = useSnackbar();
 
   const handleDelete = (tableMeta) => (e) => {
-   const validate =  confirm("Are you sure you want to delete");
+    const validate = confirm("Are you sure you want to delete");
     if (!!validate) {
       const brandId = tableMeta.rowData[0];
       deleteBrand({

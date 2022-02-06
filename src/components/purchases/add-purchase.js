@@ -45,6 +45,7 @@ export const AddPurchase = (props) => {
     items: [
       {
         invoice_number: "",
+        created_at: "",
         supplier: "",
         product: "",
         purchase_quantity: "",
@@ -58,6 +59,7 @@ export const AddPurchase = (props) => {
     branch: yup.string().required("Please choose a store"),
     purchase_date: yup.date().required("Please enter date"),
     invoice_number: yup.string().required("Please Enter Invoice Number"),
+    created_at: yup.date(),
 
     items: yup.array().of(
       yup.object().shape({
@@ -84,6 +86,7 @@ export const AddPurchase = (props) => {
 
     items.push({
       invoice_number: "",
+      created_at: "",
       supplier: "",
       product: "",
       purchase_quantity: "",
@@ -129,6 +132,14 @@ export const AddPurchase = (props) => {
             label="Invoice Number"
             disabled
             value={(items.invoice_number = values.invoice_number)}
+          />
+        </Grid>
+        <Grid item xs={6}>
+          <CustomTextField
+            name={`items.${i}.created_at`}
+            label="Date"
+            disabled
+            value={(items.created_at = values.purchase_date)}
           />
         </Grid>
         <Grid item xs={6}>

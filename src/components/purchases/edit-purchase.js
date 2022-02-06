@@ -39,6 +39,7 @@ export const EditPurchase = (props) => {
 
   let onePurchase = [];
   onePurchase = purchase.filter((pur) => pur._id === id);
+
   const strDate = new Date(onePurchase[0]?.purchase_date);
   function convert(strDate) {
     var date = new Date(strDate),
@@ -59,7 +60,9 @@ export const EditPurchase = (props) => {
     supplier:
       onePurchase.length > 0 && typeof onePurchase[0] != "undefined" ? onePurchase[0].supplier : "",
     product:
-      onePurchase.length > 0 && typeof onePurchase[0] != "undefined" ? onePurchase[0].product : "",
+      onePurchase.length > 0 && typeof onePurchase[0] != "undefined"
+        ? onePurchase[0].product_id
+        : "",
     purchase_quantity:
       onePurchase.length > 0 && typeof onePurchase[0] != "undefined"
         ? onePurchase[0].purchase_quantity
