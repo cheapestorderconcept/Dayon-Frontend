@@ -10,15 +10,15 @@ const SalesList = ({ salesList }) => {
   const { dispatch, state } = useContext(Store);
   const { enqueueSnackbar } = useSnackbar();
   const handleDelete = (tableMeta) => (e) => {
-  const validate =  confirm("Are you sure you want to delete");
-      if (!!validate) {
-    const salesId = tableMeta.rowData[0];
-    deleteSales({
-      dispatch: dispatch,
-      salesId: salesId,
-      enqueueSnackbar: enqueueSnackbar,
-    });
-      }
+    const validate = confirm("Are you sure you want to delete");
+    if (!!validate) {
+      const salesId = tableMeta.rowData[0];
+      deleteSales({
+        dispatch: dispatch,
+        salesId: salesId,
+        enqueueSnackbar: enqueueSnackbar,
+      });
+    }
   };
   const columns = [
     {
@@ -89,6 +89,7 @@ const SalesList = ({ salesList }) => {
       name: "serial_number",
       label: "Serial Number",
     },
+    { name: "date", label: "Date" },
   ];
   const [ready, setready] = useState(false);
   useEffect(() => {
@@ -98,6 +99,13 @@ const SalesList = ({ salesList }) => {
   console.log(salesList);
 
   const mySales = salesList.map((sale, i) => {
+    const strDate = new Date(sale?.created_at);
+    function convert(strDate) {
+      var date = new Date(strDate),
+        mnth = ("0" + (date.getMonth() + 1)).slice(-2),
+        day = ("0" + date.getDate()).slice(-2);
+      return [date.getFullYear(), mnth, day].join("-");
+    }
     return {
       delete: `${sale._id}`,
       update: `${sale._id}`,
@@ -110,6 +118,7 @@ const SalesList = ({ salesList }) => {
       Invoice: `${sale.invoice_number}`,
       serial_number: `${sale.serial_number}`,
       selling_price: `${sale.selling_price}`,
+      date: convert(strDate),
     };
   });
 

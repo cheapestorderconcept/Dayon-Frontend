@@ -17,13 +17,13 @@ const ProductTable = ({ products, editable }) => {
   const { enqueueSnackbar } = useSnackbar();
 
   const handleDelete = (tableMeta) => (e) => {
-   const validate =  confirm("Are you sure you want to delete");
+    const validate = confirm("Are you sure you want to delete");
     if (!!validate) {
       const productId = tableMeta.rowData[0];
       deleteProduct({
         dispatch: dispatch,
         productId: productId,
-  
+
         enqueueSnackbar: enqueueSnackbar,
       });
     }
@@ -155,6 +155,13 @@ const ProductTable = ({ products, editable }) => {
   // const product = products.map((pro) => Object.values(pro));
   // console.log(products);
   const product = products.map((pro, i) => {
+    const strDate = new Date(pro?.created_at);
+    function convert(strDate) {
+      var date = new Date(strDate),
+        mnth = ("0" + (date.getMonth() + 1)).slice(-2),
+        day = ("0" + date.getDate()).slice(-2);
+      return [date.getFullYear(), mnth, day].join("-");
+    }
     return {
       delete: `${pro._id}`,
       Update_Product: `${pro._id}`,
@@ -165,6 +172,7 @@ const ProductTable = ({ products, editable }) => {
       price: `${pro.product_price}`,
       supplier: `${pro.supplier}`,
       current_qty: `${pro.current_product_quantity}`,
+      date: convert(strDate),
       // prev_qty: `${pro.previous_product_quantity}`,
     };
   });

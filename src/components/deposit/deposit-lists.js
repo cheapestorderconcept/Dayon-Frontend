@@ -79,12 +79,23 @@ const DepositList = ({ deposits }) => {
       name: "serial_number",
       label: "Serial Number",
     },
+    {
+      name: "date",
+      label: "Deposit Date",
+    },
   ];
 
   // const myDeposits = deposits.map((item) => Object.values(item));
   console.log(deposits);
 
   const myDeposits = deposits.map((dep, i) => {
+    const strDate = new Date(dep?.created_at);
+    function convert(strDate) {
+      var date = new Date(strDate),
+        mnth = ("0" + (date.getMonth() + 1)).slice(-2),
+        day = ("0" + date.getDate()).slice(-2);
+      return [date.getFullYear(), mnth, day].join("-");
+    }
     return {
       delete: `${dep._id}`,
       update: `${dep._id}`,
@@ -98,6 +109,7 @@ const DepositList = ({ deposits }) => {
       quantity: `${dep.quantity}`,
       total_amount: `${dep.total_amount}`,
       customer_name: `${dep.customer_name}`,
+      date: convert(strDate),
     };
   });
 

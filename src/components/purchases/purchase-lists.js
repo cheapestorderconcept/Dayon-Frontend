@@ -35,7 +35,7 @@ const PurchaseList = ({ purchase }) => {
   const { dispatch } = useContext(Store);
   const { enqueueSnackbar } = useSnackbar();
   const handleDelete = (tableMeta) => (e) => {
-  const validate =  confirm("Are you sure you want to delete");
+    const validate = confirm("Are you sure you want to delete");
     if (!!validate) {
       const purchId = tableMeta.rowData[0];
       deletePurchase({
@@ -111,11 +111,22 @@ const PurchaseList = ({ purchase }) => {
       name: "discount",
       label: "Discount",
     },
+    {
+      name: "date",
+      label: "Purchase Date",
+    },
   ];
   // console.log(purchase);
   // const myPurchase = purchase.map((purch) => Object.values(purch));
 
   const myPurchase = purchase.map((purch, i) => {
+    const strDate = new Date(purch?.purchase_date);
+    function convert(strDate) {
+      var date = new Date(strDate),
+        mnth = ("0" + (date.getMonth() + 1)).slice(-2),
+        day = ("0" + date.getDate()).slice(-2);
+      return [date.getFullYear(), mnth, day].join("-");
+    }
     return {
       delete: `${purch._id}`,
       update: `${purch._id}`,
@@ -125,6 +136,7 @@ const PurchaseList = ({ purchase }) => {
       purch_qty: `${purch.purchase_quantity}`,
       total_purch_val: `${purch.total_purchase_value}`,
       discount: `${purch.discount}`,
+      date: convert(strDate),
     };
   });
 
