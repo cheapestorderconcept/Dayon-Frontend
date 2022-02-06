@@ -322,10 +322,8 @@ export const AddDeposit = (props) => {
                 validationSchema={FORM_VALIDATIONS}
                 // enableReinitialize={true}
                 onSubmit={(values, { setSubmitting, resetForm }) => {
-                  Submit(values, () => {
-                    resetForm(initialValues);
-                  });
-
+                  Submit(values);
+                  resetForm({ values: INITIAL_FORM_VALUES });
                   setSubmitting(false);
                 }}
                 innerRef={formRef}
