@@ -22,14 +22,16 @@ const BrandTable = ({ brands }) => {
   const { enqueueSnackbar } = useSnackbar();
 
   const handleDelete = (tableMeta) => (e) => {
-    confirm("Are you sure you want to delete");
-    const brandId = tableMeta.rowData[0];
-    deleteBrand({
-      dispatch: dispatch,
-      brandId: brandId,
-      Router: Router,
-      enqueueSnackbar: enqueueSnackbar,
-    });
+   const validate =  confirm("Are you sure you want to delete");
+    if (!!validate) {
+      const brandId = tableMeta.rowData[0];
+      deleteBrand({
+        dispatch: dispatch,
+        brandId: brandId,
+        Router: Router,
+        enqueueSnackbar: enqueueSnackbar,
+      });
+    }
   };
 
   const columns = [

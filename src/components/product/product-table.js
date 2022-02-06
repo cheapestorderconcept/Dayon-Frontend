@@ -17,15 +17,16 @@ const ProductTable = ({ products, editable }) => {
   const { enqueueSnackbar } = useSnackbar();
 
   const handleDelete = (tableMeta) => (e) => {
-    confirm("Are you sure you want to delete");
-    const productId = tableMeta.rowData[0];
-
-    deleteProduct({
-      dispatch: dispatch,
-      productId: productId,
-
-      enqueueSnackbar: enqueueSnackbar,
-    });
+   const validate =  confirm("Are you sure you want to delete");
+    if (!!validate) {
+      const productId = tableMeta.rowData[0];
+      deleteProduct({
+        dispatch: dispatch,
+        productId: productId,
+  
+        enqueueSnackbar: enqueueSnackbar,
+      });
+    }
   };
 
   const columnsEditable = [

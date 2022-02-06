@@ -22,14 +22,16 @@ const ListOfStaff = ({ staff }) => {
   const { enqueueSnackbar } = useSnackbar();
 
   const handleDelete = (tableMeta) => (e) => {
-    confirm("Are you sure you want to delete Staff");
+   const validate =  confirm("Are you sure you want to delete Staff");
     const staffId = tableMeta.rowData[1];
-    deleteStaff({
-      dispatch: dispatch,
-      staffId: staffId,
-      Router: Router,
-      enqueueSnackbar: enqueueSnackbar,
-    });
+      if (!!validate) {
+        deleteStaff({
+          dispatch: dispatch,
+          staffId: staffId,
+          Router: Router,
+          enqueueSnackbar: enqueueSnackbar,
+        });
+      }
   };
 
   const handleSuspend = (tableMeta) => (e) => {

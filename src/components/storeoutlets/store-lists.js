@@ -15,14 +15,16 @@ const StoreOuletLists = ({ branch }) => {
   const { dispatch } = useContext(Store);
   const { enqueueSnackbar } = useSnackbar();
   const handleDelete = (tableMeta) => (e) => {
-    confirm("Are you sure you want to delete");
+   const validate = confirm("Are you sure you want to delete");
     const storeID = tableMeta.rowData[0];
-    deleteStore({
-      dispatch: dispatch,
-      storeID: storeID,
-
-      enqueueSnackbar: enqueueSnackbar,
-    });
+      if (!!validate) {
+        deleteStore({
+          dispatch: dispatch,
+          storeID: storeID,
+    
+          enqueueSnackbar: enqueueSnackbar,
+        });
+      }
   };
   const columns = [
     {

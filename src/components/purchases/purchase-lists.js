@@ -35,14 +35,15 @@ const PurchaseList = ({ purchase }) => {
   const { dispatch } = useContext(Store);
   const { enqueueSnackbar } = useSnackbar();
   const handleDelete = (tableMeta) => (e) => {
-    confirm("Are you sure you want to delete");
-    const purchId = tableMeta.rowData[0];
-
-    deletePurchase({
-      dispatch: dispatch,
-      purchId: purchId,
-      enqueueSnackbar: enqueueSnackbar,
-    });
+  const validate =  confirm("Are you sure you want to delete");
+    if (!!validate) {
+      const purchId = tableMeta.rowData[0];
+      deletePurchase({
+        dispatch: dispatch,
+        purchId: purchId,
+        enqueueSnackbar: enqueueSnackbar,
+      });
+    }
   };
 
   const columns = [
