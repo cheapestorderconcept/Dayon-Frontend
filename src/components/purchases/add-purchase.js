@@ -26,6 +26,7 @@ import { useRouter } from "next/router";
 import Loading from "../loading/Loading";
 import { useSnackbar } from "notistack";
 import Cookies from "js-cookie";
+import { SearchableSelect } from "../basicInputs";
 
 export const AddPurchase = (props) => {
   const { suppliers, products, edit } = props;
@@ -104,7 +105,6 @@ export const AddPurchase = (props) => {
   };
 
   const handleSubmit = (values) => {
-    console.log(values);
     addPurchase({
       dispatch: dispatch,
       purchase: values,
@@ -151,14 +151,14 @@ export const AddPurchase = (props) => {
           />
         </Grid>
         <Grid item xs={6}>
-          <CustomSelect
+          <SearchableSelect
             name={`items.${i}.product`}
-            label="Select Product"
-            id="products"
             useId={true}
             options={products}
+            id="products"
           />
         </Grid>
+
         <Grid item xs={6}>
           <CustomTextField name={`items.${i}.purchase_quantity`} label="Quantity" />
         </Grid>

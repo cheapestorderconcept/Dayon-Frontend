@@ -1,7 +1,9 @@
-import { TextField, MenuItem, Button } from "@mui/material";
+import { TextField, MenuItem, Button, Box } from "@mui/material";
 import { useField, useFormikContext } from "formik";
 import { getBrands } from "src/statesManagement/store/actions/brand-action";
 import { products } from "src/__mocks__/products";
+import Autocomplete from "@mui/material/Autocomplete";
+import { useState } from "react";
 
 export const CustomTextField = ({ name, ...other }) => {
   const [field, meta] = useField(name);
@@ -16,6 +18,41 @@ export const CustomTextField = ({ name, ...other }) => {
     defaultConfiq.helperText = meta.error;
   }
   return <TextField {...defaultConfiq} />;
+};
+// searchable search bar
+
+export const SearchableSelect = ({ name, options, id, i, useId, ...other }) => {
+  const [value, setValue] = useState("");
+  const [inputValue, setInputValue] = useState("");
+  const { setFieldValue } = useFormikContext();
+
+  return (
+    <Autocomplete
+      id={id}
+      sx={{ width: 300 }}
+      name={name}
+      options={options}
+      value={value}
+      isOptionEqualToValue={(option, value) => option.id === value.id || value.product_id}
+      onChange={(event, newValue) => {
+        setValue(newValue);
+        setFieldValue(name, newValue?._id || newValue?.product_id || "");
+      }}
+      //rectify undefined as label
+      inputValue={inputValue}
+      onInputChange={(event, newInputValue) => {
+        setInputValue(newInputValue);
+      }}
+      autoHighlight
+      getOptionLabel={(option) => (option ? option.product_name : "")}
+      renderOption={(props, option) => (
+        <Box component="li" sx={{ "& > img": { mr: 2, flexShrink: 0 } }} {...props}>
+          {option ? option.product_name : ""}
+        </Box>
+      )}
+      renderInput={(params) => <TextField {...params} label="Choose a Product" />}
+    />
+  );
 };
 
 // custom select

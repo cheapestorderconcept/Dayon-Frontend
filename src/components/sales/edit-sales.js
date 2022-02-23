@@ -39,6 +39,7 @@ import {
   updateDeposit,
 } from "src/statesManagement/store/actions/deposit-action";
 import { Router } from "next/router";
+import { SearchableSelect } from "../basicInputs";
 
 // console.log(barcodeInput)
 
@@ -110,7 +111,6 @@ export const EditSalesView = (props) => {
   const { enqueueSnackbar } = useSnackbar();
 
   const Submit = (values) => {
-    console.log(id);
     updateSales({
       dispatch: dispatch,
       sales: values,
@@ -256,7 +256,7 @@ export const EditSalesView = (props) => {
             Home
           </Button>
           <Button startIcon={<DownloadIcon fontSize="small" />} sx={{ mr: 1 }}>
-            Deposit
+            Sales
           </Button>
         </Box>
       </Box>
@@ -293,16 +293,17 @@ export const EditSalesView = (props) => {
                         <CustomTextField name="barcode" label="Barcode" />
                       </Grid>
                       <Grid item xs={6}>
-                        <CustomTextField name="product" label="Product" />
+                        <CustomTextField name="product" disabled label="Product" />
                       </Grid>
-                      <Grid item xs={6}>
+
+                      {/* <Grid item xs={6}>
                         <CustomSelect
                           name="selectedProduct"
                           label="Choose Product"
                           options={products}
                           id="products"
                         />
-                      </Grid>
+                      </Grid> */}
                       <Grid item xs={6}>
                         <CustomTextField name="serial_number" label="Serial Number" />
                       </Grid>

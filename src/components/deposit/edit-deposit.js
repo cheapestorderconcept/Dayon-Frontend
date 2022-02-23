@@ -136,7 +136,6 @@ export const EditDepositView = (props) => {
   const { enqueueSnackbar } = useSnackbar();
 
   const Submit = (values) => {
-    console.log(id);
     updateDeposit({
       dispatch: dispatch,
       deposit: values,
@@ -329,16 +328,16 @@ export const EditDepositView = (props) => {
                         <CustomTextField name="barcode" label="Barcode" />
                       </Grid>
                       <Grid item xs={6}>
-                        <CustomTextField name="product" label="Product" />
+                        <CustomTextField name="product" disabled label="Product" />
                       </Grid>
-                      <Grid item xs={6}>
+                      {/* <Grid item xs={6}>
                         <CustomSelect
                           name="selectedProduct"
                           label="Choose Product"
                           options={products}
                           id="products"
                         />
-                      </Grid>
+                      </Grid> */}
                       <Grid item xs={6}>
                         <CustomTextField name="serial_number" label="Serial Number" />
                       </Grid>

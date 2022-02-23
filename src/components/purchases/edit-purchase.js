@@ -26,6 +26,7 @@ import { useRouter } from "next/router";
 import Loading from "../loading/Loading";
 import { useSnackbar } from "notistack";
 import Cookies from "js-cookie";
+import { SearchableSelect } from "../basicInputs";
 
 export const EditPurchase = (props) => {
   const { suppliers, products, id } = props;
@@ -194,11 +195,20 @@ export const EditPurchase = (props) => {
                           options={suppliers}
                         />
                       </Grid>
+                      {/* <Grid item xs={6}>
+                        <SearchableSelect
+                          name={"product"}
+                          useId={true}
+                          options={products}
+                          id="products"
+                        />
+                      </Grid> */}
                       <Grid item xs={6}>
                         <CustomSelect
                           name={`product`}
                           label="Select Product"
                           id="products"
+                          disabled
                           useId={true}
                           options={products}
                         />

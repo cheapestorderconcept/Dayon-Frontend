@@ -30,6 +30,7 @@ import { addSalesData } from "src/statesManagement/store/actions/sales-action";
 import { useSnackbar } from "notistack";
 import { useRouter } from "next/router";
 import Cookies from "js-cookie";
+import { SearchableSelect } from "../basicInputs";
 
 export const AddSales = (props) => {
   const { paymentType } = props;
@@ -136,7 +137,7 @@ export const AddSales = (props) => {
 
   const RenderForm = ({ items, i, values }) => {
     const retrieveProduct = products.filter((pro) => pro.product_barcode === items.barcode);
-    const retrieveProductById = products.filter((pro) => pro._id === items.selectedProduct);
+    const retrieveProductById = products.filter((pro) => pro._id === items?.selectedProduct);
 
     return (
       <React.Fragment key={i}>
@@ -185,6 +186,14 @@ export const AddSales = (props) => {
           />
         </Grid>
         <Grid item xs={6}>
+          <SearchableSelect
+            name={`items.${i}.selectedProduct`}
+            useId={true}
+            options={products}
+            id="products"
+          />
+        </Grid>
+        {/* <Grid item xs={6}>
           <CustomSelect
             name={`items.${i}.selectedProduct`}
             options={products}
@@ -192,7 +201,7 @@ export const AddSales = (props) => {
             id="products"
             label="Choose Products"
           />
-        </Grid>
+        </Grid> */}
 
         <Grid item xs={6}>
           <CustomTextField name={`items.${i}.serial_number`} label="Serial Number" />
