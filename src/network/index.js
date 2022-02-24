@@ -3,7 +3,7 @@ import Cookies from "js-cookie";
 const testUrl = "https://dayon-inventory.herokuapp.com";
 const liveUrl = "https://adeshexglobal.herokuapp.com";
 
-const baseUrl = `${testUrl}/api/v1`;
+const baseUrl = `${liveUrl}/api/v1`;
 
 export const RequestMethod = {
   POST: "POST",
