@@ -47,7 +47,7 @@ export const EditSalesView = (props) => {
   const { totalSales, id } = props;
   const { dispatch, state } = useContext(Store);
 
-  const { branch, products, paymentType, loading } = state;
+  const { branch, customers, paymentType, loading } = state;
   let oneSale = [];
   oneSale = totalSales.filter((sal) => sal._id === id);
   const strDate = new Date(oneSale[0]?.created_at);
@@ -90,6 +90,10 @@ export const EditSalesView = (props) => {
       oneSale.length > 0 && typeof oneSale[0] != "undefined" ? oneSale[0].selling_price : "",
     serial_number:
       oneSale.length > 0 && typeof oneSale[0] != "undefined" ? oneSale[0].serial_number : "",
+       customer_name:
+      oneSale.length > 0 && typeof oneSale[0] != "undefined"
+        ? oneSale[0].customer_name
+        : "",
   };
 
   const FORM_VALIDATIONS = yup.object().shape({
@@ -284,6 +288,12 @@ export const EditSalesView = (props) => {
                       </Grid>
                       <Grid item xs={6}>
                         <CustomTextField name="invoice_number" disabled label="Invoice Number" />
+                      </Grid>
+                      <Grid item xs={4}>
+                        <CustomTextField name="customer_name" label="Customer Name" />
+                      </Grid>
+                      <Grid item xs={4}>
+                      <CustomSelect  name="customer_id"label="Choose Customer" id="customers" useId={true} options={customers}/>
                       </Grid>
                       <Grid item xs={6}>
                         <CustomTextField name="amount" label="Amount" />

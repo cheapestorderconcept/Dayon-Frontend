@@ -44,7 +44,7 @@ const AddExpenses = ({ expensesCategories, edit, id, branch }) => {
   const { enqueueSnackbar } = useSnackbar();
   let oneExp = [];
   oneExp = expenses.filter((exp) => exp._id === id);
-  console.log(oneExp);
+
   const strDate = new Date(oneExp[0]?.date);
   function convert(strDate) {
     var date = new Date(strDate),

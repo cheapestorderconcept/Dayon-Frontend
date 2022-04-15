@@ -45,7 +45,7 @@ import { Router } from "next/router";
 export const EditDepositView = (props) => {
   const { deposits, id } = props;
   const { dispatch, state } = useContext(Store);
-  const { branch, products, paymentType, loading } = state;
+  const { branch, customers, paymentType, loading } = state;
   let oneDeposit = [];
   oneDeposit = deposits.filter((dep) => dep._id === id);
   const strDate = new Date(oneDeposit[0]?.created_at);
@@ -88,6 +88,8 @@ export const EditDepositView = (props) => {
       oneDeposit.length > 0 && typeof oneDeposit[0] != "undefined"
         ? oneDeposit[0].customer_name
         : "",
+         
+      
     total_amount:
       oneDeposit.length > 0 && typeof oneDeposit[0] != "undefined"
         ? oneDeposit[0].total_amount
@@ -124,6 +126,7 @@ export const EditDepositView = (props) => {
     price: yup.number().integer().typeError("Amount must be a number"),
     total_amount: yup.number().integer().typeError("Total Amount must be a number"),
     customer_name: yup.string(),
+    customer_id: yup.string(),
 
     barcode: yup.string(),
     product_id: yup.string(),
@@ -316,6 +319,9 @@ export const EditDepositView = (props) => {
 
                       <Grid item xs={4}>
                         <CustomTextField name="customer_name" label="Customer Name" />
+                      </Grid>
+                      <Grid item xs={4}>
+                      <CustomSelect  name="customer_id"label="Choose Customer" id="customers" useId={true} options={customers}/>
                       </Grid>
                       <Grid
                         item

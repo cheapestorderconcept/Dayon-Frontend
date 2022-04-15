@@ -1,35 +1,32 @@
 import Head from "next/head";
 import { Box, Container, Card, CardHeader, Divider, Typography, CardContent } from "@mui/material";
-import { DashboardLayout } from "../../../components/dashboard-layout";
-import { ProductBrand } from "src/components/productBrand/product-brand";
-import BrandTable from "src/components/productBrand/brand-list";
+import { DashboardLayout } from "../../components/dashboard-layout";
 import dynamic from "next/dynamic";
-import { getBrands } from "src/statesManagement/store/actions/brand-action";
-import { useContext, useEffect } from "react";
-
-import { useRouter } from "next/router";
+import { useContext } from "react";
 import { Store } from "src/statesManagement/store/store";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
+
 import { useSnackbar } from "notistack";
+import { CustomerRegisterationForm } from "src/components/customers/CustomerRegisterationForm";
 
 const DynamicComponentWithNoSSR = dynamic(() => import("src/components/navbar-branch-indicator"), {
   ssr: false,
 });
-const Brand = () => {
+
+const AddCustomers = () => {
   const { state, dispatch } = useContext(Store);
   const router = useRouter();
-  const { enqueueSnackbar } = useSnackbar();
-  const { brands, userInfo, error } = state;
 
-  console.log(brands);
+  const { userInfo, products, suppliers, brands, loading, error } = state;
+  const { enqueueSnackbar } = useSnackbar();
   useEffect(() => {
     !userInfo && router.push("/auth");
-    getBrands({ dispatch: dispatch, enqueueSnackbar: enqueueSnackbar });
   }, []);
-
   return (
     <>
       <Head>
-        <title>Brand | Adeshex Global</title>
+        <title>Customer |Adeshex Global</title>
       </Head>
       <Box
         component="main"
@@ -40,11 +37,11 @@ const Brand = () => {
       >
         <DynamicComponentWithNoSSR />
         <Container maxWidth={false}>
-          <ProductBrand title="Add Brand" />
-          <Box sx={{ pt: 3 }}>
-            {!brands ? (
+          <CustomerRegisterationForm title="Add Customer"  />
+          {/* <Box sx={{ pt: 3 }}>
+            {!products ? (
               <Card>
-                <CardHeader title="Brands" />
+                <CardHeader title="Suppliers" />
                 <Divider />
                 <Typography
                   sx={{
@@ -53,20 +50,27 @@ const Brand = () => {
                   variant="h6"
                   style={{ textAlign: "center" }}
                 >
-                  No Brands
+                  {loading ? <Loading /> : "No Products"}
                 </Typography>
                 <CardContent></CardContent>
               </Card>
             ) : (
-              <BrandTable brands={brands} />
+              <ProductTable products={products} />
             )}
-          </Box>
+          </Box> */}
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              pt: 3,
+            }}
+          ></Box>
         </Container>
       </Box>
     </>
   );
 };
 
-Brand.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
+AddCustomers.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
 
-export default Brand;
+export default AddCustomers;

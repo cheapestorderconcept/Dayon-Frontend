@@ -43,6 +43,11 @@ const initialState = {
     ? JSON.parse(Cookies.get("expensesCategories"))
     : [],
   totalSales: Cookies.get("sales") ? JSON.parse(Cookies.get("sales")) : [],
+  customers: Cookies.get("customers")?JSON.parse(Cookies.get("customers")): [],
+  customerTransactions:[],
+  customerDeposit:[],
+  customerPurchased:[],
+
 };
 
 export const StoreProvider = (props) => {

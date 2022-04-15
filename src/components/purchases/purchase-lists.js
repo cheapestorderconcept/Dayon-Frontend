@@ -6,25 +6,6 @@ import { deletePurchase } from "src/statesManagement/store/actions/purchase-acti
 import { Store } from "src/statesManagement/store/store";
 import { useSnackbar } from "notistack";
 
-// const columns = [
-//   "DATE",
-//   "INVOICE #",
-//   "STORE",
-//   "SUPPLIER",
-//   "VAT",
-//   "DISCOUNT",
-//   "	PURCHASE VALUE",
-//   "ITEMS",
-// ];
-
-// const data = [
-//   ["2021-12-28", "	000001", "	Headquarters Parakin", "Amodu Olaoye", "---", "20%", "N500", "3"],
-// ];
-
-// const options = {
-//   filter: true,
-//   sort: true,
-// };
 
 const PurchaseList = ({ purchase }) => {
   const [ready, setready] = useState(false);

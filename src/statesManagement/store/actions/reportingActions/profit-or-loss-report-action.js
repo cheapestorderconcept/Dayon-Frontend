@@ -21,7 +21,7 @@ export const getProfitOrLossReport = async ({
       method: "GET",
       path: `/view-sales-report?from=${from}&to=${to}&branch=${branch}`,
     });
-    console.log(data.data);
+  
     dispatch({
       type: GET_PROFIT_OR_LOSS_LEVEL_REPORT_SUCCESS,
       payload: data.data,

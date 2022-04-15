@@ -1,7 +1,7 @@
 import Head from "next/head";
 import { Box, Button, Container, Grid, Pagination, Typography } from "@mui/material";
 
-import { DashboardLayout } from "../../components/dashboard-layout";
+import { DashboardLayout } from "../../../components/dashboard-layout";
 import { Download as DownloadIcon } from "src/icons/download";
 import { Upload as UploadIcon } from "src/icons/upload";
 import PurchaseList from "src/components/purchases/purchase-lists";
@@ -10,24 +10,26 @@ import { useContext, useEffect } from "react";
 import { getPurchase } from "src/statesManagement/store/actions/purchase-action";
 import { Store } from "src/statesManagement/store/store";
 import { useSnackbar } from "notistack";
+import { getCustomers } from "src/statesManagement/store/actions/customer-action";
+import CustomerList from "src/components/customers/CustomerList";
 
 const DynamicComponentWithNoSSR = dynamic(() => import("src/components/navbar-branch-indicator"), {
   ssr: false,
 });
 
-const PurcahseListsPage = () => {
+const RegisteredCustomerListPage = () => {
   const { dispatch, state } = useContext(Store);
-  const { purchase, userInfo } = state;
+  const { customers, userInfo, loading } = state;
   const { enqueueSnackbar } = useSnackbar();
   useEffect(() => {
     !userInfo && router.push("/auth");
-    getPurchase({ dispatch: dispatch, enqueueSnackbar: enqueueSnackbar });
+ getCustomers({dispatch:dispatch, enqueueSnackbar:enqueueSnackbar})
   }, []);
 
   return (
     <>
       <Head>
-        <title>Purchase Lists| Adeshex Global</title>
+        <title>Registered Customers | Adeshex Global</title>
       </Head>
 
       <Box
@@ -49,7 +51,7 @@ const PurcahseListsPage = () => {
             }}
           >
             <Typography sx={{ m: 1 }} variant="h4">
-              Lists Of Purchases
+            Registered Customers
             </Typography>
             <Box sx={{ m: 1 }}>
               <Button startIcon={<UploadIcon fontSize="small" />} sx={{ mr: 1 }}>
@@ -61,7 +63,7 @@ const PurcahseListsPage = () => {
             </Box>
           </Box>
           <Box sx={{ pt: 3 }}>
-            <PurchaseList purchase={purchase} />
+            <CustomerList customers={customers} loading={loading} />
           </Box>
         </Container>
       </Box>
@@ -69,6 +71,6 @@ const PurcahseListsPage = () => {
   );
 };
 
-PurcahseListsPage.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
+RegisteredCustomerListPage.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
 
-export default PurcahseListsPage;
+export default RegisteredCustomerListPage;

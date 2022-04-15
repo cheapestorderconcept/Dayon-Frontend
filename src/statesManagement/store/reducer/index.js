@@ -154,6 +154,24 @@ import {
   UPDATE_STAFF_REQUEST,
   UPDATE_STAFF_SUCCESS,
   UPDATE_STAFF_FAIL,
+  GET_ALL_CUSTOMERS_REQUEST,
+  GET_ALL_CUSTOMERS_SUCCESS,
+  GET_ALL_CUSTOMERS_FAIL,
+  REGISTER_CUSTOMERS_REQUEST,
+  REGISTER_CUSTOMERS_SUCCESS,
+  REGISTER_CUSTOMERS_FAIL,
+  GET_CUSTOMERS_DEPOSITS_REQUEST,
+  GET_CUSTOMERS_DEPOSITS_SUCCESS,
+  GET_CUSTOMERS_DEPOSITS_FAIL,
+  GET_CUSTOMERS_PURCHASED_REQUEST,
+  GET_CUSTOMERS_PURCHASED_SUCCESS,
+  GET_CUSTOMERS_PURCHASED_FAIL,
+  GET_CUSTOMERS_TRANSACTIONS_REQUEST,
+  GET_CUSTOMERS_TRANSACTIONS_SUCCESS,
+  GET_CUSTOMERS_TRANSACTIONS_FAIL,
+  UPDATE_CUSTOMERS_REQUEST,
+  UPDATE_CUSTOMERS_SUCCESS,
+  UPDATE_CUSTOMERS_FAIL,
 } from "../constants";
 
 // const rootReducers = combineReducers({
@@ -643,6 +661,59 @@ const rootReducers = (state, action) => {
       return { ...state, loading: false, profitOrLossReport: action?.payload };
     case GET_PROFIT_OR_LOSS_LEVEL_REPORT_FAIL:
       return { ...state, loading: false, error: action.payload };
+
+//CUSTOMERS REDUCERS
+   case GET_ALL_CUSTOMERS_REQUEST:
+      return { ...state, loading: true };
+   case GET_ALL_CUSTOMERS_SUCCESS:
+      if (Cookies.get("customers")) {
+        Cookies.remove("customers");
+        Cookies.set("customers", JSON.stringify(action.payload));
+      } else {
+        Cookies.set("customers", JSON.stringify(action.payload));
+      }
+      return { ...state, loading: false, customers: action?.payload };
+   case GET_ALL_CUSTOMERS_FAIL:
+      return { ...state, loading: false, error: action.payload };
+
+   case REGISTER_CUSTOMERS_REQUEST:
+      return { ...state, loading: true };
+   case REGISTER_CUSTOMERS_SUCCESS:
+      return { ...state, loading: false };
+   case REGISTER_CUSTOMERS_FAIL:
+      return { ...state, loading: false, error: action.payload };   
+
+     case GET_CUSTOMERS_DEPOSITS_REQUEST:
+      return { ...state, loading: true };
+    case GET_CUSTOMERS_DEPOSITS_SUCCESS:
+      return { ...state, loading: false, customerDeposit: action?.payload };
+    case GET_CUSTOMERS_DEPOSITS_FAIL:
+      return { ...state, loading: false, error: action.payload };
+
+     case GET_CUSTOMERS_PURCHASED_REQUEST:
+      return { ...state, loading: true };
+    case GET_CUSTOMERS_PURCHASED_SUCCESS:
+     
+      return { ...state, loading: false, customerPurchased: action?.payload };
+    case GET_CUSTOMERS_PURCHASED_FAIL:
+      return { ...state, loading: false, error: action.payload };
+    
+    case GET_CUSTOMERS_TRANSACTIONS_REQUEST:
+      return { ...state, loading: true };
+    case GET_CUSTOMERS_TRANSACTIONS_SUCCESS:
+      return { ...state, loading: false, customerTransactions: action?.payload };
+    case GET_CUSTOMERS_TRANSACTIONS_FAIL:
+      return { ...state, loading: false, error: action.payload };
+
+    case UPDATE_CUSTOMERS_REQUEST:
+      return { ...state, loading: true };
+    case UPDATE_CUSTOMERS_SUCCESS:
+      return { ...state, loading: false };
+    case UPDATE_CUSTOMERS_FAIL:
+      return { ...state, loading: false, error: action.payload };
+    
+
+
     default:
       state;
   }

@@ -1,42 +1,38 @@
 import Head from "next/head";
 import { Box, Container, Card, CardHeader, Divider, Typography, CardContent } from "@mui/material";
-import { ProductListToolbar } from "../../components/product/product-list-toolbar";
 import { DashboardLayout } from "../../components/dashboard-layout";
-import ProductTable from "src/components/product/product-table";
 import dynamic from "next/dynamic";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { Store } from "src/statesManagement/store/store";
 import { useRouter } from "next/router";
-import {
-  getOutOfStock,
-  getProduct,
-  getProductPrice,
-} from "src/statesManagement/store/actions/product-action";
 import { useEffect } from "react";
 
-import Loading from "src/components/loading/Loading";
 import { useSnackbar } from "notistack";
+import { CustomerRegisterationForm } from "src/components/customers/CustomerRegisterationForm";
+import { getCustomers } from "src/statesManagement/store/actions/customer-action";
 
 const DynamicComponentWithNoSSR = dynamic(() => import("src/components/navbar-branch-indicator"), {
   ssr: false,
 });
 
-const Products = () => {
+const EditCustomers = () => {
   const { state, dispatch } = useContext(Store);
   const router = useRouter();
+  const [id, setid] = useState(null);
+  const { query } = useRouter();
 
-  const { userInfo, products, suppliers, brands, loading, error } = state;
+  const { userInfo,loading, error, customers } = state;
   const { enqueueSnackbar } = useSnackbar();
   useEffect(() => {
     !userInfo && router.push("/auth");
-    getProduct({ dispatch: dispatch, enqueueSnackbar: enqueueSnackbar });
-    // getProductPrice(dispatch);
-    // getOutOfStock(dispatch);
+    setid(query.id);
+    getCustomers({dispatch, enqueueSnackbar})
+     
   }, []);
   return (
     <>
       <Head>
-        <title>Products | Adeshex Global</title>
+        <title>Customer |Adeshex Global</title>
       </Head>
       <Box
         component="main"
@@ -47,8 +43,8 @@ const Products = () => {
       >
         <DynamicComponentWithNoSSR />
         <Container maxWidth={false}>
-          <ProductListToolbar products={products} suppliers={suppliers} brands={brands} />
-          <Box sx={{ pt: 3 }}>
+          <CustomerRegisterationForm title="Edit Customer" edit={true} cusId={id} customers={customers}  />
+          {/* <Box sx={{ pt: 3 }}>
             {!products ? (
               <Card>
                 <CardHeader title="Suppliers" />
@@ -67,7 +63,7 @@ const Products = () => {
             ) : (
               <ProductTable products={products} />
             )}
-          </Box>
+          </Box> */}
           <Box
             sx={{
               display: "flex",
@@ -81,6 +77,6 @@ const Products = () => {
   );
 };
 
-Products.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
+EditCustomers.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
 
-export default Products;
+export default EditCustomers;

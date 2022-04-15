@@ -35,7 +35,7 @@ import { SearchableSelect } from "../basicInputs";
 export const AddSales = (props) => {
   const { paymentType } = props;
   const { dispatch, state } = useContext(Store);
-  const { products, loading } = state;
+  const { products, loading, customers } = state;
   const { enqueueSnackbar } = useSnackbar();
   const Router = useRouter();
 
@@ -43,6 +43,8 @@ export const AddSales = (props) => {
     created_at: "",
     branch: Cookies.get("selectedBranch"),
     invoice_number: "",
+    // customer_name:"",
+    customer_id:"",
     total_amount: "",
     payment_type: "",
     items: [
@@ -66,6 +68,8 @@ export const AddSales = (props) => {
     // numOfItems: yup.string().required("Please enter number of items"),
     created_at: yup.date().required("please select date"),
     invoice_number: yup.string().required("please provide invoice number"),
+    // customer_name: yup.string(),
+    customer_id: yup.string(),
     store: yup.string().required("please select store"),
     payment_type: yup.string().required("please choose a payment method"),
     total_amount: yup.number().integer().typeError("Total amount must be a number"),
@@ -338,6 +342,16 @@ export const AddSales = (props) => {
                       </Grid>
                       <Grid item xs={4}>
                         <CustomTextField name="invoice_number" label="Invoice Number" />
+                      </Grid>
+                       {/* <Grid item xs={4}>
+                        <CustomTextField name="cutomer_name" label="Enter Customer Name" />
+                      </Grid> */}
+                      <Grid item xs={4}>
+                        <CustomSelect name="customer_id"
+                          label="Choose Customer"
+                          options={customers}
+                          id="customers"
+                          useId={true} />
                       </Grid>
                       <Grid item xs={4}>
                         <CustomTextField name="branch" value={values.branch} />

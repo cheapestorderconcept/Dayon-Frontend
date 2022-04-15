@@ -45,13 +45,15 @@ import { SearchableSelect } from "../basicInputs";
 
 export const AddDeposit = (props) => {
   const { dispatch, state } = useContext(Store);
-  const { productByBarcode, productById, paymentType, loading, products } = state;
+  const { customers, paymentType, loading, products } = state;
+  console.log(customers)
 
   const INITIAL_FORM_VALUES = {
     created_at: "",
     invoice_number: "",
     // amount_deposited: "",
     customer_name: "",
+    customer_id:"",
     branch: Cookies.get("selectedBranch"),
     payment_type: "",
     items: [
@@ -82,7 +84,8 @@ export const AddDeposit = (props) => {
     //   .typeError("Amount must be a number")
     //   .required("please enter amount deposited"),
     // customer_phone: yup.string().required("please enter Cutomer Phone number"),
-    customer_name: yup.string().required("please enter customer name"),
+    customer_name: yup.string(),
+    customer_id:yup.string(),
     items: yup.array().of(
       yup.object().shape({
         barcode: yup.string(),
@@ -356,9 +359,13 @@ export const AddDeposit = (props) => {
                       <Grid item xs={4}>
                         <CustomTextField name="customer_name" label="Customer Name" />
                       </Grid>
-                      {/* <Grid item xs={4}>
-                        <CustomTextField name="customer_phone" label="Customer Phone" />
-                      </Grid> */}
+                      <Grid item xs={4}>
+                      <CustomSelect name="customer_id"
+                          label="Choose Customer"
+                          options={customers}
+                          id="customers"
+                          useId={true} />
+                      </Grid>
 
                       <FieldArray name="items">
                         {() =>
