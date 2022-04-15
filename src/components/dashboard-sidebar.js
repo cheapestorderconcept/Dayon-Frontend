@@ -127,7 +127,7 @@ const items = [
     mainTitle: "Customers",
     title: "Add Customer",
     hasdropdown: true,
-    title2: "Registered Customers",
+    title2: "My Customers",
     href2: "/customers/registered-customers",
     // title3: "Update Customer",
     // href3: "/customers/update-customer",

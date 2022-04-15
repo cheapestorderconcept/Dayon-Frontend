@@ -346,13 +346,22 @@ export const AddSales = (props) => {
                        {/* <Grid item xs={4}>
                         <CustomTextField name="cutomer_name" label="Enter Customer Name" />
                       </Grid> */}
-                      <Grid item xs={4}>
+                      {/* <Grid item xs={4}>
                         <CustomSelect name="customer_id"
                           label="Choose Customer"
                           options={customers}
                           id="customers"
                           useId={true} />
-                      </Grid>
+                      </Grid> */}
+                        <Grid item xs={4}>
+                         <SearchableSelect
+                          name="customer_id"
+                         useId={true}
+                         title="Choose a customer"
+                          options={customers}
+                         id="customers"
+                         />
+                       </Grid>
                       <Grid item xs={4}>
                         <CustomTextField name="branch" value={values.branch} />
                       </Grid>

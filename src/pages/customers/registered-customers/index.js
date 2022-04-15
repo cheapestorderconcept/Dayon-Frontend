@@ -51,7 +51,7 @@ const RegisteredCustomerListPage = () => {
             }}
           >
             <Typography sx={{ m: 1 }} variant="h4">
-            Registered Customers
+            My Customers
             </Typography>
             <Box sx={{ m: 1 }}>
               <Button startIcon={<UploadIcon fontSize="small" />} sx={{ mr: 1 }}>

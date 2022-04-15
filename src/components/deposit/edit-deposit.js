@@ -317,9 +317,18 @@ export const EditDepositView = (props) => {
                         <CustomTextField name="price" label="Amount Deposited" />
                       </Grid>
 
-                      <Grid item xs={4}>
+                      {/* <Grid item xs={4}>
                         <CustomTextField name="customer_name" label="Customer Name" />
-                      </Grid>
+                      </Grid> */}
+                           <Grid item xs={4}>
+                            <SearchableSelect
+                              name="customer_id"
+                              useId={true}
+                              title="Choose a customer"
+                              options={customers}
+                              id="customers"
+                           />
+                         </Grid>
                       <Grid item xs={4}>
                       <CustomSelect  name="customer_id"label="Choose Customer" id="customers" useId={true} options={customers}/>
                       </Grid>

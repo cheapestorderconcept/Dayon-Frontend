@@ -24,7 +24,7 @@ const TransactionHistory = ({ customerTransactions }) => {
     },
     {
       name: "total_purchased",
-      label: "Toatal Purchased",
+      label: "Total Purchased",
     },
 
   ];

@@ -359,14 +359,23 @@ export const AddDeposit = (props) => {
                       <Grid item xs={4}>
                         <CustomTextField name="customer_name" label="Customer Name" />
                       </Grid>
-                      <Grid item xs={4}>
+                      {/* <Grid item xs={4}>
                       <CustomSelect name="customer_id"
                           label="Choose Customer"
                           options={customers}
                           id="customers"
                           useId={true} />
-                      </Grid>
+                      </Grid> */}
 
+                       <Grid item xs={4}>
+                       <SearchableSelect
+                       name="customer_id"
+                        useId={true}
+                        title="Choose a customer"
+                       options={customers}
+                          id="customers"
+                       />
+                      </Grid>
                       <FieldArray name="items">
                         {() =>
                           values.items.map((item, index) =>
