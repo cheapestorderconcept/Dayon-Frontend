@@ -19,7 +19,7 @@ import {
 import { Download as DownloadIcon } from "../../icons/download";
 import { Search as SearchIcon } from "../../icons/search";
 import { Upload as UploadIcon } from "../../icons/upload";
-import { CustomTextField } from "../basicInputs";
+import { CustomTextField, SearchableSelect } from "../basicInputs";
 import ListIcon from "@mui/icons-material/List";
 import * as yup from "yup";
 import { Formik, Form, Field, FieldArray, ErrorMessage, useFormikContext } from "formik";
@@ -329,9 +329,7 @@ export const EditDepositView = (props) => {
                               id="customers"
                            />
                          </Grid>
-                      <Grid item xs={4}>
-                      <CustomSelect  name="customer_id"label="Choose Customer" id="customers" useId={true} options={customers}/>
-                      </Grid>
+                     
                       {/* <Grid
                         item
                         xs={6}
