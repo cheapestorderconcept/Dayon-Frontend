@@ -295,7 +295,7 @@ export const EditSalesView = (props) => {
                       {/* <Grid item xs={4}>
                       <CustomSelect  name="customer_id"label="Choose Customer" id="customers" useId={true} options={customers}/>
                       </Grid> */}
-                       <Grid item xs={4}>
+                       <Grid item xs={6}>
                           <SearchableSelect
                            name="customer_id"
                             useId={true}

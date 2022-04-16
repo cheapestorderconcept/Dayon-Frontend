@@ -34,10 +34,10 @@ const DepositHistory = ({ customerDeposits }) => {
       name: "product",
       label: "Product Name",
     },
-    {
-      name: "barcode",
-      label: "Product Barcode",
-    },
+    // {
+    //   name: "barcode",
+    //   label: "Product Barcode",
+    // },
      {
       name: "cost_price",
       label: "Cost Price",

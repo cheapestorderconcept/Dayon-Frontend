@@ -133,10 +133,15 @@ export const CustomerRegisterationForm = (props) => {
             <Box sx={{ maxWidth: 500 }}>
               <Formik
                 initialValues={{ ...INITIAL_FORM_VALUES }}
-                onSubmit={edit ? handleUpdate : handleSubmit}
+                onSubmit={(values, { setSubmitting, resetForm }) => {
+                edit?handleUpdate(values):handleSubmit(values);
+                resetForm({ values: INITIAL_FORM_VALUES });
+                setSubmitting(false);
+                }}
                  enableReinitialize={true}
                 validationSchema={FORM_VALIDATIONS}
-              >
+              > 
+              {({ values, setValues }) => (
                 <Form>
                   <Grid container spacing={2}>
                     <Grid item xs={12}>
@@ -208,10 +213,11 @@ export const CustomerRegisterationForm = (props) => {
                     </Grid>
                   
                     <Grid item xs={12}>
-                      <CustomButton disabled={loading?true:false}> {edit ? "Update Customer" : "Submit"}</CustomButton>
+                      <CustomButton type="submit"  onClick={() => edit?handleUpdate(values):handleSubmit(values)} disabled={loading?true:false}> {edit ? "Update Customer" : "Submit"}</CustomButton>
                     </Grid>
                   </Grid>
                 </Form>
+                   )}
               </Formik>
             </Box>
           </CardContent>
