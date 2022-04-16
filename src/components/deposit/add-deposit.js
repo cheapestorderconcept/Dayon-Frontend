@@ -333,7 +333,7 @@ export const AddDeposit = (props) => {
               <Formik
                 initialValues={INITIAL_FORM_VALUES}
                 validationSchema={FORM_VALIDATIONS}
-                enableReinitialize={true}
+                enableReinitialize={false}
                 onSubmit={(values, { setSubmitting, resetForm }) => {
                   Submit(values);
                   resetForm({ values: INITIAL_FORM_VALUES });
