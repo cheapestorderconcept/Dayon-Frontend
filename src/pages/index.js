@@ -23,7 +23,6 @@ const Dashboard = () => {
   const router = useRouter();
   const { state, dispatch } = useContext(Store);
   const { userInfo, products, totalSales } = state;
-  console.log(totalSales);
   const totalsales = totalSales;
   const { enqueueSnackbar } = useSnackbar();
 

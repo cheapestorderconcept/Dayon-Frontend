@@ -1,4 +1,5 @@
 
+import { Typography } from "@mui/material";
 import MUIDataTable from "mui-datatables";
 import {  useEffect, useState } from "react";
 
@@ -59,6 +60,15 @@ const DepositHistory = ({ customerDeposits }) => {
     },
          {
       name: "amount_to_balance",
+      options:{
+               customBodyRender: (value, tableMeta, updateValue) => {
+          const data = tableMeta?.rowData[11]
+          return (
+             <Typography color={data == 0 ? "green":"red"}>{data}</Typography> 
+          
+          );
+        }},
+      
       label: "Amount To balance",
     },
       {

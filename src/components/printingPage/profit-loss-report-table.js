@@ -44,8 +44,8 @@ export default function CollapsibleTable({ profitOrLossReport }) {
             <TableCell align="right">
               {`₦${Number(row.quantity) * Number(row.selling_price)}`}
             </TableCell>
-            <TableCell align="right">{row.selling_price - row.cost_price<0?0:row.selling_price - row.cost_price}</TableCell>
-            <TableCell align="right">{row.selling_price - row.cost_price>0?0:row.selling_price-row.cost_price}</TableCell>
+            <TableCell align="right" style={{color:"green"}}>{row.selling_price - row.cost_price<0?0:row.selling_price - row.cost_price}</TableCell>
+            <TableCell align="right" style={{color:"red"}}>{row.selling_price - row.cost_price>0?0:row.selling_price-row.cost_price}</TableCell>
             {/* <TableCell align="right">{row.previous_product_quantity}</TableCell> */}
             
           </TableRow>
@@ -60,7 +60,7 @@ export default function CollapsibleTable({ profitOrLossReport }) {
             <Typography variant="h6">Total Profit</Typography>
           </TableCell>
           <TableCell>
-            <Typography variant="h6">{`₦${profitOrLossReport?.reduce(
+            <Typography variant="h6" color={"green"}>{`₦${profitOrLossReport?.reduce(
               (a, c) => a + Number(c.selling_price - c.cost_price),
               0
             )}`}</Typography>
@@ -69,7 +69,7 @@ export default function CollapsibleTable({ profitOrLossReport }) {
             <Typography variant="h6">Total Loss</Typography>
           </TableCell>
           <TableCell>
-            <Typography variant="h6">{`₦${profitOrLossReport?.reduce(
+            <Typography variant="h6" color={{color:"red"}}>{`₦${profitOrLossReport?.reduce(
               (a, c) => a + Number(c.selling_price - c.cost_price>0?0:c.selling_price - c.cost_price),
               0
             )}`}</Typography>

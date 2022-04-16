@@ -230,10 +230,10 @@ export const DashboardSidebar = (props) => {
             >
               <div>
                 <Typography color="inherit" variant="h6">
-                  Adeshex Global Concept.
+                 REGKEN multinational investment LTD
                 </Typography>
                 <Typography color="neutral.400" variant="body2">
-                  Daycon Consult : Available
+                   Available
                 </Typography>
               </div>
               <SelectorIcon

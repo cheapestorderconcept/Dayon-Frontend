@@ -1,8 +1,29 @@
 
 import MUIDataTable from "mui-datatables";
 import {  useEffect, useState } from "react";
+import { ThemeProvider } from "@mui/material/styles/";
+import { createTheme, Typography } from "@mui/material";
 
 const TransactionHistory = ({ customerTransactions }) => {
+
+ const theme =
+ createTheme({
+      overrides: {
+        MUIDataTable: {
+          root: {
+            backgroundColor: "#FF000"
+          },
+          paper: {
+            boxShadow: "none"
+          }
+        },
+        MUIDataTableBodyCell: {
+          root: {
+            backgroundColor: "#FF0000"
+          }
+        }
+      }
+    });
  
   const [ready, setready] = useState(false);
   
@@ -16,6 +37,8 @@ const TransactionHistory = ({ customerTransactions }) => {
    
     {
       name: "net_balance",
+     
+ 
       label: "Net Balance",
     },
     {
@@ -49,12 +72,14 @@ const TransactionHistory = ({ customerTransactions }) => {
   return (
     <>
       {ready == true && (
+        <ThemeProvider theme={theme}>
         <MUIDataTable
           title={"Customer's Transactions"}
           data={myTransactions}
           columns={columns}
           options={options}
         />
+        </ThemeProvider>
       )}
     </>
   );

@@ -58,7 +58,7 @@ export const AddDeposit = (props) => {
     payment_type: "",
     items: [
       {
-        barcode: "",
+        // barcode: "",
         product: "",
         selectedProduct: "",
         amount_deposited: "",
@@ -88,7 +88,7 @@ export const AddDeposit = (props) => {
     customer_id:yup.string(),
     items: yup.array().of(
       yup.object().shape({
-        barcode: yup.string(),
+        // barcode: yup.string(),
         product_id: yup.string(),
         selectedProduct: yup.string(),
         serial_number: yup.string(),
@@ -119,7 +119,7 @@ export const AddDeposit = (props) => {
     const items = [...values.items];
 
     items.push({
-      barcode: "",
+      // barcode: "",
       product: "",
       selectedProduct: "",
       amount_deposited: "",
@@ -171,14 +171,14 @@ export const AddDeposit = (props) => {
           <Typography>Item {i + 1}</Typography>
         </Grid>
 
-        <Grid item xs={6}>
+        {/* <Grid item xs={6}>
           <CustomTextField
             name={`items.${i}.barcode`}
             label="Barcode"
             onKeyPress={(e) => {
               e.key === "Enter" && e.preventDefault();
             }}
-            // autoFocus={true}
+            
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">
@@ -187,9 +187,9 @@ export const AddDeposit = (props) => {
               ),
             }}
           />
-        </Grid>
+        </Grid> */}
 
-        <Grid item xs={6}>
+       <Grid item xs={6}>
           <CustomTextField
             name={`items.${i}.product`}
             disabled
@@ -203,7 +203,7 @@ export const AddDeposit = (props) => {
             }
             // label="Product"
           />
-        </Grid>
+        </Grid> 
         <Grid item xs={6}>
           <SearchableSelect
             name={`items.${i}.selectedProduct`}
