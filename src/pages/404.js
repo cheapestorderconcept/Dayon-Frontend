@@ -2,12 +2,13 @@ import Head from 'next/head';
 import NextLink from 'next/link';
 import { Box, Button, Container, Typography } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { COMPANY_NAME } from 'src/utils/company_name';
 
 const NotFound = () => (
   <>
     <Head>
       <title>
-        404 | Material Kit
+        404 | {COMPANY_NAME}
       </title>
     </Head>
     <Box

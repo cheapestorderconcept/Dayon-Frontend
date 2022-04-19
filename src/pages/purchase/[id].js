@@ -11,6 +11,7 @@ import { getStores } from "src/statesManagement/store/actions/store-outlet-actio
 import { getProduct } from "src/statesManagement/store/actions/product-action";
 import { getSuppliers } from "src/statesManagement/store/actions/supplier-action";
 import { useSnackbar } from "notistack";
+import { COMPANY_NAME } from "src/utils/company_name";
 
 const DynamicComponentWithNoSSR = dynamic(() => import("src/components/navbar-branch-indicator"), {
   ssr: false,
@@ -35,7 +36,7 @@ const EditPurchasePage = () => {
   return (
     <>
       <Head>
-        <title>Edit Purchase| Material Kit</title>
+        <title>Edit Purchase| {COMPANY_NAME}</title>
       </Head>
       <Box
         component="main"

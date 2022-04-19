@@ -8,6 +8,7 @@ import SalesList from "src/components/sales/sales-list";
 import DepositList from "src/components/deposit/deposit-lists";
 import TransferList from "src/components/transferoutltes/transfer-lists";
 import dynamic from "next/dynamic";
+import { COMPANY_NAME } from "src/utils/company_name";
 
 const DynamicComponentWithNoSSR = dynamic(() => import("src/components/navbar-branch-indicator"), {
   ssr: false,
@@ -15,7 +16,7 @@ const DynamicComponentWithNoSSR = dynamic(() => import("src/components/navbar-br
 const TransferListsPage = () => (
   <>
     <Head>
-      <title>Transfer Lists| Material Kit</title>
+      <title>Transfer Lists| {COMPANY_NAME}</title>
     </Head>
 
     <Box

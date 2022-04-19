@@ -10,6 +10,7 @@ import { useContext, useEffect } from "react";
 import { getPurchase } from "src/statesManagement/store/actions/purchase-action";
 import { Store } from "src/statesManagement/store/store";
 import { useSnackbar } from "notistack";
+import { COMPANY_NAME } from "src/utils/company_name";
 
 const DynamicComponentWithNoSSR = dynamic(() => import("src/components/navbar-branch-indicator"), {
   ssr: false,
@@ -27,7 +28,7 @@ const PurcahseListsPage = () => {
   return (
     <>
       <Head>
-        <title>Purchase Lists| Adeshex Global</title>
+        <title>Purchase Lists| {COMPANY_NAME}</title>
       </Head>
 
       <Box

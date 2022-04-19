@@ -10,6 +10,7 @@ import { useRouter } from "next/router";
 import { useSnackbar } from "notistack";
 import { getProduct } from "src/statesManagement/store/actions/product-action";
 import { EditSalesView } from "src/components/sales/edit-sales";
+import { COMPANY_NAME } from "src/utils/company_name";
 
 const DynamicComponentWithNoSSR = dynamic(() => import("src/components/navbar-branch-indicator"), {
   ssr: false,
@@ -31,7 +32,7 @@ const EditSales = () => {
   return (
     <>
       <Head>
-        <title>Sales| Adeshex Global</title>
+        <title>Sales|{COMPANY_NAME}</title>
       </Head>
       <Box
         component="main"

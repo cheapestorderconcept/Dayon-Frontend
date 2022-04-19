@@ -11,6 +11,7 @@ import { DashboardLayout } from "src/components/dashboard-layout";
 import { EditProductForm } from "src/components/product/EditProductForm";
 import ProductTable from "src/components/product/product-table";
 import { useSnackbar } from "notistack";
+import { COMPANY_NAME } from "src/utils/company_name";
 
 const DynamicComponentWithNoSSR = dynamic(() => import("src/components/navbar-branch-indicator"), {
   ssr: false,
@@ -34,7 +35,7 @@ const EditProduct = () => {
   return (
     <>
       <Head>
-        <title>Update Price | Adeshex Nigeria Limited</title>
+        <title>Update Price |{COMPANY_NAME}</title>
       </Head>
       <Box
         component="main"

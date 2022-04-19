@@ -12,6 +12,7 @@ import { useEffect } from "react";
 import Loading from "src/components/loading/Loading";
 import { DashboardLayout } from "src/components/dashboard-layout";
 import { useSnackbar } from "notistack";
+import { COMPANY_NAME } from "src/utils/company_name";
 
 const DynamicComponentWithNoSSR = dynamic(() => import("src/components/navbar-branch-indicator"), {
   ssr: false,
@@ -34,7 +35,7 @@ const Stock = () => {
   return (
     <>
       <Head>
-        <title>Stocks | Adeshex Nigeria Limited</title>
+        <title>Stocks | {COMPANY_NAME}</title>
       </Head>
       <Box
         component="main"

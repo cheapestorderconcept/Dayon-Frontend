@@ -12,6 +12,7 @@ import { EditProductForm } from "src/components/product/EditProductForm";
 import ProductTable from "src/components/product/product-table";
 import { useSnackbar } from "notistack";
 import { BalStockLevelStockForm } from "src/components/product/BalStockLevelStockForm";
+import { COMPANY_NAME } from "src/utils/company_name";
 
 const DynamicComponentWithNoSSR = dynamic(() => import("src/components/navbar-branch-indicator"), {
   ssr: false,
@@ -35,7 +36,7 @@ const EditProductBalStock = () => {
   return (
     <>
       <Head>
-        <title>Update Product | Adeshex Nigeria Limited</title>
+        <title>Update Product |{COMPANY_NAME}</title>
       </Head>
       <Box
         component="main"

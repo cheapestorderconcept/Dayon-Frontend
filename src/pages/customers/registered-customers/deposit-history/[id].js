@@ -14,6 +14,7 @@ import { useSnackbar } from "notistack";
 import { getCustomerTransactionsHistory } from "src/statesManagement/store/actions/customer-action";
 import TransactionHistory from "src/components/customers/TransactionHistory";
 import DepositHistory from "src/components/customers/DepositHistory";
+import { COMPANY_NAME } from "src/utils/company_name";
 
 const DynamicComponentWithNoSSR = dynamic(() => import("src/components/navbar-branch-indicator"), {
   ssr: false,
@@ -39,7 +40,7 @@ const DepositHistoryPage = () => {
   return (
     <>
       <Head>
-        <title> Customer Deposit History| Adeshex Global</title>
+        <title> Customer Deposit History| {COMPANY_NAME}</title>
       </Head>
       <Box
         component="main"

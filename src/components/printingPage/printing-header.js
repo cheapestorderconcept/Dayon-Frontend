@@ -1,11 +1,12 @@
 import { Typography } from "@mui/material";
 import React from "react";
+import { COMPANY_NAME } from "src/utils/company_name";
 
 const PrintingHeader = ({ title }) => {
   return (
     <>
       <Typography variant="h1" sx={{ textAlign: "center", mb: 3 }}>
-        Adeshex Global
+       {COMPANY_NAME}
       </Typography>
       <Typography variant="h5" sx={{ textAlign: "center" }}>
         {title}

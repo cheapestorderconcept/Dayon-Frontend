@@ -10,6 +10,7 @@ import { useContext, useRef } from "react";
 import { Store } from "src/statesManagement/store/store";
 import ReactToPrint from "react-to-print";
 import BasicTable from "src/components/printingPage/deposit-report-table";
+import { COMPANY_NAME } from "src/utils/company_name";
 
 // import PrintingHeader from "src/components/printingPage/printing-header";
 
@@ -26,7 +27,7 @@ const DepositPrintReport = (props) => {
   return (
     <>
       <Head>
-        <title>Reporting| Adeshex Global Limited</title>
+        <title>Reporting| {COMPANY_NAME}</title>
       </Head>
       <Box
         component="main"

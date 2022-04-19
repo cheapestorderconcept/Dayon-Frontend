@@ -13,6 +13,7 @@ import {
   getExpenses,
   getExpensesCategory,
 } from "src/statesManagement/store/actions/expense-action";
+import { COMPANY_NAME } from "src/utils/company_name";
 
 const DynamicComponentWithNoSSR = dynamic(() => import("src/components/navbar-branch-indicator"), {
   ssr: false,
@@ -32,7 +33,7 @@ const ManageSupplierLists = () => {
   return (
     <>
       <Head>
-        <title>Manage Expenses| Material Kit</title>
+        <title>Manage Expenses| {COMPANY_NAME}</title>
       </Head>
 
       <Box

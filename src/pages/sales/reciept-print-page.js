@@ -10,6 +10,7 @@ import { useContext, useRef, useState, useEffect } from "react";
 import { Store } from "src/statesManagement/store/store";
 import ReactToPrint from "react-to-print";
 import CollapsibleTable from "src/components/printingPage/reciept-print-table";
+import { COMPANY_NAME } from "src/utils/company_name";
 
 // import PrintingHeader from "src/components/printingPage/printing-header";
 
@@ -31,7 +32,7 @@ const ReceiptPrintReport = (props) => {
   return (
     <>
       <Head>
-        <title>Reporting| Adeshex Global Limited</title>
+        <title>Reporting| {COMPANY_NAME}</title>
       </Head>
       <Box
         component="main"

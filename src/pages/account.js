@@ -8,6 +8,7 @@ import { Store } from "src/statesManagement/store/store";
 import { getProfile } from "src/statesManagement/store/actions/profile-action";
 import { useRouter } from "next/router";
 import { useSnackbar } from "notistack";
+import { COMPANY_NAME } from "src/utils/company_name";
 
 const Account = () => {
   const { dispatch, state } = useContext(Store);
@@ -22,7 +23,7 @@ const Account = () => {
   return (
     <>
       <Head>
-        <title>Profile | Adeshex Global</title>
+        <title>Profile | {COMPANY_NAME}</title>
       </Head>
       <Box
         component="main"

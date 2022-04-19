@@ -10,6 +10,7 @@ import { useContext, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { Store } from "src/statesManagement/store/store";
 import { useSnackbar } from "notistack";
+import { COMPANY_NAME } from "src/utils/company_name";
 
 const DynamicComponentWithNoSSR = dynamic(() => import("src/components/navbar-branch-indicator"), {
   ssr: false,
@@ -31,7 +32,7 @@ const EditBrand = () => {
   return (
     <>
       <Head>
-        <title>Brand | Material Kit</title>
+        <title>Brand |{COMPANY_NAME}</title>
       </Head>
       <Box
         component="main"

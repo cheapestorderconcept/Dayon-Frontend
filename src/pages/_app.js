@@ -8,6 +8,7 @@ import { createEmotionCache } from "../utils/create-emotion-cache";
 import { theme } from "../theme";
 import { StoreProvider } from "src/statesManagement/store/store";
 import { SnackbarProvider } from "notistack";
+import { COMPANY_NAME } from "src/utils/company_name";
 
 const clientSideEmotionCache = createEmotionCache();
 
@@ -21,7 +22,7 @@ const App = (props) => {
       <StoreProvider>
         <CacheProvider value={emotionCache}>
           <Head>
-            <title>Adeshex Global Concept</title>
+            <title>{COMPANY_NAME}</title>
             <meta name="viewport" content="initial-scale=1, width=device-width" />
           </Head>
           <LocalizationProvider dateAdapter={AdapterDateFns}>

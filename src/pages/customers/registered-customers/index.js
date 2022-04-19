@@ -12,6 +12,7 @@ import { Store } from "src/statesManagement/store/store";
 import { useSnackbar } from "notistack";
 import { getCustomers } from "src/statesManagement/store/actions/customer-action";
 import CustomerList from "src/components/customers/CustomerList";
+import { COMPANY_NAME } from "src/utils/company_name";
 
 const DynamicComponentWithNoSSR = dynamic(() => import("src/components/navbar-branch-indicator"), {
   ssr: false,
@@ -29,7 +30,7 @@ const RegisteredCustomerListPage = () => {
   return (
     <>
       <Head>
-        <title>Registered Customers | Adeshex Global</title>
+        <title>Registered Customers | {COMPANY_NAME}</title>
       </Head>
 
       <Box

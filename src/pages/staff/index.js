@@ -10,6 +10,7 @@ import { useRouter } from "next/router";
 import { getStaff } from "src/statesManagement/store/actions/register-staff-action";
 import { getStores } from "src/statesManagement/store/actions/store-outlet-action";
 import { useSnackbar } from "notistack";
+import { COMPANY_NAME } from "src/utils/company_name";
 
 const DynamicComponentWithNoSSR = dynamic(() => import("src/components/navbar-branch-indicator"), {
   ssr: false,
@@ -29,7 +30,7 @@ const Staff = () => {
   return (
     <>
       <Head>
-        <title>Staff | Adeshex Global </title>
+        <title>Staff | {COMPANY_NAME}</title>
       </Head>
       <Box
         component="main"

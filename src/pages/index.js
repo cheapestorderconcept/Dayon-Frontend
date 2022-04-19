@@ -14,6 +14,7 @@ import { useSnackbar } from "notistack";
 import SalesList from "src/components/sales/sales-list";
 import { getTotalSales } from "src/statesManagement/store/actions/sales-action";
 import { getProduct } from "src/statesManagement/store/actions/product-action";
+import { COMPANY_NAME } from "src/utils/company_name";
 
 const DynamicComponentWithNoSSR = dynamic(() => import("src/components/navbar-branch-indicator"), {
   ssr: false,
@@ -36,7 +37,7 @@ const Dashboard = () => {
   return (
     <>
       <Head>
-        <title>Dashboard | Adeshex Global </title>
+        <title>Dashboard | {COMPANY_NAME}</title>
       </Head>
       <Box
         component="main"

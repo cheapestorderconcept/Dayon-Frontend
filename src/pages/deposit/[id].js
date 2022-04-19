@@ -13,6 +13,7 @@ import { useRouter } from "next/router";
 import { getTotalDeposit } from "src/statesManagement/store/actions/deposit-action";
 import { useSnackbar } from "notistack";
 import { EditDepositView } from "src/components/deposit/edit-deposit";
+import { COMPANY_NAME } from "src/utils/company_name";
 
 const DynamicComponentWithNoSSR = dynamic(() => import("src/components/navbar-branch-indicator"), {
   ssr: false,
@@ -32,7 +33,7 @@ const EditDeposit = () => {
   return (
     <>
       <Head>
-        <title>Edit Deposit View| Adeshex Global</title>
+        <title>Edit Deposit View| {COMPANY_NAME}</title>
       </Head>
       <Box
         component="main"

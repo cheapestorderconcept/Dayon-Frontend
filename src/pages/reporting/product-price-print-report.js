@@ -13,6 +13,7 @@ import ProductPriceListTable from "src/components/reporting/product-price-list-r
 import { getProductPrice } from "src/statesManagement/store/actions/product-action";
 import { useSnackbar } from "notistack";
 import ReactToPrint from "react-to-print";
+import { COMPANY_NAME } from "src/utils/company_name";
 
 const DynamicComponentWithNoSSR = dynamic(() => import("src/components/navbar-branch-indicator"), {
   ssr: false,
@@ -32,7 +33,7 @@ const ProductPriceReport = (props) => {
   return (
     <>
       <Head>
-        <title>Reporting| Adeshex Global Limited</title>
+        <title>Reporting| {COMPANY_NAME}</title>
       </Head>
       <Box
         component="main"

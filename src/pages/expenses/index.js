@@ -13,6 +13,7 @@ import {
   getExpensesCategory,
 } from "src/statesManagement/store/actions/expense-action";
 import { useSnackbar } from "notistack";
+import { COMPANY_NAME } from "src/utils/company_name";
 
 const DynamicComponentWithNoSSR = dynamic(() => import("src/components/navbar-branch-indicator"), {
   ssr: false,
@@ -32,7 +33,7 @@ const Expenses = () => {
   return (
     <>
       <Head>
-        <title>Expenses | Adeshex Global</title>
+        <title>Expenses | {COMPANY_NAME}</title>
       </Head>
       <Box
         component="main"

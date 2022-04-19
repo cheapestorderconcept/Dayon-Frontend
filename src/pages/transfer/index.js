@@ -5,6 +5,7 @@ import { DashboardLayout } from "../../components/dashboard-layout";
 
 import { AddTransferLog } from "src/components/transferoutltes/add-transfer-log";
 import dynamic from "next/dynamic";
+import { COMPANY_NAME } from "src/utils/company_name";
 
 const DynamicComponentWithNoSSR = dynamic(() => import("src/components/navbar-branch-indicator"), {
   ssr: false,
@@ -12,7 +13,7 @@ const DynamicComponentWithNoSSR = dynamic(() => import("src/components/navbar-br
 const TransferOutlets = () => (
   <>
     <Head>
-      <title>Add Transfer Outlet| Material Kit</title>
+      <title>Add Transfer Outlet| {COMPANY_NAME}</title>
     </Head>
     <Box
       component="main"

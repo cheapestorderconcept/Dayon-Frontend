@@ -6,6 +6,7 @@ import PaymentMethodList from "src/components/paymentmethod/payment-method-list"
 import { AddPurchase } from "src/components/purchases/add-purchase";
 import { AddSupplierLedger } from "src/components/purchases/add-supplier-ledger";
 import dynamic from "next/dynamic";
+import { COMPANY_NAME } from "src/utils/company_name";
 
 const DynamicComponentWithNoSSR = dynamic(() => import("src/components/navbar-branch-indicator"), {
   ssr: false,
@@ -13,7 +14,7 @@ const DynamicComponentWithNoSSR = dynamic(() => import("src/components/navbar-br
 const AddSupplierLedgerPage = () => (
   <>
     <Head>
-      <title>Add Supplier Ledger| Material Kit</title>
+      <title>Add Supplier Ledger| {COMPANY_NAME}</title>
     </Head>
     <Box
       component="main"

@@ -5,6 +5,7 @@ import { DashboardLayout } from "../../components/dashboard-layout";
 import dynamic from "next/dynamic";
 
 import { Transfer_Report_Form } from "src/components/reporting/transfer-report";
+import { COMPANY_NAME } from "src/utils/company_name";
 
 const DynamicComponentWithNoSSR = dynamic(() => import("src/components/navbar-branch-indicator"), {
   ssr: false,
@@ -13,7 +14,7 @@ const DynamicComponentWithNoSSR = dynamic(() => import("src/components/navbar-br
 const TransferReport = () => (
   <>
     <Head>
-      <title>Reporting| 18A Nigerial Limited</title>
+      <title>Reporting| {COMPANY_NAME}</title>
     </Head>
     <Box
       component="main"
