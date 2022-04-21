@@ -121,7 +121,7 @@ const items = [
     href2: "/expenses/manage-expenses",
     title2: "Manage Expenses",
   },
-    {
+  {
     href: "/customers",
     icon: <BarChartIcon fontSize="small" />,
     mainTitle: "Customers",
@@ -230,10 +230,10 @@ export const DashboardSidebar = (props) => {
             >
               <div>
                 <Typography color="inherit" variant="h6">
-                 REGKEN multinational investment LTD
+                  REGKEN multinational investment LTD
                 </Typography>
                 <Typography color="neutral.400" variant="body2">
-                   Available
+                  Available
                 </Typography>
               </div>
               <SelectorIcon
