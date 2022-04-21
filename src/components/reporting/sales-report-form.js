@@ -44,6 +44,7 @@ export const SalesReportForm = (props) => {
   // updates date range on change
   const handleSelect = (ranges) => {
     const { selection } = ranges;
+    console.log(selection);
 
     setselectionValue([selection]);
     const startdate = selectionValue[0].startDate;
@@ -58,11 +59,12 @@ export const SalesReportForm = (props) => {
     getSalesReport({
       dispatch: dispatch,
       enqueueSnackbar: enqueueSnackbar,
-      from: formvalues.startDate,
-      to: formvalues.endDate,
+      from: selectionValue[0].startDate,
+      to: selectionValue[0].endDate,
       Router: Router,
       branch: formvalues.store,
     });
+    console.log(selectionValue);
     console.log(formvalues);
   };
 

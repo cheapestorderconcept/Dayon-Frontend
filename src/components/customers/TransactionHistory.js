@@ -1,44 +1,37 @@
-
 import MUIDataTable from "mui-datatables";
-import {  useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { ThemeProvider } from "@mui/material/styles/";
 import { createTheme, Typography } from "@mui/material";
 
 const TransactionHistory = ({ customerTransactions }) => {
-
- const theme =
- createTheme({
-      overrides: {
-        MUIDataTable: {
-          root: {
-            backgroundColor: "#FF000"
-          },
-          paper: {
-            boxShadow: "none"
-          }
+  const theme = createTheme({
+    overrides: {
+      MUIDataTable: {
+        root: {
+          backgroundColor: "#FF000",
         },
-        MUIDataTableBodyCell: {
-          root: {
-            backgroundColor: "#FF0000"
-          }
-        }
-      }
-    });
- 
-  const [ready, setready] = useState(false);
-  
+        paper: {
+          boxShadow: "none",
+        },
+      },
+      MUIDataTableBodyCell: {
+        root: {
+          backgroundColor: "#FF0000",
+        },
+      },
+    },
+  });
 
-  useEffect(() =>  {
+  const [ready, setready] = useState(false);
+
+  useEffect(() => {
     setready(true);
-  
   }, []);
 
   const columns = [
-   
     {
       name: "net_balance",
-     
- 
+
       label: "Net Balance",
     },
     {
@@ -49,18 +42,15 @@ const TransactionHistory = ({ customerTransactions }) => {
       name: "total_purchased",
       label: "Total Purchased",
     },
-
   ];
- 
 
-  const myTransactions = [{
-     
+  const myTransactions = [
+    {
       net_balance: `${customerTransactions.net_balance}`,
       total_amount_paid: `${customerTransactions.total_amount_paid}`,
       total_purchased: `${customerTransactions.total_purchased}`,
-     
-    }];
-  
+    },
+  ];
 
   const options = {
     filter: true,
@@ -73,12 +63,12 @@ const TransactionHistory = ({ customerTransactions }) => {
     <>
       {ready == true && (
         <ThemeProvider theme={theme}>
-        <MUIDataTable
-          title={"Customer's Transactions"}
-          data={myTransactions}
-          columns={columns}
-          options={options}
-        />
+          <MUIDataTable
+            title={"Customer's Transactions"}
+            data={myTransactions}
+            columns={columns}
+            options={options}
+          />
         </ThemeProvider>
       )}
     </>
