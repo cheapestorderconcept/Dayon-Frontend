@@ -8,7 +8,7 @@ import DenseTable from "src/components/printingPage/sales-report-table";
 import { withRouter } from "next/router";
 import { useContext, useRef } from "react";
 import { Store } from "src/statesManagement/store/store";
-
+import { formatDate } from "src/utils/helpers";
 import ReactToPrint from "react-to-print";
 import CollapsibleTable from "src/components/printingPage/profit-loss-report-table";
 import Moment from "react-moment";
@@ -24,6 +24,9 @@ const ProfitOrLossPrintReport = (props) => {
   console.log(profitOrLossReport);
   const printRef = useRef();
   const { router } = props;
+
+  const from_date = formatDate(router.query.from);
+  const to_date = formatDate(router.query.to);
 
   return (
     <>
@@ -42,7 +45,7 @@ const ProfitOrLossPrintReport = (props) => {
             sx={{
               mb: 4,
             }}
-            title={`Profit And Loss Report at ${router.query.branch} Between ${ router.query.from} and ${router.query.to}`}
+            title={`Profit And Loss Report at ${router.query.branch} Between "${from_date}" and "${to_date}"`}
           />
           <CollapsibleTable profitOrLossReport={profitOrLossReport} />
         </Container>
