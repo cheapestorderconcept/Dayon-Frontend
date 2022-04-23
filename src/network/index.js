@@ -1,9 +1,9 @@
 import axios from "axios";
 import Cookies from "js-cookie";
 const testUrl = "https://dayon-inventory.herokuapp.com";
-const liveUrl = "https://regken-pos.herokuapp.com";
+const liveUrl = "https://binfattech.herokuapp.com";
 
-const baseUrl = `${testUrl}/api/v1`;
+const baseUrl = `${liveUrl}/api/v1`;
 
 export const RequestMethod = {
   POST: "POST",
