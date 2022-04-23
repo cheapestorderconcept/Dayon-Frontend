@@ -60,8 +60,8 @@ export const Profit_LossReport_Form = (props) => {
       dispatch: dispatch,
       enqueueSnackbar: enqueueSnackbar,
       branch: formvalues.store,
-      from: formvalues.startDate,
-      to: formvalues.endDate,
+      from: selectionValue[0].startDate,
+      to: selectionValue[0].endDate,
       Router: Router,
     });
     console.log(formvalues);

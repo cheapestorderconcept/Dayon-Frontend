@@ -1,7 +1,7 @@
 import Head from "next/head";
 import { Box, Button, Container } from "@mui/material";
 import { DashboardLayout } from "../../components/dashboard-layout";
-
+import { formatDate } from "src/utils/helpers";
 import dynamic from "next/dynamic";
 import PrintingHeader from "src/components/printingPage/printing-header";
 import DenseTable from "src/components/printingPage/sales-report-table";
@@ -23,6 +23,9 @@ const SalesPrintReport = (props) => {
   const printRef = useRef();
   const { router } = props;
 
+  const from_date = formatDate(router.query.from);
+  const to_date = formatDate(router.query.to);
+
   return (
     <>
       <Head>
@@ -37,7 +40,7 @@ const SalesPrintReport = (props) => {
       >
         <Container ref={printRef} maxWidth={true}>
           <PrintingHeader
-            title={`Sales Report at ${router.query.branch} Between ${router.query.from} and ${router.query.to}`}
+            title={`Sales Report at ${router.query.branch} Between "${from_date}" and "${to_date}"`}
           />
           <CollapsibleTable salesReport={salesReport} />
         </Container>

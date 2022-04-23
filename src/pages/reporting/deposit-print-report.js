@@ -10,6 +10,7 @@ import { useContext, useRef } from "react";
 import { Store } from "src/statesManagement/store/store";
 import ReactToPrint from "react-to-print";
 import BasicTable from "src/components/printingPage/deposit-report-table";
+import { formatDate } from "../../utils/helpers";
 
 // import PrintingHeader from "src/components/printingPage/printing-header";
 
@@ -21,7 +22,11 @@ const DepositPrintReport = (props) => {
   const { state } = useContext(Store);
   const { depositReport } = state;
   const printRef = useRef();
-  const { router } = props;
+  const { router, end } = props;
+  console.log(end);
+
+  const from_date = formatDate(router.query.from);
+  const to_date = formatDate(router.query.to);
 
   return (
     <>
@@ -37,7 +42,7 @@ const DepositPrintReport = (props) => {
       >
         <Container ref={printRef} maxWidth={true}>
           <PrintingHeader
-            title={`Deposit Report at ${router.query.branch} Between ${router.query.from} and ${router.query.to}`}
+            title={`Deposit Report at ${router.query.branch} Between "${from_date}" and "${to_date}"`}
           />
           <BasicTable depositReport={depositReport} />
         </Container>
