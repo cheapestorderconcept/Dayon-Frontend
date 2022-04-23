@@ -10,7 +10,7 @@ import { useContext, useRef } from "react";
 import { Store } from "src/statesManagement/store/store";
 import BasicTable from "src/components/printingPage/out-of-stocks-report-table";
 import ReactToPrint from "react-to-print";
-import { COMPANY_NAME } from "src/utils/company_name";
+import { COMPANY_NAME } from "src/utils/company_details";
 
 // import PrintingHeader from "src/components/printingPage/printing-header";
 

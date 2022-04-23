@@ -11,7 +11,7 @@ import { getStaff } from "src/statesManagement/store/actions/register-staff-acti
 import { getStores } from "src/statesManagement/store/actions/store-outlet-action";
 import { useSnackbar } from "notistack";
 import { useState } from "react";
-import { COMPANY_NAME } from "src/utils/company_name";
+import { COMPANY_NAME } from "src/utils/company_details";
 
 const DynamicComponentWithNoSSR = dynamic(() => import("src/components/navbar-branch-indicator"), {
   ssr: false,

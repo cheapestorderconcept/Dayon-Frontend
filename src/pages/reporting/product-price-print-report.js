@@ -13,7 +13,7 @@ import ProductPriceListTable from "src/components/reporting/product-price-list-r
 import { getProductPrice } from "src/statesManagement/store/actions/product-action";
 import { useSnackbar } from "notistack";
 import ReactToPrint from "react-to-print";
-import { COMPANY_NAME } from "src/utils/company_name";
+import { COMPANY_NAME } from "src/utils/company_details";
 
 const DynamicComponentWithNoSSR = dynamic(() => import("src/components/navbar-branch-indicator"), {
   ssr: false,

@@ -16,7 +16,7 @@ import { useEffect } from "react";
 
 import Loading from "src/components/loading/Loading";
 import { useSnackbar } from "notistack";
-import { COMPANY_NAME } from "src/utils/company_name";
+import { COMPANY_NAME } from "src/utils/company_details";
 
 const DynamicComponentWithNoSSR = dynamic(() => import("src/components/navbar-branch-indicator"), {
   ssr: false,

@@ -5,7 +5,7 @@ import { DashboardLayout } from "../../components/dashboard-layout";
 import dynamic from "next/dynamic";
 import { Deposit_Report_Form } from "src/components/reporting/deposit-report-form";
 import { Supplier_Report_Form } from "src/components/reporting/supplier-report-form";
-import { COMPANY_NAME } from "src/utils/company_name";
+import { COMPANY_NAME } from "src/utils/company_details";
 
 const DynamicComponentWithNoSSR = dynamic(() => import("src/components/navbar-branch-indicator"), {
   ssr: false,

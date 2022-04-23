@@ -13,7 +13,7 @@ import { getSuppliers } from "src/statesManagement/store/actions/supplier-action
 import { useSnackbar } from "notistack";
 import { getCustomerTransactionsHistory } from "src/statesManagement/store/actions/customer-action";
 import TransactionHistory from "src/components/customers/TransactionHistory";
-import { COMPANY_NAME } from "src/utils/company_name";
+import { COMPANY_NAME } from "src/utils/company_details";
 
 const DynamicComponentWithNoSSR = dynamic(() => import("src/components/navbar-branch-indicator"), {
   ssr: false,

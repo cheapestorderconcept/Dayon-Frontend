@@ -2,7 +2,7 @@ import Head from 'next/head';
 import NextLink from 'next/link';
 import { Box, Button, Container, Typography } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import { COMPANY_NAME } from 'src/utils/company_name';
+import { COMPANY_NAME } from 'src/utils/company_details';
 
 const NotFound = () => (
   <>

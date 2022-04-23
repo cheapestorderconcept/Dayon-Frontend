@@ -1,6 +1,6 @@
 import { Typography } from "@mui/material";
 import React from "react";
-import { COMPANY_NAME } from "src/utils/company_name";
+import { COMPANY_NAME } from "src/utils/company_details";
 
 const PrintingHeader = ({ title }) => {
   return (

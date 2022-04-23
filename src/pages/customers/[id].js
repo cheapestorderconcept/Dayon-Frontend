@@ -10,7 +10,7 @@ import { useEffect } from "react";
 import { useSnackbar } from "notistack";
 import { CustomerRegisterationForm } from "src/components/customers/CustomerRegisterationForm";
 import { getCustomers } from "src/statesManagement/store/actions/customer-action";
-import { COMPANY_NAME } from "src/utils/company_name";
+import { COMPANY_NAME } from "src/utils/company_details";
 
 const DynamicComponentWithNoSSR = dynamic(() => import("src/components/navbar-branch-indicator"), {
   ssr: false,

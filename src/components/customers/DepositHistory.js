@@ -62,7 +62,7 @@ const DepositHistory = ({ customerDeposits }) => {
       name: "amount_to_balance",
       options:{
                customBodyRender: (value, tableMeta, updateValue) => {
-          const data = tableMeta?.rowData[11]
+          const data = tableMeta?.rowData[10]
           return (
              <Typography color={data == 0 ? "green":"red"}>{data}</Typography> 
           

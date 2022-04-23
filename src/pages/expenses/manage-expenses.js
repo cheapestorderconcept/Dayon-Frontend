@@ -13,7 +13,7 @@ import {
   getExpenses,
   getExpensesCategory,
 } from "src/statesManagement/store/actions/expense-action";
-import { COMPANY_NAME } from "src/utils/company_name";
+import { COMPANY_NAME } from "src/utils/company_details";
 
 const DynamicComponentWithNoSSR = dynamic(() => import("src/components/navbar-branch-indicator"), {
   ssr: false,

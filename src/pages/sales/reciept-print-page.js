@@ -10,7 +10,7 @@ import { useContext, useRef, useState, useEffect } from "react";
 import { Store } from "src/statesManagement/store/store";
 import ReactToPrint from "react-to-print";
 import CollapsibleTable from "src/components/printingPage/reciept-print-table";
-import { COMPANY_NAME } from "src/utils/company_name";
+import { COMPANY_NAME } from "src/utils/company_details";
 
 // import PrintingHeader from "src/components/printingPage/printing-header";
 

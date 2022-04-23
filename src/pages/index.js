@@ -14,7 +14,7 @@ import { useSnackbar } from "notistack";
 import SalesList from "src/components/sales/sales-list";
 import { getTotalSales } from "src/statesManagement/store/actions/sales-action";
 import { getProduct } from "src/statesManagement/store/actions/product-action";
-import { COMPANY_NAME } from "src/utils/company_name";
+import { COMPANY_NAME } from "src/utils/company_details";
 
 const DynamicComponentWithNoSSR = dynamic(() => import("src/components/navbar-branch-indicator"), {
   ssr: false,

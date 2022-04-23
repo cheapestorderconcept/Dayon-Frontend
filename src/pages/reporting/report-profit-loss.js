@@ -7,7 +7,7 @@ import dynamic from "next/dynamic";
 import { Profit_LossReport_Form } from "src/components/reporting/profit-loss-report";
 import { useContext } from "react";
 import { Store } from "src/statesManagement/store/store";
-import { COMPANY_NAME } from "src/utils/company_name";
+import { COMPANY_NAME } from "src/utils/company_details";
 
 const DynamicComponentWithNoSSR = dynamic(() => import("src/components/navbar-branch-indicator"), {
   ssr: false,

@@ -30,7 +30,7 @@ import { Store } from "src/statesManagement/store/store";
 import { loginAction } from "../../statesManagement/store/actions/login-action";
 import { getStores } from "src/statesManagement/store/actions/store-outlet-action";
 import { useSnackbar } from "notistack";
-import { COMPANY_ADDRESS, COMPANY_EMAIL, COMPANY_NAME, COMPANY_PHONE } from "src/utils/company_name";
+import { COMPANY_ADDRESS, COMPANY_EMAIL, COMPANY_NAME, COMPANY_PHONE } from "src/utils/company_details";
 
 // copyright
 function Copyright(props) {

@@ -8,7 +8,7 @@ import { createEmotionCache } from "../utils/create-emotion-cache";
 import { theme } from "../theme";
 import { StoreProvider } from "src/statesManagement/store/store";
 import { SnackbarProvider } from "notistack";
-import { COMPANY_NAME } from "src/utils/company_name";
+import { COMPANY_NAME } from "src/utils/company_details";
 
 const clientSideEmotionCache = createEmotionCache();
 

@@ -8,7 +8,7 @@ import { Store } from "src/statesManagement/store/store";
 import { getProfile } from "src/statesManagement/store/actions/profile-action";
 import { useRouter } from "next/router";
 import { useSnackbar } from "notistack";
-import { COMPANY_NAME } from "src/utils/company_name";
+import { COMPANY_NAME } from "src/utils/company_details";
 
 const Account = () => {
   const { dispatch, state } = useContext(Store);

@@ -6,7 +6,7 @@ import dynamic from "next/dynamic";
 import { Deposit_Report_Form } from "src/components/reporting/deposit-report-form";
 import { Out_Of_Report_Form } from "src/components/reporting/out-of-stock-report-form";
 import { Stock_level_Balance_Form } from "src/components/reporting/stock-level-summary-balance";
-import { COMPANY_NAME } from "src/utils/company_name";
+import { COMPANY_NAME } from "src/utils/company_details";
 
 const DynamicComponentWithNoSSR = dynamic(() => import("src/components/navbar-branch-indicator"), {
   ssr: false,

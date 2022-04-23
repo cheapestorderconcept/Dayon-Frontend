@@ -6,7 +6,7 @@ import PaymentMethodList from "src/components/paymentmethod/payment-method-list"
 import { AddPurchase } from "src/components/purchases/add-purchase";
 import { AddSupplierLedger } from "src/components/purchases/add-supplier-ledger";
 import dynamic from "next/dynamic";
-import { COMPANY_NAME } from "src/utils/company_name";
+import { COMPANY_NAME } from "src/utils/company_details";
 
 const DynamicComponentWithNoSSR = dynamic(() => import("src/components/navbar-branch-indicator"), {
   ssr: false,

@@ -5,7 +5,7 @@ import { DashboardLayout } from "../../components/dashboard-layout";
 
 import { AddTransferLog } from "src/components/transferoutltes/add-transfer-log";
 import dynamic from "next/dynamic";
-import { COMPANY_NAME } from "src/utils/company_name";
+import { COMPANY_NAME } from "src/utils/company_details";
 
 const DynamicComponentWithNoSSR = dynamic(() => import("src/components/navbar-branch-indicator"), {
   ssr: false,

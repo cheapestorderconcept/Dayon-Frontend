@@ -50,6 +50,7 @@ export const Deposit_Report_Form = (props) => {
     const startdate = selectionValue[0].startDate;
     const enddate = selectionValue[0].endDate;
 
+    console.log(enddate);
     setformvalues({ ...formvalues, endDate: enddate, startDate: startdate });
   };
 
@@ -59,8 +60,8 @@ export const Deposit_Report_Form = (props) => {
     getDepositReport({
       dispatch: dispatch,
       enqueueSnackbar: enqueueSnackbar,
-      from: formvalues.startDate,
-      to: formvalues.endDate,
+      from: selectionValue[0].startDate,
+      to: selectionValue[0].endDate,
       Router: Router,
       branch: formvalues.store,
     });
@@ -68,7 +69,7 @@ export const Deposit_Report_Form = (props) => {
   };
 
   return (
-    <Box {...props}>
+    <Box {...props} end={selectionValue[0].endDate}>
       <Box
         sx={{
           alignItems: "center",

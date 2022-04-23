@@ -6,7 +6,7 @@ import { Upload as UploadIcon } from "src/icons/upload";
 import PurchaseList from "src/components/purchases/purchase-lists";
 import SupplierLedgerList from "src/components/purchases/supplier-ledger-lists";
 import dynamic from "next/dynamic";
-import { COMPANY_NAME } from "src/utils/company_name";
+import { COMPANY_NAME } from "src/utils/company_details";
 
 const DynamicComponentWithNoSSR = dynamic(() => import("src/components/navbar-branch-indicator"), {
   ssr: false,
