@@ -61,7 +61,7 @@ const items = [
     hasdropdown: true,
     title2: "Manage Purchases",
     href2: "/purchase/purchaselists",
-    title3: "Update Stock",
+    title3: "Balance Stock Level",
     href3: "/purchase/stock",
     // title4: "Add Supplier Ledger",
     // href4: "/addsupplierledger",
@@ -230,7 +230,7 @@ export const DashboardSidebar = (props) => {
             >
               <div>
                 <Typography color="inherit" variant="h6">
-                  REGKEN multinational investment LTD
+                 Adeshex Global
                 </Typography>
                 <Typography color="neutral.400" variant="body2">
                   Available

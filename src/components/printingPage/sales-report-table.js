@@ -134,6 +134,24 @@ export default function CollapsibleTable({ salesReport }) {
             <TableCell align="right">{row.quantity * row.selling_price}</TableCell>             
           </TableRow>
         ))}
+         <TableRow>
+          {/* <TableCell align="right"></TableCell> */}
+          <TableCell align="right"></TableCell>
+          <TableCell align="right"></TableCell>
+          <TableCell align="right"></TableCell>
+          <TableCell align="right"></TableCell>
+          <TableCell align="right"></TableCell>
+          <TableCell align="right">
+            <Typography variant="h4">Total Selling Price Per Qty</Typography>
+          </TableCell>
+          <TableCell align="right">
+            <Typography variant="h4">{`₦${salesReport?.reduce(
+              (a, c) => a + Number(c.quantity * c.selling_price),
+              0
+            )}`}</Typography>
+          </TableCell>
+         
+        </TableRow>
       </TableBody>
     </Table>
   </TableContainer>
