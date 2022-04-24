@@ -1,5 +1,5 @@
 export const formatDate = (value) => {
-  return value.slice(1, 11);
+  return value?.slice(1, 11);
 };
 
 // export const formatTime = (timeDerived) => {
