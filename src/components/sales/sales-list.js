@@ -68,10 +68,10 @@ const SalesList = ({ salesList }) => {
       name: "Invoice",
       label: "Invoice Number",
     },
-    // {
-    //   name: "Barcode",
-    //   label: "Product Barcode",
-    // },
+    {
+      name: "Barcode",
+      label: "Product Barcode",
+    },
     {
       name: "amount",
       label: "Total Amount",

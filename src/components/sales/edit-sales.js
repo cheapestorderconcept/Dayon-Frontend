@@ -83,7 +83,7 @@ export const EditSalesView = (props) => {
     payment_type:
       oneSale.length > 0 && typeof oneSale[0] != "undefined" ? oneSale[0].payment_type : "",
     branch: oneSale.length > 0 && typeof oneSale[0] != "undefined" ? oneSale[0].branch : "",
-    // barcode: oneSale.length > 0 && typeof oneSale[0] != "undefined" ? oneSale[0].barcode : "",
+    barcode: oneSale.length > 0 && typeof oneSale[0] != "undefined" ? oneSale[0].barcode : "",
     product: oneSale.length > 0 && typeof oneSale[0] != "undefined" ? oneSale[0].product : "",
     quantity: oneSale.length > 0 && typeof oneSale[0] != "undefined" ? oneSale[0].quantity : "",
     selling_price:
@@ -104,7 +104,7 @@ export const EditSalesView = (props) => {
     amount: yup.number().integer().typeError("Amount must be a number"),
     total_amount: yup.number().integer().typeError("Total Amount must be a number"),
 
-    // barcode: yup.string(),
+    barcode: yup.string(),
     product_id: yup.string(),
     product: yup.string(),
 
@@ -308,9 +308,9 @@ export const EditSalesView = (props) => {
                         <CustomTextField name="amount" label="Amount" />
                       </Grid>
 
-                      {/* <Grid item xs={6}>
+                      <Grid item xs={6}>
                         <CustomTextField name="barcode" label="Barcode" />
-                      </Grid> */}
+                      </Grid>
                       <Grid item xs={6}>
                         <CustomTextField name="product" disabled label="Product" />
                       </Grid>

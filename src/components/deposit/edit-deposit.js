@@ -100,8 +100,8 @@ export const EditDepositView = (props) => {
         : "",
     branch:
       oneDeposit.length > 0 && typeof oneDeposit[0] != "undefined" ? oneDeposit[0].branch : "",
-    // barcode:
-    //   oneDeposit.length > 0 && typeof oneDeposit[0] != "undefined" ? oneDeposit[0].barcode : "",
+    barcode:
+      oneDeposit.length > 0 && typeof oneDeposit[0] != "undefined" ? oneDeposit[0].barcode : "",
     product:
       oneDeposit.length > 0 && typeof oneDeposit[0] != "undefined" ? oneDeposit[0].product : "",
     quantity:
@@ -128,7 +128,7 @@ export const EditDepositView = (props) => {
     customer_name: yup.string(),
     customer_id: yup.string(),
 
-    // barcode: yup.string(),
+    barcode: yup.string(),
     product_id: yup.string(),
     product: yup.string(),
 
@@ -330,7 +330,7 @@ export const EditDepositView = (props) => {
                            />
                          </Grid>
                      
-                      {/* <Grid
+                      <Grid
                         item
                         xs={6}
                         sx={{
@@ -339,7 +339,7 @@ export const EditDepositView = (props) => {
                         }}
                       >
                         <CustomTextField name="barcode" label="Barcode" />
-                      </Grid> */}
+                      </Grid>
                       <Grid item xs={6}>
                         <CustomTextField name="product" disabled label="Product" />
                       </Grid>

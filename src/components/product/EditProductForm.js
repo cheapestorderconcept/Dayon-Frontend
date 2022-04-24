@@ -44,10 +44,10 @@ export const EditProductForm = (props) => {
       oneProduct.length > 0 && typeof oneProduct[0] != "undefined"
         ? oneProduct[0].product_brand
         : "",
-    // product_barcode:
-    //   oneProduct.length > 0 && typeof oneProduct[0] != "undefined"
-    //     ? oneProduct[0].product_barcode
-    //     : "",
+    product_barcode:
+      oneProduct.length > 0 && typeof oneProduct[0] != "undefined"
+        ? oneProduct[0].product_barcode
+        : "",
     supplier:
       oneProduct.length > 0 && typeof oneProduct[0] != "undefined" ? oneProduct[0].supplier : "",
     quantity:
@@ -58,7 +58,7 @@ export const EditProductForm = (props) => {
 
   const FORM_VALIDATIONS = yup.object().shape({
     product_name: yup.string(),
-    // product_barcode: yup.string(),
+    product_barcode: yup.string(),
     product_brand: yup.string(),
     supplier: yup.string(),
     price: yup.number().integer().typeError("Price must be a number"),
@@ -129,9 +129,9 @@ export const EditProductForm = (props) => {
                       <CustomTextField name="product_name" label="Product Name" />
                     </Grid>
 
-                    {/* <Grid item xs={12}>
+                    <Grid item xs={12}>
                       <CustomTextField name="product_barcode" label="Product Barcode" />
-                    </Grid> */}
+                    </Grid>
                     <Grid item xs={12}>
                       <CustomSelect
                         name="product_brand"
