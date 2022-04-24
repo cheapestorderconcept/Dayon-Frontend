@@ -1,8 +1,6 @@
 export const formatDate = (value) => {
-  if (typeof value != undefined){
- return value.slice(1, 11);
-  }
-  return ""
+  
+ return value?.slice(1, 11);
  
 };
 
