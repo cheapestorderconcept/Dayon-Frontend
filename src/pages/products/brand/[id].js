@@ -1,8 +1,8 @@
 import Head from "next/head";
 import { Box, Container } from "@mui/material";
 import { DashboardLayout } from "../../../components/dashboard-layout";
-import { ProductBrand } from "src/components/serviceCategory/ServiceCategory";
-import BrandTable from "src/components/serviceCategory/brand-list";
+
+
 import dynamic from "next/dynamic";
 import { getBrands } from "src/statesManagement/store/actions/brand-action";
 import { useContext, useEffect, useState } from "react";
@@ -11,6 +11,8 @@ import { useRouter } from "next/router";
 import { Store } from "src/statesManagement/store/store";
 import { useSnackbar } from "notistack";
 import { COMPANY_NAME } from "src/utils/company_details";
+import { ProductBrand } from "src/components/productBrand/product-brand";
+import BrandTable from "src/components/productBrand/brand-list";
 
 const DynamicComponentWithNoSSR = dynamic(() => import("src/components/navbar-branch-indicator"), {
   ssr: false,
