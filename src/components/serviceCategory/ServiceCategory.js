@@ -25,47 +25,36 @@ import { Store } from "src/statesManagement/store/store";
 import NextLink from "next/link";
 import { useSnackbar } from "notistack";
 
-export const ProductBrand = (props) => {
+export const ServiceCategory = (props) => {
   const { title, id } = props;
   const { state, dispatch } = useContext(Store);
 
   const { loading, error, brands } = state;
+const categories = []
+  let myCategory = [];
 
-  let myBrand = [];
-
-  myBrand = brands.filter((brand) => brand._id == id);
+  myCategory = categories.filter((cat) => cat._id == id);
   const INITIAL_FORM_VALUES = {
-    name: myBrand.length > 0 && typeof myBrand[0] != "undefined" ? myBrand[0].brand_name : "",
+    category_name: myCategory.length > 0 && typeof myCategory[0] != "undefined" ? myCategory[0].category_name : "",
   };
 
   const FORM_VALIDATIONS = yup.object().shape({
-    name: yup.string().required("Please provide brand name"),
+    category_name: yup.string().required("Please provide Category name"),
   });
 
   const Router = useRouter();
   const { enqueueSnackbar } = useSnackbar();
   const handleUpdate = (values) => {
     const brand = {
-      brand_name: values.name,
+      category_name: values.name,
     };
-    updateBrand({
-      dispatch: dispatch,
-      brand: brand,
-      brandId: id,
-      Router: Router,
-      enqueueSnackbar: enqueueSnackbar,
-    });
+  
   };
   const handleSubmit = (values) => {
-    const brand = {
-      brand_name: values.name,
+    const category = {
+      category_name: values.name,
     };
-    addBrand({
-      dispatch: dispatch,
-      brand: brand,
-      Router: Router,
-      enqueueSnackbar: enqueueSnackbar,
-    });
+console.log(category);
   };
 
   return (
@@ -80,15 +69,15 @@ export const ProductBrand = (props) => {
         }}
       >
         <Typography sx={{ m: 1 }} variant="h4">
-          Brand
+          Service Category
         </Typography>
         <Box sx={{ m: 1 }}>
           <Button startIcon={<UploadIcon fontSize="small" />} sx={{ mr: 1 }}>
             Home
           </Button>
           <Button startIcon={<DownloadIcon fontSize="small" />} sx={{ mr: 1 }}>
-            <NextLink href="/products/brand" replace>
-              <Typography>Brand</Typography>
+            <NextLink href="/services/category" replace>
+              <Typography>Category</Typography>
             </NextLink>
           </Button>
         </Box>
@@ -110,8 +99,8 @@ export const ProductBrand = (props) => {
                   <Grid container spacing={2}>
                     <Grid item xs={12}>
                       <CustomTextField
-                        name="name"
-                        label="Brand Name"
+                        name="category_name"
+                        label="Category Name"
                         InputProps={{
                           endAdornment: (
                             <InputAdornment position="end">

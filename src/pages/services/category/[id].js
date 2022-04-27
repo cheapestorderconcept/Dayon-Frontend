@@ -1,11 +1,11 @@
 import Head from "next/head";
-import { Box, Container, Card, CardHeader, Divider, Typography, CardContent } from "@mui/material";
+import { Box, Container } from "@mui/material";
 import { DashboardLayout } from "../../../components/dashboard-layout";
 import { ProductBrand } from "src/components/serviceCategory/ServiceCategory";
 import BrandTable from "src/components/serviceCategory/brand-list";
 import dynamic from "next/dynamic";
 import { getBrands } from "src/statesManagement/store/actions/brand-action";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 
 import { useRouter } from "next/router";
 import { Store } from "src/statesManagement/store/store";
@@ -15,22 +15,24 @@ import { COMPANY_NAME } from "src/utils/company_details";
 const DynamicComponentWithNoSSR = dynamic(() => import("src/components/navbar-branch-indicator"), {
   ssr: false,
 });
-const Brand = () => {
+const EditServiceCategory = () => {
   const { state, dispatch } = useContext(Store);
+  const { query } = useRouter();
   const router = useRouter();
-  const { enqueueSnackbar } = useSnackbar();
-  const { brands, userInfo, error } = state;
+  const { userInfo } = state;
 
-  console.log(brands);
+  const [id, setid] = useState(null);
+  const { enqueueSnackbar } = useSnackbar();
   useEffect(() => {
     !userInfo && router.push("/auth");
-    getBrands({ dispatch: dispatch, enqueueSnackbar: enqueueSnackbar });
-  }, []);
+    setid(query.id);
+    
+  }, [query.id]);
 
   return (
     <>
       <Head>
-        <title>Brand || {COMPANY_NAME}</title>
+        <title>Service Category |{COMPANY_NAME}</title>
       </Head>
       <Box
         component="main"
@@ -41,26 +43,9 @@ const Brand = () => {
       >
         <DynamicComponentWithNoSSR />
         <Container maxWidth={false}>
-          <ProductBrand title="Add Brand" />
+          <ServiceCategory id={id} title="Edit Category" />
           <Box sx={{ pt: 3 }}>
-            {!brands ? (
-              <Card>
-                <CardHeader title="Brands" />
-                <Divider />
-                <Typography
-                  sx={{
-                    mt: 4,
-                  }}
-                  variant="h6"
-                  style={{ textAlign: "center" }}
-                >
-                  No Brands
-                </Typography>
-                <CardContent></CardContent>
-              </Card>
-            ) : (
-              <BrandTable brands={brands} />
-            )}
+            <ServiceCategoryTable categories={[]} />
           </Box>
         </Container>
       </Box>
@@ -68,6 +53,6 @@ const Brand = () => {
   );
 };
 
-Brand.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
+EditServiceCategory.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
 
-export default Brand;
+export default EditServiceCategory;

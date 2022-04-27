@@ -48,6 +48,15 @@ const items = [
     title3: "Update Product",
     href3: "/purchase/stock",
   },
+    {
+    icon: <ShoppingBagIcon fontSize="small" />,
+    mainTitle: "Service Management",
+    href: "/services",
+    title: "Add Service Type",
+    hasdropdown: true,
+    title2: "Service Category",
+    href2: "/services/category",
+  },
   {
     icon: <AccountBalanceWalletIcon fontSize="small" />,
     href: "/payment-method",

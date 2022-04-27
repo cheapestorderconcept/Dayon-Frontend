@@ -7,9 +7,9 @@ import { Store } from "src/statesManagement/store/store";
 import { deleteBrand } from "src/statesManagement/store/actions/brand-action";
 import { useSnackbar } from "notistack";
 
-const BrandTable = ({ brands }) => {
+const ServiceCategoryTable = ({ categories }) => {
   const { dispatch } = useContext(Store);
-  console.log(brands);
+  
 
   const Router = useRouter();
 
@@ -53,7 +53,7 @@ const BrandTable = ({ brands }) => {
       },
     },
     {
-      name: "Update_brand",
+      name: "Update_Category",
       options: {
         filter: true,
         sort: false,
@@ -62,7 +62,7 @@ const BrandTable = ({ brands }) => {
           return (
             <Button variant="contained">
               <NextLink
-                href={`/products/brand/${tableMeta.rowData[1]}`}
+                href={`/services/categories/${tableMeta.rowData[1]}`}
                 style={{ textDecoration: "none", color: "white" }}
               >
                 <Typography variant="body1" color="inherit">
@@ -81,11 +81,11 @@ const BrandTable = ({ brands }) => {
     },
   ];
 
-  const brand = brands?.map((pro, i) => {
+  const category = categories?.map((cat, i) => {
     return {
-      delete: `${pro._id}`,
-      Update_brand: `${pro._id}`,
-      name: `${pro.brand_name}`,
+      delete: `${cat._id}`,
+      Update_category: `${cat._id}`,
+      name: `${cat.category_name}`,
     };
   });
 
@@ -98,10 +98,10 @@ const BrandTable = ({ brands }) => {
   return (
     <>
       {ready == true && (
-        <MUIDataTable title={"Lists Of Brands"} data={brand} columns={columns} options={options} />
+        <MUIDataTable title={"Lists Of Brands"} data={category} columns={columns} options={options} />
       )}
     </>
   );
 };
 
-export default BrandTable;
+export default ServiceCategoryTable;
