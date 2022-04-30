@@ -184,7 +184,7 @@ export const AddService = (props) => {
           <SearchableSelect
             name={`services.${i}.selectedService`}
             useId={true}
-            options={services}
+            options={myServices}
             id="services"
             title="Choose Service"
           />
