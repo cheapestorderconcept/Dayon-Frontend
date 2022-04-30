@@ -3,7 +3,6 @@ import { Box, Container } from "@mui/material";
 import { DashboardLayout } from "../../../components/dashboard-layout";
 import {  ServiceCategory } from "src/components/serviceCategory/ServiceCategory";
 import dynamic from "next/dynamic";
-import { getBrands } from "src/statesManagement/store/actions/brand-action";
 import { useContext, useEffect, useState } from "react";
 
 import { useRouter } from "next/router";

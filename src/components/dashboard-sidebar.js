@@ -56,6 +56,10 @@ const items = [
     hasdropdown: true,
     title2: "Service Category",
     href2: "/services/category",
+    title3: "Service Payment",
+    href3: "/services/service-payment",
+    title4: "List Of Rendered Services",
+    href4: "/services/rendered-service",
   },
   {
     icon: <AccountBalanceWalletIcon fontSize="small" />,
