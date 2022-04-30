@@ -86,7 +86,7 @@ function Row(props) {
   );
 }
 
-export default function CollapsibleTable({ salesReciept }) {
+export default function CollapsibleTable({ serviceReciept }) {
   return (
     <TableContainer component={Paper}>
       <Table aria-label="collapsible table">
@@ -99,7 +99,7 @@ export default function CollapsibleTable({ salesReciept }) {
           </TableRow>
         </TableHead>
         <TableBody>
-          <Row row={salesReciept} />
+          <Row row={serviceReciept} />
         </TableBody>
       </Table>
     </TableContainer>
