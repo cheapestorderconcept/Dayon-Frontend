@@ -1,6 +1,6 @@
 import Head from "next/head";
 import { Box, Button, Container } from "@mui/material";
-import { DashboardLayout } from "../../components/dashboard-layout";
+import { DashboardLayout } from "src/components/dashboard-layout";
 
 import dynamic from "next/dynamic";
 import PrintingHeader from "src/components/printingPage/printing-header";
@@ -22,12 +22,11 @@ const ReceiptPrintReport = (props) => {
   const { state } = useContext(Store);
   const printRef = useRef();
   const { router } = props;
-  const [salesReciept, setsalesReciept] = useState({});
+const serviceReciept = []
   useEffect(() => {
-    setsalesReciept(JSON.parse(router.query.sales));
+
   }, []);
 
-  console.log(salesReciept);
 
   return (
     <>
@@ -42,8 +41,8 @@ const ReceiptPrintReport = (props) => {
         }}
       >
         <Container ref={printRef} maxWidth={true}>
-          <PrintingHeader title={`Sales Reciept at ${salesReciept?.branch}`} />
-          <CollapsibleTable salesReciept={salesReciept} />
+          <PrintingHeader title={`Service Reciept at ${salesReciept?.branch}`} />
+          <CollapsibleTable serviceReciept={[]} />
         </Container>
         <Container
           sx={{
