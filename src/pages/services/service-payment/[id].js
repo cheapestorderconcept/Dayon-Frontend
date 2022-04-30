@@ -1,6 +1,6 @@
 import Head from "next/head";
 import { Box, Container } from "@mui/material";
-import { DashboardLayout } from "../../components/dashboard-layout";
+import { DashboardLayout } from "src/components/dashboard-layout";
 import { AddSales } from "src/components/sales/add-sales";
 import dynamic from "next/dynamic";
 import { useContext, useEffect, useState } from "react";

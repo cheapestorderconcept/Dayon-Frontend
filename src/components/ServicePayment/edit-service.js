@@ -21,11 +21,9 @@ import * as yup from "yup";
 import { Formik, Form, Field, FieldArray, ErrorMessage, useFormikContext } from "formik";
 import { CustomSelect, CustomButton } from "../basicInputs";
 import { CustomDate } from "../basicInputs";
-import { paymentMethods } from "src/__mocks__/paymentMethods";
 import React, { useContext, useEffect, useMemo, useRef, useState } from "react";
 import { getProductByBarcode } from "src/statesManagement/store/actions/product-action";
 import { Store } from "src/statesManagement/store/store";
-import { addSupplier } from "src/statesManagement/store/actions/supplier-action";
 import {
   addSales,
   addSalesData,
