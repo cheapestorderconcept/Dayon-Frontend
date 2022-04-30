@@ -41,7 +41,7 @@ const serviceReciept = []
         }}
       >
         <Container ref={printRef} maxWidth={true}>
-          <PrintingHeader title={`Service Reciept at ${salesReciept?.branch}`} />
+          <PrintingHeader title={`Service Reciept at ${serviceReciept?.branch}`} />
           <CollapsibleTable serviceReciept={[]} />
         </Container>
         <Container
