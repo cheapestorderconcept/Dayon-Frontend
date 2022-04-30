@@ -90,7 +90,6 @@ export const EditServicePaymentView = (props) => {
     amount: yup.number().integer().typeError("Amount must be a number"),
     total_amount: yup.number().integer().typeError("Total Amount must be a number"),
 
-    // barcode: yup.string(),
     product_id: yup.string(),
     product: yup.string(),
 
@@ -106,121 +105,6 @@ export const EditServicePaymentView = (props) => {
 
   const formRef = useRef(null);
 
-  //   useEffect(() => {
-  //     getTotalDeposit({ dispatch: dispatch, enqueueSnackbar: enqueueSnackbar });
-  //   }, []);
-
-  // const RenderForm = ({ items, i }) => {
-  //   setbarcode(items.barcode);
-
-  //   return (
-  //     <React.Fragment key={i}>
-  //       <Grid
-  //         sx={{
-  //           mb: 2,
-  //           mt: 2,
-  //         }}
-  //         item
-  //         xs={12}
-  //       >
-  //         <Typography>Item {i + 1}</Typography>
-  //       </Grid>
-
-  //       {/* <Grid item xs={6}>
-  //           <form onSubmit={(e) => e.preventDefault()}>
-  //             <TextField
-  //               name="barcodeNum"
-  //               label="Scan Barcode"
-  //               value={barcode}
-  //               autoFocus={true}
-  //               onChange={handleChange}
-  //               InputProps={{
-  //                 endAdornment: (
-  //                   <InputAdornment position="end">
-  //                     <ListIcon />
-  //                   </InputAdornment>
-  //                 ),
-  //               }}
-  //             />
-  //           </form>
-  //         </Grid> */}
-  //       <Grid item xs={6}>
-  //         <CustomTextField
-  //           name={`items.${i}.barcode`}
-  //           label="Barcode"
-  //           disabled
-  //           onKeyPress={(e) => {
-  //             e.key === "Enter" && e.preventDefault();
-  //           }}
-  //           autoFocus={true}
-  //           InputProps={{
-  //             endAdornment: (
-  //               <InputAdornment position="end">
-  //                 <ListIcon />
-  //               </InputAdornment>
-  //             ),
-  //           }}
-  //         />
-  //       </Grid>
-
-  //       <Grid item xs={6}>
-  //         <CustomTextField
-  //           name={`items.${i}.product`}
-  //           disabled
-  //           // value={
-  //           //   productByBarcode.length > 0 && typeof productByBarcode[i] != "undefined"
-  //           //     ? (items.product_name = productByBarcode[i].product_name)
-  //           //     : ""
-  //           // }
-  //           label="Product"
-  //         />
-  //       </Grid>
-
-  //       <Grid item xs={6} style={{ display: "none" }}>
-  //         <CustomTextField
-  //           name={`items.${i}.product_id`}
-  //           disabled
-  //           value={
-  //             productByBarcode.length > 0 && typeof productByBarcode[i] != "undefined"
-  //               ? (items.product_id = productByBarcode[i]._id)
-  //               : ""
-  //           }
-  //           label="Product"
-  //         />
-  //       </Grid>
-  //       <Grid item xs={6}>
-  //         <CustomTextField name={`items.${i}.quantity`} label="Quantity" />
-  //         {productByBarcode.length > 0 && typeof productByBarcode[i] != "undefined"
-  //           ? Number(items.quantity) > productByBarcode[i].current_product_quantity &&
-  //             enqueueSnackbar("Quantity is out of stock", {
-  //               variant: "error",
-  //               preventDuplicate: true,
-  //             })
-  //           : null}
-  //       </Grid>
-
-  //       <Grid item xs={6}>
-  //         <CustomTextField
-  //           name={`items.${i}.selling_price`}
-  //           //values of selling price can also be set to default depends on usage
-  //           label="Selling Price Per Unit"
-  //         />
-  //       </Grid>
-
-  //       {/* <Grid item xs={6}>
-  //         <CustomTextField
-  //           name={`items.${i}.amount`}
-  //           label="Amount"
-  //           value={
-  //             productByBarcode.length > 0 && typeof productByBarcode[i] != "undefined"
-  //               ? (items.amount = items.quantity * items.selling_price)
-  //               : ""
-  //           }
-  //         />
-  //       </Grid> */}
-  //     </React.Fragment>
-  //   );
-  // };
 
   return (
     <Box {...props}>
