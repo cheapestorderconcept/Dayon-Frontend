@@ -60,6 +60,10 @@ const items = [
     href3: "/services/service-payment",
     title4: "List Of Rendered Services",
     href4: "/services/rendered-service",
+    title5: "Service Payment Deposit",
+    href5: "/services/service-deposit",
+    title6: "Manage Service Deposits",
+    href6: "/services/service-deposit/manage-service-deposit",
   },
   {
     icon: <AccountBalanceWalletIcon fontSize="small" />,

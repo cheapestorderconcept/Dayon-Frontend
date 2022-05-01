@@ -288,6 +288,7 @@ export const AddDeposit = (props) => {
           <CustomTextField
             name={`items.${i}.amount`}
             label="Amount"
+            disabled={true}
             value={
               items.selectedProduct != "" && retrieveProductById != []
                 ? (items.amount = items.quantity * items.selling_price)
