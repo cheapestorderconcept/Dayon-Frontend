@@ -254,7 +254,7 @@ export const AddServiceDeposit = (props) => {
         <Grid item xs={6}>
           <CustomTextField
             name={`services.${i}.selling_price`}
-            label="Selling Price Per Unit"
+            label="Service Cost Price"
           />
         </Grid>
 

@@ -251,7 +251,7 @@ export const AddService = (props) => {
           <CustomTextField
             name={`services.${i}.selling_price`}
             //values of selling price can also be set to default depends on usage
-            label="Service Cost"
+            label="Service Cost Price"
           />
         </Grid>
 

@@ -15,7 +15,7 @@ import {
 import { Download as DownloadIcon } from "../../icons/download";
 import { Search as SearchIcon } from "../../icons/search";
 import { Upload as UploadIcon } from "../../icons/upload";
-import { CustomTextField, SearchableSelect } from "../basicInputs";
+import { CustomTextField } from "../basicInputs";
 import ListIcon from "@mui/icons-material/List";
 import * as yup from "yup";
 import { Formik, Form, Field, FieldArray, ErrorMessage, useFormikContext } from "formik";
@@ -23,11 +23,7 @@ import { CustomSelect, CustomButton } from "../basicInputs";
 import { CustomDate } from "../basicInputs";
 import { paymentMethods } from "src/__mocks__/paymentMethods";
 import React, { useContext, useEffect, useMemo, useRef, useState } from "react";
-import { getserviceByBarcode } from "src/statesManagement/store/actions/service-action";
 import { Store } from "src/statesManagement/store/store";
-import { addSupplier } from "src/statesManagement/store/actions/supplier-action";
-import { addSales, addSalesData } from "src/statesManagement/store/actions/sales-action";
-import AlertBox from "../alert";
 import { useSnackbar } from "notistack";
 import {
   addDepositData,

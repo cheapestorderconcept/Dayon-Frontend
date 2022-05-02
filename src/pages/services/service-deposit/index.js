@@ -1,12 +1,10 @@
 import Head from "next/head";
 import { Box, Container, Grid, Pagination } from "@mui/material";
-
 import { DashboardLayout } from "src/components/dashboard-layout";
 import dynamic from "next/dynamic";
 import { useContext, useEffect } from "react";
 import { Store } from "src/statesManagement/store/store";
 import { useRouter } from "next/router";
-import { getTotalDeposit } from "src/statesManagement/store/actions/deposit-action";
 import { useSnackbar } from "notistack";
 import { COMPANY_NAME } from "src/utils/company_details";
 import { AddServiceDeposit } from "src/components/service-payment-deposit/add-service-deposit";
