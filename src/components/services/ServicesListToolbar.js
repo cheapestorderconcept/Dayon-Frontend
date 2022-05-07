@@ -162,6 +162,7 @@ export const ServicesListToolbar = (props) => {
                         options={categories.categories}
                         label="Service Category"
                         id="service_categories"
+                        useId={true}
                        
                       />
                     </Grid>
