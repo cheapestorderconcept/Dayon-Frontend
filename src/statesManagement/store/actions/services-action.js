@@ -62,12 +62,15 @@ export const addServiceCategory = async ({ dispatch, category, Router, enqueueSn
   }
 };
 
-export const deleteBrand = async ({ dispatch, brandId, Router, enqueueSnackbar }) => {
+
+
+export const deleteServiceCategory = async ({ dispatch, brandId, Router, enqueueSnackbar }) => {
   try {
     dispatch({
       type: DELETE_BRAND_REQUEST,
     });
     const { data } = await makeNetworkCall({
+
       method: "DELETE",
       path: `/delete-brand/${brandId}`,
     });
@@ -123,3 +126,6 @@ export const updateBrand = async ({ dispatch, brand, brandId, Router, enqueueSna
       });
   }
 };
+
+
+// Continue Other Services Actions from here...
