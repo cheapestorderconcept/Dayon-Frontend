@@ -20,7 +20,7 @@ const ServiceCategoryPage = () => {
   const router = useRouter();
   const { enqueueSnackbar } = useSnackbar();
   const { userInfo, serviceCategories } = state;
-  console.log(userInfo)
+  
  
 
   useEffect(() => {

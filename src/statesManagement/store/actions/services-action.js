@@ -3,7 +3,10 @@ import {
     ADD_SERVICE_CATEGORY_FAIL,
     ADD_SERVICE_CATEGORY_REQUEST,
     ADD_SERVICE_CATEGORY_SUCCESS,
- GET_SERVICE_CATEGORIES_FAIL, GET_SERVICE_CATEGORIES_REQUEST, GET_SERVICE_CATEGORIES_SUCCESS
+ DELETE_SERVICE_CATEGORY_FAIL,
+ DELETE_SERVICE_CATEGORY_REQUEST,
+ DELETE_SERVICE_CATEGORY_SUCCESS,
+ GET_SERVICE_CATEGORIES_FAIL, GET_SERVICE_CATEGORIES_REQUEST, GET_SERVICE_CATEGORIES_SUCCESS, UPDATE_SERVICE_CATEGORY_FAIL, UPDATE_SERVICE_CATEGORY_REQUEST, UPDATE_SERVICE_CATEGORY_SUCCESS
 
 } from "../constants/index";
 
@@ -64,18 +67,19 @@ export const addServiceCategory = async ({ dispatch, category, Router, enqueueSn
 
 
 
-export const deleteServiceCategory = async ({ dispatch, brandId, Router, enqueueSnackbar }) => {
+export const deleteServiceCategory = async ({ dispatch, categoryId, Router, enqueueSnackbar }) => {
   try {
     dispatch({
-      type: DELETE_BRAND_REQUEST,
+      type: DELETE_SERVICE_CATEGORY_REQUEST,
     });
     const { data } = await makeNetworkCall({
 
       method: "DELETE",
-      path: `/delete-brand/${brandId}`,
+      path: `delete-a-category/${categoryId}`,
+      target:"service"
     });
     dispatch({
-      type: DELETE_BRAND_SUCCESS,
+      type: DELETE_SERVICE_CATEGORY_SUCCESS,
       payload: data.data._id,
     });
     data &&
@@ -85,7 +89,7 @@ export const deleteServiceCategory = async ({ dispatch, brandId, Router, enqueue
     // Router.reload(window.location.pathname);
   } catch (error) {
     dispatch({
-      type: DELETE_BRAND_FAIL,
+      type: DELETE_SERVICE_CATEGORY_FAIL,
     });
 
     error &&
@@ -95,20 +99,21 @@ export const deleteServiceCategory = async ({ dispatch, brandId, Router, enqueue
   }
 };
 
-export const updateBrand = async ({ dispatch, brand, brandId, Router, enqueueSnackbar }) => {
+export const updateServiceCategory = async ({ dispatch, category, categoryId, Router, enqueueSnackbar }) => {
   try {
     dispatch({
-      type: UPDATE_BRANDS_REQUEST,
+      type: UPDATE_SERVICE_CATEGORY_REQUEST,
     });
 
     const { data } = await makeNetworkCall({
       method: "PUT",
-      path: `/update-brand/${brandId}`,
-      requestBody: brand,
+      path: `update-category/${categoryId}`,
+      target:"service",
+      requestBody: category,
     });
 
     dispatch({
-      type: UPDATE_BRAND_SUCCESS,
+      type: UPDATE_SERVICE_CATEGORY_SUCCESS,
       payload: data.data,
     });
     data &&
@@ -118,7 +123,7 @@ export const updateBrand = async ({ dispatch, brand, brandId, Router, enqueueSna
     // Router.reload(window.location.pathname);
   } catch (error) {
     dispatch({
-      type: UPDATE_BRAND_FAIL,
+      type: UPDATE_SERVICE_CATEGORY_FAIL,
     });
     error &&
       enqueueSnackbar(error?.response?.data?.response_message || error.message, {

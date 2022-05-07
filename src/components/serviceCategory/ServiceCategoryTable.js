@@ -6,6 +6,7 @@ import NextLink from "next/link";
 import { Store } from "src/statesManagement/store/store";
 import { deleteBrand } from "src/statesManagement/store/actions/brand-action";
 import { useSnackbar } from "notistack";
+import { deleteServiceCategory } from "src/statesManagement/store/actions/services-action";
 
 const ServiceCategoryTable = ({ categories }) => {
   const { dispatch } = useContext(Store);
@@ -19,17 +20,17 @@ const ServiceCategoryTable = ({ categories }) => {
     setready(true);
   }, []);
 
-  console.log(categories)
+
 
   const { enqueueSnackbar } = useSnackbar();
 
   const handleDelete = (tableMeta) => (e) => {
     const validate = confirm("Are you sure you want to delete");
     if (!!validate) {
-      const brandId = tableMeta.rowData[0];
-      deleteBrand({
+      const categoryId = tableMeta.rowData[0];
+      deleteServiceCategory({
         dispatch: dispatch,
-        brandId: brandId,
+        categoryId: categoryId,
         Router: Router,
         enqueueSnackbar: enqueueSnackbar,
       });
@@ -64,7 +65,7 @@ const ServiceCategoryTable = ({ categories }) => {
           return (
             <Button variant="contained">
               <NextLink
-                href={`/services/categories/${tableMeta.rowData[1]}`}
+                href={`/services/category/${tableMeta.rowData[0]}`}
                 style={{ textDecoration: "none", color: "white" }}
               >
                 <Typography variant="body1" color="inherit">

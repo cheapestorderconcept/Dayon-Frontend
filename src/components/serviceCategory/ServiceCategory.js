@@ -24,19 +24,17 @@ import { useRouter } from "next/router";
 import { Store } from "src/statesManagement/store/store";
 import NextLink from "next/link";
 import { useSnackbar } from "notistack";
-import { addServiceCategory } from "src/statesManagement/store/actions/services-action";
+import { addServiceCategory, updateServiceCategory } from "src/statesManagement/store/actions/services-action";
 
 export const ServiceCategory = (props) => {
-  const { title, id } = props;
+  const { title, id, categories } = props;
   const { state, dispatch } = useContext(Store);
+  const { loading, ServiceCategory  } = state;
 
-  const { loading, error,  } = state;
-const categories = []
-  let myCategory = [];
-
-  myCategory = categories.filter((cat) => cat._id == id);
+  let myCategory = []
+  myCategory = categories.categories?.filter((cat) => cat._id == id);
   const INITIAL_FORM_VALUES = {
-    category_name: myCategory.length > 0 && typeof myCategory[0] != "undefined" ? myCategory[0].category_name : "",
+    category_name:  myCategory?.length > 0 && typeof myCategory[0] != "undefined" ? myCategory[0].categories_name :"",
   };
 
   const FORM_VALIDATIONS = yup.object().shape({
@@ -49,6 +47,7 @@ const categories = []
     const category = {
       categories_name: values.category_name,
     };
+    updateServiceCategory({dispatch, enqueueSnackbar,category, categoryId:id})
   
   };
   const handleSubmit = (values) => {
