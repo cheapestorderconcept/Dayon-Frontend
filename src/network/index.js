@@ -3,7 +3,7 @@ import Cookies from "js-cookie";
 const testUrl = "https://dayon-inventory.herokuapp.com";
 const liveUrl = "https://regken-pos.herokuapp.com";
 
-const baseUrl = `${testUrl}/api/v1`;
+const baseUrl = `${testUrl}`;
 
 export const RequestMethod = {
   POST: "POST",
@@ -18,7 +18,7 @@ export const RequestMethod = {
  *
  */
 
-export const makeNetworkCall = async ({ method, path, requestBody, params }) => {
+export const makeNetworkCall = async ({ method, path, requestBody, params, target }) => {
   if (!method || !path) {
     throw new Error("A required parameter is missing. Please provide method or path");
   }
@@ -27,7 +27,7 @@ export const makeNetworkCall = async ({ method, path, requestBody, params }) => 
 
   const config = {
     method,
-    url: `${baseUrl}/${path}`,
+    url: target == "service"?`${baseUrl}/api/service/v1/${path}`:`${baseUrl}/api/v1/${path}`,
     params: params,
     headers: {
       Authorization: `Bearer ${token}`,

@@ -159,16 +159,10 @@ export const ServicesListToolbar = (props) => {
                     <Grid item xs={12}>
                       <CustomSelect
                         name="category"
-                        options={categories}
+                        options={categories.categories}
                         label="Service Category"
                         id="service_categories"
-                        // InputProps={{
-                        //   endAdornment: (
-                        //     <InputAdornment position="end">
-                        //       <ListIcon />
-                        //     </InputAdornment>
-                        //   ),
-                        // }}
+                       
                       />
                     </Grid>
                    

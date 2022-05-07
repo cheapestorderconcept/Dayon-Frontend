@@ -28,7 +28,7 @@ const Services = () => {
   const { state, dispatch } = useContext(Store);
   const router = useRouter();
 
-  const { userInfo, loading, error } = state;
+  const { userInfo, loading, serviceCategories } = state;
   const services = []
   const { enqueueSnackbar } = useSnackbar();
   useEffect(() => {
@@ -49,7 +49,7 @@ const Services = () => {
       >
         <DynamicComponentWithNoSSR />
         <Container maxWidth={false}>
-          <ServicesListToolbar title="Add Service" categories={[]} />
+          <ServicesListToolbar title="Add Service" categories={serviceCategories} />
           <Box sx={{ pt: 3 }}>
             {!services ? (
               <Card>

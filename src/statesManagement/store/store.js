@@ -47,6 +47,7 @@ const initialState = {
   customerTransactions:[],
   customerDeposit:[],
   customerPurchased:[],
+  serviceCategories: Cookies.get("servicesCategories") ? JSON.parse(Cookies.get("servicesCategories")) : [],
 
 };
 

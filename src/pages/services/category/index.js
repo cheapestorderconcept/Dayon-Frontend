@@ -4,13 +4,13 @@ import { DashboardLayout } from "../../../components/dashboard-layout";
 import  {ServiceCategory}  from "src/components/serviceCategory/ServiceCategory";
 import ServiceCategoryTable from "src/components/serviceCategory/ServiceCategoryTable";
 import dynamic from "next/dynamic";
-import { getBrands } from "src/statesManagement/store/actions/brand-action";
 import { useContext, useEffect } from "react";
 
 import { useRouter } from "next/router";
 import { Store } from "src/statesManagement/store/store";
 import { useSnackbar } from "notistack";
 import { COMPANY_NAME } from "src/utils/company_details";
+import { getServiceCategories } from "src/statesManagement/store/actions/services-action";
 
 const DynamicComponentWithNoSSR = dynamic(() => import("src/components/navbar-branch-indicator"), {
   ssr: false,
@@ -19,11 +19,13 @@ const ServiceCategoryPage = () => {
   const { state, dispatch } = useContext(Store);
   const router = useRouter();
   const { enqueueSnackbar } = useSnackbar();
-  const { userInfo } = state;
-  const categories = []
+  const { userInfo, serviceCategories } = state;
+  console.log(userInfo)
+ 
 
   useEffect(() => {
     !userInfo && router.push("/auth");
+  getServiceCategories({dispatch, enqueueSnackbar})
     
   }, []);
 
@@ -43,7 +45,7 @@ const ServiceCategoryPage = () => {
         <Container maxWidth={false}>
           <ServiceCategory title="Add Service Category" />
           <Box sx={{ pt: 3 }}>
-            {!categories ? (
+            {!serviceCategories ? (
               <Card>
                 <CardHeader title="Categories" />
                 <Divider />
@@ -59,7 +61,7 @@ const ServiceCategoryPage = () => {
                 <CardContent></CardContent>
               </Card>
             ) : (
-              <ServiceCategoryTable Categories={categories} />
+              <ServiceCategoryTable categories={serviceCategories} />
             )}
           </Box>
         </Container>

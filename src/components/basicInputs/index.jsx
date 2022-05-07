@@ -92,8 +92,10 @@ export const CustomSelect = ({ name, options, id, i, useId, ...other }) => {
         return option.expenses_category;
       case "roles":
         return option.name;
-        case "customers":
+      case "customers":
         return useId ? option._id : `${option.first_name + " " + option.last_name}`;
+      case "service_categories":
+        return useId ? option._id : `${option.categories_name}`;
 
       default:
         "";

@@ -172,6 +172,12 @@ import {
   UPDATE_CUSTOMERS_REQUEST,
   UPDATE_CUSTOMERS_SUCCESS,
   UPDATE_CUSTOMERS_FAIL,
+  ADD_SERVICE_CATEGORY_REQUEST,
+  ADD_SERVICE_CATEGORY_SUCCESS,
+  ADD_SERVICE_CATEGORY_FAIL,
+  GET_SERVICE_CATEGORIES_SUCCESS,
+  GET_SERVICE_CATEGORIES_FAIL,
+  GET_SERVICE_CATEGORIES_REQUEST,
 } from "../constants";
 
 // const rootReducers = combineReducers({
@@ -258,6 +264,41 @@ const rootReducers = (state, action) => {
       return { ...state, loading: false };
     case UPDATE_BRAND_FAIL:
       return { ...state, loading: false, error: action.payload };
+
+  //services reducers
+  case GET_SERVICE_CATEGORIES_REQUEST:
+    return {...state, loading:true}
+    case GET_SERVICE_CATEGORIES_SUCCESS: {
+      if (Cookies.get("servicesCategories")) {
+        Cookies.remove("servicesCategories");
+        Cookies.set("servicesCategories", JSON.stringify(action.payload));
+      } else {
+        Cookies.set("servicesCategories", JSON.stringify(action.payload));
+      }
+      return { ...state, loading: false, serviceCategories: action?.payload };
+    }
+    case GET_SERVICE_CATEGORIES_FAIL:
+      return { ...state, loading: false, error: action.payload };
+
+    case ADD_SERVICE_CATEGORY_REQUEST:
+      return { ...state, loading: true };
+    case ADD_SERVICE_CATEGORY_SUCCESS:
+      return { ...state, loading: false };
+    case ADD_SERVICE_CATEGORY_FAIL:
+      return { ...state, loading: false, error: action.payload };
+    case DELETE_BRAND_REQUEST:
+      return { ...state, loading: true };
+    case DELETE_BRAND_SUCCESS:
+      return { ...state, loading: false };
+    case DELETE_BRAND_FAIL:
+      return { ...state, loading: false, error: action.payload };
+    case UPDATE_BRANDS_REQUEST:
+      return { ...state, loading: true };
+    case UPDATE_BRAND_SUCCESS:
+      return { ...state, loading: false };
+    case UPDATE_BRAND_FAIL:
+      return { ...state, loading: false, error: action.payload };
+
     // Prodducts Reducers
     case GET_PRODUCT_BY_BARCODE_REQUEST:
       return { ...state, loading: true };

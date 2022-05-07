@@ -24,12 +24,13 @@ import { useRouter } from "next/router";
 import { Store } from "src/statesManagement/store/store";
 import NextLink from "next/link";
 import { useSnackbar } from "notistack";
+import { addServiceCategory } from "src/statesManagement/store/actions/services-action";
 
 export const ServiceCategory = (props) => {
   const { title, id } = props;
   const { state, dispatch } = useContext(Store);
 
-  const { loading, error, brands } = state;
+  const { loading, error,  } = state;
 const categories = []
   let myCategory = [];
 
@@ -45,16 +46,17 @@ const categories = []
   const Router = useRouter();
   const { enqueueSnackbar } = useSnackbar();
   const handleUpdate = (values) => {
-    const brand = {
-      category_name: values.name,
+    const category = {
+      categories_name: values.category_name,
     };
   
   };
   const handleSubmit = (values) => {
     const category = {
-      category_name: values.name,
+      categories_name: values.category_name,
     };
-console.log(category);
+    console.log(category)
+addServiceCategory({dispatch, enqueueSnackbar, category})
   };
 
   return (

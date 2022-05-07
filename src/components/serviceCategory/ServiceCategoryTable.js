@@ -19,6 +19,8 @@ const ServiceCategoryTable = ({ categories }) => {
     setready(true);
   }, []);
 
+  console.log(categories)
+
   const { enqueueSnackbar } = useSnackbar();
 
   const handleDelete = (tableMeta) => (e) => {
@@ -81,11 +83,11 @@ const ServiceCategoryTable = ({ categories }) => {
     },
   ];
 
-  const category = categories?.map((cat, i) => {
+  const category = categories.categories?.map((cat, i) => {
     return {
       delete: `${cat._id}`,
       Update_category: `${cat._id}`,
-      name: `${cat.category_name}`,
+      name: `${cat.categories_name}`,
     };
   });
 
