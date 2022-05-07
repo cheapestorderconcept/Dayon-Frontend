@@ -29,12 +29,12 @@ import { addServiceCategory, updateServiceCategory } from "src/statesManagement/
 export const ServiceCategory = (props) => {
   const { title, id, categories } = props;
   const { state, dispatch } = useContext(Store);
-  const { loading, ServiceCategory  } = state;
+  const { loading } = state;
 
   let myCategory = []
-  myCategory = categories.categories?.filter((cat) => cat._id == id);
+  myCategory = categories?.categories?.filter((cat) => cat._id == id);
   const INITIAL_FORM_VALUES = {
-    category_name:  myCategory?.length > 0 && typeof myCategory[0] != "undefined" ? myCategory[0].categories_name :"",
+    category_name:  myCategory?.length > 0 && typeof myCategory[0] != "undefined" ? myCategory[0]?.categories_name :"",
   };
 
   const FORM_VALIDATIONS = yup.object().shape({
@@ -54,7 +54,7 @@ export const ServiceCategory = (props) => {
     const category = {
       categories_name: values.category_name,
     };
-    console.log(category)
+   
 addServiceCategory({dispatch, enqueueSnackbar, category})
   };
 
