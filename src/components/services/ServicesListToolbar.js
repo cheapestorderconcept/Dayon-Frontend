@@ -19,7 +19,7 @@ import { CustomSelect, CustomButton } from "../basicInputs";
 import { useContext, useState } from "react";
 import { Store } from "src/statesManagement/store/store";
 import { useRouter } from "next/router";
-import { addProduct, updateProduct } from "src/statesManagement/store/actions/product-action";
+import { addService, getService } from "src/statesManagement/store/actions/services-action";
 import AlertBox from "../alert";
 import NextLink from "next/link";
 import { useSnackbar } from "notistack";
@@ -30,7 +30,6 @@ export const ServicesListToolbar = (props) => {
     name: "",
     category: "",
     price: "",
-   
   };
 
   const FORM_VALIDATIONS = yup.object().shape({
@@ -45,10 +44,10 @@ export const ServicesListToolbar = (props) => {
 
   const { title, categories, edit } = props;
   const { dispatch, state } = useContext(Store);
-  const { loading } = state;
+  const { loading, services } = state;
   const { enqueueSnackbar } = useSnackbar();
   const Router = useRouter();
- 
+  // console.log(services);
 
   const handleUpdate = (values) => {
     const services = {
@@ -56,24 +55,23 @@ export const ServicesListToolbar = (props) => {
       service_category: values.category,
       service_price: values.price,
     };
-    console.log(services)
 
-    // updateProduct({ dispatch: dispatch, product: product, productId: id, Router: Router });
+    //  getService({ dispatch: dispatch, product: product, productId: id, Router: Router });
   };
 
   const handleSubmit = (values) => {
     const services = {
       service_name: values.name,
-      service_category: values.category,
       service_price: values.price,
+      service_categories: values.category,
     };
-    console.log(services)
-    // addProduct({
-    //   dispatch: dispatch,
-    //   product: product,
-    //   Router: Router,
-    //   enqueueSnackbar: enqueueSnackbar,
-    // });
+
+    addService({
+      dispatch: dispatch,
+      service: services,
+      Router: Router,
+      enqueueSnackbar: enqueueSnackbar,
+    });
   };
   return (
     <Box {...props}>
@@ -163,10 +161,9 @@ export const ServicesListToolbar = (props) => {
                         label="Service Category"
                         id="service_categories"
                         useId={true}
-                       
                       />
                     </Grid>
-                   
+
                     <Grid item xs={12}>
                       <CustomButton> {edit ? "Update Service" : "Submit"}</CustomButton>
                     </Grid>

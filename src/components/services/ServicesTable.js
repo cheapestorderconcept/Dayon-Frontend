@@ -34,20 +34,19 @@ const ServicesTable = ({ services, editable }) => {
       name: "name",
       label: "Service Name",
     },
-   
+
     {
       name: "branch",
       label: "Branch",
     },
     {
-      name: "categories",
+      name: "service",
       label: "Service Category",
     },
     {
       name: "price",
       label: "Service Price",
     },
-
   ];
 
   const columns = [
@@ -90,11 +89,11 @@ const ServicesTable = ({ services, editable }) => {
         },
       },
     },
-     {
+    {
       name: "name",
       label: "Service Name",
     },
-   
+
     {
       name: "branch",
       label: "Branch",
@@ -111,7 +110,11 @@ const ServicesTable = ({ services, editable }) => {
 
   // const product = products.map((pro) => Object.values(pro));
   // console.log(products);
-  const service = services.map((ser, i) => {
+  // const { state } = useContext(Store);
+  // const { serviceCategories } = state;
+  // console.log(serviceCategories);
+
+  const service = services.services?.map((ser, i) => {
     const strDate = new Date(ser?.created_at);
     function convert(strDate) {
       var date = new Date(strDate),
@@ -119,13 +122,14 @@ const ServicesTable = ({ services, editable }) => {
         day = ("0" + date.getDate()).slice(-2);
       return [date.getFullYear(), mnth, day].join("-");
     }
+    console.log(ser.service_categories);
     return {
       delete: `${ser._id}`,
       Update_Service: `${ser._id}`,
       name: `${ser.service_name}`,
       branch: `${ser.branch}`,
-      category: `${ser.service_category}`,
-      price: `${ser.price}`,
+      service: `${ser.service_categories}`,
+      price: `${ser.service_price}`,
       date: convert(strDate),
       // prev_qty: `${pro.previous_product_quantity}`,
     };
