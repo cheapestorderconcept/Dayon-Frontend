@@ -184,6 +184,18 @@ import {
   UPDATE_SERVICE_CATEGORY_REQUEST,
   UPDATE_SERVICE_CATEGORY_SUCCESS,
   UPDATE_SERVICE_CATEGORY_FAIL,
+  DELETE_SERVICE_PAYMENT_FAIL,
+  DELETE_SERVICE_PAYMENT_SUCCESS,
+  DELETE_SERVICE_PAYMENT_REQUEST,
+  UPDATE_SERVICE_PAYMENT_REQUEST,
+  UPDATE_SERVICE_PAYMENT_SUCCESS,
+  UPDATE_SERVICE_PAYMENT_FAIL,
+  ADD_SERVICE_PAYMENT_FAIL,
+  ADD_SERVICE_PAYMENT_SUCCESS,
+  ADD_SERVICE_PAYMENT_REQUEST,
+  GET_SERVICE_PAYMENT_SUCCESS,
+  GET_SERVICE_PAYMENT_REQUEST,
+  GET_SERVICE_PAYMENT_FAIL,
 } from "../constants";
 
 // const rootReducers = combineReducers({
@@ -759,7 +771,38 @@ const rootReducers = (state, action) => {
     case UPDATE_SERVICE_CATEGORY_FAIL:
       return { ...state, loading: false, error: action.payload };
     
+  case GET_SERVICE_PAYMENT_REQUEST:
+    return {...state, loading:true}
+    case GET_SERVICE_PAYMENT_SUCCESS: {
+      if (Cookies.get("servicePayment")) {
+        Cookies.remove("servicePayment");
+        Cookies.set("servicePayment", JSON.stringify(action.payload));
+      } else {
+        Cookies.set("servicePayment", JSON.stringify(action.payload));
+      }
+      return { ...state, loading: false, servicePayment: action?.payload };
+    }
+    case GET_SERVICE_PAYMENT_FAIL:
+      return { ...state, loading: false, error: action.payload };
 
+    case ADD_SERVICE_PAYMENT_REQUEST:
+      return { ...state, loading: true };
+    case ADD_SERVICE_PAYMENT_SUCCESS:
+      return { ...state, loading: false };
+    case ADD_SERVICE_PAYMENT_FAIL:
+      return { ...state, loading: false, error: action.payload };
+    case DELETE_SERVICE_PAYMENT_REQUEST:
+      return { ...state, loading: true };
+    case DELETE_SERVICE_PAYMENT_SUCCESS:
+      return { ...state, loading: false };
+    case DELETE_SERVICE_PAYMENT_FAIL:
+      return { ...state, loading: false, error: action.payload };
+    case UPDATE_SERVICE_PAYMENT_REQUEST:
+      return { ...state, loading: true };
+    case UPDATE_SERVICE_PAYMENT_SUCCESS:
+      return { ...state, loading: false };
+    case UPDATE_SERVICE_PAYMENT_FAIL:
+      return { ...state, loading: false, error: action.payload };
 
     default:
       state;

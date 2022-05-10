@@ -13,6 +13,7 @@ import { getTotalSales } from "src/statesManagement/store/actions/sales-action";
 import { useSnackbar } from "notistack";
 import { COMPANY_NAME } from "src/utils/company_details";
 import ServicePaymentList from "src/components/ServicePayment/service-list";
+import { setRevalidateHeaders } from "next/dist/server/send-payload";
 
 const DynamicComponentWithNoSSR = dynamic(() => import("src/components/navbar-branch-indicator"), {
   ssr: false,
@@ -20,11 +21,10 @@ const DynamicComponentWithNoSSR = dynamic(() => import("src/components/navbar-br
 
 const ServicePaymentListPage = () => {
   const { dispatch, state } = useContext(Store);
-  const { totalSales } = state;
+  const { servicePayment } = state;
   const { enqueueSnackbar } = useSnackbar();
 
   useEffect(() => {
-   
   }, []);
 
   return (
@@ -64,7 +64,7 @@ const ServicePaymentListPage = () => {
             </Box>
           </Box>
           <Box sx={{ pt: 3 }}>
-            <ServicePaymentList serviceLists={[]} />
+            <ServicePaymentList serviceLists={servicePayment} />
           </Box>
         </Container>
       </Box>

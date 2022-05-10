@@ -3,10 +3,14 @@ import {
     ADD_SERVICE_CATEGORY_FAIL,
     ADD_SERVICE_CATEGORY_REQUEST,
     ADD_SERVICE_CATEGORY_SUCCESS,
+    ADD_SERVICE_PAYMENT_REQUEST,
+    ADD_SERVICE_PAYMENT_SUCCESS,
+    ADD_SERVICE_PAYMENT_FAIL,
+
  DELETE_SERVICE_CATEGORY_FAIL,
  DELETE_SERVICE_CATEGORY_REQUEST,
  DELETE_SERVICE_CATEGORY_SUCCESS,
- GET_SERVICE_CATEGORIES_FAIL, GET_SERVICE_CATEGORIES_REQUEST, GET_SERVICE_CATEGORIES_SUCCESS, UPDATE_SERVICE_CATEGORY_FAIL, UPDATE_SERVICE_CATEGORY_REQUEST, UPDATE_SERVICE_CATEGORY_SUCCESS
+ GET_SERVICE_CATEGORIES_FAIL, GET_SERVICE_CATEGORIES_REQUEST, GET_SERVICE_CATEGORIES_SUCCESS, UPDATE_SERVICE_CATEGORY_FAIL, UPDATE_SERVICE_CATEGORY_REQUEST, UPDATE_SERVICE_CATEGORY_SUCCESS, GET_SERVICE_PAYMENT_REQUEST, GET_SERVICE_PAYMENT_SUCCESS, GET_SERVICE_PAYMENT_FAIL
 
 } from "../constants/index";
 
@@ -134,3 +138,57 @@ export const updateServiceCategory = async ({ dispatch, category, categoryId, Ro
 
 
 // Continue Other Services Actions from here...
+
+export const addServicePayment = async ({ dispatch, service, Router, enqueueSnackbar }) => {
+  try {
+    dispatch({
+      type: ADD_SERVICE_PAYMENT_REQUEST,
+    });
+
+    const { data } = await makeNetworkCall({
+      method: "POST",
+      path: "add-payment",
+      requestBody: service,
+      target:"service"
+    });
+    console.log(data.data);
+    dispatch({
+      type: ADD_SERVICE_PAYMENT_SUCCESS,
+      payload: data.data,
+    });
+    data &&
+      enqueueSnackbar(data?.response_message, {
+        variant: "success",
+      });
+    // Router.reload(window.location.pathname);
+  } catch (error) {
+    dispatch({
+      type: ADD_SERVICE_PAYMENT_FAIL,
+    });
+    error &&
+      enqueueSnackbar(error?.response?.data?.response_message || error.message, {
+        variant: "error",
+      });
+  }
+};
+export const getServicePayments = async ({ dispatch, enqueueSnackbar }) => {
+  try {
+    dispatch({
+      type: GET_SERVICE_PAYMENT_REQUEST,
+    });
+    const { data } = await makeNetworkCall({ method: "GET", path: "fetch-all-categories", target:"service" });
+
+    dispatch({
+      type: GET_SERVICE_PAYMENT_SUCCESS,
+      payload: data.data,
+    });
+  } catch (error) {
+    dispatch({
+      type: GET_SERVICE_PAYMENT_FAIL,
+    });
+    error &&
+      enqueueSnackbar(error?.response?.data?.response_message || error.message, {
+        variant: "error",
+      });
+  }
+};

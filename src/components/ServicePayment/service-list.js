@@ -94,7 +94,7 @@ const ServicePaymentList = ({ serviceLists }) => {
   }, []);
 
 
-  const myService = serviceLists.map((serv, i) => {
+  const myService = serviceLists?.map((serv, i) => {
     const strDate = new Date(serv?.created_at);
     function convert(strDate) {
       var date = new Date(strDate),

@@ -4,42 +4,30 @@ import {
   Card,
   CardContent,
   CardHeader,
-  Divider,
-  InputAdornment,
-  Typography,
-  Grid,
-  TextField,
-  MenuItem,
-  Container,
+  Divider, Grid, Typography
 } from "@mui/material";
-import { Download as DownloadIcon } from "../../icons/download";
-import { Search as SearchIcon } from "../../icons/search";
-import { Upload as UploadIcon } from "../../icons/upload";
-import { CustomTextField } from "../basicInputs";
-import ListIcon from "@mui/icons-material/List";
-import * as yup from "yup";
-import { Formik, Form, Field, FieldArray, ErrorMessage, useFormikContext } from "formik";
-import { CustomSelect, CustomButton } from "../basicInputs";
-import { CustomDate } from "../basicInputs";
-import { paymentMethods } from "src/__mocks__/paymentMethods";
-import React, { useContext, useEffect, useMemo, useRef, useState } from "react";
-
-import { Store } from "src/statesManagement/store/store";
-
-import { addSalesData } from "src/statesManagement/store/actions/sales-action";
-import { useSnackbar } from "notistack";
-import { useRouter } from "next/router";
+import { Field, FieldArray, Form, Formik } from "formik";
 import Cookies from "js-cookie";
-import { SearchableSelect } from "../basicInputs";
+import { useRouter } from "next/router";
+import { useSnackbar } from "notistack";
+import React, { useContext, useRef } from "react";
+import { addServicePayment } from "src/statesManagement/store/actions/services-action";
+import { Store } from "src/statesManagement/store/store";
+import * as yup from "yup";
+import { Download as DownloadIcon } from "../../icons/download";
+import { Upload as UploadIcon } from "../../icons/upload";
+import { CustomDate, CustomSelect, CustomTextField, SearchableSelect } from "../basicInputs";
+
+
 
 export const AddService = (props) => {
   const { paymentType } = props;
   const { dispatch, state } = useContext(Store);
-  const { loading, customers } = state;
+  const { loading, customers, servicePayment } = state;
   const { enqueueSnackbar } = useSnackbar();
   const Router = useRouter();
-  // myservice is referring to the lists of services that will be accessible from state
-  const myServices = []
+  
+ 
 
   const INITIAL_FORM_VALUES = {
     created_at: "",
@@ -123,6 +111,8 @@ export const AddService = (props) => {
 
   const Submit = (values) => {
    console.log(values)
+  //  addServicePayment({dispatch, enqueueSnackbar, service}) .
+  
   };
   const removeservices = (values, setValues) => {
     const services = [...values.services];
@@ -134,7 +124,7 @@ export const AddService = (props) => {
 
   const RenderForm = ({ services, i, values }) => {
 
-    const retrieveServiceById = myServices.filter((serv) => serv._id === services?.selectedService);
+    const retrieveServiceById = servicePayment.filter((serv) => serv._id === services?.selectedService);
 
     return (
       <React.Fragment key={i}>
@@ -184,7 +174,7 @@ export const AddService = (props) => {
           <SearchableSelect
             name={`services.${i}.selectedService`}
             useId={true}
-            options={myServices}
+            options={[]}
             id="services"
             title="Choose Service"
           />
@@ -258,7 +248,7 @@ export const AddService = (props) => {
         <Grid item xs={6}>
           <CustomTextField
             name={`services.${i}.amount`}
-            label="Amount"
+            label="Amount Paid"
             value={
               services.selectedService != "" && retrieveServiceById != []
                 ? (services.amount = services.selling_price)
