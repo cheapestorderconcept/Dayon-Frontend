@@ -13,7 +13,7 @@ import {
   getProductPrice,
 } from "src/statesManagement/store/actions/product-action";
 import { useEffect } from "react";
-
+import { getService } from "src/statesManagement/store/actions/services-action";
 import Loading from "src/components/loading/Loading";
 import { useSnackbar } from "notistack";
 import { COMPANY_NAME } from "src/utils/company_details";
@@ -26,14 +26,17 @@ const DynamicComponentWithNoSSR = dynamic(() => import("src/components/navbar-br
 
 const Services = () => {
   const { state, dispatch } = useContext(Store);
-  const router = useRouter();
 
-  const { userInfo, loading, serviceCategories } = state;
-  const services = []
+  const { query } = useRouter();
+  const router = useRouter();
+  const { userInfo, loading, serviceCategories, services } = state;
   const { enqueueSnackbar } = useSnackbar();
   useEffect(() => {
     !userInfo && router.push("/auth");
-  
+    getService({
+      dispatch,
+      enqueueSnackbar,
+    });
   }, []);
   return (
     <>
@@ -67,7 +70,7 @@ const Services = () => {
                 <CardContent></CardContent>
               </Card>
             ) : (
-              <ServicesTable  services={services} editable={true}  />
+              <ServicesTable services={services} editable={true} />
             )}
           </Box>
           <Box

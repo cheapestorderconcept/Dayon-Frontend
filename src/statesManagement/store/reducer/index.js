@@ -196,6 +196,12 @@ import {
   GET_SERVICE_PAYMENT_SUCCESS,
   GET_SERVICE_PAYMENT_REQUEST,
   GET_SERVICE_PAYMENT_FAIL,
+  ADD_SERVICE_REQUEST,
+  ADD_SERVICE_SUCCESS,
+  ADD_SERVICE_FAIL,
+  GET_SERVICE_REQUEST,
+  GET_SERVICE_SUCCESS,
+  GET_SERVICE_FAIL,
 } from "../constants";
 
 // const rootReducers = combineReducers({
@@ -687,10 +693,10 @@ const rootReducers = (state, action) => {
     case GET_PROFIT_OR_LOSS_LEVEL_REPORT_FAIL:
       return { ...state, loading: false, error: action.payload };
 
-//CUSTOMERS REDUCERS
-   case GET_ALL_CUSTOMERS_REQUEST:
+    //CUSTOMERS REDUCERS
+    case GET_ALL_CUSTOMERS_REQUEST:
       return { ...state, loading: true };
-   case GET_ALL_CUSTOMERS_SUCCESS:
+    case GET_ALL_CUSTOMERS_SUCCESS:
       if (Cookies.get("customers")) {
         Cookies.remove("customers");
         Cookies.set("customers", JSON.stringify(action.payload));
@@ -698,31 +704,30 @@ const rootReducers = (state, action) => {
         Cookies.set("customers", JSON.stringify(action.payload));
       }
       return { ...state, loading: false, customers: action?.payload };
-   case GET_ALL_CUSTOMERS_FAIL:
+    case GET_ALL_CUSTOMERS_FAIL:
       return { ...state, loading: false, error: action.payload };
 
-   case REGISTER_CUSTOMERS_REQUEST:
+    case REGISTER_CUSTOMERS_REQUEST:
       return { ...state, loading: true };
-   case REGISTER_CUSTOMERS_SUCCESS:
+    case REGISTER_CUSTOMERS_SUCCESS:
       return { ...state, loading: false };
-   case REGISTER_CUSTOMERS_FAIL:
-      return { ...state, loading: false, error: action.payload };   
+    case REGISTER_CUSTOMERS_FAIL:
+      return { ...state, loading: false, error: action.payload };
 
-     case GET_CUSTOMERS_DEPOSITS_REQUEST:
+    case GET_CUSTOMERS_DEPOSITS_REQUEST:
       return { ...state, loading: true };
     case GET_CUSTOMERS_DEPOSITS_SUCCESS:
       return { ...state, loading: false, customerDeposit: action?.payload };
     case GET_CUSTOMERS_DEPOSITS_FAIL:
       return { ...state, loading: false, error: action.payload };
 
-     case GET_CUSTOMERS_PURCHASED_REQUEST:
+    case GET_CUSTOMERS_PURCHASED_REQUEST:
       return { ...state, loading: true };
     case GET_CUSTOMERS_PURCHASED_SUCCESS:
-     
       return { ...state, loading: false, customerPurchased: action?.payload };
     case GET_CUSTOMERS_PURCHASED_FAIL:
       return { ...state, loading: false, error: action.payload };
-    
+
     case GET_CUSTOMERS_TRANSACTIONS_REQUEST:
       return { ...state, loading: true };
     case GET_CUSTOMERS_TRANSACTIONS_SUCCESS:
@@ -737,9 +742,9 @@ const rootReducers = (state, action) => {
     case UPDATE_CUSTOMERS_FAIL:
       return { ...state, loading: false, error: action.payload };
 
- //services reducers
-  case GET_SERVICE_CATEGORIES_REQUEST:
-    return {...state, loading:true}
+    //services categories reducers
+    case GET_SERVICE_CATEGORIES_REQUEST:
+      return { ...state, loading: true };
     case GET_SERVICE_CATEGORIES_SUCCESS: {
       if (Cookies.get("servicesCategories")) {
         Cookies.remove("servicesCategories");
@@ -802,6 +807,27 @@ const rootReducers = (state, action) => {
     case UPDATE_SERVICE_PAYMENT_SUCCESS:
       return { ...state, loading: false };
     case UPDATE_SERVICE_PAYMENT_FAIL:
+
+    // Services reducer
+    case GET_SERVICE_REQUEST:
+      return { ...state, loading: true };
+    case GET_SERVICE_SUCCESS: {
+      if (Cookies.get("services")) {
+        Cookies.remove("services");
+        Cookies.set("services", JSON.stringify(action.payload));
+      } else {
+        Cookies.set("services", JSON.stringify(action.payload));
+      }
+      return { ...state, loading: false, services: action?.payload };
+    }
+    case GET_SERVICE_FAIL:
+      return { ...state, loading: false, error: action.payload };
+
+    case ADD_SERVICE_REQUEST:
+      return { ...state, loading: true };
+    case ADD_SERVICE_SUCCESS:
+      return { ...state, loading: false };
+    case ADD_SERVICE_FAIL:
       return { ...state, loading: false, error: action.payload };
 
     default:
