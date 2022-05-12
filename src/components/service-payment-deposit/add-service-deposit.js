@@ -46,7 +46,7 @@ import { SearchableSelect } from "../basicInputs";
 export const AddServiceDeposit = (props) => {
   const { dispatch, state } = useContext(Store);
   const { customers, paymentType, loading } = state;
- const myServices=[]
+  const myServices = [];
 
   const INITIAL_FORM_VALUES = {
     created_at: "",
@@ -104,8 +104,6 @@ export const AddServiceDeposit = (props) => {
           .integer()
           .typeError("Amount must be a number")
           .required("Please provide amount"),
-
-   
       })
     ),
   });
@@ -124,7 +122,6 @@ export const AddServiceDeposit = (props) => {
       created_at: "",
       service_price: "",
       amount: "",
-   
     });
 
     setValues({ ...values, services });
@@ -140,13 +137,12 @@ export const AddServiceDeposit = (props) => {
 
   const { enqueueSnackbar } = useSnackbar();
   const Submit = (values) => {
-   console.log(values)
+    console.log(values);
   };
 
   const formRef = useRef(null);
 
   const RenderComponentForm = ({ services, i, values }) => {
-   
     const retrieveServiceById = myServices.filter((serv) => serv._id === services?.selectedService);
 
     return (
@@ -180,7 +176,7 @@ export const AddServiceDeposit = (props) => {
           />
         </Grid> */}
 
-       <Grid item xs={6}>
+        <Grid item xs={6}>
           <CustomTextField
             name={`services.${i}.service`}
             disabled
@@ -188,12 +184,11 @@ export const AddServiceDeposit = (props) => {
               (services.product =
                 services.selectedService != "" && retrieveServiceById != []
                   ? retrieveServiceById[0]?.service
-        
                   : "")
             }
             // label="Product"
           />
-        </Grid> 
+        </Grid>
         <Grid item xs={6}>
           <SearchableSelect
             name={`services.${i}.selectedService`}
@@ -243,26 +238,21 @@ export const AddServiceDeposit = (props) => {
               (services.product_id =
                 services.selectedService != "" && retrieveServiceById != []
                   ? retrieveServiceById[0]?._id
-              
                   : "")
             }
             label="Service Id"
           />
         </Grid>
-       
 
         <Grid item xs={6}>
-          <CustomTextField
-            name={`services.${i}.selling_price`}
-            label="Service Cost Price"
-          />
+          <CustomTextField name={`services.${i}.selling_price`} label="Service Cost Price" />
         </Grid>
 
         <Grid item xs={6}>
           <CustomTextField
             name={`services.${i}.amount`}
             label="Amount"
-              disabled={true}
+            disabled={true}
             value={
               services.selectedService != "" && retrieveServiceById != []
                 ? (services.amount = services.selling_price)
@@ -358,7 +348,10 @@ export const AddServiceDeposit = (props) => {
                           label="Total Purchase Amount"
                           disabled
                           value={
-                            (values.total_amount = values.services.reduce((a, c) => a + c.amount, 0))
+                            (values.total_amount = values.services.reduce(
+                              (a, c) => a + c.amount,
+                              0
+                            ))
                           }
                         />
                       </Grid>

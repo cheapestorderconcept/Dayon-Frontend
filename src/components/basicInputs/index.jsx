@@ -44,12 +44,13 @@ export const SearchableSelect = ({ name, title, options, id, i, useId, ...other 
         setInputValue(newInputValue);
       }}
       autoHighlight
-      getOptionLabel={(option) => (option ? option.product_name || option.first_name + " " + option.last_name: "")}
+      getOptionLabel={(option) =>
+        option ? option.product_name || option.first_name + " " + option.last_name : ""
+      }
       renderOption={(props, option) => (
-          //below is for product and customers
+        //below is for product and customers
         <Box component="li" sx={{ "& > img": { mr: 2, flexShrink: 0 } }} {...props}>
-        
-          {option ? option.product_name || option.first_name + " " + option.last_name : "" }
+          {option ? option.product_name || option.first_name + " " + option.last_name : ""}
         </Box>
       )}
       renderInput={(params) => <TextField {...params} label={title || "Choose Product"} />}

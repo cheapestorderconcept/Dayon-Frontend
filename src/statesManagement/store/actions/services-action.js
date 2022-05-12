@@ -18,6 +18,12 @@ import {
   ADD_SERVICE_REQUEST,
   ADD_SERVICE_SUCCESS,
   ADD_SERVICE_FAIL,
+  UPDATE_SERVICE_REQUEST,
+  UPDATE_SERVICE_SUCCESS,
+  UPDATE_SERVICE_FAIL,
+  DELETE_SERVICE_REQUEST,
+  DELETE_SERVICE_SUCCESS,
+  DELETE_SERVICE_FAIL,
 } from "../constants/index";
 
 export const getServiceCategories = async ({ dispatch, enqueueSnackbar }) => {
@@ -114,7 +120,6 @@ export const updateServiceCategory = async ({
   dispatch,
   category,
   categoryId,
-  Router,
   enqueueSnackbar,
 }) => {
   try {
@@ -203,6 +208,70 @@ export const addService = async ({ dispatch, service, Router, enqueueSnackbar })
     dispatch({
       type: ADD_SERVICE_FAIL,
     });
+    error &&
+      enqueueSnackbar(error?.response?.data?.response_message || error.message, {
+        variant: "error",
+      });
+  }
+};
+
+export const updateService = async ({ dispatch, service, serviceId, enqueueSnackbar }) => {
+  try {
+    dispatch({
+      type: UPDATE_SERVICE_REQUEST,
+    });
+
+    const { data } = await makeNetworkCall({
+      method: "PUT",
+      path: `update-service/${serviceId}`,
+      target: "service",
+      requestBody: service,
+    });
+
+    dispatch({
+      type: UPDATE_SERVICE_SUCCESS,
+      payload: data.data,
+    });
+    data &&
+      enqueueSnackbar(data?.response_message, {
+        variant: "success",
+      });
+    // Router.reload(window.location.pathname);
+  } catch (error) {
+    dispatch({
+      type: UPDATE_SERVICE_FAIL,
+    });
+    error &&
+      enqueueSnackbar(error?.response?.data?.response_message || error.message, {
+        variant: "error",
+      });
+  }
+};
+
+export const deleteService = async ({ dispatch, serviceId, Router, enqueueSnackbar }) => {
+  try {
+    dispatch({
+      type: DELETE_SERVICE_REQUEST,
+    });
+    const { data } = await makeNetworkCall({
+      method: "DELETE",
+      path: `delete-service/${serviceId}`,
+      target: "service",
+    });
+    dispatch({
+      type: DELETE_SERVICE_SUCCESS,
+      payload: data.data._id,
+    });
+    data &&
+      enqueueSnackbar(data?.response_message, {
+        variant: "success",
+      });
+    // Router.reload(window.location.pathname);
+  } catch (error) {
+    dispatch({
+      type: DELETE_SERVICE_FAIL,
+    });
+
     error &&
       enqueueSnackbar(error?.response?.data?.response_message || error.message, {
         variant: "error",

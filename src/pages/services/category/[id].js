@@ -1,7 +1,7 @@
 import Head from "next/head";
 import { Box, Container } from "@mui/material";
 import { DashboardLayout } from "../../../components/dashboard-layout";
-import {  ServiceCategory } from "src/components/serviceCategory/ServiceCategory";
+import { ServiceCategory } from "src/components/serviceCategory/ServiceCategory";
 import dynamic from "next/dynamic";
 import { useContext, useEffect, useState } from "react";
 
@@ -20,15 +20,13 @@ const EditServiceCategory = () => {
   const { query } = useRouter();
   const router = useRouter();
   const { userInfo, serviceCategories } = state;
- 
 
   const [id, setid] = useState(null);
   const { enqueueSnackbar } = useSnackbar();
   useEffect(() => {
     !userInfo && router.push("/auth");
     setid(query.id);
-    getServiceCategories({dispatch, enqueueSnackbar})
-    
+    getServiceCategories({ dispatch, enqueueSnackbar });
   }, [query.id]);
 
   return (
@@ -45,7 +43,7 @@ const EditServiceCategory = () => {
       >
         <DynamicComponentWithNoSSR />
         <Container maxWidth={false}>
-          <ServiceCategory id={id} title="Edit Category " categories={serviceCategories}/>
+          <ServiceCategory id={id} title="Edit Category " categories={serviceCategories} />
           <Box sx={{ pt: 3 }}>
             <ServiceCategoryTable categories={serviceCategories} />
           </Box>
