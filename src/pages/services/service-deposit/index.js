@@ -16,8 +16,8 @@ const DynamicComponentWithNoSSR = dynamic(() => import("src/components/navbar-br
 const ServiceDepositPage = () => {
   const { dispatch, state } = useContext(Store);
   const router = useRouter();
-  // const { enqueueSnackbar } = useSnackbar();
-  const { userInfo } = state;
+  const { enqueueSnackbar } = useSnackbar();
+  const { userInfo,paymentType, services,customers } = state;
   useEffect(() => {
     !userInfo && router.push("/auth");
   }, []);
@@ -35,7 +35,7 @@ const ServiceDepositPage = () => {
       >
         <DynamicComponentWithNoSSR />
         <Container maxWidth={true}>
-          <AddServiceDeposit />
+          <AddServiceDeposit customers={customers} paymentType={paymentType} serviceType={services}/>
         </Container>
       </Box>
     </>

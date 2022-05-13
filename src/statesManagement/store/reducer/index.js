@@ -202,6 +202,18 @@ import {
   GET_SERVICE_REQUEST,
   GET_SERVICE_SUCCESS,
   GET_SERVICE_FAIL,
+  ADD_SERVICE_DEPOSIT_REQUEST,
+  ADD_SERVICE_DEPOSIT_SUCCESS,
+  ADD_SERVICE_DEPOSIT_FAIL,
+  GET_SERVICE_DEPOSIT_REQUEST,
+  GET_SERVICE_DEPOSIT_SUCCESS,
+  GET_SERVICE_DEPOSIT_FAIL,
+  DELETE_SERVICE_DEPOSIT_REQUEST,
+  DELETE_SERVICE_DEPOSIT_SUCCESS,
+  DELETE_SERVICE_DEPOSIT_FAIL,
+  UPDATE_SERVICE_DEPOSIT_REQUEST,
+  UPDATE_SERVICE_DEPOSIT_SUCCESS,
+  UPDATE_SERVICE_DEPOSIT_FAIL,
 } from "../constants";
 
 // const rootReducers = combineReducers({
@@ -823,12 +835,48 @@ const rootReducers = (state, action) => {
     case GET_SERVICE_FAIL:
       return { ...state, loading: false, error: action.payload };
 
+
     case ADD_SERVICE_REQUEST:
       return { ...state, loading: true };
     case ADD_SERVICE_SUCCESS:
       return { ...state, loading: false };
     case ADD_SERVICE_FAIL:
       return { ...state, loading: false, error: action.payload };
+
+// SErvice DEposit
+   case ADD_SERVICE_DEPOSIT_REQUEST:
+      return { ...state, loading: true };
+    case ADD_SERVICE_DEPOSIT_SUCCESS:
+      return { ...state, loading: false };
+    case ADD_SERVICE_DEPOSIT_FAIL:
+      return { ...state, loading: false, error: action.payload };
+ 
+      case GET_SERVICE_DEPOSIT_REQUEST:
+      return { ...state, loading: true };
+    case GET_SERVICE_DEPOSIT_SUCCESS: {
+      if (Cookies.get("serviceDeposits")) {
+        Cookies.remove("serviceDeposits");
+        Cookies.set("serviceDeposits", JSON.stringify(action.payload));
+      } else {
+        Cookies.set("serviceDeposits", JSON.stringify(action.payload));
+      }
+      return { ...state, loading: false, serviceDeposits: action?.payload };
+    }
+    case GET_SERVICE_DEPOSIT_FAIL:
+      return { ...state, loading: false, error: action.payload };
+    
+    case DELETE_SERVICE_DEPOSIT_REQUEST:
+      return { ...state, loading: true };
+    case DELETE_SERVICE_DEPOSIT_SUCCESS:
+      return { ...state, loading: false };
+    case DELETE_SERVICE_DEPOSIT_FAIL:
+      return { ...state, loading: false, error: action.payload };
+
+    case UPDATE_SERVICE_DEPOSIT_REQUEST:
+      return { ...state, loading: true };
+    case UPDATE_SERVICE_DEPOSIT_SUCCESS:
+      return { ...state, loading: false };
+    case UPDATE_SERVICE_DEPOSIT_FAIL:
 
     default:
       state;

@@ -161,11 +161,12 @@ export const ServicesListToolbar = (props) => {
                         label="Service Category"
                         id="service_categories"
                         useId={true}
+                        
                       />
                     </Grid>
 
                     <Grid item xs={12}>
-                      <CustomButton> {edit ? "Update Service" : "Submit"}</CustomButton>
+                      <CustomButton disabled={loading?true:false}>  {edit ? "Update Service" : "Submit"}</CustomButton>
                     </Grid>
                   </Grid>
                 </Form>

@@ -50,6 +50,7 @@ const initialState = {
   serviceCategories: Cookies.get("servicesCategories") ? JSON.parse(Cookies.get("servicesCategories")) : [],
   servicePayment: Cookies.get("servicePayment") ? JSON.parse(Cookies.get("servicePayment")) : [],
   services: Cookies.get("services") ? JSON.parse(Cookies.get("services")) : [],  
+  serviceDeposits: Cookies.get("serviceDeposits") ? JSON.parse(Cookies.get("serviceDeposits")) : [],  
 
 };
 
