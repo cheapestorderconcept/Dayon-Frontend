@@ -2,42 +2,51 @@ import Head from "next/head";
 import { Box, Container, Card, CardHeader, Divider, Typography, CardContent } from "@mui/material";
 import { ProductListToolbar } from "../../components/product/product-list-toolbar";
 import { DashboardLayout } from "../../components/dashboard-layout";
-import ProductTable from "src/components/product/product-table";
 import dynamic from "next/dynamic";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { Store } from "src/statesManagement/store/store";
 import { useRouter } from "next/router";
-import {
-  getOutOfStock,
-  getProduct,
-  getProductPrice,
-} from "src/statesManagement/store/actions/product-action";
 import { useEffect } from "react";
+import {
+  getService,
+  getServiceCategories,
+} from "src/statesManagement/store/actions/services-action";
 
 import Loading from "src/components/loading/Loading";
 import { useSnackbar } from "notistack";
 import { COMPANY_NAME } from "src/utils/company_details";
+import { ServicesListToolbar } from "src/components/services/ServicesListToolbar";
+import ServicesTable from "src/components/services/ServicesTable";
+import { EditServiceForm } from "src/components/services/EditServiceForm";
 
 const DynamicComponentWithNoSSR = dynamic(() => import("src/components/navbar-branch-indicator"), {
   ssr: false,
 });
 
-const EditProducts = () => {
+const EditService = () => {
+  const [id, setId] = useState(null);
   const { state, dispatch } = useContext(Store);
   const router = useRouter();
-
-  const { userInfo, products, suppliers, brands, loading, error } = state;
+  const { query } = useRouter();
+  const { userInfo, services, serviceCategories, loading, error } = state;
   const { enqueueSnackbar } = useSnackbar();
   useEffect(() => {
     !userInfo && router.push("/auth");
-    getProduct({ dispatch: dispatch, enqueueSnackbar: enqueueSnackbar });
-    // getProductPrice(dispatch);
-    // getOutOfStock(dispatch);
-  }, []);
+    setId(query.id);
+    getService({
+      dispatch,
+      enqueueSnackbar: enqueueSnackbar,
+    });
+
+    getServiceCategories({
+      dispatch: dispatch,
+      enqueueSnackbar: enqueueSnackbar,
+    });
+  }, [query.id]);
   return (
     <>
       <Head>
-        <title>Products | {COMPANY_NAME}</title>
+        <title>Service | {COMPANY_NAME}</title>
       </Head>
       <Box
         component="main"
@@ -48,14 +57,16 @@ const EditProducts = () => {
       >
         <DynamicComponentWithNoSSR />
         <Container maxWidth={false}>
-          <ProductListToolbar
+          {/* <ProductListToolbar
             edit={true}
             products={products}
             suppliers={suppliers}
             brands={brands}
-          />
+          /> */}
+          {/* <ServicesListToolbar services={services} serviceCategories={serviceCategories} /> */}
+          <EditServiceForm serviceCategories={serviceCategories} id={id} />
           <Box sx={{ pt: 3 }}>
-            {!products ? (
+            {!services ? (
               <Card>
                 <CardHeader title="Suppliers" />
                 <Divider />
@@ -71,7 +82,7 @@ const EditProducts = () => {
                 <CardContent></CardContent>
               </Card>
             ) : (
-              <ProductTable products={products} />
+              <ServicesTable services={services} />
             )}
           </Box>
           <Box
@@ -87,6 +98,6 @@ const EditProducts = () => {
   );
 };
 
-EditProducts.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
+EditService.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
 
-export default EditProducts;
+export default EditService;
