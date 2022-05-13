@@ -49,7 +49,7 @@ export const AddServiceDeposit = (props) => {
   const {paymentType, serviceType, customers} = props
   const { dispatch, state } = useContext(Store);
   const {loading } = state;
- const myservice=[]
+ 
 
   const INITIAL_FORM_VALUES = {
     created_at: "",

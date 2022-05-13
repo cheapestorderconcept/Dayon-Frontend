@@ -4,40 +4,26 @@ import {
   Card,
   CardContent,
   CardHeader,
-  Divider,
-  InputAdornment,
-  Typography,
-  Grid,
-  TextField,
-  MenuItem,
-  Container,
+  Divider, Grid, Typography
 } from "@mui/material";
-import { Download as DownloadIcon } from "../../icons/download";
-import { Search as SearchIcon } from "../../icons/search";
-import { Upload as UploadIcon } from "../../icons/upload";
-import { CustomTextField, SearchableSelect } from "../basicInputs";
-import ListIcon from "@mui/icons-material/List";
-import * as yup from "yup";
-import { Formik, Form, Field, FieldArray, ErrorMessage, useFormikContext } from "formik";
-import { CustomSelect, CustomButton } from "../basicInputs";
-import { CustomDate } from "../basicInputs";
-import { paymentMethods } from "src/__mocks__/paymentMethods";
-import React, { useContext, useEffect, useMemo, useRef, useState } from "react";
-import { Store } from "src/statesManagement/store/store";
+import { Form, Formik } from "formik";
 import { useSnackbar } from "notistack";
+import React, { useContext, useEffect, useRef } from "react";
 import {
-  addDepositData,
-  getTotalDeposit,
-  updateDeposit,
+  getTotalDeposit
 } from "src/statesManagement/store/actions/deposit-action";
-import { Router } from "next/router";
+import { Store } from "src/statesManagement/store/store";
+import * as yup from "yup";
+import { Download as DownloadIcon } from "../../icons/download";
+import { Upload as UploadIcon } from "../../icons/upload";
+import { CustomTextField } from "../basicInputs";
 
 // console.log(barcodeInput)
 
 export const EditServiceDepositView = (props) => {
   const { deposits, id } = props;
   const { dispatch, state } = useContext(Store);
-  const { bran, paymentType, loading } = state;
+  const { loading } = state;
   let oneDeposit = [];
   oneDeposit = deposits.filter((dep) => dep._id === id);
   const strDate = new Date(oneDeposit[0]?.created_at);

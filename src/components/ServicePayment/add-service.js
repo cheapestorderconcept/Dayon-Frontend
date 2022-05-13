@@ -7,7 +7,6 @@ import {
   Divider, Grid, Typography
 } from "@mui/material";
 import { Field, FieldArray, Form, Formik } from "formik";
-import Cookies from "js-cookie";
 import { useRouter } from "next/router";
 import { useSnackbar } from "notistack";
 import React, { useContext, useRef } from "react";
@@ -89,8 +88,8 @@ export const AddService = (props) => {
        
 
    }
-   console.log(service)
-  //  addServicePayment({dispatch, enqueueSnackbar, service:service}) 
+  
+   addServicePayment({dispatch, enqueueSnackbar, service:service}) 
 
   };
   const removeservice = (values, setValues) => {
@@ -140,19 +139,6 @@ export const AddService = (props) => {
             title="Choose Service"
           />
         </Grid>
-        {/* <Grid item xs={6}>
-          <CustomSelect
-            name={`service.${i}.selectedProduct`}
-            options={products}
-            useId={true}
-            id="products"
-            label="Choose Products"
-          />
-        </Grid> */}
-
-        {/* <Grid item xs={6}>
-          <CustomTextField name={`service.${i}.serial_number`} label="Serial Number" />
-        </Grid> */}
         <Grid item xs={6}>
           <CustomTextField
             name={`service.${i}.invoice_number`}
@@ -170,34 +156,6 @@ export const AddService = (props) => {
           />
         </Grid>
 
-        {/* <Grid item xs={6} style={{ display: "none" }}>
-          <CustomTextField
-            name={`service.${i}.service_id`}
-            disabled
-            value={
-              (service.service_id =
-                service.selectedService != "" && retrieveServiceById != []
-                  ? retrieveServiceById[0]?._id
-                  : "")
-            }
-            label="Service Id"
-          />
-        </Grid> */}
-
-     
-
-        {/* <Grid item xs={6}>
-          <CustomTextField
-            name={`service.${i}.selling_price`}
-          value={
-              (service.selling_price =
-                service.selectedService != "" && retrieveServiceById != []
-                  ? retrieveServiceById[0]?.service_price
-                  : "")
-            }
-            label="Service Cost price"
-          />
-        </Grid> */}
 
         <Grid item xs={6}>
           <CustomTextField
@@ -255,9 +213,6 @@ export const AddService = (props) => {
                         <CustomTextField name="invoice_number" label="Invoice Number" />
                       </Grid>
                      
-                      {/* <Grid item xs={4}>
-                        <CustomTextField name="branch" value={values.branch} />
-                      </Grid> */}
 
                       <FieldArray name="service">
                         {() =>
