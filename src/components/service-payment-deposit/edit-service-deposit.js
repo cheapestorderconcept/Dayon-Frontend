@@ -12,6 +12,7 @@ import React, { useContext, useEffect, useRef } from "react";
 import {
   getTotalDeposit
 } from "src/statesManagement/store/actions/deposit-action";
+import { updateServiceDeposit } from "src/statesManagement/store/actions/services-action";
 import { Store } from "src/statesManagement/store/store";
 import * as yup from "yup";
 import { Download as DownloadIcon } from "../../icons/download";
@@ -39,27 +40,27 @@ export const EditServiceDepositView = (props) => {
   
 
   const INITIAL_FORM_VALUES = {
-    created_at:
-      oneDeposit.length > 0 && typeof oneDeposit[0] != "undefined" ? convert(strDate) : "",
- invoice_number:
-      oneDeposit.length > 0 && typeof oneDeposit[0] != "undefined"
-        ? oneDeposit[0].invoice_number
-        : "",
-    customer_name:
-      oneDeposit.length > 0 && typeof oneDeposit[0] != "undefined"
-        ? oneDeposit[0].customer_name
-        : "",
-    payment_type:
-      oneDeposit.length > 0 && typeof oneDeposit[0] != "undefined"
-        ? oneDeposit[0].payment_type
-        : "", 
-    service_name:
-      oneDeposit.length > 0 && typeof oneDeposit[0] != "undefined" ? oneDeposit[0].service_name : "",
+//     created_at:
+//       oneDeposit.length > 0 && typeof oneDeposit[0] != "undefined" ? convert(strDate) : "",
+//  invoice_number:
+//       oneDeposit.length > 0 && typeof oneDeposit[0] != "undefined"
+//         ? oneDeposit[0].invoice_number
+//         : "",
+//     customer_name:
+//       oneDeposit.length > 0 && typeof oneDeposit[0] != "undefined"
+//         ? oneDeposit[0].customer_name
+//         : "",
+//     payment_type:
+//       oneDeposit.length > 0 && typeof oneDeposit[0] != "undefined"
+//         ? oneDeposit[0].payment_type
+//         : "", 
+//     service_name:
+//       oneDeposit.length > 0 && typeof oneDeposit[0] != "undefined" ? oneDeposit[0].service_name : "",
 
-    service_category:
-      oneDeposit.length > 0 && typeof oneDeposit[0] != "undefined"
-        ? oneDeposit[0].service_category
-        : "",
+//     service_category:
+//       oneDeposit.length > 0 && typeof oneDeposit[0] != "undefined"
+//         ? oneDeposit[0].service_category
+//         : "",
      amount_paid:
       oneDeposit.length > 0 && typeof oneDeposit[0] != "undefined"
         ? oneDeposit[0]. amount_paid
@@ -68,20 +69,23 @@ export const EditServiceDepositView = (props) => {
   };
 
   const FORM_VALIDATIONS = yup.object().shape({
-    created_at: yup.date().required("please select date"),
-    invoice_number: yup.string(),
-    payment_type: yup.string(),
+    // created_at: yup.date().required("please select date"),
+    // invoice_number: yup.string(),
+    // payment_type: yup.string(),
     amount_paid: yup.number().integer().typeError("Amount must be a number"),
-    customer_name: yup.string(),
-    service_category: yup.string(),
-    service_name: yup.string(),
+    // customer_name: yup.string(),
+    // service_category: yup.string(),
+    // service_name: yup.string(),
  
   });
 
   const { enqueueSnackbar } = useSnackbar();
 
   const Submit = (values) => {
-  console.log(values)
+   const deposit = {
+     amount: values.amount_paid
+   }
+    updateServiceDeposit({dispatch, enqueueSnackbar, depId:id, deposit })
   };
 
   const formRef = useRef(null);
@@ -172,7 +176,7 @@ export const EditServiceDepositView = (props) => {
                           variant="contained"
                           type="submit"
                           disabled={loading ? true : false}
-                          onClick={() => Submit(values)}
+                          
                         >
                           {" "}
                           Update Deposit

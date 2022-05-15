@@ -877,7 +877,7 @@ const rootReducers = (state, action) => {
     case UPDATE_SERVICE_DEPOSIT_SUCCESS:
       return { ...state, loading: false };
     case UPDATE_SERVICE_DEPOSIT_FAIL:
-
+     return { ...state, loading: false, error: action.payload };
     default:
       state;
   }

@@ -85,11 +85,9 @@ export const AddService = (props) => {
    const service = {
         ...values,
         total_amount : `${values.total_amount}`,
-       
-
    }
   
-   addServicePayment({dispatch, enqueueSnackbar, service:service}) 
+  //  addServicePayment({dispatch, enqueueSnackbar, service:service}) 
 
   };
   const removeservice = (values, setValues) => {
@@ -291,7 +289,7 @@ export const AddService = (props) => {
                           variant="contained"
                           type="submit"
                           disabled={loading ? true : false}
-                          onClick={() => Submit(values)}
+                          
                         >
                           {" "}
                           Process Service Payment
