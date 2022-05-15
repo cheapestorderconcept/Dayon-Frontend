@@ -1,18 +1,16 @@
+import { Box, Button, Container, Typography } from "@mui/material";
+import dynamic from "next/dynamic";
 import Head from "next/head";
-import { Box, Button, Container, Grid, Pagination, Typography } from "@mui/material";
-
+import { useSnackbar } from "notistack";
+import { useContext, useEffect } from "react";
 import { DashboardLayout } from "src/components/dashboard-layout";
+import ServicePaymentList from "src/components/ServicePayment/service-list";
 import { Download as DownloadIcon } from "src/icons/download";
 import { Upload as UploadIcon } from "src/icons/upload";
-import PurchaseList from "src/components/purchases/purchase-lists";
-import SalesList from "src/components/sales/sales-list";
-import dynamic from "next/dynamic";
-import { useContext, useEffect } from "react";
+import { getServicePayments } from "src/statesManagement/store/actions/services-action";
 import { Store } from "src/statesManagement/store/store";
-import { getTotalSales } from "src/statesManagement/store/actions/sales-action";
-import { useSnackbar } from "notistack";
 import { COMPANY_NAME } from "src/utils/company_details";
-import ServicePaymentList from "src/components/ServicePayment/service-list";
+
 
 const DynamicComponentWithNoSSR = dynamic(() => import("src/components/navbar-branch-indicator"), {
   ssr: false,
@@ -20,11 +18,13 @@ const DynamicComponentWithNoSSR = dynamic(() => import("src/components/navbar-br
 
 const ServicePaymentListPage = () => {
   const { dispatch, state } = useContext(Store);
-  const { totalSales } = state;
+  const { servicePayment, userInfo } = state;
   const { enqueueSnackbar } = useSnackbar();
+  console.log(servicePayment)
 
   useEffect(() => {
-   
+     !userInfo && router.push("/auth");
+     getServicePayments({dispatch, enqueueSnackbar})
   }, []);
 
   return (
@@ -64,7 +64,7 @@ const ServicePaymentListPage = () => {
             </Box>
           </Box>
           <Box sx={{ pt: 3 }}>
-            <ServicePaymentList serviceLists={[]} />
+            <ServicePaymentList serviceLists={servicePayment} />
           </Box>
         </Container>
       </Box>
