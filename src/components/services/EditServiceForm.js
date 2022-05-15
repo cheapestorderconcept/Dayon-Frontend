@@ -22,12 +22,12 @@ import { useRouter } from "next/router";
 import NextLink from "next/link";
 import { updateProduct } from "src/statesManagement/store/actions/product-action";
 import { useSnackbar } from "notistack";
-import { updateService } from "src/statesManagement/store/actions/services-action";
 
 export const EditServiceForm = (props) => {
   const { title, id } = props;
 
   const { dispatch, state } = useContext(Store);
+
   const { loading, services, serviceCategories } = state;
   let oneService = [];
   oneService = services?.services?.filter((ser) => ser._id === id);
@@ -35,24 +35,34 @@ export const EditServiceForm = (props) => {
   console.log(oneService);
 
   const INITIAL_FORM_VALUES = {
-    service_name:
-      oneService.length > 0 && typeof oneService[0] != "undefined"
-        ? oneService[0].service_name
+    product_name:
+      oneProduct.length > 0 && typeof oneProduct[0] != "undefined"
+        ? oneProduct[0].product_name
         : "",
-    service_categories:
-      oneService.length > 0 && typeof oneService[0] != "undefined"
-        ? oneService[0].service_categories
+    price:
+      oneProduct.length > 0 && typeof oneProduct[0] != "undefined"
+        ? oneProduct[0].product_price
         : "",
-    service_price:
-      oneService.length > 0 && typeof oneService[0] != "undefined"
-        ? oneService[0].service_price
+    product_brand:
+      oneProduct.length > 0 && typeof oneProduct[0] != "undefined"
+        ? oneProduct[0].product_brand
+        : "",
+    // product_barcode:
+    //   oneProduct.length > 0 && typeof oneProduct[0] != "undefined"
+    //     ? oneProduct[0].product_barcode
+    //     : "",
+    supplier:
+      oneProduct.length > 0 && typeof oneProduct[0] != "undefined" ? oneProduct[0].supplier : "",
+    quantity:
+      oneProduct.length > 0 && typeof oneProduct[0] != "undefined"
+        ? oneProduct[0].current_product_quantity
         : "",
   };
 
   const FORM_VALIDATIONS = yup.object().shape({
     service_name: yup.string(),
-    service_price: yup.number().integer().typeError("Price must be a number"),
-    service_categories: yup.string(),
+    service_category: yup.string(),
+    price: yup.number().integer().typeError("Price must be a number"),
   });
 
   const Router = useRouter();
@@ -60,15 +70,17 @@ export const EditServiceForm = (props) => {
   const handleSubmit = (values) => {
     const service = {
       ...values,
-      service_price: Number(values.service_price),
+      price: Number(values.price),
+      
     };
-    updateService({
-      dispatch: dispatch,
-      service: service,
-      serviceId: id,
-      Router: Router,
-      enqueueSnackbar: enqueueSnackbar,
-    });
+    // updateProduct({
+    //   dispatch: dispatch,
+    //   product: product,
+    //   productId: id,
+    //   Router: Router,
+    //   enqueueSnackbar: enqueueSnackbar,
+    // });
+    console.log(service);
   };
   return (
     <Box {...props}>
@@ -82,7 +94,7 @@ export const EditServiceForm = (props) => {
         }}
       >
         <Typography sx={{ m: 1 }} variant="h4">
-          Services
+          Products
         </Typography>
         <Box sx={{ m: 1 }}>
           <Button startIcon={<UploadIcon fontSize="small" />} sx={{ mr: 1 }}>
@@ -100,7 +112,7 @@ export const EditServiceForm = (props) => {
       </Box>
       <Box sx={{ mt: 3 }}>
         <Card>
-          <CardHeader title="Edit Service" />
+          <CardHeader title={title} />
           <Divider />
 
           <CardContent>
@@ -121,17 +133,17 @@ export const EditServiceForm = (props) => {
                       <CustomTextField name="product_barcode" label="Product Barcode" />
                     </Grid> */}
                     <Grid item xs={12}>
-                      <CustomTextField name="service_price" label="Service Price" />
+                      <CustomSelect
+                        name="service_category"
+                        id="service-categories"
+                        label="Services Category "
+                        options={categories}
+                      />
                     </Grid>
+                 
 
                     <Grid item xs={12}>
-                      <CustomSelect
-                        name="service_categories"
-                        id="service_categories"
-                        label="Services Category"
-                        options={serviceCategories.categories}
-                        useId={true}
-                      />
+                      <CustomTextField name="price" label="Service Price" />
                     </Grid>
 
                     <Grid item xs={12}>
