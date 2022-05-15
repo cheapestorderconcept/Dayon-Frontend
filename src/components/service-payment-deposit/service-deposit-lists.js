@@ -3,7 +3,8 @@ import { useEffect, useState } from "react";
 import NextLink from "next/link";
 import { Button, Typography } from "@mui/material";
 
-const ServiceDepositList = ({ deposits }) => {
+const ServiceDepositList = ({ serviceDeposits }) => {
+  
   const [ready, setready] = useState(false);
   useEffect(() => {
     setready(true);
@@ -26,7 +27,7 @@ const ServiceDepositList = ({ deposits }) => {
           return (
             <Button variant="contained">
               <NextLink
-                href={`/services/${tableMeta.rowData[0]}`}
+                href={`/services/service-deposit/${tableMeta.rowData[0]}`}
                 style={{ textDecoration: "none", color: "white" }}
               >
                 <Typography variant="body1" color="inherit">
@@ -38,22 +39,18 @@ const ServiceDepositList = ({ deposits }) => {
         },
       },
     },
-    {
-      name: "invoice",
-      label: "Invoice Number",
-    },
+
     {
       name: "customer_name",
       label: "Customer Name",
     },
     {
-      name: "name",
-      label: "Service",
+      name: "service_name",
+      label: "Service Name",
     },
-  
-    {
-      name: "price",
-      label: "Service Price",
+{
+      name: "amount_to_pay",
+      label: "Amount to pay",
     },
     {
       name: "amount_deposited",
@@ -63,15 +60,11 @@ const ServiceDepositList = ({ deposits }) => {
       name: "amount_to_balance",
       label: "Amount To Balance",
     },
-    {
-      name: "total_amount",
-      label: "Total Amount",
+     {
+      name: "branch",
+      label: "Branch",
     },
-
-    {
-      name: "serial_number",
-      label: "Serial Number",
-    },
+  
     {
       name: "date",
       label: "Deposit Date",
@@ -79,9 +72,9 @@ const ServiceDepositList = ({ deposits }) => {
   ];
 
   // const myDeposits = deposits.map((item) => Object.values(item));
-  console.log(deposits);
+  console.log(serviceDeposits);
 
-  const myDeposits = deposits.map((dep, i) => {
+  const myDeposits = serviceDeposits?.map((dep, i) => {
     const strDate = new Date(dep?.created_at);
     function convert(strDate) {
       var date = new Date(strDate),
@@ -92,14 +85,12 @@ const ServiceDepositList = ({ deposits }) => {
     return {
       delete: `${dep._id}`,
       update: `${dep._id}`,
-      name: `${dep.product}`,
-      amount_deposited: `${dep.amount_deposited}`,
+      service_name: `${dep.service_name}`,
+      amount_deposited: `${dep.amount_paid}`,
       amount_to_balance: `${dep.amount_to_balance}`,
-      price: `${dep.selling_price}`,
-      invoice: `${dep.invoice_number}`,
-      serial_number: `${dep.serial_number}`,
-      total_amount: `${dep.total_amount}`,
+      amount_to_pay: `${dep.amount_to_pay}`,
       customer_name: `${dep.customer_name}`,
+      branch: `${dep.branch}`,
       date: convert(strDate),
     };
   });

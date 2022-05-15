@@ -10,6 +10,7 @@ import { useSnackbar } from "notistack";
 import { getProduct } from "src/statesManagement/store/actions/product-action";
 import { COMPANY_NAME } from "src/utils/company_details";
 import { AddService } from "src/components/ServicePayment/add-service";
+import { getService } from "src/statesManagement/store/actions/services-action";
 
 const DynamicComponentWithNoSSR = dynamic(() => import("src/components/navbar-branch-indicator"), {
   ssr: false,
@@ -18,12 +19,13 @@ const DynamicComponentWithNoSSR = dynamic(() => import("src/components/navbar-br
 const ServicePayment = () => {
   const { dispatch, state } = useContext(Store);
   const router = useRouter();
-  const { userInfo, paymentType } = state;
+  const { userInfo, paymentType, services } = state;
   const { enqueueSnackbar } = useSnackbar();
+
 
   useEffect(() => {
     !userInfo && router.push("/auth");
-    getProduct({ dispatch: dispatch, enqueueSnackbar: enqueueSnackbar });
+    getService({ dispatch: dispatch, enqueueSnackbar: enqueueSnackbar });
   }, []);
   return (
     <>
@@ -39,7 +41,7 @@ const ServicePayment = () => {
       >
         <DynamicComponentWithNoSSR />
         <Container maxWidth={true}>
-          <AddService paymentType={paymentType} />
+          <AddService paymentType={paymentType} serviceType={services}/>
         </Container>
       </Box>
     </>

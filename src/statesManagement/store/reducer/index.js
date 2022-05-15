@@ -184,18 +184,36 @@ import {
   UPDATE_SERVICE_CATEGORY_REQUEST,
   UPDATE_SERVICE_CATEGORY_SUCCESS,
   UPDATE_SERVICE_CATEGORY_FAIL,
+  DELETE_SERVICE_PAYMENT_FAIL,
+  DELETE_SERVICE_PAYMENT_SUCCESS,
+  DELETE_SERVICE_PAYMENT_REQUEST,
+  UPDATE_SERVICE_PAYMENT_REQUEST,
+  UPDATE_SERVICE_PAYMENT_SUCCESS,
+  UPDATE_SERVICE_PAYMENT_FAIL,
+  ADD_SERVICE_PAYMENT_FAIL,
+  ADD_SERVICE_PAYMENT_SUCCESS,
+  ADD_SERVICE_PAYMENT_REQUEST,
+  GET_SERVICE_PAYMENT_SUCCESS,
+  GET_SERVICE_PAYMENT_REQUEST,
+  GET_SERVICE_PAYMENT_FAIL,
   ADD_SERVICE_REQUEST,
   ADD_SERVICE_SUCCESS,
   ADD_SERVICE_FAIL,
   GET_SERVICE_REQUEST,
   GET_SERVICE_SUCCESS,
   GET_SERVICE_FAIL,
-  DELETE_SERVICE_REQUEST,
-  DELETE_SERVICE_SUCCESS,
-  DELETE_SERVICE_FAIL,
-  UPDATE_SERVICE_REQUEST,
-  UPDATE_SERVICE_SUCCESS,
-  UPDATE_SERVICE_FAIL,
+  ADD_SERVICE_DEPOSIT_REQUEST,
+  ADD_SERVICE_DEPOSIT_SUCCESS,
+  ADD_SERVICE_DEPOSIT_FAIL,
+  GET_SERVICE_DEPOSIT_REQUEST,
+  GET_SERVICE_DEPOSIT_SUCCESS,
+  GET_SERVICE_DEPOSIT_FAIL,
+  DELETE_SERVICE_DEPOSIT_REQUEST,
+  DELETE_SERVICE_DEPOSIT_SUCCESS,
+  DELETE_SERVICE_DEPOSIT_FAIL,
+  UPDATE_SERVICE_DEPOSIT_REQUEST,
+  UPDATE_SERVICE_DEPOSIT_SUCCESS,
+  UPDATE_SERVICE_DEPOSIT_FAIL,
 } from "../constants";
 
 // const rootReducers = combineReducers({
@@ -769,6 +787,38 @@ const rootReducers = (state, action) => {
       return { ...state, loading: false };
     case UPDATE_SERVICE_CATEGORY_FAIL:
       return { ...state, loading: false, error: action.payload };
+    
+  case GET_SERVICE_PAYMENT_REQUEST:
+    return {...state, loading:true}
+    case GET_SERVICE_PAYMENT_SUCCESS: {
+      if (Cookies.get("servicePayment")) {
+        Cookies.remove("servicePayment");
+        Cookies.set("servicePayment", JSON.stringify(action.payload));
+      } else {
+        Cookies.set("servicePayment", JSON.stringify(action.payload));
+      }
+      return { ...state, loading: false, servicePayment: action?.payload };
+    }
+    case GET_SERVICE_PAYMENT_FAIL:
+      return { ...state, loading: false, error: action.payload };
+
+    case ADD_SERVICE_PAYMENT_REQUEST:
+      return { ...state, loading: true };
+    case ADD_SERVICE_PAYMENT_SUCCESS:
+      return { ...state, loading: false };
+    case ADD_SERVICE_PAYMENT_FAIL:
+      return { ...state, loading: false, error: action.payload };
+    case DELETE_SERVICE_PAYMENT_REQUEST:
+      return { ...state, loading: true };
+    case DELETE_SERVICE_PAYMENT_SUCCESS:
+      return { ...state, loading: false };
+    case DELETE_SERVICE_PAYMENT_FAIL:
+      return { ...state, loading: false, error: action.payload };
+    case UPDATE_SERVICE_PAYMENT_REQUEST:
+      return { ...state, loading: true };
+    case UPDATE_SERVICE_PAYMENT_SUCCESS:
+      return { ...state, loading: false };
+    case UPDATE_SERVICE_PAYMENT_FAIL:
 
     // Services reducer
     case GET_SERVICE_REQUEST:
@@ -785,6 +835,7 @@ const rootReducers = (state, action) => {
     case GET_SERVICE_FAIL:
       return { ...state, loading: false, error: action.payload };
 
+
     case ADD_SERVICE_REQUEST:
       return { ...state, loading: true };
     case ADD_SERVICE_SUCCESS:
@@ -792,20 +843,41 @@ const rootReducers = (state, action) => {
     case ADD_SERVICE_FAIL:
       return { ...state, loading: false, error: action.payload };
 
-    case UPDATE_SERVICE_REQUEST:
+// SErvice DEposit
+   case ADD_SERVICE_DEPOSIT_REQUEST:
       return { ...state, loading: true };
-    case UPDATE_SERVICE_SUCCESS:
+    case ADD_SERVICE_DEPOSIT_SUCCESS:
       return { ...state, loading: false };
-    case UPDATE_SERVICE_FAIL:
+    case ADD_SERVICE_DEPOSIT_FAIL:
+      return { ...state, loading: false, error: action.payload };
+ 
+      case GET_SERVICE_DEPOSIT_REQUEST:
+      return { ...state, loading: true };
+    case GET_SERVICE_DEPOSIT_SUCCESS: {
+      if (Cookies.get("serviceDeposits")) {
+        Cookies.remove("serviceDeposits");
+        Cookies.set("serviceDeposits", JSON.stringify(action.payload));
+      } else {
+        Cookies.set("serviceDeposits", JSON.stringify(action.payload));
+      }
+      return { ...state, loading: false, serviceDeposits: action?.payload };
+    }
+    case GET_SERVICE_DEPOSIT_FAIL:
+      return { ...state, loading: false, error: action.payload };
+    
+    case DELETE_SERVICE_DEPOSIT_REQUEST:
+      return { ...state, loading: true };
+    case DELETE_SERVICE_DEPOSIT_SUCCESS:
+      return { ...state, loading: false };
+    case DELETE_SERVICE_DEPOSIT_FAIL:
       return { ...state, loading: false, error: action.payload };
 
-    case DELETE_SERVICE_REQUEST:
+    case UPDATE_SERVICE_DEPOSIT_REQUEST:
       return { ...state, loading: true };
-    case DELETE_SERVICE_SUCCESS:
+    case UPDATE_SERVICE_DEPOSIT_SUCCESS:
       return { ...state, loading: false };
-    case DELETE_SERVICE_FAIL:
-      return { ...state, loading: false, error: action.payload };
-
+    case UPDATE_SERVICE_DEPOSIT_FAIL:
+     return { ...state, loading: false, error: action.payload };
     default:
       state;
   }
