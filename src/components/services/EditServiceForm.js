@@ -30,7 +30,7 @@ export const EditServiceForm = (props) => {
   const { dispatch, state } = useContext(Store);
   const { loading, services, serviceCategories } = state;
   let oneService = [];
-  oneService = services.services?.filter((ser) => ser._id === id);
+  oneService = services?.services?.filter((ser) => ser._id === id);
 
   console.log(oneService);
 
