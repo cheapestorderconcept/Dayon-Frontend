@@ -32,7 +32,7 @@ const EditService = () => {
   const { enqueueSnackbar } = useSnackbar();
   useEffect(() => {
     !userInfo && router.push("/auth");
-    setId(query?.id);
+    setId(query.id);
     getService({
       dispatch,
       enqueueSnackbar: enqueueSnackbar,
