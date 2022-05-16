@@ -178,8 +178,8 @@ const items = [
     href6: "/reporting/stock-level-balance",
     title7: "Out Of Stock Products",
     href7: "/reporting/report-out-of-stock",
-    // title8: "Suppliers Ledger",
-    // href8: "/reporting/supplier-ledger-report",
+    title8: "Service Report",
+    href8: "/reporting/service-report",
   },
   // {
   //   href: "/auth",
