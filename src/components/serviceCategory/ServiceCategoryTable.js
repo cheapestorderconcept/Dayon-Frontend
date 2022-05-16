@@ -4,11 +4,13 @@ import { useRouter } from "next/router";
 import { useContext, useEffect, useState } from "react";
 import NextLink from "next/link";
 import { Store } from "src/statesManagement/store/store";
+import { deleteBrand } from "src/statesManagement/store/actions/brand-action";
 import { useSnackbar } from "notistack";
 import { deleteServiceCategory } from "src/statesManagement/store/actions/services-action";
 
 const ServiceCategoryTable = ({ categories }) => {
   const { dispatch } = useContext(Store);
+  
 
   const Router = useRouter();
 
@@ -17,6 +19,8 @@ const ServiceCategoryTable = ({ categories }) => {
   useEffect(() => {
     setready(true);
   }, []);
+
+
 
   const { enqueueSnackbar } = useSnackbar();
 
@@ -97,12 +101,7 @@ const ServiceCategoryTable = ({ categories }) => {
   return (
     <>
       {ready == true && (
-        <MUIDataTable
-          title={"Lists Of Service Categories"}
-          data={category}
-          columns={columns}
-          options={options}
-        />
+        <MUIDataTable title={"Lists Of Brands"} data={category} columns={columns} options={options} />
       )}
     </>
   );

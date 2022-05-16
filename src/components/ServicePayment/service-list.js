@@ -1,10 +1,10 @@
 import { Button, Typography } from "@mui/material";
 import MUIDataTable from "mui-datatables";
+import NextLink from "next/link";
 import { useSnackbar } from "notistack";
 import { useContext, useEffect, useState } from "react";
-import { addSalesData, deleteSales } from "src/statesManagement/store/actions/sales-action";
+import { deleteSales } from "src/statesManagement/store/actions/sales-action";
 import { Store } from "src/statesManagement/store/store";
-import NextLink from "next/link";
 
 const ServicePaymentList = ({ serviceLists }) => {
   const { dispatch, state } = useContext(Store);
@@ -13,11 +13,7 @@ const ServicePaymentList = ({ serviceLists }) => {
     const validate = confirm("Are you sure you want to delete");
     if (!!validate) {
       const salesId = tableMeta.rowData[0];
-      deleteSales({
-        dispatch: dispatch,
-        salesId: salesId,
-        enqueueSnackbar: enqueueSnackbar,
-      });
+     
     }
   };
   const columns = [
@@ -94,7 +90,7 @@ const ServicePaymentList = ({ serviceLists }) => {
   }, []);
 
 
-  const myService = serviceLists.map((serv, i) => {
+  const myService = serviceLists?.map((serv, i) => {
     const strDate = new Date(serv?.created_at);
     function convert(strDate) {
       var date = new Date(strDate),

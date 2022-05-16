@@ -8,6 +8,7 @@ import { useRouter } from "next/router";
 import { useSnackbar } from "notistack";
 import { COMPANY_NAME } from "src/utils/company_details";
 import { AddServiceDeposit } from "src/components/service-payment-deposit/add-service-deposit";
+import { getService } from "src/statesManagement/store/actions/services-action";
 
 
 const DynamicComponentWithNoSSR = dynamic(() => import("src/components/navbar-branch-indicator"), {
@@ -16,10 +17,11 @@ const DynamicComponentWithNoSSR = dynamic(() => import("src/components/navbar-br
 const ServiceDepositPage = () => {
   const { dispatch, state } = useContext(Store);
   const router = useRouter();
-  // const { enqueueSnackbar } = useSnackbar();
-  const { userInfo } = state;
+  const { enqueueSnackbar } = useSnackbar();
+  const { userInfo,paymentType, services,customers } = state;
   useEffect(() => {
     !userInfo && router.push("/auth");
+    getService({dispatch, enqueueSnackbar})
   }, []);
   return (
     <>
@@ -35,7 +37,7 @@ const ServiceDepositPage = () => {
       >
         <DynamicComponentWithNoSSR />
         <Container maxWidth={true}>
-          <AddServiceDeposit />
+          <AddServiceDeposit customers={customers} paymentType={paymentType} serviceType={services}/>
         </Container>
       </Box>
     </>
