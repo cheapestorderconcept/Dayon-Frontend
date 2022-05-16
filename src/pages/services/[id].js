@@ -30,10 +30,18 @@ const EditProducts = () => {
   const { enqueueSnackbar } = useSnackbar();
   useEffect(() => {
     !userInfo && router.push("/auth");
-    getProduct({ dispatch: dispatch, enqueueSnackbar: enqueueSnackbar });
-    // getProductPrice(dispatch);
-    // getOutOfStock(dispatch);
-  }, []);
+    setId(query.id);
+    getService({
+      dispatch,
+      enqueueSnackbar: enqueueSnackbar,
+    });
+
+    getServiceCategories({
+      dispatch: dispatch,
+      enqueueSnackbar: enqueueSnackbar,
+    });
+  }, [query.id]);
+
   return (
     <>
       <Head>

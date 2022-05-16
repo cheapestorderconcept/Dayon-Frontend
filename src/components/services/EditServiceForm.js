@@ -27,10 +27,13 @@ export const EditServiceForm = (props) => {
   const { title, id } = props;
 
   const { dispatch, state } = useContext(Store);
-  const { loading, suppliers, brands, products } = state;
-  let oneProduct = [];
-  oneProduct = products.filter((pro) => pro._id === id);
-  console.log(oneProduct);
+
+  const { loading, services, serviceCategories } = state;
+  let oneService = [];
+  oneService = services?.services?.filter((ser) => ser._id === id);
+
+  console.log(oneService);
+
   const INITIAL_FORM_VALUES = {
     product_name:
       oneProduct.length > 0 && typeof oneProduct[0] != "undefined"
