@@ -13,7 +13,7 @@ import {
   getProductPrice,
 } from "src/statesManagement/store/actions/product-action";
 import { useEffect } from "react";
-import { getService, getServiceCategories } from "src/statesManagement/store/actions/services-action";
+import { getService } from "src/statesManagement/store/actions/services-action";
 import Loading from "src/components/loading/Loading";
 import { useSnackbar } from "notistack";
 import { COMPANY_NAME } from "src/utils/company_details";
@@ -37,7 +37,6 @@ const Services = () => {
       dispatch,
       enqueueSnackbar,
     });
-    getServiceCategories({dispatch, enqueueSnackbar})
   }, []);
   return (
     <>

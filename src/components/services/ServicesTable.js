@@ -1,14 +1,16 @@
 import { Button, Typography } from "@mui/material";
 import MUIDataTable from "mui-datatables";
-
+import { useRouter } from "next/router";
 import NextLink from "next/link";
 import { useSnackbar } from "notistack";
 import { useContext, useEffect, useState } from "react";
 import { deleteProduct } from "src/statesManagement/store/actions/product-action";
+import { deleteService } from "src/statesManagement/store/actions/services-action";
 import { Store } from "src/statesManagement/store/store";
 
 const ServicesTable = ({ services, editable }) => {
   const [ready, setready] = useState(false);
+  const Router = useRouter();
 
   useEffect(() => {
     setready(true);
@@ -19,11 +21,12 @@ const ServicesTable = ({ services, editable }) => {
   const handleDelete = (tableMeta) => (e) => {
     const validate = confirm("Are you sure you want to delete");
     if (!!validate) {
-      const productId = tableMeta.rowData[0];
-      deleteProduct({
-        dispatch: dispatch,
-        productId: productId,
+      const serviceId = tableMeta.rowData[0];
 
+      deleteService({
+        dispatch: dispatch,
+        serviceId: serviceId,
+        Router: Router,
         enqueueSnackbar: enqueueSnackbar,
       });
     }
@@ -81,7 +84,7 @@ const ServicesTable = ({ services, editable }) => {
                 style={{ textDecoration: "none", color: "white" }}
               >
                 <Typography variant="body1" color="inherit">
-                  Update Service
+                  Edit
                 </Typography>
               </NextLink>
             </Button>
@@ -114,7 +117,7 @@ const ServicesTable = ({ services, editable }) => {
   // const { serviceCategories } = state;
   // console.log(serviceCategories);
 
-  const service = services?.map((ser, i) => {
+  const service = services.services?.map((ser, i) => {
     const strDate = new Date(ser?.created_at);
     function convert(strDate) {
       var date = new Date(strDate),
@@ -148,7 +151,7 @@ const ServicesTable = ({ services, editable }) => {
         <MUIDataTable
           title={"Lists Of Services"}
           data={service}
-          columns={editable ? columnsEditable : columns}
+          columns={columns}
           options={options}
         />
       )}

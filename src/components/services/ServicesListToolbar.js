@@ -19,7 +19,11 @@ import { CustomSelect, CustomButton } from "../basicInputs";
 import { useContext, useState } from "react";
 import { Store } from "src/statesManagement/store/store";
 import { useRouter } from "next/router";
-import { addService, getService } from "src/statesManagement/store/actions/services-action";
+import {
+  addService,
+  getService,
+  updateService,
+} from "src/statesManagement/store/actions/services-action";
 import AlertBox from "../alert";
 import NextLink from "next/link";
 import { useSnackbar } from "notistack";
@@ -42,12 +46,11 @@ export const ServicesListToolbar = (props) => {
       .required("Please provide service price"),
   });
 
-  const { title, categories, edit } = props;
+  const { title, edit } = props;
   const { dispatch, state } = useContext(Store);
-  const { loading, services } = state;
+  const { loading, services, serviceCategories } = state;
   const { enqueueSnackbar } = useSnackbar();
   const Router = useRouter();
-  // console.log(services);
 
   const handleUpdate = (values) => {
     const services = {
@@ -56,7 +59,12 @@ export const ServicesListToolbar = (props) => {
       service_price: values.price,
     };
 
-    //  getService({ dispatch: dispatch, product: product, productId: id, Router: Router });
+    // updateService({
+    //   dispatch: dispatch,
+    //   service: services,
+    //   serviceId: "",
+    //   enqueueSnackbar: enqueueSnackbar,
+    // });
   };
 
   const handleSubmit = (values) => {
@@ -157,16 +165,15 @@ export const ServicesListToolbar = (props) => {
                     <Grid item xs={12}>
                       <CustomSelect
                         name="category"
-                        options={categories.categories}
+                        options={serviceCategories.categories}
                         label="Service Category"
                         id="service_categories"
                         useId={true}
-                        
                       />
                     </Grid>
 
                     <Grid item xs={12}>
-                      <CustomButton disabled={loading?true:false}>  {edit ? "Update Service" : "Submit"}</CustomButton>
+                      <CustomButton> {edit ? "Update Service" : "Submit"}</CustomButton>
                     </Grid>
                   </Grid>
                 </Form>

@@ -40,30 +40,34 @@ import { addDepositData, getTotalDeposit } from "src/statesManagement/store/acti
 import { Router } from "next/router";
 import Cookies from "js-cookie";
 import { SearchableSelect } from "../basicInputs";
-import { generateInvoice } from "src/utils/helpers";
-import { addServiceDeposit } from "src/statesManagement/store/actions/services-action";
 
 // console.log(barcodeInput)
 
 export const AddServiceDeposit = (props) => {
-  const {paymentType, serviceType, customers} = props
   const { dispatch, state } = useContext(Store);
-  const {loading } = state;
- 
+  const { customers, paymentType, loading } = state;
+  const myServices = [];
 
   const INITIAL_FORM_VALUES = {
     created_at: "",
-    invoice_number: generateInvoice(),
+    invoice_number: "",
+    // amount_deposited: "",
     customer_name: "",
+
+    branch: Cookies.get("selectedBranch"),
     payment_type: "",
-    service: [
+    services: [
       {
-        
-        service_categories: "",
-        service_name: "",
-        amount_paid: "",
-        amount_to_pay: "",
-      
+        // barcode: "",
+        service: "",
+        selectedService: "",
+        amount_deposited: "",
+        serial_number: "",
+        created_at: "",
+        invoice_number: "",
+        service_id: "",
+        service_price: "",
+        amount: "",
       },
     ],
   };
@@ -71,54 +75,75 @@ export const AddServiceDeposit = (props) => {
   const FORM_VALIDATIONS = yup.object().shape({
     created_at: yup.date().required("please select date"),
     invoice_number: yup.string().required("please provide invoice number"),
+    branch: yup.string().required("please choose store branch"),
     payment_type: yup.string().required("please choose payment method "),
+    // amount_deposited: yup
+    //   .number()
+    //   .integer()
+    //   .typeError("Amount must be a number")
+    //   .required("please enter amount deposited"),
+    // customer_phone: yup.string().required("please enter Cutomer Phone number"),
     customer_name: yup.string(),
 
-    service: yup.array().of(
+    services: yup.array().of(
       yup.object().shape({
-        service_categories: yup.string(),
-        service_name: yup.string().required(),
-        amount_to_pay: yup.number().integer().typeError("Amount to pay must be a number"),
-        amount_paid: yup.number().integer().typeError("Amount paid must be a number"),
+        // barcode: yup.string(),
+        service_id: yup.string(),
+        selectedService: yup.string(),
+        serial_number: yup.string(),
+        created_at: yup.date(),
+        amount_deposited: yup.number().integer().typeError("Amount must be a number"),
+        invoice_number: yup.string().required("please provide invoice number"),
+        service_price: yup
+          .number()
+          .integer()
+          .typeError("Price must be a number")
+          .required("Please provide Selling price"),
+        amount: yup
+          .number()
+          .integer()
+          .typeError("Amount must be a number")
+          .required("Please provide amount"),
       })
     ),
   });
 
-  const addMoreservice = (values, setValues) => {
-    const service = [...values.service];
+  const addMoreservices = (values, setValues) => {
+    const services = [...values.services];
 
-    service.push({
-      service_categories: "",
-        service_name: "",
-        amount_paid: "",
-        amount_to_pay: "",
-   
+    services.push({
+      // barcode: "",
+      service: "",
+      selectedService: "",
+      amount_deposited: "",
+      service_id: "",
+      serial_number: "",
+      invoice_number: "",
+      created_at: "",
+      service_price: "",
+      amount: "",
     });
 
-    setValues({ ...values, service });
+    setValues({ ...values, services });
   };
 
   // const Router = Router();
 
-  const removeservice = (values, setValues) => {
-    const service = [...values.service];
-    service.pop();
-    setValues({ ...values, service });
+  const removeservices = (values, setValues) => {
+    const services = [...values.services];
+    services.pop();
+    setValues({ ...values, services });
   };
 
   const { enqueueSnackbar } = useSnackbar();
   const Submit = (values) => {
-    const deposit = {
-      ...values
-    }
-   addServiceDeposit({dispatch, deposit, enqueueSnackbar})
+    console.log(values);
   };
 
   const formRef = useRef(null);
 
-  const RenderComponentForm = ({ service, i, values }) => {
-   
-    const retrieveServiceById = serviceType.filter((serv) => serv._id === service?.service_name);
+  const RenderComponentForm = ({ services, i, values }) => {
+    const retrieveServiceById = myServices.filter((serv) => serv._id === services?.selectedService);
 
     return (
       <React.Fragment key={i}>
@@ -133,38 +158,108 @@ export const AddServiceDeposit = (props) => {
           <Typography>Service {i + 1}</Typography>
         </Grid>
 
-       <Grid item xs={6} style={{display:"none"}}>
+        {/* <Grid item xs={6}>
           <CustomTextField
-            name={`service.${i}.service_categories`}
+            name={`services.${i}.barcode`}
+            label="Barcode"
+            onKeyPress={(e) => {
+              e.key === "Enter" && e.preventDefault();
+            }}
+            
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <ListIcon />
+                </InputAdornment>
+              ),
+            }}
+          />
+        </Grid> */}
+
+        <Grid item xs={6}>
+          <CustomTextField
+            name={`services.${i}.service`}
             disabled
             value={
-              (service.service_categories =
-                service.service_name != "" && retrieveServiceById != []
-                  ? retrieveServiceById[0]?.service_categories
-        
+              (services.product =
+                services.selectedService != "" && retrieveServiceById != []
+                  ? retrieveServiceById[0]?.service
                   : "")
             }
             // label="Product"
           />
-        </Grid> 
+        </Grid>
         <Grid item xs={6}>
           <SearchableSelect
-            name={`service.${i}.service_name`}
-            options={serviceType}
-            id="service"
+            name={`services.${i}.selectedService`}
+            useId={true}
+            options={myServices}
+            id="services"
             title={"Choose Service"}
+          />
+        </Grid>
+        {/* <Grid item xs={6}>
+          <CustomSelect
+            name={`services.${i}.selectedService`}
+            useId={true}
+            options={products}
+            id="products"
+            label="Choose Products"
+          />
+        </Grid> */}
+
+        <Grid item xs={6}>
+          <CustomTextField name={`services.${i}.serial_number`} label="Serial Number" />
+        </Grid>
+        <Grid item xs={6}>
+          <CustomTextField
+            name={`services.${i}.invoice_number`}
+            label="Invoice Number"
+            disabled
+            value={(services.invoice_number = values.invoice_number)}
+          />
+        </Grid>
+        <Grid item xs={6}>
+          <CustomTextField
+            name={`services.${i}.created_at`}
+            label="Date"
+            disabled
+            value={(services.created_at = values.created_at)}
+          />
+        </Grid>
+        <Grid item xs={6}>
+          <CustomTextField name={`services.${i}.amount_deposited`} label="Amount Deposited" />
+        </Grid>
+        <Grid item xs={6} style={{ display: "none" }}>
+          <CustomTextField
+            name={`services.${i}.service_id`}
+            disabled
+            value={
+              (services.product_id =
+                services.selectedService != "" && retrieveServiceById != []
+                  ? retrieveServiceById[0]?._id
+                  : "")
+            }
+            label="Service Id"
           />
         </Grid>
 
         <Grid item xs={6}>
-          <CustomTextField name={`service.${i}.amount_paid`} label="Amount Deposited" />
+          <CustomTextField name={`services.${i}.selling_price`} label="Service Cost Price" />
         </Grid>
 
-        
         <Grid item xs={6}>
-          <CustomTextField name={`service.${i}.amount_to_pay`} label="Amount to pay" />
+          <CustomTextField
+            name={`services.${i}.amount`}
+            label="Amount"
+            disabled={true}
+            value={
+              services.selectedService != "" && retrieveServiceById != []
+                ? (services.amount = services.selling_price)
+                : ""
+            }
+          />
         </Grid>
-      
       </React.Fragment>
     );
   };
@@ -173,7 +268,7 @@ export const AddServiceDeposit = (props) => {
     <Box {...props}>
       <Box
         sx={{
-          alignservice: "center",
+          alignservices: "center",
           display: "flex",
           justifyContent: "space-between",
           flexWrap: "wrap",
@@ -215,13 +310,15 @@ export const AddServiceDeposit = (props) => {
                       <Grid item xs={4}>
                         <CustomDate name="created_at" />
                       </Grid>
-                      {/* <Grid item xs={4}>
-                        <CustomTextField name="branch_id" value={values.branch_id} />
-                      </Grid> */}
+                      <Grid item xs={4}>
+                        <CustomTextField name="branch" value={values.branch} />
+                      </Grid>
                       <Grid item xs={4}>
                         <CustomTextField name="invoice_number" label="Invoice Number" />
                       </Grid>
-                    
+                      {/* <Grid item xs={4}>
+                        <CustomTextField name="amount_deposited" label="Amount Deposited" />
+                      </Grid> */}
                       <Grid item xs={4}>
                         <CustomTextField name="customer_name" label="Customer Name" />
                       </Grid>
@@ -233,28 +330,31 @@ export const AddServiceDeposit = (props) => {
                           useId={true} />
                       </Grid> */}
 
-                      <FieldArray name="service">
+                      <FieldArray name="services">
                         {() =>
-                          values.service.map((service, index) =>
+                          values.services.map((service, index) =>
                             RenderComponentForm({
                               values: values,
-                              service: service,
+                              services: service,
                               i: index,
                             })
                           )
                         }
                       </FieldArray>
 
-                      {/* <Grid item xs={6}>
+                      <Grid item xs={6}>
                         <CustomTextField
                           name="total_amount"
                           label="Total Purchase Amount"
                           disabled
                           value={
-                            (values.total_amount = values.service.reduce((a, c) => a + c.amount, 0))
+                            (values.total_amount = values.services.reduce(
+                              (a, c) => a + c.amount,
+                              0
+                            ))
                           }
                         />
-                      </Grid> */}
+                      </Grid>
                       <Grid
                         container
                         spacing={2}
@@ -264,14 +364,14 @@ export const AddServiceDeposit = (props) => {
                         }}
                       >
                         <Grid item xs={6}>
-                          <Field name="number of service">
+                          <Field name="number of services">
                             {({ field }) => (
                               <Button
                                 variant="contained"
                                 fullWidth={true}
                                 color="primary"
                                 disabled={loading ? true : false}
-                                onClick={() => addMoreservice(values, setValues)}
+                                onClick={() => addMoreservices(values, setValues)}
                                 startIcon={<DownloadIcon fontSize="small" />}
                               >
                                 Add More Service
@@ -280,14 +380,14 @@ export const AddServiceDeposit = (props) => {
                           </Field>
                         </Grid>
                         <Grid item xs={6}>
-                          <Field name="number of service">
+                          <Field name="number of services">
                             {({ field }) => (
                               <Button
                                 variant="contained"
                                 fullWidth={true}
                                 disabled={loading ? true : false}
                                 color="primary"
-                                onClick={() => removeservice(values, setValues)}
+                                onClick={() => removeservices(values, setValues)}
                                 startIcon={<DownloadIcon fontSize="small" />}
                               >
                                 Remove Service
@@ -311,6 +411,7 @@ export const AddServiceDeposit = (props) => {
                           variant="contained"
                           type="submit"
                           disabled={loading ? true : false}
+                          onClick={() => Submit(values)}
                         >
                           {" "}
                           Process Deposit
