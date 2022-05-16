@@ -21,12 +21,10 @@ export const CustomTextField = ({ name, ...other }) => {
 };
 // searchable search bar
 
-export const SearchableSelect = ({ name, title, options, id, i, useId,setNameToValue, ...other }) => {
- 
+export const SearchableSelect = ({ name, title, options, id, i, useId, ...other }) => {
   const [value, setValue] = useState("");
   const [inputValue, setInputValue] = useState("");
   const { setFieldValue } = useFormikContext();
-
 
   return (
     <Autocomplete
@@ -35,7 +33,7 @@ export const SearchableSelect = ({ name, title, options, id, i, useId,setNameToV
       name={name}
       options={options}
       value={value}
-      isOptionEqualToValue={(option, value) => option.id === value.id || value.product_id }
+      isOptionEqualToValue={(option, value) => option.id === value.id || value.product_id}
       onChange={(event, newValue) => {
         setValue(newValue);
         setFieldValue(name, newValue?._id || newValue?.product_id || "");
@@ -46,12 +44,13 @@ export const SearchableSelect = ({ name, title, options, id, i, useId,setNameToV
         setInputValue(newInputValue);
       }}
       autoHighlight
-      getOptionLabel={(option) => (option ? option.product_name ||option?.service_name || option.first_name + " " + option.last_name: "")}
+      getOptionLabel={(option) =>
+        option ? option.product_name || option.first_name + " " + option.last_name : ""
+      }
       renderOption={(props, option) => (
-          //below is for product and customers
+        //below is for product and customers
         <Box component="li" sx={{ "& > img": { mr: 2, flexShrink: 0 } }} {...props}>
-        
-          {option ? option.product_name ||option?.service_name || option.first_name + " " + option.last_name : "" }
+          {option ? option.product_name || option.first_name + " " + option.last_name : ""}
         </Box>
       )}
       renderInput={(params) => <TextField {...params} label={title || "Choose Product"} />}

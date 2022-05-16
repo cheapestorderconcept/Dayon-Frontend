@@ -1,16 +1,19 @@
-import { Box, Button, Container, Typography } from "@mui/material";
-import dynamic from "next/dynamic";
 import Head from "next/head";
-import { useSnackbar } from "notistack";
-import { useContext, useEffect } from "react";
+import { Box, Button, Container, Grid, Pagination, Typography } from "@mui/material";
+
 import { DashboardLayout } from "src/components/dashboard-layout";
-import ServiceDepositList from "src/components/service-payment-deposit/service-deposit-lists";
 import { Download as DownloadIcon } from "src/icons/download";
 import { Upload as UploadIcon } from "src/icons/upload";
-import { getServiceDeposit } from "src/statesManagement/store/actions/services-action";
+import PurchaseList from "src/components/purchases/purchase-lists";
+import SalesList from "src/components/sales/sales-list";
+import DepositList from "src/components/deposit/deposit-lists";
+import dynamic from "next/dynamic";
+import { getTotalDeposit } from "src/statesManagement/store/actions/deposit-action";
+import { useContext, useEffect } from "react";
 import { Store } from "src/statesManagement/store/store";
+import { useSnackbar } from "notistack";
+import ServiceDepositList from "src/components/service-payment-deposit/service-deposit-lists";
 import { COMPANY_NAME } from "src/utils/company_details";
-
 
 const DynamicComponentWithNoSSR = dynamic(() => import("src/components/navbar-branch-indicator"), {
   ssr: false,
@@ -19,11 +22,10 @@ const DynamicComponentWithNoSSR = dynamic(() => import("src/components/navbar-br
 const ServiceDepositListsPage = () => {
   const { dispatch, state } = useContext(Store);
   const { enqueueSnackbar } = useSnackbar();
-  const { userInfo, serviceDeposits } = state;
+  const { userInfo, deposits } = state;
   useEffect(() => {
     !userInfo && router.push("/auth");
-  
-    getServiceDeposit({ dispatch: dispatch, enqueueSnackbar: enqueueSnackbar });
+    getTotalDeposit({ dispatch: dispatch, enqueueSnackbar: enqueueSnackbar });
   }, []);
 
   return (
@@ -63,7 +65,7 @@ const ServiceDepositListsPage = () => {
             </Box>
           </Box>
           <Box sx={{ pt: 3 }}>
-            <ServiceDepositList serviceDeposits={serviceDeposits} />
+            <ServiceDepositList deposits={deposits} />
           </Box>
         </Container>
       </Box>

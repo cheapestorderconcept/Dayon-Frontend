@@ -2,10 +2,28 @@ import { makeNetworkCall } from "src/network";
 import {
   ADD_SERVICE_CATEGORY_FAIL,
   ADD_SERVICE_CATEGORY_REQUEST,
-  ADD_SERVICE_CATEGORY_SUCCESS, ADD_SERVICE_DEPOSIT_FAIL, ADD_SERVICE_DEPOSIT_REQUEST, ADD_SERVICE_DEPOSIT_SUCCESS, ADD_SERVICE_FAIL, ADD_SERVICE_PAYMENT_FAIL, ADD_SERVICE_PAYMENT_REQUEST,
-  ADD_SERVICE_PAYMENT_SUCCESS, ADD_SERVICE_REQUEST, ADD_SERVICE_SUCCESS, DELETE_SERVICE_CATEGORY_FAIL,
+  ADD_SERVICE_CATEGORY_SUCCESS,
+  DELETE_SERVICE_CATEGORY_FAIL,
   DELETE_SERVICE_CATEGORY_REQUEST,
-  DELETE_SERVICE_CATEGORY_SUCCESS, DELETE_SERVICE_DEPOSIT_FAIL, DELETE_SERVICE_DEPOSIT_REQUEST, DELETE_SERVICE_DEPOSIT_SUCCESS, GET_SERVICE_CATEGORIES_FAIL, GET_SERVICE_CATEGORIES_REQUEST, GET_SERVICE_CATEGORIES_SUCCESS, GET_SERVICE_DEPOSIT_FAIL, GET_SERVICE_DEPOSIT_REQUEST, GET_SERVICE_DEPOSIT_SUCCESS, GET_SERVICE_FAIL, GET_SERVICE_PAYMENT_REQUEST, GET_SERVICE_PAYMENT_SUCCESS, GET_SERVICE_REQUEST, GET_SERVICE_SUCCESS, UPDATE_SERVICE_CATEGORY_FAIL, UPDATE_SERVICE_CATEGORY_REQUEST, UPDATE_SERVICE_CATEGORY_SUCCESS, UPDATE_SERVICE_DEPOSIT_FAIL, UPDATE_SERVICE_DEPOSIT_REQUEST, UPDATE_SERVICE_DEPOSIT_SUCCESS
+  DELETE_SERVICE_CATEGORY_SUCCESS,
+  GET_SERVICE_CATEGORIES_FAIL,
+  GET_SERVICE_CATEGORIES_REQUEST,
+  GET_SERVICE_CATEGORIES_SUCCESS,
+  UPDATE_SERVICE_CATEGORY_FAIL,
+  UPDATE_SERVICE_CATEGORY_REQUEST,
+  UPDATE_SERVICE_CATEGORY_SUCCESS,
+  GET_SERVICE_REQUEST,
+  GET_SERVICE_SUCCESS,
+  GET_SERVICE_FAIL,
+  ADD_SERVICE_REQUEST,
+  ADD_SERVICE_SUCCESS,
+  ADD_SERVICE_FAIL,
+  UPDATE_SERVICE_REQUEST,
+  UPDATE_SERVICE_SUCCESS,
+  UPDATE_SERVICE_FAIL,
+  DELETE_SERVICE_REQUEST,
+  DELETE_SERVICE_SUCCESS,
+  DELETE_SERVICE_FAIL,
 } from "../constants/index";
 
 export const getServiceCategories = async ({ dispatch, enqueueSnackbar }) => {
@@ -13,7 +31,11 @@ export const getServiceCategories = async ({ dispatch, enqueueSnackbar }) => {
     dispatch({
       type: GET_SERVICE_CATEGORIES_REQUEST,
     });
-    const { data } = await makeNetworkCall({ method: "GET", path: "fetch-all-categories", target:"service" });
+    const { data } = await makeNetworkCall({
+      method: "GET",
+      path: "fetch-all-categories",
+      target: "service",
+    });
 
     dispatch({
       type: GET_SERVICE_CATEGORIES_SUCCESS,
@@ -40,9 +62,9 @@ export const addServiceCategory = async ({ dispatch, category, Router, enqueueSn
       method: "POST",
       path: "add-service-categories",
       requestBody: category,
-      target:"service"
+      target: "service",
     });
-    console.log(data.data);
+
     dispatch({
       type: ADD_SERVICE_CATEGORY_SUCCESS,
       payload: data.data,
@@ -69,10 +91,9 @@ export const deleteServiceCategory = async ({ dispatch, categoryId, Router, enqu
       type: DELETE_SERVICE_CATEGORY_REQUEST,
     });
     const { data } = await makeNetworkCall({
-
       method: "DELETE",
       path: `delete-a-category/${categoryId}`,
-      target:"service"
+      target: "service",
     });
     dispatch({
       type: DELETE_SERVICE_CATEGORY_SUCCESS,
@@ -95,7 +116,12 @@ export const deleteServiceCategory = async ({ dispatch, categoryId, Router, enqu
   }
 };
 
-export const updateServiceCategory = async ({ dispatch, category, categoryId, Router, enqueueSnackbar }) => {
+export const updateServiceCategory = async ({
+  dispatch,
+  category,
+  categoryId,
+  enqueueSnackbar,
+}) => {
   try {
     dispatch({
       type: UPDATE_SERVICE_CATEGORY_REQUEST,
@@ -104,7 +130,7 @@ export const updateServiceCategory = async ({ dispatch, category, categoryId, Ro
     const { data } = await makeNetworkCall({
       method: "PUT",
       path: `update-category/${categoryId}`,
-      target:"service",
+      target: "service",
       requestBody: category,
     });
 
@@ -128,6 +154,8 @@ export const updateServiceCategory = async ({ dispatch, category, categoryId, Ro
   }
 };
 
+// Continue Other Services Actions from here...
+
 export const getService = async ({ dispatch, enqueueSnackbar }) => {
   try {
     dispatch({
@@ -141,7 +169,7 @@ export const getService = async ({ dispatch, enqueueSnackbar }) => {
 
     dispatch({
       type: GET_SERVICE_SUCCESS,
-      payload: data.data.services,
+      payload: data.data,
     });
   } catch (error) {
     dispatch({
@@ -187,142 +215,21 @@ export const addService = async ({ dispatch, service, Router, enqueueSnackbar })
   }
 };
 
-
-// Continue Other Services Actions from here...
-
-export const addServicePayment = async ({ dispatch, service, Router, enqueueSnackbar }) => {
+export const updateService = async ({ dispatch, service, serviceId, enqueueSnackbar }) => {
   try {
     dispatch({
-      type: ADD_SERVICE_PAYMENT_REQUEST,
-    });
-
-    const { data } = await makeNetworkCall({
-      method: "POST",
-      path: "add-payment",
-      requestBody: service,
-      target:"service"
-    });
-    console.log(data.data);
-    dispatch({
-      type: ADD_SERVICE_PAYMENT_SUCCESS,
-      payload: data.data,
-    });
-    data &&
-      enqueueSnackbar(data?.response_message, {
-        variant: "success",
-      });
-    // Router.reload(window.location.pathname);
-  } catch (error) {
-    dispatch({
-      type: ADD_SERVICE_PAYMENT_FAIL,
-    });
-    error &&
-      enqueueSnackbar(error?.response?.data?.response_message || error.message, {
-        variant: "error",
-      });
-  }
-};
-
-export const getServicePayments = async ({ dispatch, enqueueSnackbar }) => {
-  try {
-    dispatch({
-      type: GET_SERVICE_PAYMENT_REQUEST,
-    });
-    const { data } = await makeNetworkCall({ method: "GET", path: "fetch-all-categories", target:"service" });
-
-    dispatch({
-      type: GET_SERVICE_PAYMENT_SUCCESS,
-      payload: data.data,
-    });
-  } catch (error) {
-    dispatch({
-      type: GET_SERVICE_PAYMENT_FAIL,
-    });
-    error &&
-      enqueueSnackbar(error?.response?.data?.response_message || error.message, {
-        variant: "error",
-      });
-  }
-};
-
-
-export const addServiceDeposit = async ({ dispatch, deposit, Router, enqueueSnackbar }) => {
-  try {
-    dispatch({
-      type: ADD_SERVICE_DEPOSIT_REQUEST,
-    });
-
-    const { data } = await makeNetworkCall({
-      method: "POST",
-      path: "add-deposit", 
-      requestBody: deposit,
-      target:"service"
-    });
-    console.log(data.data);
-    dispatch({
-      type: ADD_SERVICE_DEPOSIT_SUCCESS,
-      payload: data.data,
-    });
-    data &&
-      enqueueSnackbar(data?.response_message, {
-        variant: "success",
-      });
-    // Router.reload(window.location.pathname);
-  } catch (error) {
-    dispatch({
-      type: ADD_SERVICE_DEPOSIT_FAIL,
-    });
-    error &&
-      enqueueSnackbar(error?.response?.data?.response_message || error.message, {
-        variant: "error",
-      });
-  }
-};
-
-export const getServiceDeposit = async ({ dispatch, enqueueSnackbar }) => {
-  
-  try {
-    dispatch({
-      type: GET_SERVICE_DEPOSIT_REQUEST,
-    });
-    const { data } = await makeNetworkCall({ method: "GET", path: "fetch-deposit", target:"service" });
-
-    dispatch({
-      type: GET_SERVICE_DEPOSIT_SUCCESS,
-      payload: data.data,
-    });
-    console.log(data.data)
-     data &&
-      enqueueSnackbar(data?.response_message, {
-        variant: "success",
-      });
-
-  } catch (error) {
-    dispatch({
-      type: GET_SERVICE_DEPOSIT_FAIL,
-    });
-    error &&
-      enqueueSnackbar(error?.response?.data?.response_message || error.message, {
-        variant: "error",
-      });
-  }
-};
-
-export const updateServiceDeposit = async ({ dispatch, deposit, depId, Router, enqueueSnackbar }) => {
-  try {
-    dispatch({
-      type: UPDATE_SERVICE_DEPOSIT_REQUEST,
+      type: UPDATE_SERVICE_REQUEST,
     });
 
     const { data } = await makeNetworkCall({
       method: "PUT",
-      path: `update-deposit-payment?depositId=${depId}`, 
-      target:"service",
-      requestBody: deposit,
+      path: `update-service/${serviceId}`,
+      target: "service",
+      requestBody: service,
     });
 
     dispatch({
-      type: UPDATE_SERVICE_DEPOSIT_SUCCESS,
+      type: UPDATE_SERVICE_SUCCESS,
       payload: data.data,
     });
     data &&
@@ -332,7 +239,7 @@ export const updateServiceDeposit = async ({ dispatch, deposit, depId, Router, e
     // Router.reload(window.location.pathname);
   } catch (error) {
     dispatch({
-      type: UPDATE_SERVICE_DEPOSIT_FAIL,
+      type: UPDATE_SERVICE_FAIL,
     });
     error &&
       enqueueSnackbar(error?.response?.data?.response_message || error.message, {
@@ -341,19 +248,18 @@ export const updateServiceDeposit = async ({ dispatch, deposit, depId, Router, e
   }
 };
 
-export const deleteServiceDeposit = async ({ dispatch, depId, Router, enqueueSnackbar }) => {
+export const deleteService = async ({ dispatch, serviceId, Router, enqueueSnackbar }) => {
   try {
     dispatch({
-      type: DELETE_SERVICE_DEPOSIT_REQUEST,
+      type: DELETE_SERVICE_REQUEST,
     });
     const { data } = await makeNetworkCall({
-
       method: "DELETE",
-      path: `delete-a-service-deposit/${depId}`,// confirm path
-      target:"service"
+      path: `delete-service/${serviceId}`,
+      target: "service",
     });
     dispatch({
-      type: DELETE_SERVICE_DEPOSIT_SUCCESS,
+      type: DELETE_SERVICE_SUCCESS,
       payload: data.data._id,
     });
     data &&
@@ -363,7 +269,7 @@ export const deleteServiceDeposit = async ({ dispatch, depId, Router, enqueueSna
     // Router.reload(window.location.pathname);
   } catch (error) {
     dispatch({
-      type: DELETE_SERVICE_DEPOSIT_FAIL,
+      type: DELETE_SERVICE_FAIL,
     });
 
     error &&

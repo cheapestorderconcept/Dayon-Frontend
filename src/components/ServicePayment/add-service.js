@@ -4,103 +4,137 @@ import {
   Card,
   CardContent,
   CardHeader,
-  Divider, Grid, Typography
+  Divider,
+  InputAdornment,
+  Typography,
+  Grid,
+  TextField,
+  MenuItem,
+  Container,
 } from "@mui/material";
-import { Field, FieldArray, Form, Formik } from "formik";
-import { useRouter } from "next/router";
-import { useSnackbar } from "notistack";
-import React, { useContext, useRef } from "react";
-import { addServicePayment } from "src/statesManagement/store/actions/services-action";
-import { Store } from "src/statesManagement/store/store";
-import { generateInvoice } from "src/utils/helpers";
-import * as yup from "yup";
 import { Download as DownloadIcon } from "../../icons/download";
+import { Search as SearchIcon } from "../../icons/search";
 import { Upload as UploadIcon } from "../../icons/upload";
-import { CustomDate, CustomSelect, CustomTextField, SearchableSelect } from "../basicInputs";
+import { CustomTextField } from "../basicInputs";
+import ListIcon from "@mui/icons-material/List";
+import * as yup from "yup";
+import { Formik, Form, Field, FieldArray, ErrorMessage, useFormikContext } from "formik";
+import { CustomSelect, CustomButton } from "../basicInputs";
+import { CustomDate } from "../basicInputs";
+import { paymentMethods } from "src/__mocks__/paymentMethods";
+import React, { useContext, useEffect, useMemo, useRef, useState } from "react";
 
+import { Store } from "src/statesManagement/store/store";
 
+import { addSalesData } from "src/statesManagement/store/actions/sales-action";
+import { useSnackbar } from "notistack";
+import { useRouter } from "next/router";
+import Cookies from "js-cookie";
+import { SearchableSelect } from "../basicInputs";
 
 export const AddService = (props) => {
-  const { paymentType, serviceType } = props;
+  const { paymentType } = props;
   const { dispatch, state } = useContext(Store);
-  const { loading } = state;
+  const { loading, customers } = state;
   const { enqueueSnackbar } = useSnackbar();
   const Router = useRouter();
-
-
+  // myservice is referring to the lists of services that will be accessible from state
+  const myServices = []
 
   const INITIAL_FORM_VALUES = {
     created_at: "",
-    // branch: Cookies.get("selectedBranch"),
-    invoice_number: generateInvoice(),
+    branch: Cookies.get("selectedBranch"),
+    invoice_number: "",
+    customer_name:"",
+    // customer_id:"",
     total_amount: "",
     payment_type: "",
-    service: [
+    services: [
       {
      
         service_name: "",
-        service_category: "",
+        selectedService: "",
+        serial_number: "",
         invoice_number: "",
         created_at: "",
-        amount_paid: "",
+        service_id: "",
+        cost_price: "",
+        service_price: "",
+        amount: "",
        
       },
     ],
   };
 
   const FORM_VALIDATIONS = yup.object().shape({
+    // numOfservices: yup.string().required("Please enter number of services"),
     created_at: yup.date().required("please select date"),
     invoice_number: yup.string().required("please provide invoice number"),
+    customer_name: yup.string(),
+    // customer_id: yup.string(),
+    store: yup.string().required("please select store"),
     payment_type: yup.string().required("please choose a payment method"),
     total_amount: yup.number().integer().typeError("Total amount must be a number"),
-    service: yup.array().of(
+    services: yup.array().of(
       yup.object().shape({
+  
+        selectedService: yup.string(),
+        product_id: yup.string(),
         service_name: yup.string(),
-        service_category: yup.string(),
+        serial_number: yup.string(),
         invoice_number: yup.string(),
         created_at: yup.date(),
-        amount_paid: yup.number().integer().typeError("Amount must be a number"),
+        service_price: yup
+          .number()
+          .integer()
+          .typeError("Price must be a number")
+          .required("Please provide service price"),
+        cost_price: yup
+          .number()
+          .integer()
+          .typeError("Cost must be a number")
+          .required("Please provide Cost price"),
+        amount: yup.number().integer().typeError("Amount must be a number"),
        
       })
     ),
   });
 
-  const addMoreservice = (values, setValues) => {
-    const service = [...values.service];
+  const addMoreservices = (values, setValues) => {
+    const services = [...values.services];
 
-    service.push({
+    services.push({
     
-      service_category: "",
       service_name: "",
+      selectedService: "",
+      serial_number: "",
       invoice_number: "",
       created_at: "",
-      amount_paid: "",
+      service_id: "",
+      cost_price: "",
+
+      service_price: "",
+      amount: "",
     
     });
 
-    setValues({ ...values, service });
+    setValues({ ...values, services });
   };
 
   const Submit = (values) => {
-   const service = {
-        ...values,
-        total_amount : `${values.total_amount}`,
-   }
-  
-  //  addServicePayment({dispatch, enqueueSnackbar, service:service}) 
-
+   console.log(values)
   };
-  const removeservice = (values, setValues) => {
-    const service = [...values.service];
-    service.pop();
-    setValues({ ...values, service });
+  const removeservices = (values, setValues) => {
+    const services = [...values.services];
+    services.pop();
+    setValues({ ...values, services });
   };
 
   const formRef = useRef(null);
 
-  const RenderForm = ({ service, i, values }) => {
+  const RenderForm = ({ services, i, values }) => {
 
-    const retrieveServiceById = serviceType?.filter((serv) => serv._id === service?.service_name);
+    const retrieveServiceById = myServices.filter((serv) => serv._id === services?.selectedService);
 
     return (
       <React.Fragment key={i}>
@@ -115,51 +149,122 @@ export const AddService = (props) => {
           <Typography>Service {i + 1}</Typography>
         </Grid>
 
-
-       <Grid item xs={6} style={{display:"none"}}>
+        {/* <Grid item xs={6}>
           <CustomTextField
-            name={`service.${i}.service_category`}
+            name={`services.${i}.barcode`}
+            label="Barcode"
+            onKeyPress={(e) => {
+              e.key === "Enter" && e.preventDefault();
+            }}
+          
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <ListIcon />
+                </InputAdornment>
+              ),
+            }}
+          />
+        </Grid> */}
+
+       <Grid item xs={6}>
+          <CustomTextField
+            name={`services.${i}.service_name`}
             disabled
-           
+            // label="Product"
             value={
-              (service.service_category =
-                service.service_name != "" && retrieveServiceById != []
-                  ? retrieveServiceById[0]?.service_categories
+              (services.product =
+                services.selectedService != "" && retrieveServiceById != []
+                  ? retrieveServiceById[0]?.service_name
                   : "")
             }
           />
         </Grid> 
         <Grid item xs={6}>
           <SearchableSelect
-            name={`service.${i}.service_name`}
-            options={serviceType}
-            id="service"
+            name={`services.${i}.selectedService`}
+            useId={true}
+            options={myServices}
+            id="services"
             title="Choose Service"
           />
         </Grid>
+        {/* <Grid item xs={6}>
+          <CustomSelect
+            name={`services.${i}.selectedProduct`}
+            options={products}
+            useId={true}
+            id="products"
+            label="Choose Products"
+          />
+        </Grid> */}
+
+        <Grid item xs={6}>
+          <CustomTextField name={`services.${i}.serial_number`} label="Serial Number" />
+        </Grid>
         <Grid item xs={6}>
           <CustomTextField
-            name={`service.${i}.invoice_number`}
+            name={`services.${i}.invoice_number`}
             label="Invoice Number"
             disabled
-            value={(service.invoice_number = values.invoice_number)}
+            value={(services.invoice_number = values.invoice_number)}
           />
         </Grid>
         <Grid item xs={6}>
           <CustomTextField
-            name={`service.${i}.created_at`}
+            name={`services.${i}.created_at`}
             label="Date"
             disabled
-            value={(service.created_at = values.created_at)}
+            value={(services.created_at = values.created_at)}
           />
         </Grid>
 
+        <Grid item xs={6} style={{ display: "none" }}>
+          <CustomTextField
+            name={`services.${i}.service_id`}
+            disabled
+            value={
+              (services.service_id =
+                services.selectedService != "" && retrieveServiceById != []
+                  ? retrieveServiceById[0]?._id
+                  : "")
+            }
+            label="Service Id"
+          />
+        </Grid>
+        <Grid item xs={6} style={{ display: "none" }}>
+          <CustomTextField
+            name={`services.${i}.cost_price`}
+            disabled
+            value={
+              (services.cost_price =
+                services.selectedService != "" && retrieveServiceById != []
+                  ? retrieveServiceById[0]?.service_price
+                  : "")
+            }
+            label="Cost price"
+          />
+        </Grid>
+     
 
         <Grid item xs={6}>
           <CustomTextField
-            name={`service.${i}.amount_paid`}
-            label="Amount Paid"
-          
+            name={`services.${i}.selling_price`}
+            //values of selling price can also be set to default depends on usage
+            label="Service Cost Price"
+          />
+        </Grid>
+
+        <Grid item xs={6}>
+          <CustomTextField
+            name={`services.${i}.amount`}
+            label="Amount"
+            value={
+              services.selectedService != "" && retrieveServiceById != []
+                ? (services.amount = services.selling_price)
+             
+                : ""
+            }
           />
         </Grid>
       </React.Fragment>
@@ -170,7 +275,7 @@ export const AddService = (props) => {
     <Box {...props}>
       <Box
         sx={{
-          alignservice: "center",
+          alignservices: "center",
           display: "flex",
           justifyContent: "space-between",
           flexWrap: "wrap",
@@ -210,14 +315,35 @@ export const AddService = (props) => {
                       <Grid item xs={4}>
                         <CustomTextField name="invoice_number" label="Invoice Number" />
                       </Grid>
-                     
+                       <Grid item xs={4}>
+                        <CustomTextField name="cutomer_name" label="Enter Customer Name" />
+                      </Grid>
+                      {/* <Grid item xs={4}>
+                        <CustomSelect name="customer_id"
+                          label="Choose Customer"
+                          options={customers}
+                          id="customers"
+                          useId={true} />
+                      </Grid> */}
+                        {/* <Grid item xs={4}>
+                         <SearchableSelect
+                          name="customer_id"
+                         useId={true}
+                         title="Choose a customer"
+                          options={customers}
+                         id="customers"
+                         />
+                       </Grid> */}
+                      <Grid item xs={4}>
+                        <CustomTextField name="branch" value={values.branch} />
+                      </Grid>
 
-                      <FieldArray name="service">
+                      <FieldArray name="services">
                         {() =>
-                          values.service.map((service, index) =>
+                          values.services.map((service, index) =>
                             RenderForm({
                               values: values,
-                              service: service,
+                              services: service,
                               i: index,
                             })
                           )
@@ -226,10 +352,10 @@ export const AddService = (props) => {
                       <Grid item xs={6}>
                         <CustomTextField
                           name="total_amount"
-                          label="Total service Cost"
+                          label="Total Services Cost"
                           disabled
                           value={
-                            (values.total_amount = values.service.reduce((a, c) => a + Number(c.amount_paid), 0))
+                            (values.total_amount = values.services.reduce((a, c) => a + c.amount, 0))
                           }
                         />
                       </Grid>
@@ -242,14 +368,14 @@ export const AddService = (props) => {
                         }}
                       >
                         <Grid item xs={6}>
-                          <Field name="number of service">
+                          <Field name="number of services">
                             {({ field }) => (
                               <Button
                                 variant="contained"
                                 color="primary"
                                 disabled={loading ? true : false}
                                 fullWidth={true}
-                                onClick={() => addMoreservice(values, setValues)}
+                                onClick={() => addMoreservices(values, setValues)}
                                 startIcon={<DownloadIcon fontSize="small" />}
                               >
                                 Add More Service
@@ -258,14 +384,14 @@ export const AddService = (props) => {
                           </Field>
                         </Grid>
                         <Grid item xs={6}>
-                          <Field name="number of service">
+                          <Field name="number of services">
                             {({ field }) => (
                               <Button
                                 variant="contained"
                                 fullWidth={true}
                                 color="primary"
                                 disabled={loading ? true : false}
-                                onClick={() => removeservice(values, setValues)}
+                                onClick={() => removeservices(values, setValues)}
                                 startIcon={<DownloadIcon fontSize="small" />}
                               >
                                 Remove Service
@@ -289,7 +415,7 @@ export const AddService = (props) => {
                           variant="contained"
                           type="submit"
                           disabled={loading ? true : false}
-                          
+                          onClick={() => Submit(values)}
                         >
                           {" "}
                           Process Service Payment
