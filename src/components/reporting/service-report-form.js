@@ -56,14 +56,14 @@ export const ServicesReportForm = (props) => {
   //handle form submit
   const handleSubmit = (e) => {
     e.preventDefault();
-    getSalesReport({
-      dispatch: dispatch,
-      enqueueSnackbar: enqueueSnackbar,
-      from: selectionValue[0].startDate,
-      to: selectionValue[0].endDate,
-      Router: Router,
-      branch: formvalues.store,
-    });
+    // getSalesReport({
+    //   dispatch: dispatch,
+    //   enqueueSnackbar: enqueueSnackbar,
+    //   from: selectionValue[0].startDate,
+    //   to: selectionValue[0].endDate,
+    //   Router: Router,
+    //   branch: formvalues.store,
+    // });
     console.log(selectionValue);
     console.log(formvalues);
   };
