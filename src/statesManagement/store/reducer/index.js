@@ -214,6 +214,12 @@ import {
   UPDATE_SERVICE_DEPOSIT_REQUEST,
   UPDATE_SERVICE_DEPOSIT_SUCCESS,
   UPDATE_SERVICE_DEPOSIT_FAIL,
+  UPDATE_SERVICE_REQUEST,
+  UPDATE_SERVICE_SUCCESS,
+  UPDATE_SERVICE_FAIL,
+  DELETE_SERVICE_REQUEST,
+  DELETE_SERVICE_SUCCESS,
+  DELETE_SERVICE_FAIL,
 } from "../constants";
 
 // const rootReducers = combineReducers({
@@ -841,6 +847,20 @@ const rootReducers = (state, action) => {
     case ADD_SERVICE_SUCCESS:
       return { ...state, loading: false };
     case ADD_SERVICE_FAIL:
+      return { ...state, loading: false, error: action.payload };
+
+        case UPDATE_SERVICE_REQUEST:
+      return { ...state, loading: true };
+    case UPDATE_SERVICE_SUCCESS:
+      return { ...state, loading: false };
+    case UPDATE_SERVICE_FAIL:
+      return { ...state, loading: false, error: action.payload };
+
+    case DELETE_SERVICE_REQUEST:
+      return { ...state, loading: true };
+    case DELETE_SERVICE_SUCCESS:
+      return { ...state, loading: false };
+    case DELETE_SERVICE_FAIL:
       return { ...state, loading: false, error: action.payload };
 
 // SErvice DEposit
