@@ -119,10 +119,10 @@ export const ServiceDepositByCategoryReportForm = (props) => {
                       value={formvalues.category}
                       onChange={(e) => setformvalues({ ...formvalues, category: e.target.value })}
                     >
-                      {serviceCategories?.categories.map((option) => {
+                      {serviceCategories?.categories?.map((option) => {
                         return (
-                          <MenuItem key={option.id} value={option.categories_name}>
-                            {option.categories_name}
+                          <MenuItem key={option?.id} value={option?.categories_name}>
+                            {option?.categories_name}
                           </MenuItem>
                         );
                       })}
