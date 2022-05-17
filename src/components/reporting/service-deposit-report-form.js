@@ -4,27 +4,23 @@ import {
   Card,
   CardContent,
   CardHeader,
-  Divider,
-  Typography,
-  Grid,
-  TextField,
-  MenuItem,
+  Divider, Grid, Typography
 } from "@mui/material";
-import { Download as DownloadIcon } from "../../icons/download";
-import { Upload as UploadIcon } from "../../icons/upload";
-
-import { useContext, useState } from "react";
-import ReactDatePicker from "../dateslibrary/react-date-range";
 import { addDays, subDays } from "date-fns";
-import { Store } from "src/statesManagement/store/store";
-import { useSnackbar } from "notistack";
 //   import { getSalesReport } from "src/statesManagement/store/actions/reportingActions/sales-report-action";
 import { useRouter } from "next/router";
-import { getServiceReports } from "src/statesManagement/store/actions/reportingActions/service-report-action ";
+import { useSnackbar } from "notistack";
+import { useContext, useState } from "react";
+import { getServiceDepositReports } from "src/statesManagement/store/actions/reportingActions/service-report-action ";
+import { Store } from "src/statesManagement/store/store";
+import { Download as DownloadIcon } from "../../icons/download";
+import { Upload as UploadIcon } from "../../icons/upload";
+import ReactDatePicker from "../dateslibrary/react-date-range";
 
-export const ServicesReportForm = (props) => {
+
+export const ServicesDepositReportForm = (props) => {
   const { dispatch, state } = useContext(Store);
-  const { branch, loading } = state;
+  const { loading } = state;
   const { enqueueSnackbar } = useSnackbar();
   const Router = useRouter();
   const [formvalues, setformvalues] = useState({
@@ -56,8 +52,9 @@ export const ServicesReportForm = (props) => {
   //handle form submit
   const handleSubmit = (e) => {
     e.preventDefault();
-    getServiceReports({dispatch, enqueueSnackbar, from:selectionValue[0].startDate, to:selectionValue[0].endDate})
-  console.log(selectionValue);
+    getServiceDepositReports({dispatch, enqueueSnackbar, from:selectionValue[0].startDate, to:selectionValue[0].endDate})
+    
+ 
   };
 
   return (
@@ -79,7 +76,7 @@ export const ServicesReportForm = (props) => {
             Home
           </Button>
           <Button startIcon={<DownloadIcon fontSize="small" />} sx={{ mr: 1 }}>
-            Services Report
+            Service Deposit Report
           </Button>
           {/* <Button color="primary" variant="contained">
               Add Sales
@@ -88,7 +85,7 @@ export const ServicesReportForm = (props) => {
       </Box>
       <Box sx={{ mt: 3 }}>
         <Card>
-          <CardHeader title="Service Report" />
+          <CardHeader title="Service Deposit Report" />
           <Divider />
           <CardContent>
             <Box sx={{ maxWidth: 800 }}>

@@ -15,6 +15,10 @@ export const RenderNavItemsWithDropDown = ({
   href6,
   href7,
   href8,
+  href9,
+  href10,
+  href11,
+  href12,
   title2,
   title3,
   title4,
@@ -22,6 +26,10 @@ export const RenderNavItemsWithDropDown = ({
   title6,
   title7,
   title8,
+  title9,
+  title10,
+  title11,
+  title12,
   mainTitle,
   ...others
 }) => {
@@ -133,6 +141,35 @@ export const RenderNavItemsWithDropDown = ({
             </NextLink>
           </MenuItem>
         )}
+        {href9 != null && (
+          <MenuItem onClick={handleClose}>
+            <NextLink href={href9}>
+              <Box sx={{ flexGrow: 1 }}>{title9}</Box>
+            </NextLink>
+          </MenuItem>
+        )}
+        {href10 != null && (
+          <MenuItem onClick={handleClose}>
+            <NextLink href={href10}>
+              <Box sx={{ flexGrow: 1 }}>{title10}</Box>
+            </NextLink>
+          </MenuItem>
+        )}
+        {href11 != null && (
+          <MenuItem onClick={handleClose}>
+            <NextLink href={href11}>
+              <Box sx={{ flexGrow: 1 }}>{title11}</Box>
+            </NextLink>
+          </MenuItem>
+        )}
+        {href12 != null && (
+          <MenuItem onClick={handleClose}>
+            <NextLink href={href12}>
+              <Box sx={{ flexGrow: 1 }}>{title12}</Box>
+            </NextLink>
+          </MenuItem>
+        )}
+        
       </Menu>
     </ListItem>
   );

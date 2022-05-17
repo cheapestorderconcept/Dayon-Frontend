@@ -27,7 +27,11 @@ const initialState = {
   productById: [],
   profile: {},
   salesReport: [],
+  paymentReport:[],
+  serviceDepositReport:[],
   depositReport: [],
+  serviceDepositByCatReport:[],
+  paymentByCatReport:[],
   outOfStocksReport: [],
   profitOrLossReport: [],
   productPrice: [],
@@ -51,6 +55,7 @@ const initialState = {
   servicePayment: Cookies.get("servicePayment") ? JSON.parse(Cookies.get("servicePayment")) : [],
   services: Cookies.get("services") ? JSON.parse(Cookies.get("services")) : [],  
   serviceDeposits: Cookies.get("serviceDeposits") ? JSON.parse(Cookies.get("serviceDeposits")) : [],  
+  depositTracks: Cookies.get("depositTracks") ? JSON.parse(Cookies.get("depositTracks")) : [],  
 
 };
 
