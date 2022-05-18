@@ -87,7 +87,7 @@ export const AddService = (props) => {
         total_amount : `${values.total_amount}`,
    }
   
-  //  addServicePayment({dispatch, enqueueSnackbar, service:service}) 
+   addServicePayment({dispatch, enqueueSnackbar, service:service}) 
 
   };
   const removeservice = (values, setValues) => {
