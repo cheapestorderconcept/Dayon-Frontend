@@ -48,7 +48,7 @@ const items = [
     title3: "Update Product",
     href3: "/purchase/stock",
   },
-    {
+  {
     icon: <ShoppingBagIcon fontSize="small" />,
     mainTitle: "Service Management",
     href: "/services",
@@ -178,8 +178,19 @@ const items = [
     href6: "/reporting/stock-level-balance",
     title7: "Out Of Stock Products",
     href7: "/reporting/report-out-of-stock",
+<<<<<<< Updated upstream
     // title8: "Suppliers Ledger",
     // href8: "/reporting/supplier-ledger-report",
+=======
+    title8: "Service Payment Report",
+    href8: "/reporting/service-report",
+    title9: "Service Deposit Report",
+    href9: "/reporting/service-deposit-report",
+    title10: "Service Payment Report By Category",
+    href10: "/reporting/service-bycategory-report",
+    title11: "Service Deposit Report By Category",
+    href11: "/reporting/service-deposit-by-category-report",
+>>>>>>> Stashed changes
   },
   // {
   //   href: "/auth",
@@ -248,7 +259,7 @@ export const DashboardSidebar = (props) => {
             >
               <div>
                 <Typography color="inherit" variant="h6">
-               {COMPANY_NAME}
+                  {COMPANY_NAME}
                 </Typography>
                 <Typography color="neutral.400" variant="body2">
                   Available

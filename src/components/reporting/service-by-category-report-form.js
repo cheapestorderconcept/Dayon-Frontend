@@ -18,17 +18,20 @@ import ReactDatePicker from "../dateslibrary/react-date-range";
 import { addDays, subDays } from "date-fns";
 import { Store } from "src/statesManagement/store/store";
 import { useSnackbar } from "notistack";
-//   import { getSalesReport } from "src/statesManagement/store/actions/reportingActions/sales-report-action";
+import { getSalesReport } from "src/statesManagement/store/actions/reportingActions/sales-report-action";
 import { useRouter } from "next/router";
+import { getServiceByCategoryReports } from "src/statesManagement/store/actions/reportingActions/service-report-action ";
 
-export const ServicesReportForm = (props) => {
+export const ServiceByCategoryReportForm = (props) => {
   const { dispatch, state } = useContext(Store);
-  const { branch, loading } = state;
+  const { serviceCategories, loading } = state;
   const { enqueueSnackbar } = useSnackbar();
   const Router = useRouter();
   const [formvalues, setformvalues] = useState({
     startDate: null,
     endDate: null,
+    category: "",
+    // product: "",
   });
 
   const [selectionValue, setselectionValue] = useState([
@@ -42,6 +45,7 @@ export const ServicesReportForm = (props) => {
   // updates date range on change
   const handleSelect = (ranges) => {
     const { selection } = ranges;
+    console.log(selection);
 
     setselectionValue([selection]);
     const startdate = selectionValue[0].startDate;
@@ -53,14 +57,14 @@ export const ServicesReportForm = (props) => {
   //handle form submit
   const handleSubmit = (e) => {
     e.preventDefault();
-    getServiceReports({
+    getServiceByCategoryReports({
       dispatch,
       enqueueSnackbar,
       Router: Router,
       from: selectionValue[0].startDate,
       to: selectionValue[0].endDate,
+      query: formvalues.category,
     });
-    console.log(selectionValue);
   };
 
   return (
@@ -82,16 +86,16 @@ export const ServicesReportForm = (props) => {
             Home
           </Button>
           <Button startIcon={<DownloadIcon fontSize="small" />} sx={{ mr: 1 }}>
-            Services Report
+            Service By Category Report
           </Button>
           {/* <Button color="primary" variant="contained">
-              Add Sales
-            </Button> */}
+            Add Sales
+          </Button> */}
         </Box>
       </Box>
       <Box sx={{ mt: 3 }}>
         <Card>
-          <CardHeader title="Service Payment Report" />
+          <CardHeader title=" Service Payment By Category Report" />
           <Divider />
           <CardContent>
             <Box sx={{ maxWidth: 800 }}>
@@ -113,16 +117,16 @@ export const ServicesReportForm = (props) => {
                     <TextField
                       select={true}
                       fullWidth={true}
-                      name="store"
-                      label="Select Store"
+                      name="category"
+                      label="Select Service Category"
                       required
-                      value={formvalues.store}
-                      onChange={(e) => setformvalues({ ...formvalues, store: e.target.value })}
+                      value={formvalues.category}
+                      onChange={(e) => setformvalues({ ...formvalues, category: e.target.value })}
                     >
-                      {branch.map((option) => {
+                      {serviceCategories?.categories?.map((option) => {
                         return (
-                          <MenuItem key={option.id} value={option.branch_name}>
-                            {option.branch_name}
+                          <MenuItem key={option?._id} value={option?.categories_name}>
+                            {option?.categories_name}
                           </MenuItem>
                         );
                       })}
@@ -130,24 +134,24 @@ export const ServicesReportForm = (props) => {
                   </Grid>
 
                   {/* <Grid item xs={6} sx={{ mb: 4 }}>
-                      <TextField
-                        required
-                        select={true}
-                        fullWidth={true}
-                        name="product"
-                        label="Select Product"
-                        value={formvalues.product}
-                        onChange={(e) => setformvalues({ ...formvalues, product: e.target.value })}
-                      >
-                        {products.map((option) => {
-                          return (
-                            <MenuItem key={option.id} value={option.product_name}>
-                              {option.product_name}
-                            </MenuItem>
-                          );
-                        })}
-                      </TextField>
-                    </Grid> */}
+                    <TextField
+                      required
+                      select={true}
+                      fullWidth={true}
+                      name="product"
+                      label="Select Product"
+                      value={formvalues.product}
+                      onChange={(e) => setformvalues({ ...formvalues, product: e.target.value })}
+                    >
+                      {products.map((option) => {
+                        return (
+                          <MenuItem key={option.id} value={option.product_name}>
+                            {option.product_name}
+                          </MenuItem>
+                        );
+                      })}
+                    </TextField>
+                  </Grid> */}
 
                   <Grid item xs={12}>
                     <Button
