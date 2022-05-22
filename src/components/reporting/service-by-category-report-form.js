@@ -57,6 +57,7 @@ export const ServiceByCategoryReportForm = (props) => {
   //handle form submit
   const handleSubmit = (e) => {
     e.preventDefault();
+
     getServiceByCategoryReports({
       dispatch,
       enqueueSnackbar,
@@ -65,6 +66,7 @@ export const ServiceByCategoryReportForm = (props) => {
       to: selectionValue[0].endDate,
       query: formvalues.category,
     });
+
   };
 
   return (
@@ -95,7 +97,9 @@ export const ServiceByCategoryReportForm = (props) => {
       </Box>
       <Box sx={{ mt: 3 }}>
         <Card>
+
           <CardHeader title=" Service Payment By Category Report" />
+
           <Divider />
           <CardContent>
             <Box sx={{ maxWidth: 800 }}>
@@ -171,4 +175,8 @@ export const ServiceByCategoryReportForm = (props) => {
       </Box>
     </Box>
   );
+
 };
+
+};
+

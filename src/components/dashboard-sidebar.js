@@ -64,6 +64,8 @@ const items = [
     href5: "/services/service-deposit",
     title6: "Manage Service Deposits",
     href6: "/services/service-deposit/manage-service-deposit",
+    title7: "Deposit Track",
+    href7: "/services/service-deposit/deposit-track",
   },
   {
     icon: <AccountBalanceWalletIcon fontSize="small" />,
@@ -169,7 +171,7 @@ const items = [
     title2: "Profit/Loss Report",
     href2: "/reporting/report-profit-loss",
     // title3: "Transfer To Outlets",
-    href3: "/reporting/sales-print-report",
+    // href3: "/reporting/sales-print-report",
     title4: "Deposit Report",
     href4: "/reporting/deposit-report",
     title5: "Product Price List",
@@ -178,10 +180,6 @@ const items = [
     href6: "/reporting/stock-level-balance",
     title7: "Out Of Stock Products",
     href7: "/reporting/report-out-of-stock",
-<<<<<<< Updated upstream
-    // title8: "Suppliers Ledger",
-    // href8: "/reporting/supplier-ledger-report",
-=======
     title8: "Service Payment Report",
     href8: "/reporting/service-report",
     title9: "Service Deposit Report",
@@ -190,7 +188,6 @@ const items = [
     href10: "/reporting/service-bycategory-report",
     title11: "Service Deposit Report By Category",
     href11: "/reporting/service-deposit-by-category-report",
->>>>>>> Stashed changes
   },
   // {
   //   href: "/auth",
@@ -296,6 +293,10 @@ export const DashboardSidebar = (props) => {
                 title6={item.title6}
                 title7={item.title7}
                 title8={item.title8}
+                title9={item.title9}
+                title10={item.title10}
+                title11={item.title11}
+                title12={item.title12}
                 href2={item.href2}
                 href3={item.href3}
                 href4={item.href4}
@@ -303,6 +304,10 @@ export const DashboardSidebar = (props) => {
                 href6={item.href6}
                 href7={item.href7}
                 href8={item.href8}
+                href9={item.href9}
+                href10={item.href10}
+                href11={item.href11}
+                href12={item.href12}
                 mainTitle={item.mainTitle}
               />
             ) : (

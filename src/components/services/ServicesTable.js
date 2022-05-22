@@ -29,25 +29,7 @@ const ServicesTable = ({ services, editable }) => {
     }
   };
 
-  const columnsEditable = [
-    {
-      name: "name",
-      label: "Service Name",
-    },
 
-    {
-      name: "branch",
-      label: "Branch",
-    },
-    {
-      name: "service",
-      label: "Service Category",
-    },
-    {
-      name: "price",
-      label: "Service Price",
-    },
-  ];
 
   const columns = [
     {
@@ -108,11 +90,7 @@ const ServicesTable = ({ services, editable }) => {
     },
   ];
 
-  // const product = products.map((pro) => Object.values(pro));
-  // console.log(products);
-  // const { state } = useContext(Store);
-  // const { serviceCategories } = state;
-  // console.log(serviceCategories);
+ 
 
   const service = services?.map((ser, i) => {
     const strDate = new Date(ser?.created_at);
@@ -148,7 +126,7 @@ const ServicesTable = ({ services, editable }) => {
         <MUIDataTable
           title={"Lists Of Services"}
           data={service}
-          columns={editable ? columnsEditable : columns}
+          columns={ columns}
           options={options}
         />
       )}

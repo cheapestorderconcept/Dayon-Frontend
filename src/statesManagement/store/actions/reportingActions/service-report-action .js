@@ -22,6 +22,7 @@ export const getServiceReports = async ({
   Router,
   branch,
 }) => {
+
   try {
     dispatch({
       type: GET_SERVICE_PAYMENT_REPORT_REQUEST,
@@ -29,7 +30,9 @@ export const getServiceReports = async ({
     const { data } = await makeNetworkCall({
       method: "GET",
       path: `payment-report?from=${from}&to=${to}`,
+
       target: "service",
+
     });
     console.log(data.data);
     dispatch({
@@ -40,10 +43,12 @@ export const getServiceReports = async ({
       enqueueSnackbar(data?.response_message, {
         variant: "success",
       });
+
     Router.push({
       pathname: "/reporting/service-payment-print-report",
       query: { branch, from: JSON.stringify(from), to: JSON.stringify(to) },
     });
+
   } catch (error) {
     dispatch({
       type: GET_SERVICE_PAYMENT_REPORT_FAIL,
@@ -63,6 +68,7 @@ export const getServiceDepositReports = async ({
   Router,
   branch,
 }) => {
+
   try {
     dispatch({
       type: GET_SERVICE_DEPOSIT_REPORT_REQUEST,
@@ -70,7 +76,9 @@ export const getServiceDepositReports = async ({
     const { data } = await makeNetworkCall({
       method: "GET",
       path: `deposit-report?from=${from}&to=${to}`,
+
       target: "service",
+
     });
     console.log(data.data);
     dispatch({
@@ -85,6 +93,7 @@ export const getServiceDepositReports = async ({
       pathname: "/reporting/service-deposit-print-report",
       query: { branch, from: JSON.stringify(from), to: JSON.stringify(to) },
     });
+
   } catch (error) {
     dispatch({
       type: GET_SERVICE_DEPOSIT_REPORT_FAIL,
@@ -96,6 +105,7 @@ export const getServiceDepositReports = async ({
   }
 };
 
+
 export const getServiceByCategoryReports = async ({
   dispatch,
   enqueueSnackbar,
@@ -105,6 +115,7 @@ export const getServiceByCategoryReports = async ({
   query,
   branch,
 }) => {
+
   try {
     dispatch({
       type: GET_SERVICE_PAYMENT_BY_CATEGORY_REPORT_REQUEST,
@@ -112,7 +123,9 @@ export const getServiceByCategoryReports = async ({
     const { data } = await makeNetworkCall({
       method: "GET",
       path: `fetch-payment-by-categories?from=${from}&to=${to}&categories=${query}`,
+
       target: "service",
+
     });
     console.log(data.data);
     dispatch({
@@ -127,6 +140,7 @@ export const getServiceByCategoryReports = async ({
       pathname: "/reporting/service-payment-by-category-print-report",
       query: { branch, from: JSON.stringify(from), to: JSON.stringify(to) },
     });
+
   } catch (error) {
     dispatch({
       type: GET_SERVICE_PAYMENT_BY_CATEGORY_REPORT_FAIL,
@@ -138,6 +152,7 @@ export const getServiceByCategoryReports = async ({
   }
 };
 
+
 export const getServiceDepositByCategoryReports = async ({
   dispatch,
   enqueueSnackbar,
@@ -147,6 +162,7 @@ export const getServiceDepositByCategoryReports = async ({
   query,
   branch,
 }) => {
+
   try {
     dispatch({
       type: GET_SERVICE_DEPOSIT_BY_CATEGORY_REPORT_REQUEST,
@@ -154,7 +170,9 @@ export const getServiceDepositByCategoryReports = async ({
     const { data } = await makeNetworkCall({
       method: "GET",
       path: `deposit-report-by-categories?from=${from}&to=${to}&categories=${query}`,
+
       target: "service",
+
     });
     console.log(data.data);
     dispatch({
@@ -165,10 +183,12 @@ export const getServiceDepositByCategoryReports = async ({
       enqueueSnackbar(data?.response_message, {
         variant: "success",
       });
+
     Router.push({
       pathname: "/reporting/service-deposit-by-category-print-report",
       query: { branch, from: JSON.stringify(from), to: JSON.stringify(to) },
     });
+
   } catch (error) {
     dispatch({
       type: GET_SERVICE_DEPOSIT_BY_CATEGORY_REPORT_FAIL,
@@ -178,4 +198,6 @@ export const getServiceDepositByCategoryReports = async ({
         variant: "error",
       });
   }
+
 };
+

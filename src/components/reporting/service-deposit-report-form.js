@@ -7,6 +7,7 @@ import {
   Divider,
   Grid,
   Typography,
+
 } from "@mui/material";
 import { addDays, subDays } from "date-fns";
 //   import { getSalesReport } from "src/statesManagement/store/actions/reportingActions/sales-report-action";
@@ -18,6 +19,7 @@ import { Store } from "src/statesManagement/store/store";
 import { Download as DownloadIcon } from "../../icons/download";
 import { Upload as UploadIcon } from "../../icons/upload";
 import ReactDatePicker from "../dateslibrary/react-date-range";
+
 
 export const ServicesDepositReportForm = (props) => {
   const { dispatch, state } = useContext(Store);
@@ -40,7 +42,6 @@ export const ServicesDepositReportForm = (props) => {
   // updates date range on change
   const handleSelect = (ranges) => {
     const { selection } = ranges;
-
     setselectionValue([selection]);
     const startdate = selectionValue[0].startDate;
     const enddate = selectionValue[0].endDate;
@@ -58,6 +59,7 @@ export const ServicesDepositReportForm = (props) => {
       to: selectionValue[0].endDate,
       Router: Router,
     });
+
   };
 
   return (

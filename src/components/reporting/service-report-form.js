@@ -20,6 +20,7 @@ import { Store } from "src/statesManagement/store/store";
 import { useSnackbar } from "notistack";
 //   import { getSalesReport } from "src/statesManagement/store/actions/reportingActions/sales-report-action";
 import { useRouter } from "next/router";
+import { getServiceReports } from "src/statesManagement/store/actions/reportingActions/service-report-action ";
 
 export const ServicesReportForm = (props) => {
   const { dispatch, state } = useContext(Store);
@@ -60,7 +61,6 @@ export const ServicesReportForm = (props) => {
       from: selectionValue[0].startDate,
       to: selectionValue[0].endDate,
     });
-    console.log(selectionValue);
   };
 
   return (
@@ -109,7 +109,7 @@ export const ServicesReportForm = (props) => {
                     />
                   </Grid>
 
-                  <Grid item xs={6} sx={{ mb: 4 }}>
+                  {/* <Grid item xs={6} sx={{ mb: 4 }}>
                     <TextField
                       select={true}
                       fullWidth={true}
@@ -127,7 +127,7 @@ export const ServicesReportForm = (props) => {
                         );
                       })}
                     </TextField>
-                  </Grid>
+                  </Grid> */}
 
                   {/* <Grid item xs={6} sx={{ mb: 4 }}>
                       <TextField

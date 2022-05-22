@@ -34,7 +34,7 @@ export const ServiceDepositByCategoryReportForm = (props) => {
     // product: "",
   });
 
-  // console.log(serviceCategories);
+
 
   const [selectionValue, setselectionValue] = useState([
     {
@@ -59,6 +59,7 @@ export const ServiceDepositByCategoryReportForm = (props) => {
   //handle form submit
   const handleSubmit = (e) => {
     e.preventDefault();
+
     getServiceDepositByCategoryReports({
       dispatch,
       enqueueSnackbar,
@@ -67,6 +68,7 @@ export const ServiceDepositByCategoryReportForm = (props) => {
       to: selectionValue[0].endDate,
       query: formvalues.category,
     });
+
   };
 
   return (
@@ -173,4 +175,7 @@ export const ServiceDepositByCategoryReportForm = (props) => {
       </Box>
     </Box>
   );
+
 };
+
+

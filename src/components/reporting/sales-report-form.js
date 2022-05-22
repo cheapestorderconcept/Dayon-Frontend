@@ -64,8 +64,8 @@ export const SalesReportForm = (props) => {
       Router: Router,
       branch: formvalues.store,
     });
-    console.log(selectionValue);
-    console.log(formvalues);
+   
+    
   };
 
   return (

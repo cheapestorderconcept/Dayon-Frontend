@@ -214,6 +214,26 @@ import {
   UPDATE_SERVICE_DEPOSIT_REQUEST,
   UPDATE_SERVICE_DEPOSIT_SUCCESS,
   UPDATE_SERVICE_DEPOSIT_FAIL,
+  UPDATE_SERVICE_REQUEST,
+  UPDATE_SERVICE_SUCCESS,
+  UPDATE_SERVICE_FAIL,
+  DELETE_SERVICE_REQUEST,
+  DELETE_SERVICE_SUCCESS,
+  DELETE_SERVICE_FAIL,
+  GET_SERVICE_DEPOSIT_TRACK_REQUEST,
+  GET_SERVICE_DEPOSIT_TRACK_SUCCESS,
+  GET_SERVICE_PAYMENT_REPORT_REQUEST,
+  GET_SERVICE_PAYMENT_REPORT_SUCCESS,
+  GET_SERVICE_PAYMENT_REPORT_FAIL,
+  GET_SERVICE_DEPOSIT_REPORT_REQUEST,
+  GET_SERVICE_DEPOSIT_REPORT_SUCCESS,
+  GET_SERVICE_DEPOSIT_REPORT_FAIL,
+  GET_SERVICE_PAYMENT_BY_CATEGORY_REPORT_REQUEST,
+  GET_SERVICE_PAYMENT_BY_CATEGORY_REPORT_SUCCESS,
+  GET_SERVICE_PAYMENT_BY_CATEGORY_REPORT_FAIL,
+  GET_SERVICE_DEPOSIT_BY_CATEGORY_REPORT_REQUEST,
+  GET_SERVICE_DEPOSIT_BY_CATEGORY_REPORT_SUCCESS,
+  GET_SERVICE_DEPOSIT_BY_CATEGORY_REPORT_FAIL,
 } from "../constants";
 
 // const rootReducers = combineReducers({
@@ -662,6 +682,35 @@ const rootReducers = (state, action) => {
     case GET_SALES_REPORT_FAIL:
       return { ...state, loading: false, error: action.payload };
 
+      //SERVICE REPORTING
+       case GET_SERVICE_PAYMENT_REPORT_REQUEST:
+      return { ...state, loading: true };
+    case GET_SERVICE_PAYMENT_REPORT_SUCCESS:
+      return { ...state, loading: false, paymentReport: action?.payload };
+    case GET_SERVICE_PAYMENT_REPORT_FAIL:
+      return { ...state, loading: false, error: action.payload };
+
+     case GET_SERVICE_PAYMENT_BY_CATEGORY_REPORT_REQUEST:
+      return { ...state, loading: true };
+    case GET_SERVICE_PAYMENT_BY_CATEGORY_REPORT_SUCCESS:
+      return { ...state, loading: false, paymentByCatReport: action?.payload };
+    case GET_SERVICE_PAYMENT_BY_CATEGORY_REPORT_FAIL:
+      return { ...state, loading: false, error: action.payload };
+
+    case GET_SERVICE_DEPOSIT_REPORT_REQUEST:
+      return { ...state, loading: true };
+    case GET_SERVICE_DEPOSIT_REPORT_SUCCESS:
+      return { ...state, loading: false, serviceDepositReport: action?.payload };
+    case GET_SERVICE_DEPOSIT_REPORT_FAIL:
+      return { ...state, loading: false, error: action.payload };
+
+       case GET_SERVICE_DEPOSIT_BY_CATEGORY_REPORT_REQUEST:
+      return { ...state, loading: true };
+    case GET_SERVICE_DEPOSIT_BY_CATEGORY_REPORT_SUCCESS:
+      return { ...state, loading: false, serviceDepositByCatReport: action?.payload };
+    case GET_SERVICE_DEPOSIT_BY_CATEGORY_REPORT_FAIL:
+      return { ...state, loading: false, error: action.payload };
+
     // deposits reports
 
     case GET_DEPOSIT_REPORT_REQUEST:
@@ -843,6 +892,20 @@ const rootReducers = (state, action) => {
     case ADD_SERVICE_FAIL:
       return { ...state, loading: false, error: action.payload };
 
+        case UPDATE_SERVICE_REQUEST:
+      return { ...state, loading: true };
+    case UPDATE_SERVICE_SUCCESS:
+      return { ...state, loading: false };
+    case UPDATE_SERVICE_FAIL:
+      return { ...state, loading: false, error: action.payload };
+
+    case DELETE_SERVICE_REQUEST:
+      return { ...state, loading: true };
+    case DELETE_SERVICE_SUCCESS:
+      return { ...state, loading: false };
+    case DELETE_SERVICE_FAIL:
+      return { ...state, loading: false, error: action.payload };
+
 // SErvice DEposit
    case ADD_SERVICE_DEPOSIT_REQUEST:
       return { ...state, loading: true };
@@ -878,6 +941,18 @@ const rootReducers = (state, action) => {
       return { ...state, loading: false };
     case UPDATE_SERVICE_DEPOSIT_FAIL:
      return { ...state, loading: false, error: action.payload };
+
+          case GET_SERVICE_DEPOSIT_TRACK_REQUEST:
+      return { ...state, loading: true };
+    case GET_SERVICE_DEPOSIT_TRACK_SUCCESS: {
+      if (Cookies.get("depositTracks")) {
+        Cookies.remove("depositTracks");
+        Cookies.set("depositTracks", JSON.stringify(action.payload));
+      } else {
+        Cookies.set("depositTracks", JSON.stringify(action.payload));
+      }
+      return { ...state, loading: false, depositTracks: action?.payload };
+    }
     default:
       state;
   }

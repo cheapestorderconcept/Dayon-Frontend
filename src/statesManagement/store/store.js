@@ -27,15 +27,11 @@ const initialState = {
   productById: [],
   profile: {},
   salesReport: [],
-<<<<<<< Updated upstream
-  depositReport: [],
-=======
   paymentReport: [],
   serviceDepositReport: [],
   depositReport: [],
   serviceDepositByCatReport: [],
   paymentByCatReport: [],
->>>>>>> Stashed changes
   outOfStocksReport: [],
   profitOrLossReport: [],
   productPrice: [],
@@ -59,15 +55,9 @@ const initialState = {
     ? JSON.parse(Cookies.get("servicesCategories"))
     : [],
   servicePayment: Cookies.get("servicePayment") ? JSON.parse(Cookies.get("servicePayment")) : [],
-<<<<<<< Updated upstream
-  services: Cookies.get("services") ? JSON.parse(Cookies.get("services")) : [],  
-  serviceDeposits: Cookies.get("serviceDeposits") ? JSON.parse(Cookies.get("serviceDeposits")) : [],  
-
-=======
   services: Cookies.get("services") ? JSON.parse(Cookies.get("services")) : [],
   serviceDeposits: Cookies.get("serviceDeposits") ? JSON.parse(Cookies.get("serviceDeposits")) : [],
   depositTracks: Cookies.get("depositTracks") ? JSON.parse(Cookies.get("depositTracks")) : [],
->>>>>>> Stashed changes
 };
 
 export const StoreProvider = (props) => {
