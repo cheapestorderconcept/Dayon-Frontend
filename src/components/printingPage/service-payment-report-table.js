@@ -106,6 +106,7 @@ function Row(props) {
 }
 
 export default function CollapsibleTable({ paymentReport }) {
+  console.log(paymentReport)
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -115,9 +116,9 @@ export default function CollapsibleTable({ paymentReport }) {
             <TableCell>Invoice</TableCell>
             <TableCell>Date</TableCell>
             <TableCell align="right">Service name</TableCell>
-            <TableCell align="right">Cost Price</TableCell>
-            <TableCell align="right">Selling Price</TableCell>
-            <TableCell align="right">Total Selling Price Per Qty</TableCell>
+            <TableCell align="right">Amount Paid</TableCell>
+            <TableCell align="right">Payment Type</TableCell>
+            {/* <TableCell align="right">Total Payable Amount</TableCell> */}
           </TableRow>
         </TableHead>
         <TableBody>
@@ -127,11 +128,11 @@ export default function CollapsibleTable({ paymentReport }) {
               <TableCell component="th" scope="row">
                 {row.invoice_number}
               </TableCell>
-              <TableCell align="right">{row.created_at}</TableCell>
+              <TableCell component="th" scope="row" >{row.created_at}</TableCell>
               <TableCell align="right">{row.service_name}</TableCell>
-              <TableCell align="right">{row.amount_paid}</TableCell>
               <TableCell align="right">{`₦${row.amount_paid}`}</TableCell>
-              <TableCell align="right">{row.amount_paid}</TableCell>
+              <TableCell align="right">{row.payment_type}</TableCell>
+              {/* <TableCell align="right">{`₦${row.total_amount}`}</TableCell> */}
             </TableRow>
           ))}
           <TableRow>
@@ -140,9 +141,9 @@ export default function CollapsibleTable({ paymentReport }) {
             <TableCell align="right"></TableCell>
             <TableCell align="right"></TableCell>
             <TableCell align="right"></TableCell>
-            <TableCell align="right"></TableCell>
+            {/* <TableCell align="right"></TableCell> */}
             <TableCell align="right">
-              <Typography variant="h4">Total Selling Price Per Qty</Typography>
+              <Typography variant="h4">Total Service Amount</Typography>
             </TableCell>
             <TableCell align="right">
               <Typography variant="h4">{`₦${paymentReport?.reduce(

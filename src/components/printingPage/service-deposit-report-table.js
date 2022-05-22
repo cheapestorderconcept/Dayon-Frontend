@@ -106,36 +106,35 @@ function Row(props) {
 }
 
 export default function CollapsibleTable({ serviceDepositReport }) {
+  
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
           <TableRow>
-            <TableCell>S/N</TableCell>
-            <TableCell>Invoice</TableCell>
-            <TableCell>Date</TableCell>
+            <TableCell align="right">S/N</TableCell>
+            <TableCell align="right">Date</TableCell>
+            <TableCell align="right">Customer Name</TableCell>
             <TableCell align="right">Service name</TableCell>
-            <TableCell align="right">Cost Price</TableCell>
-            <TableCell align="right">Selling Price</TableCell>
-            <TableCell align="right">Total Selling Price Per Qty</TableCell>
+            <TableCell align="right">Amount paid </TableCell>
+            <TableCell align="right">Amount To Balance</TableCell>
+            <TableCell align="right">Amount To Pay</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {serviceDepositReport?.map((row, index) => (
             <TableRow key={row._id} sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
               <TableCell align="right">{index + 1}</TableCell>
-              <TableCell component="th" scope="row">
-                {row.invoice_number}
-              </TableCell>
               <TableCell align="right">{row.created_at}</TableCell>
-              <TableCell align="right">{row.product}</TableCell>
-              <TableCell align="right">{row.cost_price}</TableCell>
-              <TableCell align="right">{`₦${row.selling_price}`}</TableCell>
-              <TableCell align="right">{row.quantity * row.selling_price}</TableCell>
+             <TableCell align="right">{row.customer_name}</TableCell>
+              <TableCell align="right">{row.service_name}</TableCell>
+              <TableCell align="right">{`₦${row.amount_paid}`}</TableCell>
+              <TableCell align="right">{`₦${row.amount_to_balance}`}</TableCell>
+              <TableCell align="right">{`₦${row.amount_to_pay}`}</TableCell>
             </TableRow>
           ))}
-          <TableRow>
-            {/* <TableCell align="right"></TableCell> */}
+          {/* <TableRow>
+           <TableCell align="right"></TableCell> 
             <TableCell align="right"></TableCell>
             <TableCell align="right"></TableCell>
             <TableCell align="right"></TableCell>
@@ -150,7 +149,7 @@ export default function CollapsibleTable({ serviceDepositReport }) {
                 0
               )}`}</Typography>
             </TableCell>
-          </TableRow>
+          </TableRow> */}
         </TableBody>
       </Table>
     </TableContainer>

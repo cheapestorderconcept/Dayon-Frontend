@@ -24,7 +24,7 @@ const DepositPrintReport = (props) => {
   const { depositReport } = state;
   const printRef = useRef();
   const { router, end } = props;
-  console.log(end);
+  console.log(depositReport);
 
   const from_date = formatDate(router.query.from);
   const to_date = formatDate(router.query.to);

@@ -86,7 +86,99 @@ function Row(props) {
   );
 }
 
-export default function CollapsibleTable({ salesReciept }) {
+function ServiceRow(props) {
+  const { row, index } = props;
+  const [open, setOpen] = React.useState(false);
+console.log(row)
+  return (
+    <React.Fragment>
+      <TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
+        <TableCell>
+          <IconButton aria-label="expand row" size="small" onClick={() => setOpen(!open)}>
+            {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+          </IconButton>
+        </TableCell>
+        {/* <TableCell component="th" scope="row">
+          {index + 1}
+        </TableCell> */}
+        <TableCell>{row?.created_at}</TableCell>
+        <TableCell>{row?.invoice_number}</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
+          <Collapse in={open} timeout="auto" unmountOnExit>
+            <Box sx={{ margin: 1 }}>
+              <Typography variant="h6" gutterBottom component="div">
+                Services
+              </Typography>
+              <Table size="small" aria-label="purchases">
+                <TableHead>
+                  <TableRow>
+                   
+                    <TableCell>Service Name</TableCell>
+                  
+                    <TableCell>Cost Price Per Service</TableCell>
+                    <TableCell> Total Price</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {row?.service?.map((item, i) => (
+                    
+                    <TableRow key={i}>
+                      <TableCell>{item.service_name}</TableCell>
+                      <TableCell>{`₦${item.amount_paid}`}</TableCell>
+                      <TableCell>{`₦${item.amount_paid}`}</TableCell>
+                     
+                     
+                      {/* <TableCell align="right">
+                        {Math.round(historyRow.amount * row.price * 100) / 100}
+                      </TableCell> */}
+                    </TableRow>
+                  ))}
+                  <TableRow>
+                 
+                    <TableCell></TableCell>
+                    <TableCell></TableCell>
+                    <TableCell>
+                      <Typography variant="h6">Total Service Price</Typography>
+                    </TableCell>
+                    <TableCell>
+                      {" "}
+                      <Typography variant="h6">{`₦${row.total_amount}`}</Typography>
+                    </TableCell>
+                  </TableRow>
+                </TableBody>
+              </Table>
+            </Box>
+          </Collapse>
+        </TableCell>
+      </TableRow>
+    </React.Fragment>
+  );
+}
+
+export  function ServiceCollapsibleTable({serviceReciept }) {
+  console.log(serviceReciept)
+  return (
+    <TableContainer component={Paper}>
+      <Table aria-label="collapsible table">
+        <TableHead>
+          <TableRow>
+            <TableCell />
+            {/* <TableCell>S/N</TableCell> */}
+            <TableCell>Date</TableCell>
+            <TableCell>Invoice</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          <ServiceRow row={serviceReciept} />
+        </TableBody>
+      </Table>
+    </TableContainer>
+  );
+}
+
+export  function CollapsibleTable({ salesReciept }) {
   return (
     <TableContainer component={Paper}>
       <Table aria-label="collapsible table">

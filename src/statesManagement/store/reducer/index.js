@@ -225,15 +225,15 @@ import {
   GET_SERVICE_PAYMENT_REPORT_REQUEST,
   GET_SERVICE_PAYMENT_REPORT_SUCCESS,
   GET_SERVICE_PAYMENT_REPORT_FAIL,
-  GET_SERVICE_DEPOSIT_REPORT_REQUEST,
-  GET_SERVICE_DEPOSIT_REPORT_SUCCESS,
-  GET_SERVICE_DEPOSIT_REPORT_FAIL,
   GET_SERVICE_PAYMENT_BY_CATEGORY_REPORT_REQUEST,
   GET_SERVICE_PAYMENT_BY_CATEGORY_REPORT_SUCCESS,
   GET_SERVICE_PAYMENT_BY_CATEGORY_REPORT_FAIL,
   GET_SERVICE_DEPOSIT_BY_CATEGORY_REPORT_REQUEST,
   GET_SERVICE_DEPOSIT_BY_CATEGORY_REPORT_SUCCESS,
   GET_SERVICE_DEPOSIT_BY_CATEGORY_REPORT_FAIL,
+  GET_SERVICE_DEPOSIT_REPORT_REQUEST,
+  GET_SERVICE_DEPOSIT_REPORT_SUCCESS,
+  GET_SERVICE_DEPOSIT_REPORT_FAIL,
 } from "../constants";
 
 // const rootReducers = combineReducers({
@@ -689,8 +689,8 @@ const rootReducers = (state, action) => {
       return { ...state, loading: false, paymentReport: action?.payload };
     case GET_SERVICE_PAYMENT_REPORT_FAIL:
       return { ...state, loading: false, error: action.payload };
-
      case GET_SERVICE_PAYMENT_BY_CATEGORY_REPORT_REQUEST:
+       
       return { ...state, loading: true };
     case GET_SERVICE_PAYMENT_BY_CATEGORY_REPORT_SUCCESS:
       return { ...state, loading: false, paymentByCatReport: action?.payload };
@@ -698,8 +698,10 @@ const rootReducers = (state, action) => {
       return { ...state, loading: false, error: action.payload };
 
     case GET_SERVICE_DEPOSIT_REPORT_REQUEST:
+      console.log("Requesting...")
       return { ...state, loading: true };
     case GET_SERVICE_DEPOSIT_REPORT_SUCCESS:
+      console.log(action.payload)
       return { ...state, loading: false, serviceDepositReport: action?.payload };
     case GET_SERVICE_DEPOSIT_REPORT_FAIL:
       return { ...state, loading: false, error: action.payload };

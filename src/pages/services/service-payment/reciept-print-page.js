@@ -9,8 +9,8 @@ import { withRouter } from "next/router";
 import { useContext, useRef, useState, useEffect } from "react";
 import { Store } from "src/statesManagement/store/store";
 import ReactToPrint from "react-to-print";
-import CollapsibleTable from "src/components/printingPage/service-reciept-print-table";
 import { COMPANY_NAME } from "src/utils/company_details";
+import { ServiceCollapsibleTable } from "src/components/printingPage/reciept-print-table";
 
 // import PrintingHeader from "src/components/printingPage/printing-header";
 
@@ -20,13 +20,15 @@ const DynamicComponentWithNoSSR = dynamic(() => import("src/components/navbar-br
 
 const ReceiptPrintReport = (props) => {
   const { state } = useContext(Store);
+  const {branch} = state
   const printRef = useRef();
   const { router } = props;
-const serviceReciept = []
+  const [serviceReciept, setserviceReciept] = useState({});
   useEffect(() => {
-
+    setserviceReciept(JSON.parse(router.query.service));
   }, []);
 
+  console.log(serviceReciept);
 
   return (
     <>
@@ -41,8 +43,8 @@ const serviceReciept = []
         }}
       >
         <Container ref={printRef} maxWidth={true}>
-          <PrintingHeader title={`Service Reciept at ${serviceReciept?.branch}`} />
-          <CollapsibleTable serviceReciept={[]} />
+          <PrintingHeader title={`Service Reciept at ${COMPANY_NAME}`} />
+          <ServiceCollapsibleTable serviceReciept={serviceReciept} />
         </Container>
         <Container
           sx={{

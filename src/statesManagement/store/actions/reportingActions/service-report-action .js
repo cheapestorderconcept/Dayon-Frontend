@@ -1,8 +1,5 @@
 import { makeNetworkCall } from "src/network";
 import {
-  GET_SERVICE_DEPOSIT_REPORT_REQUEST,
-  GET_SERVICE_DEPOSIT_REPORT_SUCCESS,
-  GET_SERVICE_DEPOSIT_REPORT_FAIL,
   GET_SERVICE_PAYMENT_REPORT_FAIL,
   GET_SERVICE_PAYMENT_REPORT_REQUEST,
   GET_SERVICE_PAYMENT_REPORT_SUCCESS,
@@ -12,6 +9,9 @@ import {
   GET_SERVICE_PAYMENT_BY_CATEGORY_REPORT_REQUEST,
   GET_SERVICE_PAYMENT_BY_CATEGORY_REPORT_SUCCESS,
   GET_SERVICE_PAYMENT_BY_CATEGORY_REPORT_FAIL,
+  GET_SERVICE_DEPOSIT_REPORT_REQUEST,
+  GET_SERVICE_DEPOSIT_REPORT_SUCCESS,
+  GET_SERVICE_DEPOSIT_REPORT_FAIL,
 } from "../../constants";
 
 export const getServiceReports = async ({
@@ -34,7 +34,7 @@ export const getServiceReports = async ({
       target: "service",
 
     });
-    console.log(data.data);
+  
     dispatch({
       type: GET_SERVICE_PAYMENT_REPORT_SUCCESS,
       payload: data.data,
@@ -68,7 +68,6 @@ export const getServiceDepositReports = async ({
   Router,
   branch,
 }) => {
-
   try {
     dispatch({
       type: GET_SERVICE_DEPOSIT_REPORT_REQUEST,
@@ -80,7 +79,7 @@ export const getServiceDepositReports = async ({
       target: "service",
 
     });
-    console.log(data.data);
+  
     dispatch({
       type: GET_SERVICE_DEPOSIT_REPORT_SUCCESS,
       payload: data.data,
@@ -89,6 +88,7 @@ export const getServiceDepositReports = async ({
       enqueueSnackbar(data?.response_message, {
         variant: "success",
       });
+
     Router.push({
       pathname: "/reporting/service-deposit-print-report",
       query: { branch, from: JSON.stringify(from), to: JSON.stringify(to) },

@@ -275,7 +275,10 @@ export const addServicePayment = async ({ dispatch, service, Router, enqueueSnac
       enqueueSnackbar(data?.response_message, {
         variant: "success",
       });
-    // Router.reload(window.location.pathname);
+     Router.push({
+      pathname: "/services/service-payment/reciept-print-page",
+      query: { service: JSON.stringify(service) },
+    });
   } catch (error) {
     dispatch({
       type: ADD_SERVICE_PAYMENT_FAIL,
