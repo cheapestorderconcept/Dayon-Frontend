@@ -30,7 +30,6 @@ export const ServicesReportForm = (props) => {
   const [formvalues, setformvalues] = useState({
     startDate: null,
     endDate: null,
-  
   });
 
   const [selectionValue, setselectionValue] = useState([
@@ -44,7 +43,6 @@ export const ServicesReportForm = (props) => {
   // updates date range on change
   const handleSelect = (ranges) => {
     const { selection } = ranges;
-  
 
     setselectionValue([selection]);
     const startdate = selectionValue[0].startDate;
@@ -56,8 +54,13 @@ export const ServicesReportForm = (props) => {
   //handle form submit
   const handleSubmit = (e) => {
     e.preventDefault();
-    getServiceReports({dispatch, enqueueSnackbar, from:selectionValue[0].startDate, to:selectionValue[0].endDate})
-  console.log(selectionValue);
+    getServiceReports({
+      dispatch,
+      enqueueSnackbar,
+      Router: Router,
+      from: selectionValue[0].startDate,
+      to: selectionValue[0].endDate,
+    });
   };
 
   return (
@@ -88,7 +91,7 @@ export const ServicesReportForm = (props) => {
       </Box>
       <Box sx={{ mt: 3 }}>
         <Card>
-          <CardHeader title="Service Report" />
+          <CardHeader title="Service Payment Report" />
           <Divider />
           <CardContent>
             <Box sx={{ maxWidth: 800 }}>

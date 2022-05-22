@@ -27,11 +27,11 @@ const initialState = {
   productById: [],
   profile: {},
   salesReport: [],
-  paymentReport:[],
-  serviceDepositReport:[],
+  paymentReport: [],
+  serviceDepositReport: [],
   depositReport: [],
-  serviceDepositByCatReport:[],
-  paymentByCatReport:[],
+  serviceDepositByCatReport: [],
+  paymentByCatReport: [],
   outOfStocksReport: [],
   profitOrLossReport: [],
   productPrice: [],
@@ -47,16 +47,17 @@ const initialState = {
     ? JSON.parse(Cookies.get("expensesCategories"))
     : [],
   totalSales: Cookies.get("sales") ? JSON.parse(Cookies.get("sales")) : [],
-  customers: Cookies.get("customers")?JSON.parse(Cookies.get("customers")): [],
-  customerTransactions:[],
-  customerDeposit:[],
-  customerPurchased:[],
-  serviceCategories: Cookies.get("servicesCategories") ? JSON.parse(Cookies.get("servicesCategories")) : [],
+  customers: Cookies.get("customers") ? JSON.parse(Cookies.get("customers")) : [],
+  customerTransactions: [],
+  customerDeposit: [],
+  customerPurchased: [],
+  serviceCategories: Cookies.get("servicesCategories")
+    ? JSON.parse(Cookies.get("servicesCategories"))
+    : [],
   servicePayment: Cookies.get("servicePayment") ? JSON.parse(Cookies.get("servicePayment")) : [],
-  services: Cookies.get("services") ? JSON.parse(Cookies.get("services")) : [],  
-  serviceDeposits: Cookies.get("serviceDeposits") ? JSON.parse(Cookies.get("serviceDeposits")) : [],  
-  depositTracks: Cookies.get("depositTracks") ? JSON.parse(Cookies.get("depositTracks")) : [],  
-
+  services: Cookies.get("services") ? JSON.parse(Cookies.get("services")) : [],
+  serviceDeposits: Cookies.get("serviceDeposits") ? JSON.parse(Cookies.get("serviceDeposits")) : [],
+  depositTracks: Cookies.get("depositTracks") ? JSON.parse(Cookies.get("depositTracks")) : [],
 };
 
 export const StoreProvider = (props) => {

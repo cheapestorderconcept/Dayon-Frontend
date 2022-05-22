@@ -34,7 +34,7 @@ export const ServiceDepositByCategoryReportForm = (props) => {
     // product: "",
   });
 
-  console.log(serviceCategories)
+
 
   const [selectionValue, setselectionValue] = useState([
     {
@@ -59,8 +59,16 @@ export const ServiceDepositByCategoryReportForm = (props) => {
   //handle form submit
   const handleSubmit = (e) => {
     e.preventDefault();
-    getServiceDepositByCategoryReports({dispatch, enqueueSnackbar, from:selectionValue[0].startDate, to:selectionValue[0].endDate, query:formvalues.category})
-    
+
+    getServiceDepositByCategoryReports({
+      dispatch,
+      enqueueSnackbar,
+      Router: Router,
+      from: selectionValue[0].startDate,
+      to: selectionValue[0].endDate,
+      query: formvalues.category,
+    });
+
   };
 
   return (
@@ -167,4 +175,7 @@ export const ServiceDepositByCategoryReportForm = (props) => {
       </Box>
     </Box>
   );
+
 };
+
+

@@ -48,7 +48,7 @@ const items = [
     title3: "Update Product",
     href3: "/purchase/stock",
   },
-    {
+  {
     icon: <ShoppingBagIcon fontSize="small" />,
     mainTitle: "Service Management",
     href: "/services",
@@ -188,7 +188,6 @@ const items = [
     href10: "/reporting/service-bycategory-report",
     title11: "Service Deposit Report By Category",
     href11: "/reporting/service-deposit-by-category-report",
-  
   },
   // {
   //   href: "/auth",
@@ -257,7 +256,7 @@ export const DashboardSidebar = (props) => {
             >
               <div>
                 <Typography color="inherit" variant="h6">
-               {COMPANY_NAME}
+                  {COMPANY_NAME}
                 </Typography>
                 <Typography color="neutral.400" variant="body2">
                   Available

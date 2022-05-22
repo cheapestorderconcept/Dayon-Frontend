@@ -4,7 +4,10 @@ import {
   Card,
   CardContent,
   CardHeader,
-  Divider, Grid, Typography
+  Divider,
+  Grid,
+  Typography,
+
 } from "@mui/material";
 import { addDays, subDays } from "date-fns";
 //   import { getSalesReport } from "src/statesManagement/store/actions/reportingActions/sales-report-action";
@@ -26,7 +29,6 @@ export const ServicesDepositReportForm = (props) => {
   const [formvalues, setformvalues] = useState({
     startDate: null,
     endDate: null,
-  
   });
 
   const [selectionValue, setselectionValue] = useState([
@@ -40,8 +42,6 @@ export const ServicesDepositReportForm = (props) => {
   // updates date range on change
   const handleSelect = (ranges) => {
     const { selection } = ranges;
-  
-
     setselectionValue([selection]);
     const startdate = selectionValue[0].startDate;
     const enddate = selectionValue[0].endDate;
@@ -52,9 +52,14 @@ export const ServicesDepositReportForm = (props) => {
   //handle form submit
   const handleSubmit = (e) => {
     e.preventDefault();
-    getServiceDepositReports({dispatch, enqueueSnackbar, from:selectionValue[0].startDate, to:selectionValue[0].endDate})
-    
- 
+    getServiceDepositReports({
+      dispatch,
+      enqueueSnackbar,
+      from: selectionValue[0].startDate,
+      to: selectionValue[0].endDate,
+      Router: Router,
+    });
+
   };
 
   return (
