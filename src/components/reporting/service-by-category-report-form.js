@@ -178,5 +178,4 @@ export const ServiceByCategoryReportForm = (props) => {
 
 };
 
-};
 
