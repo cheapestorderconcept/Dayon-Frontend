@@ -331,7 +331,11 @@ export const AddSales = (props) => {
               <Formik
                 initialValues={INITIAL_FORM_VALUES}
                 validationSchema={FORM_VALIDATIONS}
-                onSubmit={Submit}
+                onSubmit= {(values, { setSubmitting, resetForm }) => {
+                  Submit(values);
+                  resetForm({ values: INITIAL_FORM_VALUES });
+                  setSubmitting(false);
+                }}
                 innerRef={formRef}
               >
                 {({ values, setValues }) => (

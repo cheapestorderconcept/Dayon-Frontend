@@ -86,15 +86,15 @@ export const DashboardNavbar = (props) => {
             <MenuIcon fontSize="small" />
           </IconButton>
 
-          <NextLink className={classes.link} href="/sales">
-            <Typography sx={{ flexGrow: 1 }} variant="h6" color="black">
+          <NextLink  href="/sales">
+            <Typography className={classes.link} sx={{ flexGrow: 1 }} variant="h6" color="black">
               Add Sales
             </Typography>
           </NextLink>
 
           <Box sx={{ flexGrow: 1 }} />
           <NextLink href="/sales/manage-sales">
-            <Typography color={"black"} variant="h6">
+            <Typography className={classes.link} color={"black"} variant="h6">
               View Sales
             </Typography>
           </NextLink>
@@ -133,11 +133,11 @@ export const DashboardNavbar = (props) => {
             </>
           </Tooltip>
 
-          <Tooltip title="Download database">
+          {/* <Tooltip title="Download database">
             <IconButton sx={{ ml: 1 }}>
               <CloudDownloadIcon fontSize="small" />
             </IconButton>
-          </Tooltip>
+          </Tooltip> */}
         </Toolbar>
       </DashboardNavbarRoot>
     </>

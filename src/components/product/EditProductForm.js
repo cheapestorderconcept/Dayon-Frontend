@@ -71,7 +71,7 @@ export const EditProductForm = (props) => {
     const product = {
       ...values,
       price: Number(values.price),
-      quantity: Number(values.quantity),
+      // quantity: Number(values.quantity),
     };
     updateProduct({
       dispatch: dispatch,
@@ -152,9 +152,9 @@ export const EditProductForm = (props) => {
                     <Grid item xs={12}>
                       <CustomTextField name="price" label="Cost Price" />
                     </Grid>
-                    <Grid item xs={12}>
+                    {/* <Grid item xs={12}>
                       <CustomTextField name="quantity" label="Quantity" />
-                    </Grid>
+                    </Grid> */}
 
                     <Grid item xs={12}>
                       <CustomButton disabled={loading ? true : false}> Update Product</CustomButton>

@@ -223,7 +223,6 @@ export const updateProduct = async ({ dispatch, product, productId, Router, enqu
       path: `/update-product/${productId}`,
       requestBody: product,
     });
-    console.log(data);
     dispatch({
       type: UPDATE_PRODUCT_SUCCESS,
       payload: data.data,
@@ -233,7 +232,7 @@ export const updateProduct = async ({ dispatch, product, productId, Router, enqu
         variant: "success",
       });
 
-    // Router.reload(window.location.pathname);
+    Router.push("/products");
   } catch (error) {
     dispatch({
       type: UPDATE_PRODUCT_FAIL,

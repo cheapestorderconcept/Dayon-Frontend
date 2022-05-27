@@ -35,6 +35,7 @@ export const AddService = (props) => {
     invoice_number: generateInvoice(),
     total_amount: "",
     payment_type: "",
+    customer_name:"",
     service: [
       {
      
@@ -44,6 +45,7 @@ export const AddService = (props) => {
         created_at: "",
         amount_paid: "",
        
+       
       },
     ],
   };
@@ -51,6 +53,7 @@ export const AddService = (props) => {
   const FORM_VALIDATIONS = yup.object().shape({
     created_at: yup.date().required("please select date"),
     invoice_number: yup.string().required("please provide invoice number"),
+    customer_name:yup.string(),
     payment_type: yup.string().required("please choose a payment method"),
     total_amount: yup.number().integer().typeError("Total amount must be a number"),
     service: yup.array().of(
@@ -75,6 +78,7 @@ export const AddService = (props) => {
       invoice_number: "",
       created_at: "",
       amount_paid: "",
+     
     
     });
 
@@ -86,8 +90,8 @@ export const AddService = (props) => {
         ...values,
         total_amount : `${values.total_amount}`,
    }
-  
-   addServicePayment({dispatch, enqueueSnackbar, service:service, Router}) 
+  console.log(service)
+  //  addServicePayment({dispatch, enqueueSnackbar, service:service, Router}) 
 
   };
   const removeservice = (values, setValues) => {
@@ -162,6 +166,7 @@ export const AddService = (props) => {
           
           />
         </Grid>
+       
       </React.Fragment>
     );
   };
@@ -198,7 +203,11 @@ export const AddService = (props) => {
               <Formik
                 initialValues={INITIAL_FORM_VALUES}
                 validationSchema={FORM_VALIDATIONS}
-                onSubmit={Submit}
+                onSubmit= {(values, { setSubmitting, resetForm }) => {
+                  Submit(values);
+                  resetForm({ values: INITIAL_FORM_VALUES });
+                  setSubmitting(false);
+                }}
                 innerRef={formRef}
               >
                 {({ values, setValues }) => (
@@ -209,6 +218,9 @@ export const AddService = (props) => {
                       </Grid>
                       <Grid item xs={4}>
                         <CustomTextField name="invoice_number" label="Invoice Number" />
+                      </Grid>
+                      <Grid item xs={4}>
+                        <CustomTextField name="customer_name" label="Customer Name" />
                       </Grid>
                      
 
