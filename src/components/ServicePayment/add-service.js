@@ -139,7 +139,6 @@ export const AddService = (props) => {
           <SearchableSelect
             name={`service.${i}.service_name`}
             options={serviceType}
-            setselectedService={setselectedService}
             id="service"
             title="Choose Service"
           />
