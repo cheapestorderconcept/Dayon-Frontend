@@ -129,7 +129,7 @@ export const ServiceByCategoryReportForm = (props) => {
                     >
                       {serviceCategories?.categories?.map((option) => {
                         return (
-                          <MenuItem key={option?._id} value={option?.categories_name}>
+                          <MenuItem key={option?._id} value={option?._id}>
                             {option?.categories_name}
                           </MenuItem>
                         );

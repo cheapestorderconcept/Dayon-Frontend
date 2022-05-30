@@ -129,7 +129,7 @@ export const ServiceDepositByCategoryReportForm = (props) => {
                     >
                       {serviceCategories?.categories?.map((option) => {
                         return (
-                          <MenuItem key={option?.id} value={option?.categories_name}>
+                          <MenuItem key={option?.id} value={option?._id}>
                             {option?.categories_name}
                           </MenuItem>
                         );

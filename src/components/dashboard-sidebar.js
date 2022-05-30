@@ -45,8 +45,8 @@ const items = [
     hasdropdown: true,
     title2: "Product Brand",
     href2: "/products/brand",
-    title3: "Update Product",
-    href3: "/purchase/stock",
+    // title3: "Update Product",
+    // href3: "/purchase/stock",
   },
   {
     icon: <ShoppingBagIcon fontSize="small" />,

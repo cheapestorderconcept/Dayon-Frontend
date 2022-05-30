@@ -42,7 +42,7 @@ const ServicePaymentPrintReport = (props) => {
       >
         <Container ref={printRef} maxWidth={true}>
           <PrintingHeader
-            title={`Service Payment Report at ${router.query.branch} Between "${from_date}" and "${to_date}"`}
+            title={`Service Payment Report  Between "${from_date}" and "${to_date}"`}
           />
           <CollapsibleTable paymentReport={paymentReport} />
         </Container>

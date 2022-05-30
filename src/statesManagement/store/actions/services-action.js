@@ -440,31 +440,4 @@ export const deleteServiceDeposit = async ({ dispatch, depId, Router, enqueueSna
   }
 };
 
-export const fetchServiceDepositTrack = async ({ dispatch, enqueueSnackbar, query }) => {
-  
-  try {
-    dispatch({
-      type: GET_SERVICE_DEPOSIT_TRACK_REQUEST,
-    });
-    const { data } = await makeNetworkCall({ method: "GET", path: `fetch-deposit-track?customer_name=${query}`, target:"service" });
 
-    dispatch({
-      type: GET_SERVICE_DEPOSIT_TRACK_SUCCESS,
-      payload: data.data,
-    });
-    console.log(data.data)
-     data &&
-      enqueueSnackbar(data?.response_message, {
-        variant: "success",
-      });
-
-  } catch (error) {
-    dispatch({
-      type: GET_SERVICE_DEPOSIT_TRACK_FAIL,
-    });
-    error &&
-      enqueueSnackbar(error?.response?.data?.response_message || error.message, {
-        variant: "error",
-      });
-  }
-};

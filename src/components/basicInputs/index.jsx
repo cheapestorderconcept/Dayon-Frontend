@@ -21,7 +21,7 @@ export const CustomTextField = ({ name, ...other }) => {
 };
 // searchable search bar
 
-export const SearchableSelect = ({ name, title, options, id, i, useId,setNameToValue, ...other }) => {
+export const SearchableSelect = ({ name, title, options, id, i, useId,setNameToValue,setselectedService, ...other }) => {
  
   const [value, setValue] = useState("");
   const [inputValue, setInputValue] = useState("");
@@ -38,6 +38,7 @@ export const SearchableSelect = ({ name, title, options, id, i, useId,setNameToV
       isOptionEqualToValue={(option, value) => option.id === value.id || value.product_id }
       onChange={(event, newValue) => {
         setValue(newValue);
+        // setselectedService(newValue)
         setFieldValue(name, newValue?._id || newValue?.product_id || "");
       }}
       //rectify undefined as label

@@ -110,7 +110,11 @@ export const ServicesListToolbar = (props) => {
             <Box sx={{ maxWidth: 500 }}>
               <Formik
                 initialValues={{ ...INITIAL_FORM_VALUES }}
-                onSubmit={edit ? handleUpdate : handleSubmit}
+                onSubmit={(values, { setSubmitting, resetForm }) => {
+                  edit?handleUpdate(values):handleSubmit(values);
+                  resetForm({ values: INITIAL_FORM_VALUES });
+                  setSubmitting(false);
+                }}
                 validationSchema={FORM_VALIDATIONS}
               >
                 <Form>

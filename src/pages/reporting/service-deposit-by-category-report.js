@@ -2,8 +2,9 @@ import { Box, Container } from "@mui/material";
 import dynamic from "next/dynamic";
 import Head from "next/head";
 import { useSnackbar } from "notistack";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { ServiceDepositByCategoryReportForm } from "src/components/reporting/service-deposit-by-category-report-form";
+import { getServiceCategories } from "src/statesManagement/store/actions/services-action";
 import { Store } from "src/statesManagement/store/store";
 import { COMPANY_NAME } from "src/utils/company_details";
 import { DashboardLayout } from "../../components/dashboard-layout";
@@ -15,6 +16,10 @@ const DynamicComponentWithNoSSR = dynamic(() => import("src/components/navbar-br
 const ServiceDepositByCategory = () => {
   const { dispatch, state } = useContext(Store);
   const { enqueueSnackbar } = useSnackbar();
+  useEffect(() => {
+    getServiceCategories({dispatch, enqueueSnackbar})
+  }, [])
+  
 
   return (
     <>
