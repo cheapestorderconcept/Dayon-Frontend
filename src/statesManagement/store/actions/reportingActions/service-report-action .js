@@ -46,7 +46,7 @@ export const getServiceReports = async ({
 
     Router.push({
       pathname: "/reporting/service-payment-print-report",
-      query: { branch, from: JSON.stringify(from), to: JSON.stringify(to) },
+      query: { from: JSON.stringify(from), to: JSON.stringify(to) },
     });
 
   } catch (error) {
@@ -91,7 +91,7 @@ export const getServiceDepositReports = async ({
 
     Router.push({
       pathname: "/reporting/service-deposit-print-report",
-      query: { branch, from: JSON.stringify(from), to: JSON.stringify(to) },
+      query: { from: JSON.stringify(from), to: JSON.stringify(to) },
     });
 
   } catch (error) {
@@ -138,7 +138,7 @@ export const getServiceByCategoryReports = async ({
       });
     Router.push({
       pathname: "/reporting/service-payment-by-category-print-report",
-      query: { branch, from: JSON.stringify(from), to: JSON.stringify(to) },
+      query: { from: JSON.stringify(from), to: JSON.stringify(to) },
     });
 
   } catch (error) {
@@ -186,7 +186,7 @@ export const getServiceDepositByCategoryReports = async ({
 
     Router.push({
       pathname: "/reporting/service-deposit-by-category-print-report",
-      query: { branch, from: JSON.stringify(from), to: JSON.stringify(to) },
+      query: {  from: JSON.stringify(from), to: JSON.stringify(to) },
     });
 
   } catch (error) {

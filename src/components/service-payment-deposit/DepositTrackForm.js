@@ -24,7 +24,8 @@ import { useRouter } from "next/router";
 import { Store } from "src/statesManagement/store/store";
 import NextLink from "next/link";
 import { useSnackbar } from "notistack";
-import { fetchServiceDepositTrack } from "src/statesManagement/store/actions/services-action";
+import { fetchServiceDepositTrack } from "src/statesManagement/store/actions/reportingActions/deposit-repoort-action";
+
 
 export const DepositTrackForm = (props) => {
   const { title, id } = props;
@@ -46,10 +47,8 @@ export const DepositTrackForm = (props) => {
  
   
   const handleSubmit = (values) => {
-    const body = {
-      customer_name: values.customer_name,
-    };
- fetchServiceDepositTrack({dispatch, enqueueSnackbar, query:body})
+  const query =  values.customer_name
+ fetchServiceDepositTrack({Router,dispatch, enqueueSnackbar, query})
   };
 
   return (

@@ -122,7 +122,7 @@ export default function CollapsibleTable({ serviceDepositByCatReport }) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {serviceDepositByCatReport?.map((row, index) => (
+          {serviceDepositByCatReport?.branchReport?.map((row, index) => (
             <TableRow key={row._id} sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
               <TableCell align="right">{index + 1}</TableCell>
               <TableCell align="right">{row.created_at}</TableCell>

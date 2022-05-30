@@ -9,7 +9,7 @@ import {
 import { Field, FieldArray, Form, Formik } from "formik";
 import { useRouter } from "next/router";
 import { useSnackbar } from "notistack";
-import React, { useContext, useRef } from "react";
+import React, { useContext, useRef, useState } from "react";
 import { addServicePayment } from "src/statesManagement/store/actions/services-action";
 import { Store } from "src/statesManagement/store/store";
 import { generateInvoice } from "src/utils/helpers";
@@ -26,7 +26,7 @@ export const AddService = (props) => {
   const { loading } = state;
   const { enqueueSnackbar } = useSnackbar();
   const Router = useRouter();
-
+  const [selectedService, setselectedService] = useState("")
 
 
   const INITIAL_FORM_VALUES = {
@@ -69,7 +69,9 @@ export const AddService = (props) => {
   });
 
   const addMoreservice = (values, setValues) => {
+    
     const service = [...values.service];
+
 
     service.push({
     
@@ -90,8 +92,8 @@ export const AddService = (props) => {
         ...values,
         total_amount : `${values.total_amount}`,
    }
-  console.log(service)
-  //  addServicePayment({dispatch, enqueueSnackbar, service:service, Router}) 
+
+   addServicePayment({dispatch, enqueueSnackbar, service:service, Router}) 
 
   };
   const removeservice = (values, setValues) => {
@@ -102,7 +104,7 @@ export const AddService = (props) => {
 
   const formRef = useRef(null);
 
-  const RenderForm = ({ service, i, values }) => {
+  const RenderForm = ({ service, i, values, setselectedService }) => {
 
     const retrieveServiceById = serviceType?.filter((serv) => serv._id === service?.service_name);
 
@@ -137,6 +139,7 @@ export const AddService = (props) => {
           <SearchableSelect
             name={`service.${i}.service_name`}
             options={serviceType}
+            setselectedService={setselectedService}
             id="service"
             title="Choose Service"
           />
@@ -163,6 +166,7 @@ export const AddService = (props) => {
           <CustomTextField
             name={`service.${i}.amount_paid`}
             label="Amount Paid"
+            
           
           />
         </Grid>
@@ -203,6 +207,7 @@ export const AddService = (props) => {
               <Formik
                 initialValues={INITIAL_FORM_VALUES}
                 validationSchema={FORM_VALIDATIONS}
+           
                 onSubmit= {(values, { setSubmitting, resetForm }) => {
                   Submit(values);
                   resetForm({ values: INITIAL_FORM_VALUES });
@@ -230,6 +235,7 @@ export const AddService = (props) => {
                             RenderForm({
                               values: values,
                               service: service,
+                              setselectedService,
                               i: index,
                             })
                           )

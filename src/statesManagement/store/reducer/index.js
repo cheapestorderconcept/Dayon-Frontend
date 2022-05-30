@@ -234,6 +234,7 @@ import {
   GET_SERVICE_DEPOSIT_REPORT_REQUEST,
   GET_SERVICE_DEPOSIT_REPORT_SUCCESS,
   GET_SERVICE_DEPOSIT_REPORT_FAIL,
+  GET_SERVICE_DEPOSIT_TRACK_FAIL,
 } from "../constants";
 
 // const rootReducers = combineReducers({
@@ -706,6 +707,7 @@ const rootReducers = (state, action) => {
     case GET_SERVICE_DEPOSIT_REPORT_FAIL:
       return { ...state, loading: false, error: action.payload };
 
+
        case GET_SERVICE_DEPOSIT_BY_CATEGORY_REPORT_REQUEST:
       return { ...state, loading: true };
     case GET_SERVICE_DEPOSIT_BY_CATEGORY_REPORT_SUCCESS:
@@ -944,7 +946,7 @@ const rootReducers = (state, action) => {
     case UPDATE_SERVICE_DEPOSIT_FAIL:
      return { ...state, loading: false, error: action.payload };
 
-          case GET_SERVICE_DEPOSIT_TRACK_REQUEST:
+     case GET_SERVICE_DEPOSIT_TRACK_REQUEST:
       return { ...state, loading: true };
     case GET_SERVICE_DEPOSIT_TRACK_SUCCESS: {
       if (Cookies.get("depositTracks")) {
@@ -955,6 +957,8 @@ const rootReducers = (state, action) => {
       }
       return { ...state, loading: false, depositTracks: action?.payload };
     }
+    case GET_SERVICE_DEPOSIT_TRACK_FAIL:
+      return {...state, loading:false, error:action?.payload}
     default:
       state;
   }
