@@ -87,14 +87,14 @@ export const DashboardNavbar = (props) => {
           </IconButton>
 
           <NextLink  href="/sales">
-            <Typography className={classes.link} sx={{ flexGrow: 1 }} variant="h6" color="black">
+            <Typography style={{cursor:"pointer"}} sx={{ flexGrow: 1 }} variant="h6" color="black">
               Add Sales
             </Typography>
           </NextLink>
 
           <Box sx={{ flexGrow: 1 }} />
           <NextLink href="/sales/manage-sales">
-            <Typography className={classes.link} color={"black"} variant="h6">
+            <Typography style={{cursor:"pointer"}} color={"black"} variant="h6">
               View Sales
             </Typography>
           </NextLink>
