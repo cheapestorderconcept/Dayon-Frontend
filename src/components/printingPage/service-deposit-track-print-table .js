@@ -125,7 +125,7 @@ export default function CollapsibleTable({ depositTrack }) {
           {depositTrack?.map((row, index) => (
             <TableRow key={row._id} sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
               <TableCell align="right">{index + 1}</TableCell>
-              <TableCell align="right">{row.created_at}</TableCell>
+              <TableCell align="right">{row.createdAt}</TableCell>
              <TableCell align="right">{row.customer_name}</TableCell>
               <TableCell align="right">{row.service_name}</TableCell>
               <TableCell align="right">{`₦${row.amount_paid}`}</TableCell>
@@ -133,23 +133,31 @@ export default function CollapsibleTable({ depositTrack }) {
               <TableCell align="right">{`₦${row.amount_to_pay}`}</TableCell>
             </TableRow>
           ))}
-          {/* <TableRow>
+          <TableRow>
            <TableCell align="right"></TableCell> 
             <TableCell align="right"></TableCell>
             <TableCell align="right"></TableCell>
             <TableCell align="right"></TableCell>
-            <TableCell align="right"></TableCell>
-            <TableCell align="right"></TableCell>
             <TableCell align="right">
-              <Typography variant="h4">Total Selling Price Per Qty</Typography>
-            </TableCell>
-            <TableCell align="right">
-              <Typography variant="h4">{`₦${serviceDepositReport?.reduce(
-                (a, c) => a + Number(c.quantity * c.selling_price),
+              <Typography variant="h5">{`₦${depositTrack?.reduce(
+                (a, c) => a + Number(c.amount_paid ),
                 0
               )}`}</Typography>
             </TableCell>
-          </TableRow> */}
+            <TableCell align="right">
+              <Typography variant="h5">{`₦${depositTrack?.reduce(
+                (a, c) => a + Number(c.amount_to_balance ),
+                0
+              )}`}</Typography>
+            </TableCell>
+            <TableCell align="right">
+              <Typography variant="h5">{`₦${depositTrack?.reduce(
+                (a, c) => a + Number(c.amount_to_pay ),
+                0
+              )}`}</Typography>
+            </TableCell>
+            
+          </TableRow>
         </TableBody>
       </Table>
     </TableContainer>
