@@ -8,40 +8,18 @@ import {
   Card,
   CardContent,
   CardHeader,
-  Divider,
-  InputAdornment,
-  Typography,
-  Grid,
-  TextField,
-  MenuItem,
-  Container,
+  Divider, Grid, Typography
 } from "@mui/material";
-import { Download as DownloadIcon } from "../../icons/download";
-import { Search as SearchIcon } from "../../icons/search";
-import { Upload as UploadIcon } from "../../icons/upload";
-import { CustomTextField } from "../basicInputs";
-import ListIcon from "@mui/icons-material/List";
-import * as yup from "yup";
-import { Formik, Form, Field, FieldArray, ErrorMessage, useFormikContext } from "formik";
-import { CustomSelect, CustomButton } from "../basicInputs";
-import { CustomDate } from "../basicInputs";
-import { paymentMethods } from "src/__mocks__/paymentMethods";
-import React, { useContext, useEffect, useMemo, useRef, useState } from "react";
-import {
-  getProductByBarcode,
-  getProductById,
-} from "src/statesManagement/store/actions/product-action";
-import { Store } from "src/statesManagement/store/store";
-import { addSupplier } from "src/statesManagement/store/actions/supplier-action";
-import { addSales, addSalesData } from "src/statesManagement/store/actions/sales-action";
-import AlertBox from "../alert";
+import { Field, FieldArray, Form, Formik } from "formik";
 import { useSnackbar } from "notistack";
-import { addDepositData, getTotalDeposit } from "src/statesManagement/store/actions/deposit-action";
-import { Router } from "next/router";
-import Cookies from "js-cookie";
-import { SearchableSelect } from "../basicInputs";
-import { generateInvoice } from "src/utils/helpers";
+import React, { useContext, useRef } from "react";
 import { addServiceDeposit } from "src/statesManagement/store/actions/services-action";
+import { Store } from "src/statesManagement/store/store";
+import { generateInvoice } from "src/utils/helpers";
+import * as yup from "yup";
+import { Download as DownloadIcon } from "../../icons/download";
+import { Upload as UploadIcon } from "../../icons/upload";
+import { CustomDate, CustomSelect, CustomTextField, SearchableSelect } from "../basicInputs";
 
 // console.log(barcodeInput)
 

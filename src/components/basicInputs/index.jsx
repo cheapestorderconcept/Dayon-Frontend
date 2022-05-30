@@ -21,7 +21,7 @@ export const CustomTextField = ({ name, ...other }) => {
 };
 // searchable search bar
 
-export const SearchableSelect = ({ name, title, options, id, i, useId,setNameToValue,setselectedService, ...other }) => {
+export const SearchableSelect = ({ name, title, options, id, i, useId,setNameToValue, ...other }) => {
  
   const [value, setValue] = useState("");
   const [inputValue, setInputValue] = useState("");
