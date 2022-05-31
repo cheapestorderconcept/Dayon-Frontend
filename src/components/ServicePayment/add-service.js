@@ -242,7 +242,7 @@ export const AddService = (props) => {
                       <FieldArray name="service">
                         {() =>
                           values.service.map((service, index) =>
-                           <RenderForm values={values} service={service} serviceType={serviceType} i={index} />
+                           <RenderForm key={index} values={values} service={service} serviceType={serviceType} i={index} />
                             // RenderForm({
                             //   values: values,
                             //   service: service,
