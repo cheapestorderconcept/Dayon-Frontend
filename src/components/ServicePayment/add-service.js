@@ -96,7 +96,7 @@ export const AddService = (props) => {
    }
    console.log(service)
 
-  //  addServicePayment({dispatch, enqueueSnackbar, service:service, Router}) 
+   addServicePayment({dispatch, enqueueSnackbar, service:service, Router}) 
 
   };
   const removeservice = (values, setValues) => {
