@@ -88,12 +88,15 @@ export const AddService = (props) => {
   };
 
   const Submit = (values) => {
+  
    const service = {
         ...values,
         total_amount : `${values.total_amount}`,
+        
    }
+   console.log(service)
 
-   addServicePayment({dispatch, enqueueSnackbar, service:service, Router}) 
+  //  addServicePayment({dispatch, enqueueSnackbar, service:service, Router}) 
 
   };
   const removeservice = (values, setValues) => {
@@ -104,10 +107,11 @@ export const AddService = (props) => {
 
   const formRef = useRef(null);
 
-  const RenderForm = ({ service, i, values, setselectedService }) => {
-
+  const RenderForm = ({ service, i, values }) => {
+    // service.amount_paid = 300
+   
     const retrieveServiceById = serviceType?.filter((serv) => serv._id === service?.service_name);
-
+   
     return (
       <React.Fragment key={i}>
         <Grid
@@ -155,7 +159,7 @@ export const AddService = (props) => {
           <CustomTextField
             name={`service.${i}.created_at`}
             label="Date"
-            disabled
+            // disabled
             value={(service.created_at = values.created_at)}
           />
         </Grid>
@@ -164,9 +168,16 @@ export const AddService = (props) => {
         <Grid item xs={6}>
           <CustomTextField
             name={`service.${i}.amount_paid`}
-            label="Amount Paid"
+   
+           
             
-          
+            label = {
+              (
+                service.service_name != "" && retrieveServiceById != []
+                  ? retrieveServiceById[0]?.service_price
+                  : "Select Service to see the price")
+            }
+            
           />
         </Grid>
        
@@ -206,7 +217,7 @@ export const AddService = (props) => {
               <Formik
                 initialValues={INITIAL_FORM_VALUES}
                 validationSchema={FORM_VALIDATIONS}
-           
+                enableReinitialize={true}
                 onSubmit= {(values, { setSubmitting, resetForm }) => {
                   Submit(values);
                   resetForm({ values: INITIAL_FORM_VALUES });
@@ -231,12 +242,13 @@ export const AddService = (props) => {
                       <FieldArray name="service">
                         {() =>
                           values.service.map((service, index) =>
-                            RenderForm({
-                              values: values,
-                              service: service,
-                              setselectedService,
-                              i: index,
-                            })
+                           <RenderForm key={index} values={values} service={service} serviceType={serviceType} i={index} />
+                            // RenderForm({
+                            //   values: values,
+                            //   service: service,
+                            //   setselectedService,
+                            //   i: index,
+                            // })
                           )
                         }
                       </FieldArray>

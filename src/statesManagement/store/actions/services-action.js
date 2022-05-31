@@ -266,7 +266,7 @@ export const addServicePayment = async ({ dispatch, service, Router, enqueueSnac
       requestBody: service,
       target:"service"
     });
-    console.log(data.data);
+  
     dispatch({
       type: ADD_SERVICE_PAYMENT_SUCCESS,
       payload: data.data,
@@ -275,6 +275,7 @@ export const addServicePayment = async ({ dispatch, service, Router, enqueueSnac
       enqueueSnackbar(data?.response_message, {
         variant: "success",
       });
+     
      Router.push({
       pathname: "/services/service-payment/reciept-print-page",
       query: { service: JSON.stringify(service) },

@@ -858,7 +858,7 @@ const rootReducers = (state, action) => {
     case ADD_SERVICE_PAYMENT_REQUEST:
       return { ...state, loading: true };
     case ADD_SERVICE_PAYMENT_SUCCESS:
-      return { ...state, loading: false };
+      return { ...state, loading: false, serviceRecieptBody:action?.payload };
     case ADD_SERVICE_PAYMENT_FAIL:
       return { ...state, loading: false, error: action.payload };
     case DELETE_SERVICE_PAYMENT_REQUEST:

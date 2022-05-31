@@ -87,9 +87,9 @@ function Row(props) {
 }
 
 function ServiceRow(props) {
-  const { row, index } = props;
+  const { row, index,serviceRecieptBody } = props;
   const [open, setOpen] = React.useState(false);
-console.log(row)
+console.log(serviceRecieptBody)
   return (
     <React.Fragment>
       <TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
@@ -122,7 +122,7 @@ console.log(row)
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {row?.service?.map((item, i) => (
+                  {serviceRecieptBody.map((item, i) => (
                     
                     <TableRow key={i}>
                       <TableCell>{item.service_name}</TableCell>
@@ -138,7 +138,7 @@ console.log(row)
                   <TableRow>
                  
                     <TableCell></TableCell>
-                    <TableCell></TableCell>
+                    {/* <TableCell></TableCell> */}
                     <TableCell>
                       <Typography variant="h6">Total Service Price</Typography>
                     </TableCell>
@@ -157,7 +157,7 @@ console.log(row)
   );
 }
 
-export  function ServiceCollapsibleTable({serviceReciept }) {
+export  function ServiceCollapsibleTable({serviceReciept , serviceRecieptBody}) {
   console.log(serviceReciept)
   return (
     <TableContainer component={Paper}>
@@ -171,7 +171,7 @@ export  function ServiceCollapsibleTable({serviceReciept }) {
           </TableRow>
         </TableHead>
         <TableBody>
-          <ServiceRow row={serviceReciept} />
+          <ServiceRow row={serviceReciept} serviceRecieptBody={serviceRecieptBody} />
         </TableBody>
       </Table>
     </TableContainer>

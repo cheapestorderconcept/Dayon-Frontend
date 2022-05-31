@@ -20,7 +20,7 @@ const DynamicComponentWithNoSSR = dynamic(() => import("src/components/navbar-br
 
 const ReceiptPrintReport = (props) => {
   const { state } = useContext(Store);
-  const {branch} = state
+  const {branch, serviceRecieptBody} = state
   const printRef = useRef();
   const { router } = props;
   const [serviceReciept, setserviceReciept] = useState({});
@@ -28,7 +28,7 @@ const ReceiptPrintReport = (props) => {
     setserviceReciept(JSON.parse(router.query.service));
   }, []);
 
-  console.log(serviceReciept);
+  
 
   return (
     <>
@@ -44,7 +44,7 @@ const ReceiptPrintReport = (props) => {
       >
         <Container ref={printRef} maxWidth={true}>
           <PrintingHeader title={`Service Reciept at ${COMPANY_NAME}`} />
-          <ServiceCollapsibleTable serviceReciept={serviceReciept} />
+          <ServiceCollapsibleTable serviceReciept={serviceReciept} serviceRecieptBody={serviceRecieptBody} />
         </Container>
         <Container
           sx={{
