@@ -95,7 +95,6 @@ export const AddServiceDeposit = (props) => {
   const formRef = useRef(null);
 
   const RenderComponentForm = ({ service, i, values }) => {
-   
     const retrieveServiceById = serviceType.filter((serv) => serv._id === service?.service_name);
 
     return (
