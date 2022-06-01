@@ -43,7 +43,8 @@ export const AddService = (props) => {
         service_category: "",
         invoice_number: "",
         created_at: "",
-        amount_paid: "",
+         original_price: "",
+        incoming_price:""
        
        
       },
@@ -62,7 +63,8 @@ export const AddService = (props) => {
         service_category: yup.string(),
         invoice_number: yup.string(),
         created_at: yup.date(),
-        amount_paid: yup.number().integer().typeError("Amount must be a number"),
+        original_price: yup.number().integer().typeError("Amount must be a number"),
+        incoming_price: yup.number().integer().typeError("Amount must be a number"),
        
       })
     ),
@@ -79,7 +81,8 @@ export const AddService = (props) => {
       service_name: "",
       invoice_number: "",
       created_at: "",
-      amount_paid: "",
+      original_price: "",
+      incoming_price:""
      
     
     });
@@ -94,7 +97,7 @@ export const AddService = (props) => {
         total_amount : `${values.total_amount}`,
         
    }
-   console.log(service)
+   
 
    addServicePayment({dispatch, enqueueSnackbar, service:service, Router}) 
 
@@ -167,17 +170,21 @@ export const AddService = (props) => {
 
         <Grid item xs={6}>
           <CustomTextField
-            name={`service.${i}.amount_paid`}
-   
-           
-            
-            label = {
-              (
+            name={`service.${i}.original_price`}
+            value={service.original_price=  (
                 service.service_name != "" && retrieveServiceById != []
                   ? retrieveServiceById[0]?.service_price
-                  : "Select Service to see the price")
-            }
+                  : "Select Service to see the price")}
+
+            label ="Service price"
             
+          />
+        </Grid>
+          <Grid item xs={6}>
+          <CustomTextField
+            name={`service.${i}.incoming_price`}
+            label ="Selling Price"  
+            placeholder= "Enter price if differ from original service price"
           />
         </Grid>
        
@@ -217,7 +224,7 @@ export const AddService = (props) => {
               <Formik
                 initialValues={INITIAL_FORM_VALUES}
                 validationSchema={FORM_VALIDATIONS}
-                enableReinitialize={true}
+                // enableReinitialize={true}
                 onSubmit= {(values, { setSubmitting, resetForm }) => {
                   Submit(values);
                   resetForm({ values: INITIAL_FORM_VALUES });
@@ -258,7 +265,7 @@ export const AddService = (props) => {
                           label="Total service Cost"
                           disabled
                           value={
-                            (values.total_amount = values.service.reduce((a, c) => a + Number(c.amount_paid), 0))
+                            (values.total_amount = values.service.reduce((a, c) => c.incoming_price != "" ? a + Number(c.incoming_price): a + Number(c.original_price), 0))
                           }
                         />
                       </Grid>
