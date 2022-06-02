@@ -1,7 +1,11 @@
 import { COMPANY_INITIALS } from "./company_details";
 
-export const formatDate = (value) => {
-  return value?.slice(1, 11);
+export const formatDate = (value) => {      
+      const parsedValue = value.replace(/(^"|"$)/g, '')
+      const date = new Date(parsedValue),
+      mnth = ("0" + (date.getMonth() + 1)).slice(-2),
+      day = ("0" + date.getDate()).slice(-2);
+      return [date.getFullYear(), mnth, day].join("-");
 };
 
 export const generateInvoice = ()=>{
