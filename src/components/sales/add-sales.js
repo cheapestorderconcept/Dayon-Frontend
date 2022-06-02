@@ -112,7 +112,7 @@ export const AddSales = (props) => {
   };
 
   const Submit = (values) => {
-    console.log(values)
+
     addSalesData({
       dispatch: dispatch,
       sales: values,
