@@ -7,8 +7,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
-
-
+import { formatDate } from "src/utils/helpers";
 
 export default function CollapsibleTable({ profitOrLossReport }) {
   return (
@@ -16,9 +15,9 @@ export default function CollapsibleTable({ profitOrLossReport }) {
     <Table sx={{ minWidth: 650 }} aria-label="simple table">
       <TableHead>
         <TableRow>
-        <TableCell>S/N</TableCell>
-          <TableCell>Invoice</TableCell>
-          <TableCell>Date</TableCell>
+        <TableCell align="right">S/N</TableCell>
+          <TableCell align="right">Invoice</TableCell>
+          <TableCell align="right">Date</TableCell>
           <TableCell align="right">Product name</TableCell>
           <TableCell align="right">Cost Price</TableCell>
           <TableCell align="right">Selling Price</TableCell>
@@ -30,13 +29,13 @@ export default function CollapsibleTable({ profitOrLossReport }) {
       </TableHead>
       <TableBody>
         {profitOrLossReport?.map((row, index) => (
-          
+         
           <TableRow key={row._id} sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
              <TableCell align="right">{index + 1}</TableCell>
-            <TableCell component="th" scope="row">
+            <TableCell align="right" component="th" scope="row">
               {row.invoice_number}
             </TableCell>
-            <TableCell align="right">{row.created_at}</TableCell>
+            <TableCell align="right">{formatDate(row.created_at)}</TableCell>
             <TableCell align="right">{row.product}</TableCell>
             <TableCell align="right">{row.cost_price}</TableCell>
             <TableCell align="right">{`₦${row.selling_price}`}</TableCell>
@@ -61,7 +60,7 @@ export default function CollapsibleTable({ profitOrLossReport }) {
           </TableCell>
           <TableCell>
             <Typography variant="h6" color={"green"}>{`₦${profitOrLossReport?.reduce(
-              (a, c) => a + Number(c.selling_price - c.cost_price),
+              (a, c) => a + Number(c.selling_price - c.cost_price < 0?0:c.selling_price-c.cost_price),
               0
             )}`}</Typography>
           </TableCell>

@@ -13,6 +13,7 @@ import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
+import { formatDate } from "src/utils/helpers";
 
 function Row(props) {
   const { row, index } = props;
@@ -125,7 +126,7 @@ export default function CollapsibleTable({ serviceDepositReport }) {
           {serviceDepositReport?.map((row, index) => (
             <TableRow key={row._id} sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
               <TableCell align="right">{index + 1}</TableCell>
-              <TableCell align="right">{row.created_at}</TableCell>
+              <TableCell align="right">{formatDate( row.created_at)}</TableCell>
              <TableCell align="right">{row.customer_name}</TableCell>
               <TableCell align="right">{row.service_name}</TableCell>
               <TableCell align="right">{`₦${row.amount_paid}`}</TableCell>

@@ -4,33 +4,21 @@ import {
   Card,
   CardContent,
   CardHeader,
-  Divider,
-  InputAdornment,
-  Typography,
-  Grid,
-  TextField,
-  MenuItem,
-  Container,
+  Divider, Grid, Typography
 } from "@mui/material";
-import { Download as DownloadIcon } from "../../icons/download";
-import { Search as SearchIcon } from "../../icons/search";
-import { Upload as UploadIcon } from "../../icons/upload";
-import { CustomTextField } from "../basicInputs";
-import ListIcon from "@mui/icons-material/List";
-import * as yup from "yup";
-import { Formik, Form, Field, FieldArray, ErrorMessage, useFormikContext } from "formik";
-import { CustomSelect, CustomButton } from "../basicInputs";
-import { CustomDate } from "../basicInputs";
-import { paymentMethods } from "src/__mocks__/paymentMethods";
-import React, { useContext, useEffect, useMemo, useRef, useState } from "react";
-
-import { Store } from "src/statesManagement/store/store";
-
-import { addSalesData } from "src/statesManagement/store/actions/sales-action";
-import { useSnackbar } from "notistack";
-import { useRouter } from "next/router";
+import { Field, FieldArray, Form, Formik } from "formik";
 import Cookies from "js-cookie";
-import { SearchableSelect } from "../basicInputs";
+import { useRouter } from "next/router";
+import { useSnackbar } from "notistack";
+import React, { useContext, useRef } from "react";
+import { addSalesData } from "src/statesManagement/store/actions/sales-action";
+import { Store } from "src/statesManagement/store/store";
+import { generateInvoice } from "src/utils/helpers";
+import * as yup from "yup";
+import { Download as DownloadIcon } from "../../icons/download";
+import { Upload as UploadIcon } from "../../icons/upload";
+import { CustomDate, CustomSelect, CustomTextField, SearchableSelect } from "../basicInputs";
+
 
 export const AddSales = (props) => {
   const { paymentType } = props;
@@ -42,7 +30,7 @@ export const AddSales = (props) => {
   const INITIAL_FORM_VALUES = {
     created_at: "",
     branch: Cookies.get("selectedBranch"),
-    invoice_number: "",
+    invoice_number: generateInvoice(),
     // customer_name:"",
     customer_id:"",
     total_amount: "",
@@ -124,6 +112,7 @@ export const AddSales = (props) => {
   };
 
   const Submit = (values) => {
+
     addSalesData({
       dispatch: dispatch,
       sales: values,
@@ -183,8 +172,6 @@ export const AddSales = (props) => {
               (items.product =
                 items.selectedProduct != "" && retrieveProductById != []
                   ? retrieveProductById[0]?.product_name
-                  : retrieveProduct != []
-                  ? retrieveProduct[0]?.product_name
                   : "")
             }
           />
@@ -235,8 +222,6 @@ export const AddSales = (props) => {
               (items.product_id =
                 items.selectedProduct != "" && retrieveProductById != []
                   ? retrieveProductById[0]?._id
-                  : retrieveProduct != []
-                  ? retrieveProduct[0]?._id
                   : "")
             }
             label="Product Id"
@@ -250,8 +235,6 @@ export const AddSales = (props) => {
               (items.cost_price =
                 items.selectedProduct != "" && retrieveProductById != []
                   ? retrieveProductById[0]?.product_price
-                  : retrieveProduct != []
-                  ? retrieveProduct[0]?.product_price
                   : "")
             }
             label="Cost price"
@@ -265,12 +248,7 @@ export const AddSales = (props) => {
                 variant: "warning",
                 preventDuplicate: true,
               })
-            : retrieveProductById != []
-            ? Number(items.quantity) > retrieveProduct[0]?.current_product_quantity &&
-              enqueueSnackbar("provided quantity is out of stock", {
-                variant: "warning",
-                preventDuplicate: true,
-              })
+           
             : null}
         </Grid>
 
@@ -288,8 +266,6 @@ export const AddSales = (props) => {
             label="Amount"
             value={
               items.selectedProduct != "" && retrieveProductById != []
-                ? (items.amount = items.quantity * items.selling_price)
-                : retrieveProductById != []
                 ? (items.amount = items.quantity * items.selling_price)
                 : ""
             }

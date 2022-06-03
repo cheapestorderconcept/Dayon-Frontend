@@ -13,6 +13,7 @@ import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
+import { formatDate } from "src/utils/helpers";
 
 function Row(props) {
   const { row, index } = props;
@@ -127,7 +128,7 @@ export default function CollapsibleTable({ paymentByCatReport }) {
               <TableCell component="th" scope="row">
                 {row.invoice_number}
               </TableCell>
-              <TableCell component="th" scope="row" >{row.created_at}</TableCell>
+              <TableCell component="th" scope="row" >{formatDate( row.created_at)}</TableCell>
               <TableCell align="right">{row.service_name}</TableCell>
               <TableCell align="right">{`₦${row.amount_paid}`}</TableCell>
               <TableCell align="right">{row.payment_type}</TableCell>

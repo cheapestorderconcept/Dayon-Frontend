@@ -13,6 +13,7 @@ import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
+import { formatDate } from "src/utils/helpers";
 
 function Row(props) {
   const { row, index } = props;
@@ -29,7 +30,7 @@ function Row(props) {
         {/* <TableCell component="th" scope="row">
           {index + 1}
         </TableCell> */}
-        <TableCell>{row?.created_at}</TableCell>
+        <TableCell>{formatDate(row?.created_at)}</TableCell>
         <TableCell>{row?.invoice_number}</TableCell>
       </TableRow>
       <TableRow>

@@ -1,7 +1,5 @@
 import { TextField, MenuItem, Button, Box } from "@mui/material";
 import { useField, useFormikContext } from "formik";
-import { getBrands } from "src/statesManagement/store/actions/brand-action";
-import { products } from "src/__mocks__/products";
 import Autocomplete from "@mui/material/Autocomplete";
 import { useState } from "react";
 
@@ -38,10 +36,8 @@ export const SearchableSelect = ({ name, title, options, id, i, useId,setNameToV
       isOptionEqualToValue={(option, value) => option.id === value.id || value.product_id }
       onChange={(event, newValue) => {
         setValue(newValue);
-        // setselectedService(newValue)
         setFieldValue(name, newValue?._id || newValue?.product_id || "");
       }}
-      //rectify undefined as label
       inputValue={inputValue}
       onInputChange={(event, newInputValue) => {
         setInputValue(newInputValue);

@@ -22,10 +22,8 @@ const DynamicComponentWithNoSSR = dynamic(() => import("src/components/navbar-br
 const ProfitOrLossPrintReport = (props) => {
   const { state } = useContext(Store);
   const { profitOrLossReport } = state;
-  console.log(profitOrLossReport);
   const printRef = useRef();
   const { router } = props;
-
   const from_date = formatDate(router.query.from);
   const to_date = formatDate(router.query.to);
 

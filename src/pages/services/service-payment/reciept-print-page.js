@@ -28,8 +28,6 @@ const ReceiptPrintReport = (props) => {
     setserviceReciept(JSON.parse(router.query.service));
   }, []);
 
-  
-
   return (
     <>
       <Head>
