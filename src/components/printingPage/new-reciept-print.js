@@ -2,14 +2,7 @@ import React from 'react'
 import { COMPANY_ADDRESS, COMPANY_NAME } from 'src/utils/company_details'
 
 const RecieptTemplate = ({salesReciept}) => {
-    const getSerialNumber = ({items}) =>{
-     
-     for (let index = 0; index <= items; index++) {
-         console.log(index)
-         return index;
-         
-     }
-    }
+   
   return (
       <div className='main-reciept-container'>
     <div className="wrapper">
