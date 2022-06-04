@@ -277,7 +277,7 @@ export const addServicePayment = async ({ dispatch, service, Router, enqueueSnac
       });
      
      Router.push({
-      pathname: "/services/service-payment/reciept-print-page",
+      pathname: "/services/service-payment/new-service-reciept-print-page",
       query: { service: JSON.stringify(service) },
     });
   } catch (error) {

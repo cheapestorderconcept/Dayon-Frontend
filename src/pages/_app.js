@@ -9,6 +9,7 @@ import { theme } from "../theme";
 import { StoreProvider } from "src/statesManagement/store/store";
 import { SnackbarProvider } from "notistack";
 import { COMPANY_NAME } from "src/utils/company_details";
+import "../components/printingPage/reciept-styling.css"
 
 const clientSideEmotionCache = createEmotionCache();
 
