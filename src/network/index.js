@@ -1,9 +1,9 @@
 import axios from "axios";
 import Cookies from "js-cookie";
 const testUrl = "https://dayon-inventory.herokuapp.com";
-const liveUrl = "https://solace-hospital-backend.herokuapp.com";
+const liveUrl = "https://regken-pos.herokuapp.com";
 
-const baseUrl = `${testUrl}`;
+const baseUrl = `${liveUrl}`;
 
 export const RequestMethod = {
   POST: "POST",
@@ -27,7 +27,7 @@ export const makeNetworkCall = async ({ method, path, requestBody, params, targe
 
   const config = {
     method,
-    url: target == "service"?`${baseUrl}/api/service/v1/${path}`:`${baseUrl}/api/v1/${path}`,
+    url: target == "service" ? `${baseUrl}/api/service/v1/${path}` : `${baseUrl}/api/v1/${path}`,
     params: params,
     headers: {
       Authorization: `Bearer ${token}`,
