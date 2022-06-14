@@ -31,6 +31,8 @@ body {
         align-items: center;
         justify-content: center;
         font-size: 14px;
+        margin: auto;
+        height: 70vh;
 }
 
 .bold {
@@ -44,12 +46,13 @@ body {
 .wrapper {
     background: var(--white);
     padding: 30px;
+    
 }
 
 .invoice_wrapper {
     border: 3px solid var(--primary);
-    width: 700px;
-    max-width: 100%;
+    width: 100%;;
+    /* max-width: 100%; */
 }
 
 .invoice_wrapper .header .logo_invoice_wrap,
@@ -82,6 +85,10 @@ body {
 .invoice_wrapper .header .bill_total_wrap .total_wrap {
     text-align: right;
 }
+.invoice_wrapper .header .invoice_sec{
+    margin-top: 25px;
+    padding-top: 20px;
+}
 
 .invoice_wrapper .header .invoice_sec .invoice {
     font-size: 28px;
@@ -92,6 +99,8 @@ body {
 .invoice_wrapper .header .invoice_sec .date {
     display: flex;
     width: 100%;
+    
+  
 }
 
 .invoice_wrapper .header .invoice_sec .invoice_no span:first-child,
@@ -131,7 +140,7 @@ body {
 }
 
 .invoice_wrapper .body .main_table .row .col_no {
-    width: 5%;
+    width: 10%;
 }
 
 .invoice_wrapper .body .main_table .row .col_des {
@@ -139,7 +148,7 @@ body {
 }
 
 .invoice_wrapper .body .main_table .row .col_price {
-    width: 20%;
+    width: 15%;
     text-align: center;
 }
 

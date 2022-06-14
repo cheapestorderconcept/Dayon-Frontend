@@ -1,5 +1,5 @@
-export const COMPANY_NAME = "Solace Medicare hospital."
-export const COMPANY_EMAIL = "Solacehospital22@gmail.com"
-export const COMPANY_ADDRESS = "Modakeke, Osun State."
-export const COMPANY_PHONE = "08035992252"
-export const COMPANY_INITIALS = "SOC"
+export const COMPANY_NAME = "Regken Multinational";
+export const COMPANY_EMAIL = "regkenmultinationalinvestmentl@gmail.com";
+export const COMPANY_ADDRESS = "Oranmiayan tower lagere ile ife";
+export const COMPANY_PHONE = "+2348064154821";
+export const COMPANY_INITIALS = "REG";

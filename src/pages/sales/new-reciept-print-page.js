@@ -1,17 +1,14 @@
-import Head from "next/head";
 import { Box, Button, Container } from "@mui/material";
+import Head from "next/head";
 import { DashboardLayout } from "../../components/dashboard-layout";
 
 import dynamic from "next/dynamic";
-import PrintingHeader from "src/components/printingPage/printing-header";
-import DenseTable from "src/components/printingPage/sales-report-table";
 import { withRouter } from "next/router";
-import { useContext, useRef, useState, useEffect } from "react";
-import { Store } from "src/statesManagement/store/store";
-import ReactToPrint from "react-to-print";
-import { COMPANY_NAME } from "src/utils/company_details";
-import {CollapsibleTable} from "src/components/printingPage/reciept-print-table";
+import { useContext, useEffect, useRef, useState } from "react";
+import { useReactToPrint } from "react-to-print";
 import RecieptTemplate from "src/components/printingPage/new-reciept-print";
+import { Store } from "src/statesManagement/store/store";
+import { COMPANY_NAME } from "src/utils/company_details";
 
 // import PrintingHeader from "src/components/printingPage/printing-header";
 
@@ -28,7 +25,9 @@ const ReceiptPrintReport = (props) => {
     setsalesReciept(JSON.parse(router.query.sales));
   }, []);
 
-  console.log(salesReciept);
+  const handlePrint = useReactToPrint({
+    content: () => printRef.current,
+  });
 
   return (
     <>
@@ -42,10 +41,9 @@ const ReceiptPrintReport = (props) => {
           py: 2,
         }}
       >
-        <Container ref={printRef} maxWidth={true}>
-          {/* <PrintingHeader title={`Sales Reciept at ${salesReciept?.branch}`} /> */}
-        <RecieptTemplate salesReciept={salesReciept}/>
-        </Container>
+        {/* <PrintingHeader title={`Sales Reciept at ${salesReciept?.branch}`} /> */}
+        <RecieptTemplate salesReciept={salesReciept} ref={printRef} />
+
         <Container
           sx={{
             display: "flex",
@@ -53,14 +51,9 @@ const ReceiptPrintReport = (props) => {
             justifyContent: "flex-end",
           }}
         >
-          <ReactToPrint
-            trigger={() => (
-              <Button variant="contained" color="primary">
-                Print Reciept
-              </Button>
-            )}
-            content={() => printRef.current}
-          />
+          <Button onClick={handlePrint} variant="contained" color="primary">
+            Print Reciept
+          </Button>
         </Container>
       </Box>
     </>

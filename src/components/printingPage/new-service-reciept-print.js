@@ -1,11 +1,11 @@
-import React from 'react'
-import { COMPANY_ADDRESS, COMPANY_NAME } from 'src/utils/company_details'
+import React from "react";
+import { COMPANY_ADDRESS, COMPANY_NAME } from "src/utils/company_details";
 
-const ServiceRecieptTemplate = ({serviceReciept, serviceRecieptBody}) => {    
-
+const ServiceRecieptTemplate = React.forwardRef((props, ref) => {
+  const { serviceReciept, serviceRecieptBody } = props;
   return (
-      <div className='main-reciept-container'>
-    <div className="wrapper">
+    <div ref={ref} className="main-reciept-container">
+      <div className="wrapper">
         <div className="invoice_wrapper">
           <div className="header">
             <div className="logo_invoice_wrap">
@@ -30,11 +30,9 @@ const ServiceRecieptTemplate = ({serviceReciept, serviceRecieptBody}) => {
             </div>
             <div className="bill_total_wrap">
               <div className="bill_sec">
-                <p>Bill To :</p> 
+                <p>Bill To :</p>
                 {/* <p className="bold name">{serviceReciept.customer_name}</p> */}
-                <span>
-                 {serviceReciept.customer_name}
-                </span>
+                <span>{serviceReciept.customer_name}</span>
               </div>
               <div className="total_wrap">
                 <p>Total Due</p>
@@ -46,7 +44,7 @@ const ServiceRecieptTemplate = ({serviceReciept, serviceRecieptBody}) => {
             <div className="main_table">
               <div className="table_header">
                 <div className="row">
-                  <div className="col col_no">NO.</div>
+                  <div className="col col_no">S/N</div>
                   <div className="col col_des">ITEM </div>
                   <div className="col col_price">PRICE</div>
                   <div className="col col_qty">QTY</div>
@@ -54,27 +52,25 @@ const ServiceRecieptTemplate = ({serviceReciept, serviceRecieptBody}) => {
                 </div>
               </div>
               <div className="table_body">
-                  {serviceRecieptBody?.map((item, i)=>(
- <div key={i} className="row">
-                  <div className="col col_no">
-                    <p>{i + 1}</p>
+                {serviceRecieptBody?.map((item, i) => (
+                  <div key={i} className="row">
+                    <div className="col col_no">
+                      <p>{i + 1}</p>
+                    </div>
+                    <div className="col col_des">
+                      <p className="bold">{item.service_name}</p>
+                    </div>
+                    <div className="col col_price">
+                      <p>{item.amount_paid}</p>
+                    </div>
+                    <div className="col col_qty">
+                      <p>N/A</p>
+                    </div>
+                    <div className="col col_total">
+                      <p>{item.amount_paid}</p>
+                    </div>
                   </div>
-                  <div className="col col_des">
-                    <p className="bold">{item.service_name}</p>
-                  </div>
-                  <div className="col col_price">
-                    <p>{item.amount_paid}</p>
-                  </div>
-                  <div className="col col_qty">
-                    <p>N/A</p>
-                  </div>
-                  <div className="col col_total">
-                    <p>{item.amount_paid}</p>
-                  </div>
-                </div>
-                  ))}
-               
-             
+                ))}
               </div>
             </div>
             <div className="paymethod_grandtotal_wrap">
@@ -103,17 +99,15 @@ const ServiceRecieptTemplate = ({serviceReciept, serviceRecieptBody}) => {
             </div>
           </div>
           <div className="footer">
-           
             <div className="terms">
               {/* <p className="tc bold">Note:</p>
               <p>Goods bought in good shape cannot be returned.</p> */}
             </div>
-             <p>Thank you and Best Wishes</p>
+            <p>Thank you and Best Wishes</p>
           </div>
         </div>
       </div>
-      </div>
-  )
-}
-
-export default ServiceRecieptTemplate
+    </div>
+  );
+});
+export default ServiceRecieptTemplate;

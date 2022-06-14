@@ -1,11 +1,12 @@
-import React from 'react'
-import { COMPANY_ADDRESS, COMPANY_NAME } from 'src/utils/company_details'
+import React from "react";
+import { COMPANY_ADDRESS, COMPANY_NAME } from "src/utils/company_details";
 
-const RecieptTemplate = ({salesReciept}) => {
-   
+const RecieptTemplate = React.forwardRef((props, ref) => {
+  const { salesReciept } = props;
+
   return (
-      <div className='main-reciept-container'>
-    <div className="wrapper">
+    <div ref={ref} className="main-reciept-container">
+      <div className="wrapper">
         <div className="invoice_wrapper">
           <div className="header">
             <div className="logo_invoice_wrap">
@@ -19,11 +20,11 @@ const RecieptTemplate = ({salesReciept}) => {
               <div className="invoice_sec">
                 <p className="invoice bold">INVOICE</p>
                 <p className="invoice_no">
-                  <span className="bold">Invoice</span>
+                  <span className="bold">Invoice:</span>
                   <span>{salesReciept.invoice_number}</span>
                 </p>
                 <p className="date">
-                  <span className="bold">Date</span>
+                  <span className="bold">Date:</span>
                   <span>{salesReciept.created_at}</span>
                 </p>
               </div>
@@ -55,27 +56,25 @@ const RecieptTemplate = ({salesReciept}) => {
                 </div>
               </div>
               <div className="table_body">
-                  {salesReciept?.items?.map((item, i)=>(
- <div key={i} className="row">
-                  <div className="col col_no">
-                    <p>{i + 1}</p>
+                {salesReciept?.items?.map((item, i) => (
+                  <div key={i} className="row">
+                    <div className="col col_no">
+                      <p>{i + 1}</p>
+                    </div>
+                    <div className="col col_des">
+                      <p className="bold">{item.product}</p>
+                    </div>
+                    <div className="col col_price">
+                      <p>{item.selling_price}</p>
+                    </div>
+                    <div className="col col_qty">
+                      <p>{item.quantity}</p>
+                    </div>
+                    <div className="col col_total">
+                      <p>{item.amount}</p>
+                    </div>
                   </div>
-                  <div className="col col_des">
-                    <p className="bold">{item.product}</p>
-                  </div>
-                  <div className="col col_price">
-                    <p>{item.selling_price}</p>
-                  </div>
-                  <div className="col col_qty">
-                    <p>{item.quantity}</p>
-                  </div>
-                  <div className="col col_total">
-                    <p>{item.amount}</p>
-                  </div>
-                </div>
-                  ))}
-               
-             
+                ))}
               </div>
             </div>
             <div className="paymethod_grandtotal_wrap">
@@ -104,17 +103,16 @@ const RecieptTemplate = ({salesReciept}) => {
             </div>
           </div>
           <div className="footer">
-           
             <div className="terms">
               <p className="tc bold">Note:</p>
               <p>Goods bought in good shape cannot be returned.</p>
             </div>
-             <p>Thank you and Best Wishes</p>
+            <p>Thank you and Best Wishes</p>
           </div>
         </div>
       </div>
-      </div>
-  )
-}
+    </div>
+  );
+});
 
-export default RecieptTemplate
+export default RecieptTemplate;
