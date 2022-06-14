@@ -5,6 +5,7 @@ import { DashboardLayout } from "../../components/dashboard-layout";
 import dynamic from "next/dynamic";
 import { withRouter } from "next/router";
 import { useContext, useEffect, useRef, useState } from "react";
+import { useReactToPrint } from "react-to-print";
 import RecieptTemplate from "src/components/printingPage/new-reciept-print";
 import { Store } from "src/statesManagement/store/store";
 import { COMPANY_NAME } from "src/utils/company_details";
