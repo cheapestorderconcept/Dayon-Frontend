@@ -18,7 +18,6 @@ const RecieptTemplate = React.forwardRef((props, ref) => {
                 </div>
               </div>
               <div className="invoice_sec">
-                <p className="invoice bold">INVOICE</p>
                 <p className="invoice_no">
                   <span className="bold">Invoice:</span>
                   <span>{salesReciept.invoice_number}</span>

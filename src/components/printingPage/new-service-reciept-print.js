@@ -17,13 +17,12 @@ const ServiceRecieptTemplate = React.forwardRef((props, ref) => {
                 </div>
               </div>
               <div className="invoice_sec">
-                <p className="invoice bold">INVOICE</p>
                 <p className="invoice_no">
-                  <span className="bold">Invoice</span>
+                  <span className="bold">Invoice:</span>
                   <span>{serviceReciept.invoice_number}</span>
                 </p>
                 <p className="date">
-                  <span className="bold">Date</span>
+                  <span className="bold">Date:</span>
                   <span>{serviceReciept.created_at}</span>
                 </p>
               </div>
@@ -61,13 +60,13 @@ const ServiceRecieptTemplate = React.forwardRef((props, ref) => {
                       <p className="bold">{item.service_name}</p>
                     </div>
                     <div className="col col_price">
-                      <p>{item.amount_paid}</p>
+                      <p className="semi-bold">{item.amount_paid}</p>
                     </div>
                     <div className="col col_qty">
-                      <p>N/A</p>
+                      <p className="semi-bold">N/A</p>
                     </div>
                     <div className="col col_total">
-                      <p>{item.amount_paid}</p>
+                      <p className="semi-bold">{item.amount_paid}</p>
                     </div>
                   </div>
                 ))}
@@ -104,6 +103,10 @@ const ServiceRecieptTemplate = React.forwardRef((props, ref) => {
               <p>Goods bought in good shape cannot be returned.</p> */}
             </div>
             <p>Thank you and Best Wishes</p>
+            <div className="powered-by">
+              <p className="consultant-name">Powered by Dayon Consult</p>
+              <p className="phone">07033548020</p>
+            </div>
           </div>
         </div>
       </div>
