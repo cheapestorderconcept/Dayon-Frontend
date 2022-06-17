@@ -33,10 +33,10 @@ const ServiceRecieptTemplate = React.forwardRef((props, ref) => {
                 {/* <p className="bold name">{serviceReciept.customer_name}</p> */}
                 <span>{serviceReciept.customer_name}</span>
               </div>
-              <div className="total_wrap">
+              {/* <div className="total_wrap">
                 <p>Total Due</p>
                 <p className="bold price">NGN:{serviceReciept.total_amount}</p>
-              </div>
+              </div> */}
             </div>
           </div>
           <div className="body">

@@ -37,10 +37,10 @@ const RecieptTemplate = React.forwardRef((props, ref) => {
                   +111 222345667
                 </span> */}
               </div>
-              <div className="total_wrap">
+              {/* <div className="total_wrap">
                 <p>Total Due</p>
                 <p className="bold price">NGN:{salesReciept.total_amount}</p>
-              </div>
+              </div> */}
             </div>
           </div>
           <div className="body">
