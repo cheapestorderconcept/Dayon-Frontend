@@ -8,7 +8,7 @@ import DenseTable from "src/components/printingPage/sales-report-table";
 import { withRouter } from "next/router";
 import { useContext, useRef, useState, useEffect } from "react";
 import { Store } from "src/statesManagement/store/store";
-import ReactToPrint from "react-to-print";
+import { useReactToPrint } from "react-to-print";
 import CollapsibleTable from "src/components/printingPage/reciept-print-table";
 import { COMPANY_NAME } from "src/utils/company_details";
 import RecieptTemplate from "src/components/printingPage/reciept-print-table";
