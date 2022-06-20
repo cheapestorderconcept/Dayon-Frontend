@@ -1,3 +1,4 @@
+import ListIcon from "@mui/icons-material/List";
 import {
   Box,
   Button,
@@ -5,33 +6,25 @@ import {
   CardContent,
   CardHeader,
   Divider,
+  Grid,
   InputAdornment,
   Typography,
-  Grid,
-  TextField,
-  MenuItem,
-  Container,
 } from "@mui/material";
-import { Download as DownloadIcon } from "../../icons/download";
-import { Search as SearchIcon } from "../../icons/search";
-import { Upload as UploadIcon } from "../../icons/upload";
-import { CustomTextField } from "../basicInputs";
-import ListIcon from "@mui/icons-material/List";
+import { Field, FieldArray, Form, Formik } from "formik";
+import React, { useContext, useRef } from "react";
 import * as yup from "yup";
-import { Formik, Form, Field, FieldArray, ErrorMessage, useFormikContext } from "formik";
-import { CustomSelect, CustomButton } from "../basicInputs";
-import { CustomDate } from "../basicInputs";
-import { paymentMethods } from "src/__mocks__/paymentMethods";
-import React, { useContext, useEffect, useMemo, useRef, useState } from "react";
+import { Download as DownloadIcon } from "../../icons/download";
+import { Upload as UploadIcon } from "../../icons/upload";
+import { CustomDate, CustomSelect, CustomTextField } from "../basicInputs";
 
 import { Store } from "src/statesManagement/store/store";
 
-import { addSalesData } from "src/statesManagement/store/actions/sales-action";
-import { useSnackbar } from "notistack";
-import { useRouter } from "next/router";
 import Cookies from "js-cookie";
-import { SearchableSelect } from "../basicInputs";
+import { useRouter } from "next/router";
+import { useSnackbar } from "notistack";
+import { addSalesData } from "src/statesManagement/store/actions/sales-action";
 import { generateInvoice } from "src/utils/helpers";
+import { SearchableSelect } from "../basicInputs";
 
 export const AddSales = (props) => {
   const { paymentType } = props;
