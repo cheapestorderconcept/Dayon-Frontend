@@ -13,6 +13,7 @@ export const generateInvoice = () => {
 
   return `${COMPANY_INITIALS}/${today}/${Math.floor(Math.random() * 100 + 1)}`;
 };
-// export const formatTime = (timeDerived) => {
-//   return timeDerived.slice(-14, -9);
-// };
+
+export const numberWithCommas = (x) => {
+  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+};

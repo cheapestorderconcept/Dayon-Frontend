@@ -63,29 +63,36 @@ export const addPaymentMethod = async ({ dispatch, method, Router, enqueueSnackb
   }
 };
 
-// export const deletePaymentMethod = async ({dispatch, methodId, Router}) => {
-//   try {
-//     dispatch({
-//       type: DELETE_PAYMENT_TYPE_REQUEST,
-//     });
-//     const { data } = await makeNetworkCall({
-//       method: "DELETE",
-//       path: `/delete-payment-type/${methodId}`,
-//     });
-//     dispatch({
-//       type: DELETE_PAYMENT_TYPE_SUCCESS,
-//       payload: data.data._id,
-//     });
-//     console.log(data.data);
-//     Router.reload(window.location.pathname);
-//   } catch (error) {
-//     console.log(error);
-//     dispatch({
-//       type: DELETE_PAYMENT_TYPE_FAIL,
-//       payload: error?.response?.data?.response_message || error.message,
-//     });
-//   }
-// };
+export const deletePaymentMethod = async ({ dispatch, methodId, Router, enqueueSnackbar }) => {
+  try {
+    dispatch({
+      type: DELETE_PAYMENT_TYPE_REQUEST,
+    });
+    const { data } = await makeNetworkCall({
+      method: "DELETE",
+      path: `delete-payment-type/${methodId}`,
+    });
+    dispatch({
+      type: DELETE_PAYMENT_TYPE_SUCCESS,
+      payload: data.data._id,
+    });
+    data &&
+      enqueueSnackbar(data?.response_message, {
+        variant: "success",
+      });
+    console.log(data.data);
+    Router.reload(window.location.pathname);
+  } catch (error) {
+    console.log(error);
+    dispatch({
+      type: DELETE_PAYMENT_TYPE_FAIL,
+    });
+    error &&
+      enqueueSnackbar(error?.response?.data?.response_message || error.message, {
+        variant: "error",
+      });
+  }
+};
 
 // export const updatePaymentMethod = async ({ dispatch, methodId, supId, Router }) => {
 //   try {

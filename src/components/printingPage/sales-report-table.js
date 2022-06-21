@@ -13,6 +13,7 @@ import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
+import { numberWithCommas } from "src/utils/helpers";
 
 function Row(props) {
   const { row, index } = props;
@@ -108,53 +109,52 @@ function Row(props) {
 export default function CollapsibleTable({ salesReport }) {
   return (
     <TableContainer component={Paper}>
-    <Table sx={{ minWidth: 650 }} aria-label="simple table">
-      <TableHead>
-        <TableRow>
-        <TableCell>S/N</TableCell>
-          <TableCell>Invoice</TableCell>
-          <TableCell>Date</TableCell>
-          <TableCell align="right">Product name</TableCell>
-          <TableCell align="right">Cost Price</TableCell>
-          <TableCell align="right">Selling Price</TableCell>
-          <TableCell align="right">Total Selling Price Per Qty</TableCell>  
-        </TableRow>
-      </TableHead>
-      <TableBody>
-        {salesReport?.map((row, index) => (
-          <TableRow key={row._id} sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
-             <TableCell align="right">{index + 1}</TableCell>
-            <TableCell component="th" scope="row">
-              {row.invoice_number}
-            </TableCell>
-            <TableCell align="right">{row.created_at}</TableCell>
-            <TableCell align="right">{row.product}</TableCell>
-            <TableCell align="right">{row.cost_price}</TableCell>
-            <TableCell align="right">{`₦${row.selling_price}`}</TableCell>
-            <TableCell align="right">{row.quantity * row.selling_price}</TableCell>             
-                     
+      <Table sx={{ minWidth: 650 }} aria-label="simple table">
+        <TableHead>
+          <TableRow>
+            <TableCell>S/N</TableCell>
+            <TableCell>Invoice</TableCell>
+            <TableCell>Date</TableCell>
+            <TableCell align="right">Product name</TableCell>
+            <TableCell align="right">Cost Price</TableCell>
+            <TableCell align="right">Selling Price</TableCell>
+            <TableCell align="right">Total Selling Price Per Qty</TableCell>
           </TableRow>
-        ))}
-           <TableRow>
-          {/* <TableCell align="right"></TableCell> */}
-          <TableCell align="right"></TableCell>
-          <TableCell align="right"></TableCell>
-          <TableCell align="right"></TableCell>
-          <TableCell align="right"></TableCell>
-          <TableCell align="right"></TableCell>
-          <TableCell align="right">
-            <Typography variant="h4">Total Selling Price Per Qty</Typography>
-          </TableCell>
-          <TableCell align="right">
-            <Typography variant="h4">{`₦${salesReport?.reduce(
-              (a, c) => a + Number(c.quantity * c.selling_price),
-              0
-            )}`}</Typography>
-          </TableCell>
-         
-        </TableRow>
-      </TableBody>
-    </Table>
-  </TableContainer>
+        </TableHead>
+        <TableBody>
+          {salesReport?.map((row, index) => (
+            <TableRow key={row._id} sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
+              <TableCell align="right">{index + 1}</TableCell>
+              <TableCell component="th" scope="row">
+                {row.invoice_number}
+              </TableCell>
+              <TableCell align="right">{row.created_at}</TableCell>
+              <TableCell align="right">{row.product}</TableCell>
+              <TableCell align="right">{row.cost_price}</TableCell>
+              <TableCell align="right">{`₦${row.selling_price}`}</TableCell>
+              <TableCell align="right">{row.quantity * row.selling_price}</TableCell>
+            </TableRow>
+          ))}
+          <TableRow>
+            {/* <TableCell align="right"></TableCell> */}
+            <TableCell align="right"></TableCell>
+            <TableCell align="right"></TableCell>
+            <TableCell align="right"></TableCell>
+            <TableCell align="right"></TableCell>
+            <TableCell align="right"></TableCell>
+            <TableCell align="right">
+              <Typography variant="h4">Total Selling Price Per Qty</Typography>
+            </TableCell>
+            <TableCell align="right">
+              <Typography variant="h4">
+                {`₦${numberWithCommas(
+                  salesReport?.reduce((a, c) => a + Number(c.quantity * c.selling_price), 0)
+                )}`}
+              </Typography>
+            </TableCell>
+          </TableRow>
+        </TableBody>
+      </Table>
+    </TableContainer>
   );
 }

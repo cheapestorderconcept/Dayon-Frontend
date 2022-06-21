@@ -7,6 +7,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { Typography } from "@mui/material";
+import { numberWithCommas } from "src/utils/helpers";
 
 export default function BasicTable({ stockLevel }) {
   return (
@@ -37,7 +38,9 @@ export default function BasicTable({ stockLevel }) {
               <TableCell align="right">{row.current_product_quantity}</TableCell>
               {/* <TableCell align="right">{row.previous_product_quantity}</TableCell> */}
               <TableCell align="right">
-                {`₦${Number(row.current_product_quantity) * Number(row.product_price)}`}
+                {`₦${numberWithCommas(
+                  Number(row.current_product_quantity) * Number(row.product_price)
+                )}`}
               </TableCell>
             </TableRow>
           ))}
@@ -51,9 +54,11 @@ export default function BasicTable({ stockLevel }) {
               <Typography variant="h6">Total </Typography>
             </TableCell>
             <TableCell>
-              <Typography variant="h6">{`₦${stockLevel?.mProduct?.reduce(
-                (a, c) => a + Number(c.current_product_quantity * c.product_price),
-                0
+              <Typography variant="h6">{`₦${numberWithCommas(
+                stockLevel?.mProduct?.reduce(
+                  (a, c) => a + Number(c.current_product_quantity * c.product_price),
+                  0
+                )
               )}`}</Typography>
             </TableCell>
           </TableRow>
