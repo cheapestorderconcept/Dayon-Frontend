@@ -25,7 +25,7 @@ const PaymentMethodList = ({ paymentType }) => {
   const handleDelete = (tableMeta) => (e) => {
     const validate = confirm("Are you sure you want to delete");
     if (!!validate) {
-      const methodId = tableMeta.rowData[0];
+      const methodId = tableMeta?.rowData[0];
       deletePaymentMethod({
         dispatch: dispatch,
         methodId: methodId,
