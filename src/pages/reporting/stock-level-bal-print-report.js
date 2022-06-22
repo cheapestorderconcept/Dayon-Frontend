@@ -1,21 +1,20 @@
-import Head from "next/head";
 import { Box, Button, Container } from "@mui/material";
+import Head from "next/head";
 import { DashboardLayout } from "../../components/dashboard-layout";
 
-import dynamic from "next/dynamic";
 import PrintingHeader from "src/components/printingPage/printing-header";
-import DenseTable from "src/components/printingPage/sales-report-table";
+// import DenseTable from "src/components/printingPage/sales-report-table";
 import { withRouter } from "next/router";
 import { useContext, useRef } from "react";
-import { Store } from "src/statesManagement/store/store";
 import BasicTable from "src/components/printingPage/stock-level-report-table";
+import { Store } from "src/statesManagement/store/store";
 
-import { ReactToPrint } from "react-to-print";
+import ReactToPrint from "react-to-print";
 import { COMPANY_NAME } from "src/utils/company_details";
 
-const DynamicComponentWithNoSSR = dynamic(() => import("src/components/navbar-branch-indicator"), {
-  ssr: false,
-});
+// const DynamicComponentWithNoSSR = dynamic(() => import("src/components/navbar-branch-indicator"), {
+//   ssr: false,
+// });
 
 const StockLevelPrintReport = (props) => {
   const { state } = useContext(Store);
@@ -26,7 +25,7 @@ const StockLevelPrintReport = (props) => {
   return (
     <>
       <Head>
-        <title>Reporting| {COMPANY_NAME}</title>
+        <title>Reporting || {COMPANY_NAME}</title>
       </Head>
       <Box
         component="main"
