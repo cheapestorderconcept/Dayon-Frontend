@@ -14,7 +14,7 @@ const RecieptTemplate = React.forwardRef((props, ref) => {
                 {/* <h4>{COMPANY_NAME}</h4> */}
                 <div className="title_wrap">
                   <p className="title bold">{COMPANY_NAME}</p>
-                  <p className="sub_title">{COMPANY_ADDRESS}</p>
+                  <p className="sub_title">{`${COMPANY_ADDRESS}, Tel: 08117729805.`}</p>
                 </div>
               </div>
               <div className="invoice_sec">
