@@ -274,9 +274,9 @@ export const AddSales = (props) => {
             value={
               (items.original_selling_price =
                 items?.selectedProduct != "" && retrieveProductById != []
-                  ? retrieveProductById[0]?.product_price
+                  ? retrieveProductById[0]?.selling_price
                   : retrieveProduct != []
-                  ? retrieveProduct[0]?.product_price
+                  ? retrieveProduct[0]?.selling_price
                   : "")
             }
           />
