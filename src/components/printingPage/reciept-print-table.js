@@ -64,7 +64,11 @@ const RecieptTemplate = React.forwardRef((props, ref) => {
                       <p className="bold">{item.product}</p>
                     </div>
                     <div className="col col_price">
-                      <p>{item.selling_price}</p>
+                      <p>
+                        {item.original_selling_price != ""
+                          ? item.original_selling_price
+                          : item.incoming_selling_price}
+                      </p>
                     </div>
                     <div className="col col_qty">
                       <p>{item.quantity}</p>
