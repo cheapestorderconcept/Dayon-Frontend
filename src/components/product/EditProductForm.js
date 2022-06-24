@@ -4,7 +4,9 @@ import {
   Card,
   CardContent,
   CardHeader,
-  Divider, Grid, Typography
+  Divider,
+  Grid,
+  Typography,
 } from "@mui/material";
 import { Form, Formik } from "formik";
 import NextLink from "next/link";
@@ -35,7 +37,7 @@ export const EditProductForm = (props) => {
       oneProduct.length > 0 && typeof oneProduct[0] != "undefined"
         ? oneProduct[0].product_price
         : "",
-        selling_price:
+    selling_price:
       oneProduct.length > 0 && typeof oneProduct[0] != "undefined"
         ? oneProduct[0].selling_price
         : "",
@@ -60,9 +62,9 @@ export const EditProductForm = (props) => {
     product_barcode: yup.string(),
     product_brand: yup.string(),
     supplier: yup.string(),
-    price: yup.number().integer().typeError("Price must be a number"),
-    selling_price: yup.number().integer().typeError("Selling Price must be a number"),
-    quantity: yup.number().integer().typeError("Quantity must be a number"),
+    price: yup.number().typeError("Price must be a number"),
+    selling_price: yup.number().typeError("Selling Price must be a number"),
+    quantity: yup.number().typeError("Quantity must be a number"),
   });
 
   const Router = useRouter();
@@ -81,7 +83,6 @@ export const EditProductForm = (props) => {
       Router,
       enqueueSnackbar: enqueueSnackbar,
     });
-
   };
   return (
     <Box {...props}>

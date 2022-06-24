@@ -95,21 +95,16 @@ export const AddDeposit = (props) => {
         selectedProduct: yup.string(),
         serial_number: yup.string(),
         created_at: yup.date(),
-        amount_deposited: yup.number().integer().typeError("Amount must be a number"),
+        amount_deposited: yup.number().typeError("Amount must be a number"),
         invoice_number: yup.string().required("please provide invoice number"),
-        original_selling_price: yup.number().integer().typeError("Price must be a number"),
+        original_selling_price: yup.number().typeError("Price must be a number"),
 
-        incoming_selling_price: yup.number().integer().typeError("Price must be a number"),
+        incoming_selling_price: yup.number().typeError("Price must be a number"),
 
-        amount: yup
-          .number()
-          .integer()
-          .typeError("Amount must be a number")
-          .required("Please provide amount"),
+        amount: yup.number().typeError("Amount must be a number").required("Please provide amount"),
 
         quantity: yup
           .number()
-          .integer()
           .typeError("Price must be a number")
           .required("Please provide product quantity"),
       })

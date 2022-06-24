@@ -67,7 +67,7 @@ export const AddSales = (props) => {
     // customer_id: yup.string(),
     store: yup.string().required("please select store"),
     payment_type: yup.string().required("please choose a payment method"),
-    total_amount: yup.number().integer().typeError("Total amount must be a number"),
+    total_amount: yup.number().typeError("Total amount must be a number"),
     items: yup.array().of(
       yup.object().shape({
         barcode: yup.string(),
@@ -77,19 +77,17 @@ export const AddSales = (props) => {
         serial_number: yup.string(),
         invoice_number: yup.string(),
         created_at: yup.date(),
-        original_selling_price: yup.number().integer().typeError("Price must be a number"),
+        original_selling_price: yup.number().typeError("Price must be a number"),
 
-        incoming_selling_price: yup.number().integer().typeError("Price must be a number"),
+        incoming_selling_price: yup.number().typeError("Price must be a number"),
 
         cost_price: yup
           .number()
-          .integer()
           .typeError("Cost must be a number")
           .required("Please provide Cost price"),
-        amount: yup.number().integer().typeError("Amount must be a number"),
+        amount: yup.number().typeError("Amount must be a number"),
         quantity: yup
           .number()
-          .integer()
           .typeError("Price must be a number")
           .required("Please provide product quantity"),
       })

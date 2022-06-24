@@ -88,8 +88,7 @@ export const EditDepositView = (props) => {
       oneDeposit.length > 0 && typeof oneDeposit[0] != "undefined"
         ? oneDeposit[0].customer_name
         : "",
-         
-      
+
     total_amount:
       oneDeposit.length > 0 && typeof oneDeposit[0] != "undefined"
         ? oneDeposit[0].total_amount
@@ -123,8 +122,8 @@ export const EditDepositView = (props) => {
     branch: yup.string(),
     payment_type: yup.string(),
     serial_number: yup.string(),
-    price: yup.number().integer().typeError("Amount must be a number"),
-    total_amount: yup.number().integer().typeError("Total Amount must be a number"),
+    price: yup.number().typeError("Amount must be a number"),
+    total_amount: yup.number().typeError("Total Amount must be a number"),
     customer_name: yup.string(),
     customer_id: yup.string(),
 
@@ -132,8 +131,8 @@ export const EditDepositView = (props) => {
     product_id: yup.string(),
     product: yup.string(),
 
-    selling_price: yup.number().integer().typeError("Price must be a number"),
-    quantity: yup.number().integer().typeError("Price must be a number"),
+    selling_price: yup.number().typeError("Price must be a number"),
+    quantity: yup.number().typeError("Price must be a number"),
   });
 
   const { enqueueSnackbar } = useSnackbar();
@@ -319,8 +318,8 @@ export const EditDepositView = (props) => {
 
                       <Grid item xs={4}>
                         <CustomTextField name="customer_name" label="Customer Name" />
-                      </Grid> 
-                         {/*   <Grid item xs={4}>
+                      </Grid>
+                      {/*   <Grid item xs={4}>
                             <SearchableSelect
                               name="customer_id"
                               useId={true}

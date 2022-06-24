@@ -69,7 +69,6 @@ export const AddPurchase = (props) => {
         product: yup.string().required("Please choose a product"),
         purchase_quantity: yup
           .number()
-          .integer()
           .typeError("Invoice number must be a number")
           .required("Please enter Invoice Number"),
         discount: yup.string(),

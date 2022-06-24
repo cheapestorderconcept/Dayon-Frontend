@@ -37,7 +37,7 @@ export const BalStockLevelStockForm = (props) => {
   };
 
   const FORM_VALIDATIONS = yup.object().shape({
-    quantity: yup.number().integer().typeError("Quantity must be a number"),
+    quantity: yup.number().typeError("Quantity must be a number"),
   });
 
   const Router = useRouter();
@@ -53,7 +53,6 @@ export const BalStockLevelStockForm = (props) => {
       Router: Router,
       enqueueSnackbar: enqueueSnackbar,
     });
-    console.log(product);
   };
   return (
     <Box {...props}>

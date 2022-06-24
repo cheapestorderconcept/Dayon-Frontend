@@ -82,10 +82,10 @@ export const EditPurchase = (props) => {
     invoice_number: yup.string().required("Please Enter Invoice Number"),
     supplier: yup.string(),
     product: yup.string(),
-    purchase_quantity: yup.number().integer().typeError("Invoice number must be a number"),
+    purchase_quantity: yup.number().typeError("Invoice number must be a number"),
 
     discount: yup.string(),
-    total_purchase_value: yup.number().integer().typeError("Purchase Value must be a number"),
+    total_purchase_value: yup.number().typeError("Purchase Value must be a number"),
   });
 
   //   const addMoreItems = (values, setValues) => {

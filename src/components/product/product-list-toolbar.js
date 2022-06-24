@@ -29,7 +29,7 @@ export const ProductListToolbar = (props) => {
   const INITIAL_FORM_VALUES = {
     name: "",
     price: "",
-    selling_price:"",
+    selling_price: "",
     brand: "",
     barcode: "",
     supplier: "",
@@ -41,12 +41,10 @@ export const ProductListToolbar = (props) => {
     barcode: yup.string(),
     price: yup
       .number()
-      .integer()
       .typeError("Price must be a number")
       .required("Please provide product price"),
-       selling_price: yup
+    selling_price: yup
       .number()
-      .integer()
       .typeError("Selling Price must be a number")
       .required("Please provide product selling price"),
     supplier: yup.string().required("Please provide product supplier"),
@@ -57,7 +55,6 @@ export const ProductListToolbar = (props) => {
   const { loading } = state;
   const { enqueueSnackbar } = useSnackbar();
   const Router = useRouter();
- 
 
   const handleUpdate = (values) => {
     const product = {
@@ -75,7 +72,7 @@ export const ProductListToolbar = (props) => {
     const product = {
       product_name: values.name,
       product_price: values.price,
-      selling_price:values.selling_price,
+      selling_price: values.selling_price,
       product_brand: values.brand,
       product_barcode: values.barcode,
       supplier: values.supplier,
@@ -125,8 +122,8 @@ export const ProductListToolbar = (props) => {
               <Formik
                 initialValues={{ ...INITIAL_FORM_VALUES }}
                 enableReinitialize={true}
-                 onSubmit={(values, { setSubmitting, resetForm }) => {
-                  edit? handleUpdate(values):handleSubmit(values);
+                onSubmit={(values, { setSubmitting, resetForm }) => {
+                  edit ? handleUpdate(values) : handleSubmit(values);
                   resetForm({ values: INITIAL_FORM_VALUES });
                   setSubmitting(false);
                 }}
@@ -173,7 +170,7 @@ export const ProductListToolbar = (props) => {
                         }}
                       />
                     </Grid>
-                        <Grid item xs={12}>
+                    <Grid item xs={12}>
                       <CustomTextField
                         name="selling_price"
                         label="Selling Price"
@@ -217,7 +214,10 @@ export const ProductListToolbar = (props) => {
                       />
                     </Grid>
                     <Grid item xs={12}>
-                      <CustomButton disabled= {loading?true:false}> {edit ? "Update Product" : "Submit"}</CustomButton>
+                      <CustomButton disabled={loading ? true : false}>
+                        {" "}
+                        {edit ? "Update Product" : "Submit"}
+                      </CustomButton>
                     </Grid>
                   </Grid>
                 </Form>
