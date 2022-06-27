@@ -3,7 +3,7 @@ import Cookies from "js-cookie";
 const testUrl = "https://dayon-inventory.herokuapp.com";
 const liveUrl = "https://solace-hospital-backend.herokuapp.com";
 
-const baseUrl = `${liveUrl}`;
+const baseUrl = `${testUrl}`;
 
 export const RequestMethod = {
   POST: "POST",

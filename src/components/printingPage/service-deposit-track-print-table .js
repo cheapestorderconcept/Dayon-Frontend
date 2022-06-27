@@ -127,37 +127,36 @@ export default function CollapsibleTable({ depositTrack }) {
             <TableRow key={row._id} sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
               <TableCell align="right">{index + 1}</TableCell>
               <TableCell align="right">{formatDate(row.createdAt)}</TableCell>
-             <TableCell align="right">{row.customer_name}</TableCell>
+              <TableCell align="right">{row.customer_name}</TableCell>
               <TableCell align="right">{row.service_name}</TableCell>
-              <TableCell align="right">{`₦${row.amount_paid}`}</TableCell>
+              <TableCell align="right">{`₦${row.amount_paid_today}`}</TableCell>
               <TableCell align="right">{`₦${row.amount_to_balance}`}</TableCell>
               <TableCell align="right">{`₦${row.amount_to_pay}`}</TableCell>
             </TableRow>
           ))}
           <TableRow>
-           <TableCell align="right"></TableCell> 
+            <TableCell align="right"></TableCell>
             <TableCell align="right"></TableCell>
             <TableCell align="right"></TableCell>
             <TableCell align="right"></TableCell>
             <TableCell align="right">
               <Typography variant="h5">{`₦${depositTrack?.reduce(
-                (a, c) => a + Number(c.amount_paid ),
+                (a, c) => a + Number(c.amount_paid),
                 0
               )}`}</Typography>
             </TableCell>
             <TableCell align="right">
               <Typography variant="h5">{`₦${depositTrack?.reduce(
-                (a, c) => a + Number(c.amount_to_balance ),
+                (a, c) => a + Number(c.amount_to_balance),
                 0
               )}`}</Typography>
             </TableCell>
             <TableCell align="right">
               <Typography variant="h5">{`₦${depositTrack?.reduce(
-                (a, c) => a + Number(c.amount_to_pay ),
+                (a, c) => a + Number(c.amount_to_pay),
                 0
               )}`}</Typography>
             </TableCell>
-            
           </TableRow>
         </TableBody>
       </Table>
