@@ -78,6 +78,8 @@ const items = [
     hasdropdown: true,
     href2: "/sales/manage-sales",
     title2: "Sales List",
+    title3: "Reprint Receipt",
+    href3: "/sales/receipt-reprint",
   },
   {
     href: "/deposit",
@@ -225,7 +227,7 @@ export const DashboardSidebar = (props) => {
             >
               <div>
                 <Typography color="inherit" variant="h6">
-               {COMPANY_NAME}
+                  {COMPANY_NAME}
                 </Typography>
                 <Typography color="neutral.400" variant="body2">
                   Available

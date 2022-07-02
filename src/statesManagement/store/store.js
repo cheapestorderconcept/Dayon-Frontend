@@ -27,6 +27,7 @@ const initialState = {
   productById: [],
   profile: {},
   salesReport: [],
+  receipts: [],
   depositReport: [],
   outOfStocksReport: [],
   profitOrLossReport: [],
@@ -43,11 +44,10 @@ const initialState = {
     ? JSON.parse(Cookies.get("expensesCategories"))
     : [],
   totalSales: Cookies.get("sales") ? JSON.parse(Cookies.get("sales")) : [],
-  customers: Cookies.get("customers")?JSON.parse(Cookies.get("customers")): [],
-  customerTransactions:[],
-  customerDeposit:[],
-  customerPurchased:[],
-
+  customers: Cookies.get("customers") ? JSON.parse(Cookies.get("customers")) : [],
+  customerTransactions: [],
+  customerDeposit: [],
+  customerPurchased: [],
 };
 
 export const StoreProvider = (props) => {

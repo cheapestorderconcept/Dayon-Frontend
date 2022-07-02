@@ -1,8 +1,9 @@
 import React from "react";
 import { COMPANY_ADDRESS, COMPANY_NAME } from "src/utils/company_details";
+import { formatDate } from "src/utils/helpers";
 
 const RecieptTemplate = React.forwardRef((props, ref) => {
-  const { salesReciept } = props;
+  const { salesReciept, receipts } = props;
 
   return (
     <div ref={ref} className="main-reciept-container">
@@ -20,11 +21,11 @@ const RecieptTemplate = React.forwardRef((props, ref) => {
               <div className="invoice_sec">
                 <p className="invoice_no">
                   <span className="bold">Invoice:</span>
-                  <span>{salesReciept.invoice_number}</span>
+                  <span>{salesReciept?.invoice_number || receipts[0]?.invoice_number}</span>
                 </p>
                 <p className="date">
                   <span className="bold">Date:</span>
-                  <span>{salesReciept.created_at}</span>
+                  <span>{salesReciept?.created_at || formatDate(receipts[0]?.created_at)}</span>
                 </p>
               </div>
             </div>
@@ -55,40 +56,64 @@ const RecieptTemplate = React.forwardRef((props, ref) => {
                 </div>
               </div>
               <div className="table_body">
-                {salesReciept?.items?.map((item, i) => (
-                  <div key={i} className="row">
-                    <div className="col col_no">
-                      <p>{i + 1}</p>
-                    </div>
-                    <div className="col col_des">
-                      <p className="bold">{item.product}</p>
-                    </div>
-                    <div className="col col_price">
-                      <p>
-                        {item.original_selling_price != ""
-                          ? item.original_selling_price
-                          : item.incoming_selling_price}
-                      </p>
-                    </div>
-                    <div className="col col_qty">
-                      <p>{item.quantity}</p>
-                    </div>
-                    <div className="col col_total">
-                      <p>{item.amount}</p>
-                    </div>
-                  </div>
-                ))}
+                {salesReciept
+                  ? salesReciept?.items?.map((item, i) => (
+                      <div key={i} className="row">
+                        <div className="col col_no">
+                          <p>{i + 1}</p>
+                        </div>
+                        <div className="col col_des">
+                          <p className="bold">{item.product}</p>
+                        </div>
+                        <div className="col col_price">
+                          <p>
+                            {item.original_selling_price != ""
+                              ? item.original_selling_price
+                              : item.incoming_selling_price}
+                          </p>
+                        </div>
+                        <div className="col col_qty">
+                          <p>{item.quantity}</p>
+                        </div>
+                        <div className="col col_total">
+                          <p>{item.amount}</p>
+                        </div>
+                      </div>
+                    ))
+                  : receipts?.map((item, i) => (
+                      <div key={i} className="row">
+                        <div className="col col_no">
+                          <p>{i + 1}</p>
+                        </div>
+                        <div className="col col_des">
+                          <p className="bold">{item.product}</p>
+                        </div>
+                        <div className="col col_price">
+                          <p>{item.selling_price}</p>
+                        </div>
+                        <div className="col col_qty">
+                          <p>{item.quantity}</p>
+                        </div>
+                        <div className="col col_total">
+                          <p>{item.amount}</p>
+                        </div>
+                      </div>
+                    ))}
               </div>
             </div>
             <div className="paymethod_grandtotal_wrap">
               <div className="paymethod_sec">
                 <p className="bold">Payment Method</p>
-                <p>{salesReciept.payment_type}</p>
+                <p>{salesReciept?.payment_type || receipts[0]?.payment_type}</p>
               </div>
               <div className="grandtotal_sec">
                 <p className="bold">
                   <span>SUB TOTAL</span>
-                  <span>₦{salesReciept.total_amount}</span>
+                  <span>
+                    ₦
+                    {salesReciept?.total_amount ||
+                      receipts?.reduce((a, c) => a + Number(c.amount), 0)}
+                  </span>
                 </p>
                 <p>
                   <span>Tax Vat</span>
@@ -100,7 +125,11 @@ const RecieptTemplate = React.forwardRef((props, ref) => {
                 </p>
                 <p className="bold">
                   <span>Grand Total</span>
-                  <span>₦{salesReciept.total_amount}</span>
+                  <span>
+                    ₦
+                    {salesReciept?.total_amount ||
+                      receipts?.reduce((a, c) => a + Number(c.amount), 0)}
+                  </span>
                 </p>
               </div>
             </div>
@@ -121,5 +150,5 @@ const RecieptTemplate = React.forwardRef((props, ref) => {
     </div>
   );
 });
-
+// todo:: total using reducers
 export default RecieptTemplate;

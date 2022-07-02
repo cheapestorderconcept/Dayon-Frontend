@@ -1,9 +1,12 @@
 import { COMPANY_INITIALS } from "./company_details";
 
 export const formatDate = (value) => {
-  return value?.slice(1, 11);
+  const parsedValue = value?.replace(/(^"|"$)/g, "");
+  const date = new Date(parsedValue),
+    mnth = ("0" + (date.getMonth() + 1)).slice(-2),
+    day = ("0" + date.getDate()).slice(-2);
+  return [date.getFullYear(), mnth, day].join("-");
 };
-
 export const generateInvoice = () => {
   let today = new Date();
   const dd = String(today.getDate()).padStart(2, "0");
@@ -11,7 +14,7 @@ export const generateInvoice = () => {
   const yyyy = today.getFullYear();
   today = dd + "/" + mm + "/" + yyyy;
 
-  return `${COMPANY_INITIALS}/${today}/${Math.floor(Math.random() * 100 + 1)}`;
+  return `${COMPANY_INITIALS}/${today}/${new Date().getTime().toString().slice(-4)}`;
 };
 
 export const numberWithCommas = (x) => {

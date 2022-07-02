@@ -175,6 +175,9 @@ import {
   DELETE_PAYMENT_TYPE_REQUEST,
   DELETE_PAYMENT_TYPE_SUCCESS,
   DELETE_PAYMENT_TYPE_FAIL,
+  GET_RECEIPT_REPRINT_FAIL,
+  GET_RECEIPT_REPRINT_SUCCESS,
+  GET_RECEIPT_REPRINT_REQUEST,
 } from "../constants";
 
 // const rootReducers = combineReducers({
@@ -624,8 +627,16 @@ const rootReducers = (state, action) => {
     case GET_SALES_REPORT_REQUEST:
       return { ...state, loading: true };
     case GET_SALES_REPORT_SUCCESS:
-      return { ...state, loading: false, salesReport: action?.payload };
+      return { ...state, loading: false, receipts: action?.payload };
     case GET_SALES_REPORT_FAIL:
+      return { ...state, loading: false, error: action.payload };
+
+    // Reprint Receipt reporting
+    case GET_RECEIPT_REPRINT_REQUEST:
+      return { ...state, loading: true };
+    case GET_RECEIPT_REPRINT_SUCCESS:
+      return { ...state, loading: false, salesReport: action?.payload };
+    case GET_RECEIPT_REPRINT_FAIL:
       return { ...state, loading: false, error: action.payload };
 
     // deposits reports
