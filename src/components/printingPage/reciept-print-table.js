@@ -21,11 +21,15 @@ const RecieptTemplate = React.forwardRef((props, ref) => {
               <div className="invoice_sec">
                 <p className="invoice_no">
                   <span className="bold">Invoice:</span>
-                  <span>{salesReciept?.invoice_number || receipts[0]?.invoice_number}</span>
+                  <span>
+                    {salesReciept ? salesReciept?.invoice_number : receipts[0]?.invoice_number}
+                  </span>
                 </p>
                 <p className="date">
                   <span className="bold">Date:</span>
-                  <span>{salesReciept?.created_at || formatDate(receipts[0]?.created_at)}</span>
+                  <span>
+                    {salesReciept ? salesReciept?.created_at : formatDate(receipts[0]?.created_at)}
+                  </span>
                 </p>
               </div>
             </div>
@@ -104,7 +108,7 @@ const RecieptTemplate = React.forwardRef((props, ref) => {
             <div className="paymethod_grandtotal_wrap">
               <div className="paymethod_sec">
                 <p className="bold">Payment Method</p>
-                <p>{salesReciept?.payment_type || receipts[0]?.payment_type}</p>
+                <p>{salesReciept ? salesReciept?.payment_type : receipts[0]?.payment_type}</p>
               </div>
               <div className="grandtotal_sec">
                 <p className="bold">
