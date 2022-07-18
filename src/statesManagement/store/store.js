@@ -59,6 +59,9 @@ const initialState = {
   services: Cookies.get("services") ? JSON.parse(Cookies.get("services")) : [],
   serviceDeposits: Cookies.get("serviceDeposits") ? JSON.parse(Cookies.get("serviceDeposits")) : [],
   depositTracks: Cookies.get("depositTracks") ? JSON.parse(Cookies.get("depositTracks")) : [],
+  cart:{
+    cartItems:[]
+  },
 };
 
 export const StoreProvider = (props) => {

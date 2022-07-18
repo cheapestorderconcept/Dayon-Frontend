@@ -235,6 +235,8 @@ import {
   GET_SERVICE_DEPOSIT_REPORT_SUCCESS,
   GET_SERVICE_DEPOSIT_REPORT_FAIL,
   GET_SERVICE_DEPOSIT_TRACK_FAIL,
+  ADD_TO_CART,
+  REMOVE_FROM_CART,
 } from "../constants";
 
 // const rootReducers = combineReducers({
@@ -683,15 +685,14 @@ const rootReducers = (state, action) => {
     case GET_SALES_REPORT_FAIL:
       return { ...state, loading: false, error: action.payload };
 
-      //SERVICE REPORTING
-       case GET_SERVICE_PAYMENT_REPORT_REQUEST:
+    //SERVICE REPORTING
+    case GET_SERVICE_PAYMENT_REPORT_REQUEST:
       return { ...state, loading: true };
     case GET_SERVICE_PAYMENT_REPORT_SUCCESS:
       return { ...state, loading: false, paymentReport: action?.payload };
     case GET_SERVICE_PAYMENT_REPORT_FAIL:
       return { ...state, loading: false, error: action.payload };
-     case GET_SERVICE_PAYMENT_BY_CATEGORY_REPORT_REQUEST:
-       
+    case GET_SERVICE_PAYMENT_BY_CATEGORY_REPORT_REQUEST:
       return { ...state, loading: true };
     case GET_SERVICE_PAYMENT_BY_CATEGORY_REPORT_SUCCESS:
       return { ...state, loading: false, paymentByCatReport: action?.payload };
@@ -699,16 +700,15 @@ const rootReducers = (state, action) => {
       return { ...state, loading: false, error: action.payload };
 
     case GET_SERVICE_DEPOSIT_REPORT_REQUEST:
-      console.log("Requesting...")
+      console.log("Requesting...");
       return { ...state, loading: true };
     case GET_SERVICE_DEPOSIT_REPORT_SUCCESS:
-      console.log(action.payload)
+      console.log(action.payload);
       return { ...state, loading: false, serviceDepositReport: action?.payload };
     case GET_SERVICE_DEPOSIT_REPORT_FAIL:
       return { ...state, loading: false, error: action.payload };
 
-
-       case GET_SERVICE_DEPOSIT_BY_CATEGORY_REPORT_REQUEST:
+    case GET_SERVICE_DEPOSIT_BY_CATEGORY_REPORT_REQUEST:
       return { ...state, loading: true };
     case GET_SERVICE_DEPOSIT_BY_CATEGORY_REPORT_SUCCESS:
       return { ...state, loading: false, serviceDepositByCatReport: action?.payload };
@@ -840,9 +840,9 @@ const rootReducers = (state, action) => {
       return { ...state, loading: false };
     case UPDATE_SERVICE_CATEGORY_FAIL:
       return { ...state, loading: false, error: action.payload };
-    
-  case GET_SERVICE_PAYMENT_REQUEST:
-    return {...state, loading:true}
+
+    case GET_SERVICE_PAYMENT_REQUEST:
+      return { ...state, loading: true };
     case GET_SERVICE_PAYMENT_SUCCESS: {
       if (Cookies.get("servicePayment")) {
         Cookies.remove("servicePayment");
@@ -858,7 +858,7 @@ const rootReducers = (state, action) => {
     case ADD_SERVICE_PAYMENT_REQUEST:
       return { ...state, loading: true };
     case ADD_SERVICE_PAYMENT_SUCCESS:
-      return { ...state, loading: false, serviceRecieptBody:action?.payload };
+      return { ...state, loading: false, serviceRecieptBody: action?.payload };
     case ADD_SERVICE_PAYMENT_FAIL:
       return { ...state, loading: false, error: action.payload };
     case DELETE_SERVICE_PAYMENT_REQUEST:
@@ -888,7 +888,6 @@ const rootReducers = (state, action) => {
     case GET_SERVICE_FAIL:
       return { ...state, loading: false, error: action.payload };
 
-
     case ADD_SERVICE_REQUEST:
       return { ...state, loading: true };
     case ADD_SERVICE_SUCCESS:
@@ -896,7 +895,7 @@ const rootReducers = (state, action) => {
     case ADD_SERVICE_FAIL:
       return { ...state, loading: false, error: action.payload };
 
-        case UPDATE_SERVICE_REQUEST:
+    case UPDATE_SERVICE_REQUEST:
       return { ...state, loading: true };
     case UPDATE_SERVICE_SUCCESS:
       return { ...state, loading: false };
@@ -910,15 +909,15 @@ const rootReducers = (state, action) => {
     case DELETE_SERVICE_FAIL:
       return { ...state, loading: false, error: action.payload };
 
-// SErvice DEposit
-   case ADD_SERVICE_DEPOSIT_REQUEST:
+    // SErvice DEposit
+    case ADD_SERVICE_DEPOSIT_REQUEST:
       return { ...state, loading: true };
     case ADD_SERVICE_DEPOSIT_SUCCESS:
       return { ...state, loading: false };
     case ADD_SERVICE_DEPOSIT_FAIL:
       return { ...state, loading: false, error: action.payload };
- 
-      case GET_SERVICE_DEPOSIT_REQUEST:
+
+    case GET_SERVICE_DEPOSIT_REQUEST:
       return { ...state, loading: true };
     case GET_SERVICE_DEPOSIT_SUCCESS: {
       if (Cookies.get("serviceDeposits")) {
@@ -931,7 +930,7 @@ const rootReducers = (state, action) => {
     }
     case GET_SERVICE_DEPOSIT_FAIL:
       return { ...state, loading: false, error: action.payload };
-    
+
     case DELETE_SERVICE_DEPOSIT_REQUEST:
       return { ...state, loading: true };
     case DELETE_SERVICE_DEPOSIT_SUCCESS:
@@ -944,9 +943,9 @@ const rootReducers = (state, action) => {
     case UPDATE_SERVICE_DEPOSIT_SUCCESS:
       return { ...state, loading: false };
     case UPDATE_SERVICE_DEPOSIT_FAIL:
-     return { ...state, loading: false, error: action.payload };
+      return { ...state, loading: false, error: action.payload };
 
-     case GET_SERVICE_DEPOSIT_TRACK_REQUEST:
+    case GET_SERVICE_DEPOSIT_TRACK_REQUEST:
       return { ...state, loading: true };
     case GET_SERVICE_DEPOSIT_TRACK_SUCCESS: {
       if (Cookies.get("depositTracks")) {
@@ -958,7 +957,27 @@ const rootReducers = (state, action) => {
       return { ...state, loading: false, depositTracks: action?.payload };
     }
     case GET_SERVICE_DEPOSIT_TRACK_FAIL:
-      return {...state, loading:false, error:action?.payload}
+      return { ...state, loading: false, error: action?.payload };
+
+    case ADD_TO_CART:
+      const newItem = action.payload;
+      const existingItem = state.cart.cartItems.find((item) => newItem._id === item._id);
+      const cartItems = existingItem
+        ? state.cart.cartItems.map((item) => (item._id === existingItem._id ? newItem : item))
+        : [...state.cart.cartItems, newItem];
+      console.log(cartItems);
+      return {
+        ...state,
+        cart: { ...state.cart.cartItems, cartItems },
+      };
+
+    case REMOVE_FROM_CART: {
+      const cartItems = state.cart.cartItems.filter((item) => item._id !== action.payload._id);
+      return {
+        ...state,
+        cart: { ...state.cart.cartItems, cartItems },
+      };
+    }
     default:
       state;
   }
