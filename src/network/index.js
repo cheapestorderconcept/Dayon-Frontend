@@ -1,6 +1,6 @@
 import axios from "axios";
 import Cookies from "js-cookie";
-const testUrl = "https://dayon-inventory.herokuapp.com";
+const testUrl = "https://dayon-v1.herokuapp.com";
 const liveUrl = "https://solace-hospital-backend.herokuapp.com";
 
 const baseUrl = `${testUrl}`;
