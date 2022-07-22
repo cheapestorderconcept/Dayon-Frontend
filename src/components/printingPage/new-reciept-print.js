@@ -64,13 +64,13 @@ const RecieptTemplate = React.forwardRef((props, ref) => {
                       <p className="bold">{item.product_name}</p>
                     </div>
                     <div className="col col_price">
-                      <p>{item.product_name}</p>
+                      <p>{item.product_price}</p>
                     </div>
                     <div className="col col_qty">
                       <p>{item.quantity}</p>
                     </div>
                     <div className="col col_total">
-                      <p>{item.quantity * item.price}</p>
+                      <p>{Number(item.quantity * item.product_price)}</p>
                     </div>
                   </div>
                 ))}

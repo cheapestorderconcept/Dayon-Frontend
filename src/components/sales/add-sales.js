@@ -54,7 +54,7 @@ export const AddSales = (props) => {
 
   const Submit = (formData) => {
     const values = { ...formData, items: cart.cartItems };
-    console.log(values);
+
     addSalesData({
       dispatch: dispatch,
       sales: values,
