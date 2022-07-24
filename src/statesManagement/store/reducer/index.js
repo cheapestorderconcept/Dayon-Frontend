@@ -178,6 +178,8 @@ import {
   GET_RECEIPT_REPRINT_FAIL,
   GET_RECEIPT_REPRINT_SUCCESS,
   GET_RECEIPT_REPRINT_REQUEST,
+  ADD_TO_CART,
+  REMOVE_FROM_CART,
 } from "../constants";
 
 // const rootReducers = combineReducers({
@@ -731,6 +733,25 @@ const rootReducers = (state, action) => {
     case UPDATE_CUSTOMERS_FAIL:
       return { ...state, loading: false, error: action.payload };
 
+    case ADD_TO_CART:
+      const newItem = action.payload;
+      const existingItem = state.cart.cartItems.find((item) => newItem._id === item._id);
+      const cartItems = existingItem
+        ? state.cart.cartItems.map((item) => (item._id === existingItem._id ? newItem : item))
+        : [...state.cart.cartItems, newItem];
+      console.log(cartItems);
+      return {
+        ...state,
+        cart: { ...state.cart.cartItems, cartItems },
+      };
+
+    case REMOVE_FROM_CART: {
+      const cartItems = state.cart.cartItems.filter((item) => item._id !== action.payload._id);
+      return {
+        ...state,
+        cart: { ...state.cart.cartItems, cartItems },
+      };
+    }
     default:
       state;
   }

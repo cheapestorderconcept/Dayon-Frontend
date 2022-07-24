@@ -68,10 +68,10 @@ const SalesList = ({ salesList }) => {
       name: "Invoice",
       label: "Invoice Number",
     },
-    {
-      name: "Barcode",
-      label: "Product Barcode",
-    },
+    // {
+    //   name: "Barcode",
+    //   label: "Product Barcode",
+    // },
     {
       name: "amount",
       label: "Total Amount",
@@ -85,10 +85,10 @@ const SalesList = ({ salesList }) => {
       name: "qty",
       label: "Quantity",
     },
-    {
-      name: "serial_number",
-      label: "Serial Number",
-    },
+    // {
+    //   name: "serial_number",
+    //   label: "Serial Number",
+    // },
     { name: "date", label: "Date" },
   ];
   const [ready, setready] = useState(false);

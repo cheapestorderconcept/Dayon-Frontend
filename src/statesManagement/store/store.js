@@ -48,6 +48,9 @@ const initialState = {
   customerTransactions: [],
   customerDeposit: [],
   customerPurchased: [],
+  cart: {
+    cartItems: [],
+  },
 };
 
 export const StoreProvider = (props) => {
