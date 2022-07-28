@@ -1,5 +1,14 @@
 import Head from "next/head";
-import { Box, Button, Container, Grid, IconButton, Paper, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Container,
+  Grid,
+  IconButton,
+  Paper,
+  TextField,
+  Typography,
+} from "@mui/material";
 import { DashboardLayout } from "../../components/dashboard-layout";
 import { AddSales } from "src/components/sales/add-sales";
 import dynamic from "next/dynamic";
@@ -16,6 +25,7 @@ import { COMPANY_NAME } from "src/utils/company_details";
 
 import { addToCart, removeFromCartAction } from "src/statesManagement/store/actions/cart_action";
 import ProductSalesTable from "../product/product-sales-table";
+import { CustomTextField } from "../basicInputs";
 
 const DynamicComponentWithNoSSR = dynamic(() => import("src/components/navbar-branch-indicator"), {
   ssr: false,
@@ -47,6 +57,8 @@ export const CartPage = ({ Submit, values }) => {
   const removeFromCart = (item) => {
     removeFromCartAction({ dispatch: dispatch, product: item });
   };
+
+  const [qValue, setqValue] = useState(0);
 
   return (
     <>
@@ -82,33 +94,52 @@ export const CartPage = ({ Submit, values }) => {
                   )}
                   )
                 </Typography>
-                {cart.cartItems.length === 0 && (
-                  <Typography variant="h6">No items in cart, please add some </Typography>
-                )}
-                {cart.cartItems.map((item) => (
-                  <Grid
-                    key={item._id}
-                    container
-                    spacing={2}
-                    sx={{
-                      padding: "10px",
-                      marginBottom: "15px",
-                    }}
-                  >
-                    <Grid item sx={4}>
-                      <Typography variant="subtitle1"> {item.product_name}</Typography>
-                    </Grid>
-                    <Grid item sx={4}>
-                      <Typography variant="subtitle1"> ₦{item.selling_price}</Typography>
-                    </Grid>
+                <Container
+                  sx={{
+                    maxHeight: "400px",
+                    overflowY: "scroll",
+                  }}
+                >
+                  {cart.cartItems.length === 0 && (
+                    <Typography variant="h6">No items in cart, please add some </Typography>
+                  )}
+                  {cart.cartItems.map((item) => (
+                    <Grid
+                      key={item._id}
+                      container
+                      spacing={2}
+                      sx={{
+                        padding: "10px",
+                        marginBottom: "15px",
+                      }}
+                    >
+                      <Grid item sx={4}>
+                        <Typography variant="subtitle1"> {item.product_name}</Typography>
+                      </Grid>
+                      <Grid item sx={4}>
+                        <Typography variant="subtitle1"> ₦{item.selling_price}</Typography>
+                      </Grid>
 
-                    <Grid item sx={3}>
-                      <div
-                        style={{
-                          display: "flex",
-                        }}
-                      >
-                        <IconButton
+                      <Grid item sx={3}>
+                        <div
+                          style={{
+                            display: "flex",
+                          }}
+                        >
+                          <TextField
+                            label="quantity"
+                            type={"number"}
+                            onChange={(e) => {
+                              setqValue(e.target.value);
+                              updateCartHandler(item, Number(e.target.value));
+                            }}
+                            fullWidth={false}
+                            style={{
+                              maxWidth: "120px",
+                            }}
+                          />
+
+                          {/* <IconButton
                           onClick={() => updateCartHandler(item, item.quantity - 1)}
                           disabled={item.quantity === 1}
                           disableRipple={false}
@@ -123,22 +154,23 @@ export const CartPage = ({ Submit, values }) => {
                           }}
                         >
                           {item.quantity}
-                        </Typography>
-                        <IconButton
+                        </Typography> */}
+                          {/* <IconButton
                           disableRipple={false}
                           onClick={() => updateCartHandler(item, item.quantity + 1)}
                         >
                           <AddIcon />{" "}
+                        </IconButton> */}
+                        </div>
+                      </Grid>
+                      <Grid item>
+                        <IconButton disableRipple={false} onClick={() => removeFromCart(item)}>
+                          <DeleteIcon />{" "}
                         </IconButton>
-                      </div>
+                      </Grid>
                     </Grid>
-                    <Grid item>
-                      <IconButton disableRipple={false} onClick={() => removeFromCart(item)}>
-                        <DeleteIcon />{" "}
-                      </IconButton>
-                    </Grid>
-                  </Grid>
-                ))}
+                  ))}
+                </Container>
                 {cart.cartItems.length > 0 && (
                   <Button
                     fullWidth={true}

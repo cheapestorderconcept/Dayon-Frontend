@@ -115,6 +115,8 @@ const ProductSalesTable = ({ products }) => {
     selectableRowsHeader: false,
     selectableRows: "none",
     responsive: "simple",
+
+    // onSearchOpen: () => alert("open"),
   };
 
   return (
