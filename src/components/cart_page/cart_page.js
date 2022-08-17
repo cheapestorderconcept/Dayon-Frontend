@@ -42,6 +42,7 @@ export const CartPage = ({ Submit, values }) => {
     getProduct({ dispatch: dispatch, enqueueSnackbar: enqueueSnackbar });
   }, []);
 
+  const [qValue, setqValue] = useState(0);
   const updateCartHandler = (item, qty) => {
     const actPro = products.filter((pro) => pro._id === item._id);
     if (actPro.length === 0) {
@@ -57,8 +58,6 @@ export const CartPage = ({ Submit, values }) => {
   const removeFromCart = (item) => {
     removeFromCartAction({ dispatch: dispatch, product: item });
   };
-
-  const [qValue, setqValue] = useState(0);
 
   return (
     <>

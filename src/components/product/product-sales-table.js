@@ -108,15 +108,21 @@ const ProductSalesTable = ({ products }) => {
       // prev_qty: `${pro.previous_product_quantity}`,
     };
   });
-
+  const handleSearch = (e) => {
+    if (e.charCode === 13) {
+      e.preventDefault();
+    }
+  };
   const options = {
     filter: true,
     sort: true,
     selectableRowsHeader: false,
     selectableRows: "none",
     responsive: "simple",
-
-    // onSearchOpen: () => alert("open"),
+    searchAlwaysOpen: true,
+    searchProps: {
+      onKeyPress: handleSearch,
+    },
   };
 
   return (
