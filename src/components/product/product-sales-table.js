@@ -29,12 +29,26 @@ const ProductSalesTable = ({ products }) => {
     return true;
   };
 
-  const handleAddToCart = (tableMeta) => (e) => {
+  const handleAddToCart = (tableMeta) => async (e) => {
     const productIdArray = tableMeta.rowData;
     const product = { ...productIdArray };
     const actPro = products.filter((pro) => pro._id === product[0]);
 
-    addToCart({ dispatch: dispatch, product: { ...actPro[0], quantity: 1 } });
+    await addToCart({ dispatch: dispatch, product: { ...actPro[0], quantity: 1 } });
+  };
+  const handleSearch = async (e) => {
+    if (e.charCode === 13) {
+      e.preventDefault();
+      const actPro = await products.filter((pro) => pro.product_barcode === e.target.value);
+      if (actPro.length < 1) {
+        alert("no product with this barcode");
+        e.target.value = "";
+        return;
+      }
+      await addToCart({ dispatch: dispatch, product: { ...actPro[0], quantity: 1 } });
+      e.target.value = "";
+      e.preventDefault();
+    }
   };
 
   const columns = [
@@ -108,11 +122,7 @@ const ProductSalesTable = ({ products }) => {
       // prev_qty: `${pro.previous_product_quantity}`,
     };
   });
-  const handleSearch = (e) => {
-    if (e.charCode === 13) {
-      e.preventDefault();
-    }
-  };
+
   const options = {
     filter: true,
     sort: true,

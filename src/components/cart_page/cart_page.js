@@ -43,6 +43,7 @@ export const CartPage = ({ Submit, values }) => {
   }, []);
 
   const [qValue, setqValue] = useState(0);
+  const [barcode, setbarcode] = useState(null);
   const updateCartHandler = (item, qty) => {
     const actPro = products.filter((pro) => pro._id === item._id);
     if (actPro.length === 0) {
@@ -59,6 +60,15 @@ export const CartPage = ({ Submit, values }) => {
     removeFromCartAction({ dispatch: dispatch, product: item });
   };
 
+  // const handleBarcodeSubmit = (e) => {
+  //   console.log(barcode);
+  //   e.preventDefault();
+  // };
+  // const onChange = (e) => {
+  //   setbarcode(e.target.value);
+  //   console.log(e);
+  // };
+
   return (
     <>
       <Box
@@ -68,6 +78,17 @@ export const CartPage = ({ Submit, values }) => {
           py: 2,
         }}
       >
+        {/* <form onSubmit={handleBarcodeSubmit}>
+          <CustomTextField
+            name="scan_barcode"
+            label="Scan Barcode"
+            onChange={onChange}
+            value={barcode}
+            style={{
+              width: "350px",
+            }}
+          />
+        </form> */}
         <Container maxWidth={true}>
           <Grid container spacing={2}>
             <Grid item xs={7}>

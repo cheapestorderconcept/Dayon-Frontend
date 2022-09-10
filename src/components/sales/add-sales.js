@@ -146,6 +146,7 @@ export const AddSales = (props) => {
                           id="paymentType"
                         />
                       </Grid>
+
                       <Grid
                         item
                         sx={{
