@@ -107,20 +107,20 @@ const RecieptTemplate = React.forwardRef((props, ref) => {
                 <p>{salesReciept ? salesReciept?.payment_type : receipts[0]?.payment_type}</p>
               </div>
               <div className="grandtotal_sec">
-                <p className="bold">
+                {/* <p className="bold">
                   <span>SUB TOTAL</span>
                   <span>
                     ₦
                     {salesReciept?.total_amount ||
                       receipts?.reduce((a, c) => a + Number(c.amount), 0)}
                   </span>
-                </p>
+                </p> */}
                 <p>
                   <span>Tax Vat</span>
                   <span>N/A</span>
                 </p>
                 <p>
-                  <span>Discount 10%</span>
+                  <span>Discount</span>
                   <span>N/A</span>
                 </p>
                 <p className="bold">

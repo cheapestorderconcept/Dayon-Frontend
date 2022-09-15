@@ -33,11 +33,13 @@ export const ProductListToolbar = (props) => {
     brand: "",
     barcode: "",
     supplier: "",
+    quantity: "",
   };
 
   const FORM_VALIDATIONS = yup.object().shape({
     name: yup.string().required("Please provide product name"),
     brand: yup.string().required("Please provide product brand"),
+    quantity: yup.number().typeError("Quantity must be a number"),
     barcode: yup.string(),
     price: yup
       .number()
@@ -63,6 +65,7 @@ export const ProductListToolbar = (props) => {
       product_brand: values.brand,
       product_barcode: values.barcode,
       supplier: values.supplier,
+      quantity: values.quantity,
     };
 
     updateProduct({ dispatch: dispatch, product: product, productId: id, Router: Router });
@@ -76,6 +79,7 @@ export const ProductListToolbar = (props) => {
       product_brand: values.brand,
       product_barcode: values.barcode,
       supplier: values.supplier,
+      quantity: values.quantity,
     };
     addProduct({
       dispatch: dispatch,
@@ -161,6 +165,19 @@ export const ProductListToolbar = (props) => {
                       <CustomTextField
                         name="price"
                         label="Cost Price"
+                        InputProps={{
+                          endAdornment: (
+                            <InputAdornment position="end">
+                              <ListIcon />
+                            </InputAdornment>
+                          ),
+                        }}
+                      />
+                    </Grid>
+                    <Grid item xs={12}>
+                      <CustomTextField
+                        name="quantity"
+                        label="Quantity"
                         InputProps={{
                           endAdornment: (
                             <InputAdornment position="end">
