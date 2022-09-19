@@ -39,7 +39,7 @@ export default function BasicTable({ stockLevel }) {
               {/* <TableCell align="right">{row.previous_product_quantity}</TableCell> */}
               <TableCell align="right">
                 {`₦${numberWithCommas(
-                  Number(row.current_product_quantity) * Number(row.product_price)
+                  Number(row.current_product_quantity * row.product_price).toFixed(2)
                 )}`}
               </TableCell>
             </TableRow>
