@@ -23,13 +23,14 @@ import { useRouter } from "next/router";
 
 export const SalesReportForm = (props) => {
   const { dispatch, state } = useContext(Store);
-  const { branch, loading } = state;
+  const { branch, paymentType, loading } = state;
   const { enqueueSnackbar } = useSnackbar();
   const Router = useRouter();
   const [formvalues, setformvalues] = useState({
     startDate: null,
     endDate: null,
     store: "",
+    payment_type: "",
     // product: "",
   });
 
@@ -63,6 +64,7 @@ export const SalesReportForm = (props) => {
       to: selectionValue[0].endDate,
       Router: Router,
       branch: formvalues.store,
+      payment_type: formvalues.payment_type,
     });
     console.log(selectionValue);
     console.log(formvalues);
@@ -134,12 +136,33 @@ export const SalesReportForm = (props) => {
                     </TextField>
                   </Grid>
 
-                  {/* <Grid item xs={6} sx={{ mb: 4 }}>
+                  <Grid item xs={6} sx={{ mb: 4 }}>
+                    <TextField
+                      select={true}
+                      fullWidth={true}
+                      name="payment_type"
+                      label="Payment Type"
+                      value={formvalues.payment_type}
+                      onChange={(e) =>
+                        setformvalues({ ...formvalues, payment_type: e.target.value })
+                      }
+                    >
+                      {paymentType.map((option) => {
+                        return (
+                          <MenuItem key={option.id} value={option.payment_type}>
+                            {option.payment_type}
+                          </MenuItem>
+                        );
+                      })}
+                    </TextField>
+                  </Grid>
+                  {/* 
+                  <Grid item xs={6} sx={{ mb: 4 }}>
                     <TextField
                       required
                       select={true}
                       fullWidth={true}
-                      name="product"
+                      name="payment_type"
                       label="Select Product"
                       value={formvalues.product}
                       onChange={(e) => setformvalues({ ...formvalues, product: e.target.value })}

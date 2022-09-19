@@ -13,7 +13,7 @@ import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
-import { numberWithCommas } from "src/utils/helpers";
+import { formatDate, numberWithCommas } from "src/utils/helpers";
 
 function Row(props) {
   const { row, index } = props;
@@ -118,6 +118,7 @@ export default function CollapsibleTable({ salesReport }) {
             <TableCell align="right">Product name</TableCell>
             <TableCell align="right">Cost Price</TableCell>
             <TableCell align="right">Selling Price</TableCell>
+            <TableCell align="right">Payment Type</TableCell>
             <TableCell align="right">Total Selling Price Per Qty</TableCell>
           </TableRow>
         </TableHead>
@@ -128,15 +129,17 @@ export default function CollapsibleTable({ salesReport }) {
               <TableCell component="th" scope="row">
                 {row.invoice_number}
               </TableCell>
-              <TableCell align="right">{row.created_at}</TableCell>
+              <TableCell align="right">{formatDate(row.created_at)}</TableCell>
               <TableCell align="right">{row.product}</TableCell>
               <TableCell align="right">{row.cost_price}</TableCell>
               <TableCell align="right">{`₦${row.selling_price}`}</TableCell>
+              <TableCell align="right">{`₦${row.payment_type}`}</TableCell>
               <TableCell align="right">{row.quantity * row.selling_price}</TableCell>
             </TableRow>
           ))}
           <TableRow>
             {/* <TableCell align="right"></TableCell> */}
+            <TableCell align="right"></TableCell>
             <TableCell align="right"></TableCell>
             <TableCell align="right"></TableCell>
             <TableCell align="right"></TableCell>

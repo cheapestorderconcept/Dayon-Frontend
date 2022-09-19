@@ -24,6 +24,7 @@ export const loginAction = async ({ loginDetails, dispatch, enqueueSnackbar }) =
     });
 
     Cookies.set("user", data.data.token);
+    Cookies.set("username", data.data.username);
     if (Cookies.get("selectedBranch")) {
       Cookies.remove("selectedBranch");
       Cookies.set("selectedBranch", loginDetails.branch_id);
@@ -37,8 +38,6 @@ export const loginAction = async ({ loginDetails, dispatch, enqueueSnackbar }) =
     getPurchase({ dispatch: dispatch, enqueueSnackbar: enqueueSnackbar });
     getStaff({ dispatch: dispatch, enqueueSnackbar: enqueueSnackbar });
     getPaymentMethod({ dispatch: dispatch, enqueueSnackbar: enqueueSnackbar });
-   
-   
   } catch (error) {
     dispatch({
       type: LOGIN_FAIL,

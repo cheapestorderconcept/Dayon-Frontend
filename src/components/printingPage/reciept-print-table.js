@@ -1,3 +1,4 @@
+import Cookies from "js-cookie";
 import React from "react";
 import { COMPANY_ADDRESS, COMPANY_NAME } from "src/utils/company_details";
 import { formatDate } from "src/utils/helpers";
@@ -139,7 +140,7 @@ const RecieptTemplate = React.forwardRef((props, ref) => {
               <p className="tc bold">Note:</p>
               <p>Goods bought in good shape cannot be returned.</p>
             </div>
-            <p>Thank you and Best Wishes</p>
+            <p>You were served by {Cookies.get("username")}</p>
             <div className="powered-by">
               <p className="consultant-name">Powered by Dayon Consult</p>
               <p className="phone">07033548020</p>

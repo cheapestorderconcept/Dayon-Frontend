@@ -15,7 +15,7 @@ import { useSnackbar } from "notistack";
 import React, { useContext, useRef } from "react";
 import { addSalesData } from "src/statesManagement/store/actions/sales-action";
 import { Store } from "src/statesManagement/store/store";
-import { generateInvoice } from "src/utils/helpers";
+import { generateInvoice, generateTodayDate } from "src/utils/helpers";
 import * as yup from "yup";
 import { Download as DownloadIcon } from "../../icons/download";
 import { Upload as UploadIcon } from "../../icons/upload";
@@ -30,7 +30,7 @@ export const AddSales = (props) => {
   const Router = useRouter();
 
   const INITIAL_FORM_VALUES = {
-    created_at: "",
+    created_at: generateTodayDate(),
     branch: Cookies.get("selectedBranch"),
     invoice_number: generateInvoice(),
     // customer_name:"",

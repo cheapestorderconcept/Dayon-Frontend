@@ -218,9 +218,11 @@ body {
 
 .invoice_wrapper .footer>p {
     color: var(--primary);
-    text-decoration: underline;
-    font-size: 18px;
+    
+    font-size: 16px;
     padding-bottom: 0px;
+    text-align: center;
+    margin-top: 10px;
 }
 
 .invoice_wrapper .footer .terms .tc {
@@ -230,4 +232,5 @@ body {
 .powered-by {
     text-align: center;
     margin-top: 10px;
+    font-size: .7rem;
 }

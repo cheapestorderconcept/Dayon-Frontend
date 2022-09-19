@@ -26,6 +26,10 @@ const ReceiptPrintReport = (props) => {
   const [salesReciept, setsalesReciept] = useState({});
   useEffect(() => {
     setsalesReciept(JSON.parse(router.query.sales));
+    const timer = setTimeout(() => {
+      handlePrint();
+    }, 500);
+    return () => clearTimeout(timer);
   }, []);
 
   const handlePrint = useReactToPrint({

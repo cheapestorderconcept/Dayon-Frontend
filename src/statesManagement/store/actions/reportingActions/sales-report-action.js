@@ -8,7 +8,15 @@ import {
   GET_SALES_REPORT_SUCCESS,
 } from "../../constants";
 
-export const getSalesReport = async ({ dispatch, enqueueSnackbar, from, to, Router, branch }) => {
+export const getSalesReport = async ({
+  dispatch,
+  enqueueSnackbar,
+  from,
+  to,
+  Router,
+  branch,
+  payment_type,
+}) => {
   try {
     dispatch({
       type: GET_SALES_REPORT_REQUEST,
@@ -17,7 +25,7 @@ export const getSalesReport = async ({ dispatch, enqueueSnackbar, from, to, Rout
       method: "GET",
       path: `/view-sales-report?from=${from}&to=${to}&branch=${branch}`,
     });
-    console.log(data.data);
+    console.log(data);
     dispatch({
       type: GET_SALES_REPORT_SUCCESS,
       payload: data.data,

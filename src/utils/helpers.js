@@ -7,6 +7,15 @@ export const formatDate = (value) => {
     day = ("0" + date.getDate()).slice(-2);
   return [date.getFullYear(), mnth, day].join("-");
 };
+export const generateTodayDate = () => {
+  let today = new Date();
+  const dd = String(today.getDate()).padStart(2, "0");
+  const mm = String(today.getMonth() + 1).padStart(2, "0");
+  const yyyy = today.getFullYear();
+  today = mm + "-" + dd + "-" + yyyy;
+
+  return today;
+};
 export const generateInvoice = () => {
   let today = new Date();
   const dd = String(today.getDate()).padStart(2, "0");

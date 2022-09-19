@@ -51,14 +51,13 @@ export default function BasicTable({ stockLevel }) {
             <TableCell></TableCell>
             <TableCell></TableCell>
             <TableCell>
-              <Typography variant="h6">Total </Typography>
+              <Typography variant="h6">Total</Typography>
             </TableCell>
             <TableCell>
               <Typography variant="h6">{`₦${numberWithCommas(
-                stockLevel?.mProduct?.reduce(
-                  (a, c) => a + Number(c.current_product_quantity * c.product_price),
-                  0
-                )
+                stockLevel?.mProduct
+                  ?.reduce((a, c) => a + Number(c.current_product_quantity * c.product_price), 0)
+                  .toFixed(2)
               )}`}</Typography>
             </TableCell>
           </TableRow>

@@ -8,6 +8,7 @@ export const logoutAction = async ({ dispatch, router, enqueueSnackbar }) => {
     });
     Cookies.remove("user");
     Cookies.remove("selectedBranch");
+    Cookies.remove("username");
     router.push("/auth");
   } catch (error) {
     error &&

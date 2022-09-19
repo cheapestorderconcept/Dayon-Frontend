@@ -137,7 +137,7 @@ export const CustomDate = ({ name, ...other }) => {
     defaultConfiq.error = true;
     defaultConfiq.helperText = meta.error;
   }
-  return <TextField {...defaultConfiq} />;
+  return <TextField  {...defaultConfiq} />;
 };
 
 //Custom

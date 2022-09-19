@@ -30,6 +30,7 @@ export const ProductListToolbar = (props) => {
     name: "",
     price: "",
     selling_price: "",
+
     brand: "",
     barcode: "",
     supplier: "",
@@ -49,14 +50,27 @@ export const ProductListToolbar = (props) => {
       .number()
       .typeError("Selling Price must be a number")
       .required("Please provide product selling price"),
+
     supplier: yup.string().required("Please provide product supplier"),
   });
+
+  const returnPercentageProfit = ({ cost_price, selling_price }) => {
+    selling_price === "" ? (selling_price = 0) : (selling_price = selling_price);
+    cost_price === "" ? (cost_price = 0) : (cost_price = cost_price);
+    const profit = selling_price - cost_price;
+    const overallGain = (profit / cost_price) * 100;
+    return overallGain.toFixed(2);
+  };
 
   const { title, suppliers, brands, edit } = props;
   const { dispatch, state } = useContext(Store);
   const { loading } = state;
   const { enqueueSnackbar } = useSnackbar();
   const Router = useRouter();
+
+  // const [costPrice, setcostPrice] = useState("");
+  // const [sellingPrice, setsellingPrice] = useState("");
+  // const [calculatePercent, setcalculatePercent] = useState({ cost_price: "", selling_price: "" });
 
   const handleUpdate = (values) => {
     const product = {
@@ -133,111 +147,159 @@ export const ProductListToolbar = (props) => {
                 }}
                 validationSchema={FORM_VALIDATIONS}
               >
-                <Form>
-                  <Grid container spacing={2}>
-                    <Grid item xs={12}>
-                      <CustomTextField
-                        name="name"
-                        label="Product Name"
-                        InputProps={{
-                          endAdornment: (
-                            <InputAdornment position="end">
-                              <ListIcon />
-                            </InputAdornment>
-                          ),
-                        }}
-                      />
+                {({ values }) => (
+                  <Form>
+                    <Grid container spacing={2}>
+                      <Grid item xs={12}>
+                        <CustomTextField
+                          name="name"
+                          label="Product Name"
+                          InputProps={{
+                            endAdornment: (
+                              <InputAdornment position="end">
+                                <ListIcon />
+                              </InputAdornment>
+                            ),
+                          }}
+                        />
+                      </Grid>
+                      <Grid item xs={12}>
+                        <CustomTextField
+                          name="barcode"
+                          label="Product Barcode"
+                          InputProps={{
+                            endAdornment: (
+                              <InputAdornment position="end">
+                                <ListIcon />
+                              </InputAdornment>
+                            ),
+                          }}
+                        />
+                      </Grid>
+                      <Grid item xs={12}>
+                        <CustomTextField
+                          name="price"
+                          label="Cost Price"
+                          // value={calculatePercent.cost_price}
+                          // onChange={(e) =>
+                          //   setcalculatePercent({
+                          //     cost_price: e.target.value,
+                          //     selling_price: calculatePercent.selling_price,
+                          //   })
+                          // }
+                          InputProps={{
+                            endAdornment: (
+                              <InputAdornment position="end">
+                                <ListIcon />
+                              </InputAdornment>
+                            ),
+                          }}
+                        />
+                      </Grid>
+                      <Grid item xs={12}>
+                        <CustomTextField
+                          name="selling_price"
+                          label="Selling Price"
+                          // value={calculatePercent.selling_price}
+                          // onChange={(e) =>
+                          //   setcalculatePercent({
+                          //     selling_price: e.target.value,
+                          //     cost_price: calculatePercent.cost_price,
+                          //   })
+                          // }
+                          InputProps={{
+                            endAdornment: (
+                              <InputAdornment position="end">
+                                <ListIcon />
+                              </InputAdornment>
+                            ),
+                          }}
+                        />
+                      </Grid>
+                      {(values.selling_price !== "" || values.price !== "") && (
+                        <Grid item xs={12}>
+                          <Typography>
+                            {`You're selling with a ${
+                              returnPercentageProfit({
+                                cost_price: values.price,
+                                selling_price: values.selling_price,
+                              }) < 0
+                                ? "loss of"
+                                : "profit of"
+                            }`}{" "}
+                            <span
+                              style={{
+                                color:
+                                  returnPercentageProfit({
+                                    cost_price: values.price,
+                                    selling_price: values.selling_price,
+                                  }) < 0
+                                    ? "red"
+                                    : "green",
+                                fontWeight: "bolder",
+                              }}
+                            >
+                              {`${returnPercentageProfit({
+                                cost_price: values.price,
+                                selling_price: values.selling_price,
+                              })} %`}
+                            </span>
+                          </Typography>
+                        </Grid>
+                      )}
+                      <Grid item xs={12}>
+                        <CustomTextField
+                          name="current_product_quantity"
+                          label="Quantity"
+                          InputProps={{
+                            endAdornment: (
+                              <InputAdornment position="end">
+                                <ListIcon />
+                              </InputAdornment>
+                            ),
+                          }}
+                        />
+                      </Grid>
+
+                      <Grid item xs={12}>
+                        <CustomSelect
+                          name="brand"
+                          options={brands}
+                          label="Brand Name"
+                          id="brands"
+                          // InputProps={{
+                          //   endAdornment: (
+                          //     <InputAdornment position="end">
+                          //       <ListIcon />
+                          //     </InputAdornment>
+                          //   ),
+                          // }}
+                        />
+                      </Grid>
+                      <Grid item xs={12}>
+                        <CustomSelect
+                          name="supplier"
+                          options={suppliers}
+                          id="suppliers"
+                          label="Supplier Name"
+                          // InputProps={{
+                          //   endAdornment: (
+                          //     <InputAdornment position="end">
+                          //       <ListIcon />
+                          //     </InputAdornment>
+                          //   ),
+                          // }}
+                        />
+                      </Grid>
+                      <Grid item xs={12}>
+                        <CustomButton disabled={loading ? true : false}>
+                          {" "}
+                          {edit ? "Update Product" : "Submit"}
+                        </CustomButton>
+                      </Grid>
                     </Grid>
-                    <Grid item xs={12}>
-                      <CustomTextField
-                        name="barcode"
-                        label="Product Barcode"
-                        InputProps={{
-                          endAdornment: (
-                            <InputAdornment position="end">
-                              <ListIcon />
-                            </InputAdornment>
-                          ),
-                        }}
-                      />
-                    </Grid>
-                    <Grid item xs={12}>
-                      <CustomTextField
-                        name="price"
-                        label="Cost Price"
-                        InputProps={{
-                          endAdornment: (
-                            <InputAdornment position="end">
-                              <ListIcon />
-                            </InputAdornment>
-                          ),
-                        }}
-                      />
-                    </Grid>
-                    <Grid item xs={12}>
-                      <CustomTextField
-                        name="current_product_quantity"
-                        label="Quantity"
-                        InputProps={{
-                          endAdornment: (
-                            <InputAdornment position="end">
-                              <ListIcon />
-                            </InputAdornment>
-                          ),
-                        }}
-                      />
-                    </Grid>
-                    <Grid item xs={12}>
-                      <CustomTextField
-                        name="selling_price"
-                        label="Selling Price"
-                        InputProps={{
-                          endAdornment: (
-                            <InputAdornment position="end">
-                              <ListIcon />
-                            </InputAdornment>
-                          ),
-                        }}
-                      />
-                    </Grid>
-                    <Grid item xs={12}>
-                      <CustomSelect
-                        name="brand"
-                        options={brands}
-                        label="Brand Name"
-                        id="brands"
-                        // InputProps={{
-                        //   endAdornment: (
-                        //     <InputAdornment position="end">
-                        //       <ListIcon />
-                        //     </InputAdornment>
-                        //   ),
-                        // }}
-                      />
-                    </Grid>
-                    <Grid item xs={12}>
-                      <CustomSelect
-                        name="supplier"
-                        options={suppliers}
-                        id="suppliers"
-                        label="Supplier Name"
-                        // InputProps={{
-                        //   endAdornment: (
-                        //     <InputAdornment position="end">
-                        //       <ListIcon />
-                        //     </InputAdornment>
-                        //   ),
-                        // }}
-                      />
-                    </Grid>
-                    <Grid item xs={12}>
-                      <CustomButton disabled={loading ? true : false}>
-                        {" "}
-                        {edit ? "Update Product" : "Submit"}
-                      </CustomButton>
-                    </Grid>
-                  </Grid>
-                </Form>
+                  </Form>
+                )}
               </Formik>
             </Box>
           </CardContent>

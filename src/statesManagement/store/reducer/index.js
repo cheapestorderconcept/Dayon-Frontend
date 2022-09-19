@@ -450,6 +450,7 @@ const rootReducers = (state, action) => {
     case ADD_SALES_DATA_REQUEST:
       return { ...state, loading: true, notification: false };
     case ADD_SALES_DATASUCCESS: {
+      state.cart.cartItems = [];
       return { ...state, loading: false, notification: true, success: action.payload };
     }
     case ADD_SALES_DATA_FAIL:
