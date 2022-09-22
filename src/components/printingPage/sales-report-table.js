@@ -133,7 +133,7 @@ export default function CollapsibleTable({ salesReport }) {
               <TableCell align="right">{row.product}</TableCell>
               <TableCell align="right">{row.cost_price}</TableCell>
               <TableCell align="right">{`₦${row.selling_price}`}</TableCell>
-              <TableCell align="right">{`₦${row.payment_type}`}</TableCell>
+              <TableCell align="right">{`${row.payment_type}`}</TableCell>
               <TableCell align="right">{row.quantity * row.selling_price}</TableCell>
             </TableRow>
           ))}
@@ -151,7 +151,9 @@ export default function CollapsibleTable({ salesReport }) {
             <TableCell align="right">
               <Typography variant="h4">
                 {`₦${numberWithCommas(
-                  salesReport?.reduce((a, c) => a + Number(c.quantity * c.selling_price), 0)
+                  salesReport
+                    ?.reduce((a, c) => a + Number(c.quantity * c.selling_price), 0)
+                    .toFixed(2)
                 )}`}
               </Typography>
             </TableCell>

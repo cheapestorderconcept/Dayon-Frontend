@@ -20,7 +20,7 @@ const DynamicComponentWithNoSSR = dynamic(() => import("src/components/navbar-br
 
 const SalesPrintReport = (props) => {
   const { state } = useContext(Store);
-  const { salesReport } = state;
+  const { receipts } = state;
   const printRef = useRef();
   const { router } = props;
 
@@ -43,7 +43,7 @@ const SalesPrintReport = (props) => {
           <PrintingHeader
             title={`Sales Report at ${router.query.branch} Between "${from_date}" and "${to_date}"`}
           />
-          <CollapsibleTable salesReport={salesReport} />
+          <CollapsibleTable salesReport={receipts} />
         </Container>
         <Container
           sx={{

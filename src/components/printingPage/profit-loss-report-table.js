@@ -40,17 +40,17 @@ export default function CollapsibleTable({ profitOrLossReport }) {
               <TableCell align="right">{`₦${row.selling_price}`}</TableCell>
               <TableCell align="right">{row.quantity}</TableCell>
               <TableCell align="right">
-                {`₦${Number(row.quantity) * Number(row.selling_price)}`}
+                {`₦${Number(row.quantity * row.selling_price).toFixed(2)}`}
               </TableCell>
               <TableCell align="right" style={{ color: "green" }}>
                 {Number(
                   row.selling_price - row.cost_price < 0 ? 0 : row.selling_price - row.cost_price
-                )}
+                ).toFixed(2)}
               </TableCell>
               <TableCell align="right" style={{ color: "red" }}>
                 {Number(
                   row.selling_price - row.cost_price > 0 ? 0 : row.selling_price - row.cost_price
-                )}
+                ).toFixed(2)}
               </TableCell>
               {/* <TableCell align="right">{row.previous_product_quantity}</TableCell> */}
             </TableRow>
@@ -67,10 +67,9 @@ export default function CollapsibleTable({ profitOrLossReport }) {
             <TableCell>
               <Typography variant="h6" color={"green"}>
                 {`₦${numberWithCommas(
-                  profitOrLossReport?.reduce(
-                    (a, c) => a + Number(c.selling_price - c.cost_price),
-                    0
-                  )
+                  profitOrLossReport
+                    ?.reduce((a, c) => a + Number(c.selling_price - c.cost_price), 0)
+                    .toFixed(2)
                 )}`}
               </Typography>
             </TableCell>
@@ -80,14 +79,16 @@ export default function CollapsibleTable({ profitOrLossReport }) {
             <TableCell>
               <Typography variant="h6" color={{ color: "red" }}>
                 {`₦${numberWithCommas(
-                  profitOrLossReport?.reduce(
-                    (a, c) =>
-                      a +
-                      Number(
-                        c.selling_price - c.cost_price > 0 ? 0 : c.selling_price - c.cost_price
-                      ),
-                    0
-                  )
+                  profitOrLossReport
+                    ?.reduce(
+                      (a, c) =>
+                        a +
+                        Number(
+                          c.selling_price - c.cost_price > 0 ? 0 : c.selling_price - c.cost_price
+                        ),
+                      0
+                    )
+                    .toFixed(2)
                 )}`}
               </Typography>
             </TableCell>

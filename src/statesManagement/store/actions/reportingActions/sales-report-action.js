@@ -23,7 +23,7 @@ export const getSalesReport = async ({
     });
     const { data } = await makeNetworkCall({
       method: "GET",
-      path: `/view-sales-report?from=${from}&to=${to}&branch=${branch}`,
+      path: `/view-sales-report?from=${from}&to=${to}&branch=${branch}&payment_type=${payment_type}`,
     });
     console.log(data);
     dispatch({
