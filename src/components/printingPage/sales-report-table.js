@@ -146,7 +146,7 @@ export default function CollapsibleTable({ salesReport }) {
             <TableCell align="right"></TableCell>
             <TableCell align="right"></TableCell>
             <TableCell align="right">
-              <Typography variant="h4">Total Selling Price Per Qty</Typography>
+              <Typography variant="h4">Total</Typography>
             </TableCell>
             <TableCell align="right">
               <Typography variant="h4">
