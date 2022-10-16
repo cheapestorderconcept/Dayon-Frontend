@@ -7,7 +7,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
-import { numberWithCommas } from "src/utils/helpers";
+import { formatDate, numberWithCommas } from "src/utils/helpers";
 
 export default function CollapsibleTable({ profitOrLossReport }) {
   return (
@@ -34,7 +34,7 @@ export default function CollapsibleTable({ profitOrLossReport }) {
               <TableCell component="th" scope="row">
                 {row.invoice_number}
               </TableCell>
-              <TableCell align="right">{row.created_at}</TableCell>
+              <TableCell align="right">{formatDate(row.created_at)}</TableCell>
               <TableCell align="right">{row.product}</TableCell>
               <TableCell align="right">{row.cost_price}</TableCell>
               <TableCell align="right">{`₦${row.selling_price}`}</TableCell>
@@ -68,7 +68,7 @@ export default function CollapsibleTable({ profitOrLossReport }) {
               <Typography variant="h6" color={"green"}>
                 {`₦${numberWithCommas(
                   profitOrLossReport
-                    ?.reduce((a, c) => a + Number(c.selling_price - c.cost_price), 0)
+                    ?.reduce((a, c) => a + Number((c.selling_price - c.cost_price) * c.quantity), 0)
                     .toFixed(2)
                 )}`}
               </Typography>
@@ -84,7 +84,9 @@ export default function CollapsibleTable({ profitOrLossReport }) {
                       (a, c) =>
                         a +
                         Number(
-                          c.selling_price - c.cost_price > 0 ? 0 : c.selling_price - c.cost_price
+                          (c.selling_price - c.cost_price > 0
+                            ? 0
+                            : c.selling_price - c.cost_price) * c.quantity
                         ),
                       0
                     )
