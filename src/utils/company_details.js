@@ -1,5 +1,5 @@
-export const COMPANY_NAME = "Awetco Stores";
-export const COMPANY_EMAIL = "Awetco00@gmail.com";
-export const COMPANY_ADDRESS = "No. 180, Hezekiah Oluwasanmi Rd7, Ile-Ife, Osun State.";
-export const COMPANY_PHONE = " +2347032529199, +2348060410828, +2348117729805.";
-export const COMPANY_INITIALS = "AWE";
+export const COMPANY_NAME = "LE BISTROT 10 LIMITED";
+export const COMPANY_EMAIL = "lebistrot10limited@yahoo.com";
+export const COMPANY_ADDRESS = "LE Bistrot 10 Limited, Mayfair Ife.";
+export const COMPANY_PHONE = "08037582688/ 08022697920";
+export const COMPANY_INITIALS = "LE";
