@@ -1,7 +1,7 @@
 import axios from "axios";
 import Cookies from "js-cookie";
 // const testUrl = "https://dayon-v1.herokuapp.com";
-const liveUrl = "https://lebistrot.onrender.com";
+const liveUrl = "https://easystuff.onrender.com";
 
 const baseUrl = `${liveUrl}/api/v1`;
 
