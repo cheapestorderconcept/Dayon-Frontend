@@ -180,6 +180,9 @@ import {
   GET_RECEIPT_REPRINT_REQUEST,
   ADD_TO_CART,
   REMOVE_FROM_CART,
+  GET_CUSTOMER_FAIL,
+  GET_CUSTOMER_SUCCESS,
+  GET_CUSTOMER_REQUEST,
 } from "../constants";
 
 // const rootReducers = combineReducers({
@@ -725,6 +728,13 @@ const rootReducers = (state, action) => {
     case GET_CUSTOMERS_TRANSACTIONS_SUCCESS:
       return { ...state, loading: false, customerTransactions: action?.payload };
     case GET_CUSTOMERS_TRANSACTIONS_FAIL:
+      return { ...state, loading: false, error: action.payload };
+
+    case GET_CUSTOMER_REQUEST:
+      return { ...state, loading: true };
+    case GET_CUSTOMER_SUCCESS:
+      return { ...state, loading: false, customer: action?.payload };
+    case GET_CUSTOMER_FAIL:
       return { ...state, loading: false, error: action.payload };
 
     case UPDATE_CUSTOMERS_REQUEST:

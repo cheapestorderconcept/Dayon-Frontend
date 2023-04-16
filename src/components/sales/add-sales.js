@@ -33,9 +33,10 @@ export const AddSales = (props) => {
     created_at: generateTodayDate(),
     branch: Cookies.get("selectedBranch"),
     invoice_number: generateInvoice(),
-    // customer_name:"",
-    // customer_id: "",
+    // customer_name: "",
+    customer_id: "",
     total_amount: "",
+    amount_paid: "",
     payment_type: "",
     items: [],
   };
@@ -45,10 +46,11 @@ export const AddSales = (props) => {
     created_at: yup.date().required("please select date"),
     invoice_number: yup.string().required("please provide invoice number"),
     // customer_name: yup.string(),
-    // customer_id: yup.string(),
+    customer_id: yup.string(),
     store: yup.string().required("please select store"),
     payment_type: yup.string().required("please choose a payment method"),
-    total_amount: yup.number().integer().typeError("Total amount must be a number"),
+    total_amount: yup.number().typeError("Total amount must be a number"),
+    amount_paid: yup.number().typeError("Amount paid  must be a number"),
     items: yup.array().required("please add product to cart "),
   });
 
@@ -115,7 +117,7 @@ export const AddSales = (props) => {
                         <CustomTextField name="branch" value={values.branch} />
                       </Grid>
 
-                      {/* <Grid item xs={4}>
+                      <Grid item xs={4}>
                         <SearchableSelect
                           name="customer_id"
                           useId={true}
@@ -123,7 +125,14 @@ export const AddSales = (props) => {
                           options={customers}
                           id="customers"
                         />
-                      </Grid> */}
+                      </Grid>
+                      <Grid item xs={4}>
+                        <CustomTextField
+                          label="Amount Paid"
+                          name="amount_paid"
+                          value={values.amount_paid}
+                        />
+                      </Grid>
                       <Grid item xs={4}>
                         <CustomTextField
                           name="total_amount"

@@ -155,6 +155,7 @@ export const CustomButton = ({ children, disabled, ...others }) => {
     color: "primary",
     disabled: disabled,
     fullWidth: true,
+    
   };
 
   return <Button {...defaultConfiq}>{children}</Button>;

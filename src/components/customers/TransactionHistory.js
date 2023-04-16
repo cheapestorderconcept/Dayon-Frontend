@@ -4,6 +4,9 @@ import { ThemeProvider } from "@mui/material/styles/";
 import { createTheme, Typography } from "@mui/material";
 
 const TransactionHistory = ({ customerTransactions }) => {
+  console.log("====================================");
+  console.log(customerTransactions);
+  console.log("====================================");
   const theme = createTheme({
     overrides: {
       MUIDataTable: {
@@ -30,27 +33,51 @@ const TransactionHistory = ({ customerTransactions }) => {
 
   const columns = [
     {
-      name: "net_balance",
-
-      label: "Net Balance",
+      name: "created_at",
+      label: "Transaction Date",
     },
+    {
+      name: "customer_fullname",
+
+      label: "Full Name",
+    },
+    {
+      name: "invoice_number",
+
+      label: "Invoice Number",
+    },
+
     {
       name: "total_amount_paid",
       label: "Total Amount Paid",
     },
     {
-      name: "total_purchased",
-      label: "Total Purchased",
+      name: "customer_current_debt",
+      label: "Customer Current Debt ",
+    },
+    {
+      name: "payment_due",
+      label: "Payment Due ",
     },
   ];
 
-  const myTransactions = [
-    {
-      net_balance: `${customerTransactions.net_balance}`,
-      total_amount_paid: `${customerTransactions.total_amount_paid}`,
-      total_purchased: `${customerTransactions.total_purchased}`,
-    },
-  ];
+  const myTransactions = customerTransactions.map((cus) => {
+    const strDate = new Date(cus?.created_at);
+    function convert(strDate) {
+      var date = new Date(strDate),
+        mnth = ("0" + (date.getMonth() + 1)).slice(-2),
+        day = ("0" + date.getDate()).slice(-2);
+      return [date.getFullYear(), mnth, day].join("-");
+    }
+    return {
+      payment_due: `${cus.payment_due}`,
+      customer_current_debt: `${cus.customer_current_debt}`,
+      total_amount_paid: `${cus.total_amount_paid}`,
+      invoice_number: `${cus.invoice_number}`,
+      customer_fullname: `${cus.customer_fullname}`,
+      created_at: `${convert(strDate)}`,
+    };
+  });
 
   const options = {
     filter: true,
